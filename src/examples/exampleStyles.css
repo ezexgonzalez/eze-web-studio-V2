@@ -1,0 +1,28 @@
+.visual-placeholder {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklch, var(--theme-accent) 17%, var(--theme-background)),
+    var(--theme-background)
+  );
+}
+
+.visual-placeholder::before {
+  position: absolute;
+  inset: 9% 8% 12% 17%;
+  border: 1px solid color-mix(in oklch, var(--theme-text) 18%, transparent);
+  background: color-mix(in oklch, var(--theme-surface) 44%, transparent);
+  content: "";
+}
+
+.visual-placeholder::after {
+  position: absolute;
+  top: 12%;
+  right: 10%;
+  width: 34%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--theme-accent);
+  content: "";
+  mix-blend-mode: multiply;
+  opacity: 0.68;
+}
