@@ -76,113 +76,101 @@ Se busca:
 
 SVG/CSS manual queda reservado para detalles simples o cuando ninguna herramienta existente resuelve correctamente la intención visual.
 
+### Restricción de tooling — FREE / OPEN SOURCE FIRST
+
+Para Eze Web Studio V2, los efectos visuales deben resolverse por defecto con herramientas **gratuitas y/o open source** que permitan uso legítimo en producción.
+
+Reglas:
+
+- no comprar planes Pro para resolver backgrounds, shaders, partículas, motion o efectos ornamentales;
+- no depender de trials, componentes premium ni assets que exijan una suscripción para mantener el resultado;
+- verificar licencia y compatibilidad con uso comercial antes de adoptar una librería;
+- no instalar todas las alternativas: hacer una prueba aislada, elegir una y agregar únicamente las dependencias realmente usadas;
+- si una solución gratuita de calidad resuelve correctamente la intención visual, no introducir una opción paga;
+- una herramienta gratuita no se aprueba solo por ser gratis: debe tener calidad visual, personalización suficiente, mantenimiento razonable y coste técnico aceptable.
+
+Regla ejecutiva:
+
+> **Primero agotar soluciones gratuitas/open source de calidad. Pagar solo si una ventaja concreta y difícil de reemplazar justifica la inversión.**
+
 ---
 
 ## 4. Librerías visuales candidatas
 
-Estas librerías deben revisarse cuando comience el desarrollo. No es obligatorio utilizar todas.
+No existe una librería obligatoria para todo el proyecto. Se selecciona según el efecto concreto.
 
-### Paper Shaders
+Para el **Hero actual**, el orden de prueba aprobado es:
 
-Prioridad alta para:
+### 1. React Bits — FREE
 
-- fondos vivos;
-- shaders;
-- campos de luz;
-- texturas procedurales;
-- noise;
-- efectos animados configurables.
+Primera prueba por velocidad de integración y catálogo de backgrounds React.
 
-Repo / referencia:
-`paper-design/shaders`
+Revisar únicamente componentes y recursos disponibles en su capa gratuita / open source.
 
-Uso esperado en EWS V2:
-**candidato principal para fondos hero y escenas visuales complejas.**
+Priorizar efectos que permitan aproximar:
 
----
-
-### ShaderGradient
-
-Útil para:
-
-- gradients tridimensionales;
-- campos de color animados;
-- fondos fluidos;
-- efectos compatibles con React.
-
-Repo / referencia:
-`ruucm/shadergradient`
-
-Puede ser especialmente útil para traducir una intención visual aprobada a un fondo realmente vivo en producción.
-
----
-
-### React Bits
-
-Biblioteca amplia de efectos y componentes visuales para React.
-
-Revisar principalmente:
-
-- backgrounds;
-- animated backgrounds;
-- motion;
-- decorative effects.
+- horizonte o arco luminoso;
+- glow ambiental;
+- light rays / beams suaves;
+- aurora o niebla de luz;
+- movimiento lento y parametrizable.
 
 Repo / referencia:
 `DavidHDev/react-bits`
 
-Uso esperado:
-soluciones rápidas para efectos secundarios o incluso fondos completos cuando encajen con el diseño.
+No utilizar componentes Pro.
 
 ---
 
-### Aceternity UI
+### 2. ShaderGradient
 
-Revisar especialmente:
+Fallback principal cuando React Bits no permita reproducir correctamente la silueta curva o la profundidad del fondo.
 
-- Aurora backgrounds;
-- Background Beams;
-- Background Gradient Animation;
-- Background Lines;
-- Noise Background;
-- efectos de luces y motion.
+Útil para:
 
-Sitio:
-`ui.aceternity.com`
+- gradients tridimensionales;
+- superficies curvas;
+- campos de color animados;
+- fondos fluidos;
+- escenas compatibles con React / WebGL.
 
-Uso esperado:
-recursos visuales listos para adaptar al sistema EWS sin reinventarlos desde cero.
+Repo / referencia:
+`ruucm/shadergradient`
 
 ---
 
-### tsParticles
+### 3. Vanta.js
 
-Usar solo cuando haga falta una capa de partículas real.
+Alternativa gratuita para fondos WebGL listos cuando alguno de sus efectos encaje realmente con la dirección visual.
 
-Repo:
-`tsparticles/tsparticles`
+Repo / referencia:
+`tengbao/vanta`
 
-No debe convertirse en el protagonista del diseño.
-
-Uso sugerido:
-
-- sparks muy sutiles;
-- polvo luminoso;
-- pequeñas partículas ambientales.
+No usarlo si obliga a cambiar la identidad del Hero para adaptarnos al efecto disponible.
 
 ---
 
-### Magic UI
+### Otras opciones gratuitas
 
-Puede servir para detalles secundarios:
+Pueden evaluarse cuando aporten una ventaja concreta:
 
-- grids animados;
-- patrones;
-- pequeños efectos decorativos.
+- Paper Shaders;
+- componentes free de Aceternity UI;
+- Magic UI;
+- tsParticles para partículas ambientales puntuales;
+- otras librerías mantenidas y con licencia compatible.
 
-No es prioridad para el efecto principal del hero.
+No convertir esta lista en dependencias permanentes.
 
----
+### Regla de selección
+
+Para cada efecto:
+
+1. buscar la solución gratuita que mejor reproduzca la intención aprobada;
+2. hacer una prueba técnica aislada;
+3. medir fidelidad visual, control, responsive y coste de performance;
+4. elegir una sola implementación;
+5. recién entonces agregar las dependencias necesarias al proyecto.
 
 ## 5. Dirección actual del Hero
 
@@ -203,6 +191,8 @@ El Hero de EWS V2 sigue esta dirección:
 
 ### Idea conceptual
 
+El Hero es el momento de mayor impacto visual de la landing. Las secciones posteriores deben bajar la intensidad y priorizar lectura, contenido y respiración.
+
 No pensar el fondo como "un círculo cyan".
 
 Pensarlo como:
@@ -217,7 +207,18 @@ La maqueta de Figma solo necesita representar bien:
 - composición;
 - relación con el texto.
 
-El volumen, bloom, niebla, partículas y animación final se resolverán durante desarrollo con una librería especializada.
+El volumen, bloom, niebla, partículas y animación final se resolverán durante desarrollo con una librería especializada gratuita/open source.
+
+Movimiento buscado para el Hero:
+
+- respiración muy lenta del glow;
+- variaciones suaves de intensidad recorriendo el horizonte;
+- halo o niebla cyan con movimiento ambiental;
+- muy pocas partículas y con desplazamiento lento;
+- reacción al cursor solo si es extremadamente sutil y mejora el resultado;
+- grid prácticamente estático.
+
+El efecto debe comunicar que el fondo está vivo sin competir con el headline.
 
 ---
 
@@ -396,13 +397,16 @@ Extraer:
 
 Antes de construir efectos manuales:
 
-1. Paper Shaders;
+Para el Hero actual:
+
+1. React Bits FREE;
 2. ShaderGradient;
-3. React Bits;
-4. Aceternity UI;
-5. Magic UI;
-6. tsParticles cuando corresponda;
-7. otras librerías mantenidas si son claramente mejores.
+3. Vanta.js;
+4. otras alternativas gratuitas/open source mantenidas si las anteriores no alcanzan.
+
+Para efectos secundarios pueden evaluarse Paper Shaders, componentes free de Aceternity UI, Magic UI o tsParticles cuando corresponda.
+
+No usar componentes Pro, trials ni recursos premium.
 
 Elegir la herramienta que más se acerque visualmente con menor complejidad innecesaria.
 

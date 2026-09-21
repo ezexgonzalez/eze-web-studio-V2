@@ -2,20 +2,25 @@
 
 ## Propósito del repositorio
 
-`eze-landing-starter` es una plantilla madre reutilizable para crear landings de negocios. Su objetivo es ofrecer una base técnica sólida, adaptable y mantenible, no representar la identidad final de un cliente ni imponer una narrativa.
+`eze-web-studio-V2` es la implementación activa de la nueva landing oficial de **Eze Web Studio**.
 
-La plantilla madre debe permanecer genérica. Las demos y los proyectos de clientes deben crearse como repositorios nuevos mediante **GitHub Template**. No personalizar este starter directamente para un negocio concreto.
+Este repositorio ya no debe tratarse como una plantilla neutral durante la implementación actual. Las decisiones aprobadas de marca, composición, copy y dirección visual de Eze Web Studio sí pueden y deben implementarse aquí.
+
+La base reutilizable que originó el proyecto sigue aportando patrones técnicos, ejemplos y estructura, pero no tiene prioridad sobre el brief actual, Figma aprobado ni las decisiones vigentes del proyecto.
 
 ## Principios de trabajo
 
-- Mantener los componentes reutilizables y fáciles de adaptar entre distintos rubros.
-- Mantener separados el contenido, la presentación y el comportamiento.
-- Limitar `src/data/siteConfig.js` a la configuración compartida que consume el núcleo; el contenido específico de secciones debe vivir en módulos de datos propios del proyecto.
-- No hardcodear nombres, teléfonos, direcciones, testimonios, promociones ni otros datos de clientes dentro de componentes.
-- Evitar lógica o estilos que solo funcionen para una demo específica.
+- Mantener los componentes claros, mantenibles y razonablemente reutilizables cuando exista reutilización real.
+- Mantener separados el contenido, la presentación y el comportamiento cuando eso mejore el mantenimiento.
+- Limitar `src/data/siteConfig.js` a configuración compartida; el contenido específico de secciones puede vivir en módulos de datos propios.
+- Los datos reales de Eze Web Studio pueden formar parte de este proyecto.
+- No forzar abstracciones genéricas si destruyen una composición específica aprobada.
 - Respetar la estructura existente del proyecto antes de introducir nuevas abstracciones.
 - Mantener el código limpio, legible y sencillo de modificar por otra persona o agente.
-- No agregar librerías sin una necesidad concreta y una justificación clara. Preferir las capacidades del stack actual.
+- No agregar librerías sin una necesidad concreta y una justificación clara.
+- Para efectos visuales complejos aplicar **library-first**: antes de recrear shaders, fondos, partículas, auroras, beams o glow complejo manualmente, revisar soluciones gratuitas/open source aprobadas.
+- No usar componentes Pro, trials ni recursos premium para efectos visuales.
+- No instalar varias librerías candidatas a la vez: hacer un spike, elegir una y dejar solo las dependencias realmente usadas.
 - Mantener `npm run build` funcionando después de cada cambio relevante.
 
 ## Composición manual y ejemplos
@@ -75,3 +80,25 @@ La landing debe construir una secuencia clara: presentar, generar interés, demo
 - Ejecutar las verificaciones disponibles en el proyecto.
 - Usar `npm run check` como validación técnica final y resolver cualquier error antes de dar el trabajo por terminado.
 - Documentar cualquier dependencia nueva y explicar por qué era necesaria.
+
+
+## Política actual de efectos visuales — EWS V2
+
+El Hero aprobado necesita una gran fuente de luz / horizonte cyan animado. Figma define composición e intención; el efecto final se resuelve en producción.
+
+Orden de prueba actual:
+
+1. React Bits — únicamente recursos FREE.
+2. ShaderGradient.
+3. Vanta.js.
+4. otra alternativa gratuita/open source solo si las anteriores no resuelven la intención.
+
+Criterios obligatorios:
+
+- movimiento ambiental, lento y sutil;
+- sin estética gamer;
+- sin convertir el fondo en protagonista por encima del copy;
+- desktop y mobile deben conservar la idea sin exigir el mismo coste gráfico;
+- respetar `prefers-reduced-motion`;
+- verificar licencia compatible antes de adoptar una dependencia;
+- no modificar la composición aprobada solo para adaptarse a una librería.

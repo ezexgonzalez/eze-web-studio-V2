@@ -1,82 +1,98 @@
-# Eze Landing Starter
+# Eze Web Studio V2
 
-## Propósito
+Nueva landing oficial de **Eze Web Studio**.
 
-`eze-landing-starter` es una base técnica neutral para crear landings como repositorios independientes mediante **GitHub Template**. Proporciona infraestructura reutilizable sin imponer identidad visual, rubro, narrativa ni composición.
+El proyecto busca combinar una dirección visual minimalista, tecnológica y muy cuidada con una implementación clara, performante y fácil de mantener.
 
-## Qué incluye
+## Stack
 
-- React.
-- Vite.
-- Tailwind CSS.
-- ESLint.
-- Un theme técnico configurable.
-- Componentes UI básicos.
-- Una base de accesibilidad.
-- Ejemplos opt-in separados del núcleo.
+- React 19
+- Vite 8
+- Tailwind CSS 4
+- ESLint
 
-## Qué NO incluye
+## Dirección del proyecto
 
-- Un diseño aprobado para proyectos nuevos.
-- Una estructura narrativa predeterminada.
-- Un rubro o una identidad de cliente.
-- Un orden obligatorio de secciones.
-- Un sistema dinámico de páginas, registry o page builder.
+La identidad de Eze Web Studio parte de:
 
-## Crear un proyecto
+- fondo negro / dark neutral;
+- blanco como texto principal;
+- cyan eléctrico como acento;
+- tipografía sans moderna;
+- alto control de spacing;
+- composición CLEAN;
+- tecnología sin estética gamer;
+- detalle visual sin caer en recursos SaaS / IA genéricos.
 
-1. Crear un repositorio nuevo desde este GitHub Template.
-2. Instalar las dependencias con `npm install`.
-3. Completar `project-brief.md`.
-4. Realizar el reconocimiento visual.
-5. Aprobar una dirección creativa.
-6. Decidir manualmente las secciones necesarias y su orden.
-7. Crear o importar únicamente esas secciones en `App.jsx`.
-8. Configurar `src/data/siteConfig.js`.
-9. Sustituir metadata y assets pendientes.
-10. Validar el proyecto antes de publicarlo.
+El Hero concentra el mayor impacto visual. Las secciones posteriores reducen la intensidad y priorizan claridad, contenido y respiración.
 
-## Uso de `src/examples`
+## Figma y producción
 
-`src/examples` contiene referencias opcionales. No forma parte de `App.jsx`, no representa una dirección creativa aprobada y no debe copiarse como una landing completa. Seleccioná únicamente los ejemplos que respondan al proyecto y copialos o adaptalos después de aprobar su composición.
+Figma es la fuente de verdad para:
 
-## Configuración
+- composición;
+- geometría;
+- jerarquía;
+- tipografía;
+- spacing;
+- desktop;
+- mobile;
+- intención visual.
 
-`src/data/siteConfig.js` contiene únicamente los datos compartidos por el núcleo:
+Los efectos complejos de producción —shaders, glow avanzado, fondos animados, partículas o niebla— pueden resolverse con herramientas especializadas siempre que respeten el diseño aprobado.
 
-- `businessName`: marca mostrada en Navbar y Footer.
-- `navigation.links`: enlaces `{ label, href }` del Navbar.
-- `navigation.cta`: CTA opcional `{ label, href, external }` del Navbar, o `null`.
-- `footerNote`: nota opcional del Footer.
-- `theme.mode`: esquema de color del navegador.
-- `theme.background`: fondo general.
-- `theme.surface`: color de superficies.
-- `theme.border`: color de bordes.
-- `theme.text`: color principal de texto.
-- `theme.muted`: color de texto secundario.
-- `theme.accent`: color de acciones y foco.
-- `theme.accentText`: texto sobre el color de acento.
-- `theme.radius`: radio técnico de controles.
+Ver `FRONTEND_AI_WORKFLOW.md` para el workflow completo.
 
-El contenido propio de cada landing debe mantenerse separado de sus componentes siguiendo el patrón adecuado para el proyecto.
+## Política de herramientas visuales
+
+**FREE / OPEN SOURCE FIRST.**
+
+No se compran planes Pro para resolver motion, backgrounds o efectos ornamentales cuando existe una alternativa gratuita/open source de calidad.
+
+Para el fondo animado del Hero, el orden de prueba actual es:
+
+1. React Bits — solo recursos FREE.
+2. ShaderGradient.
+3. Vanta.js.
+4. otras alternativas gratuitas/open source si hace falta.
+
+No se instalan todas las librerías candidatas. Primero se hace un spike técnico; después se incorpora únicamente la solución elegida.
+
+## Documentos importantes
+
+- `project-brief.md` — estado y dirección actual del proyecto.
+- `design-guidelines.md` — criterios de diseño y anti-genericismo.
+- `FRONTEND_AI_WORKFLOW.md` — workflow Figma → producción y estrategia de efectos.
+- `AGENTS.md` — reglas operativas para agentes de implementación.
 
 ## Scripts
 
-- `npm run dev`: inicia el servidor de desarrollo.
-- `npm run lint`: ejecuta ESLint.
-- `npm run build`: genera el build de producción.
-- `npm run check`: ejecuta lint y build como validación final.
-- `npm run preview`: sirve localmente el build generado.
+- `npm run dev` — servidor de desarrollo.
+- `npm run lint` — ESLint.
+- `npm run build` — build de producción.
+- `npm run check` — lint + build.
+- `npm run preview` — preview local del build.
 
-## Checklist antes de publicar
+## Regla de dependencias
 
-- [ ] Revisar todo el copy.
-- [ ] Personalizar metadata e idioma en `index.html`.
-- [ ] Agregar favicon y OG image si corresponden, y referenciarlos correctamente.
-- [ ] Verificar enlaces y destinos externos.
-- [ ] Verificar número, mensaje y enlace de WhatsApp si se utiliza.
-- [ ] Optimizar y validar assets.
-- [ ] Revisar accesibilidad y navegación por teclado.
-- [ ] Revisar responsive en mobile y desktop.
-- [ ] Ejecutar `npm run lint`.
-- [ ] Ejecutar `npm run build`.
+No agregar una librería por anticipación.
+
+Una dependencia nueva debe:
+
+1. resolver un problema concreto;
+2. superar una prueba técnica/visual;
+3. tener licencia compatible;
+4. justificar su coste de bundle y mantenimiento;
+5. quedar realmente utilizada en producción.
+
+## Validación antes de cerrar una sección
+
+- fidelidad a Figma;
+- desktop y mobile;
+- estados interactivos;
+- links / CTAs;
+- accesibilidad básica;
+- performance;
+- consola limpia;
+- `prefers-reduced-motion` cuando exista motion;
+- `npm run check`.
