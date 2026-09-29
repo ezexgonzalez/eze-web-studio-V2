@@ -1,0 +1,416 @@
+/* Figma text roles. Shared roles use Mobile below 768, fluid transition
+   from 768 to 1200, and exact Desktop at 1200+. Specific Desktop-only roles
+   remain exact; their Mobile usage is decided by each approved section. */
+:root {
+  --type-display-hero-size: 48px;
+  --type-display-hero-leading: 54px;
+  --type-display-hero-weight: 600;
+  --type-display-hero-tracking: -0.015em;
+  --type-display-feature-size: 60px;
+  --type-display-feature-leading: 64px;
+  --type-display-feature-weight: 600;
+  --type-display-feature-tracking: -0.025em;
+  --type-display-action-size: 48px;
+  --type-display-action-leading: 54px;
+  --type-display-action-weight: 400;
+  --type-display-action-tracking: 0em;
+  --type-heading-xl-size: 44px;
+  --type-heading-xl-leading: 50px;
+  --type-heading-xl-weight: 600;
+  --type-heading-xl-tracking: -0.01em;
+  --type-heading-l-size: 38px;
+  --type-heading-l-leading: 44px;
+  --type-heading-l-weight: 600;
+  --type-heading-l-tracking: -0.015em;
+  --type-heading-m-size: 26px;
+  --type-heading-m-leading: 32px;
+  --type-heading-m-weight: 600;
+  --type-heading-m-tracking: -0.01em;
+  --type-title-card-size: 22px;
+  --type-title-card-leading: 28px;
+  --type-title-card-weight: 600;
+  --type-title-card-tracking: -0.01em;
+  --type-body-lg-size: 18px;
+  --type-body-lg-leading: 28px;
+  --type-body-lg-weight: 400;
+  --type-body-lg-tracking: -0.005em;
+  --type-body-md-size: 16px;
+  --type-body-md-leading: 26px;
+  --type-body-md-weight: 400;
+  --type-body-md-tracking: -0.005em;
+  --type-body-sm-size: 14px;
+  --type-body-sm-leading: 22px;
+  --type-body-sm-weight: 400;
+  --type-body-sm-tracking: 0em;
+  --type-label-eyebrow-size: 12px;
+  --type-label-eyebrow-leading: 18px;
+  --type-label-eyebrow-weight: 600;
+  --type-label-eyebrow-tracking: 0.28em;
+  --type-label-cta-size: 12px;
+  --type-label-cta-leading: 16px;
+  --type-label-cta-weight: 600;
+  --type-label-cta-tracking: 0.14em;
+  --type-label-meta-size: 11px;
+  --type-label-meta-leading: 16px;
+  --type-label-meta-weight: 500;
+  --type-label-meta-tracking: 0.16em;
+  --type-feature-support-size: 28px;
+  --type-feature-support-leading: 36px;
+  --type-feature-support-weight: 400;
+  --type-feature-support-tracking: -0.005em;
+  --type-faq-question-size: 21px;
+  --type-faq-question-leading: 28px;
+  --type-faq-question-weight: 400;
+  --type-faq-question-tracking: -0.005em;
+  --type-heading-editorial-size: 50px;
+  --type-heading-editorial-leading: 62px;
+  --type-heading-editorial-weight: 400;
+  --type-heading-editorial-tracking: -0.01em;
+  --type-brand-header-size: 18px;
+  --type-brand-header-leading: 24px;
+  --type-brand-header-weight: 600;
+  --type-brand-header-tracking: 0.14em;
+  --type-brand-footer-size: 25px;
+  --type-brand-footer-leading: 32px;
+  --type-brand-footer-weight: 500;
+  --type-brand-footer-tracking: 0.35200000000000004em;
+  --type-navigation-header-size: 13px;
+  --type-navigation-header-leading: 20px;
+  --type-navigation-header-weight: 500;
+  --type-navigation-header-tracking: 0.16em;
+  --type-navigation-footer-size: 18px;
+  --type-navigation-footer-leading: 28px;
+  --type-navigation-footer-weight: 400;
+  --type-navigation-footer-tracking: 0em;
+  --type-footer-meta-size: 19px;
+  --type-footer-meta-leading: 28px;
+  --type-footer-meta-weight: 400;
+  --type-footer-meta-tracking: 0em;
+  --type-label-section-number-size: 19px;
+  --type-label-section-number-leading: 24px;
+  --type-label-section-number-weight: 500;
+  --type-label-section-number-tracking: 0.16em;
+  --type-label-card-number-size: 14px;
+  --type-label-card-number-leading: 20px;
+  --type-label-card-number-weight: 500;
+  --type-label-card-number-tracking: -0.01em;
+  --type-body-intro-size: 19px;
+  --type-body-intro-leading: 26px;
+  --type-body-intro-weight: 400;
+  --type-body-intro-tracking: -0.003em;
+  --type-label-emphasis-size: 22px;
+  --type-label-emphasis-leading: 30px;
+  --type-label-emphasis-weight: 600;
+  --type-label-emphasis-tracking: -0.01em;
+  --type-label-pagination-size: 14px;
+  --type-label-pagination-leading: 20px;
+  --type-label-pagination-weight: 400;
+  --type-label-pagination-tracking: 0em;
+  --type-label-pagination-active-size: 14px;
+  --type-label-pagination-active-leading: 20px;
+  --type-label-pagination-active-weight: 500;
+  --type-label-pagination-active-tracking: 0em;
+  --type-contact-detail-size: 24px;
+  --type-contact-detail-leading: 32px;
+  --type-contact-detail-weight: 400;
+  --type-contact-detail-tracking: 0em;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --type-display-hero-size: clamp(48px, calc(48px + (100vw - 768px) * 0.055555556), 72px);
+    --type-display-hero-leading: clamp(54px, calc(54px + (100vw - 768px) * 0.069444444), 84px);
+    --type-display-feature-size: clamp(60px, calc(60px + (100vw - 768px) * 0.12962963), 116px);
+    --type-display-feature-leading: clamp(64px, calc(64px + (100vw - 768px) * 0.134259259), 122px);
+    --type-display-action-size: clamp(48px, calc(48px + (100vw - 768px) * 0.037037037), 64px);
+    --type-display-action-leading: clamp(54px, calc(54px + (100vw - 768px) * 0.041666667), 72px);
+    --type-heading-xl-size: clamp(44px, calc(44px + (100vw - 768px) * 0.055555556), 68px);
+    --type-heading-xl-leading: clamp(50px, calc(50px + (100vw - 768px) * 0.060185185), 76px);
+    --type-heading-l-size: clamp(38px, calc(38px + (100vw - 768px) * 0.037037037), 54px);
+    --type-heading-l-leading: clamp(44px, calc(44px + (100vw - 768px) * 0.041666667), 62px);
+    --type-heading-m-size: clamp(26px, calc(26px + (100vw - 768px) * 0.00462963), 28px);
+    --type-heading-m-leading: clamp(32px, calc(32px + (100vw - 768px) * 0.00462963), 34px);
+    --type-title-card-size: clamp(22px, calc(22px + (100vw - 768px) * 0.00462963), 24px);
+    --type-title-card-leading: clamp(28px, calc(28px + (100vw - 768px) * 0.00462963), 30px);
+    --type-body-lg-size: clamp(18px, calc(18px + (100vw - 768px) * 0.009259259), 22px);
+    --type-body-lg-leading: clamp(28px, calc(28px + (100vw - 768px) * 0.013888889), 34px);
+    --type-body-md-size: clamp(16px, calc(16px + (100vw - 768px) * 0.00462963), 18px);
+    --type-body-md-leading: clamp(26px, calc(26px + (100vw - 768px) * 0.00462963), 28px);
+    --type-body-sm-size: clamp(14px, calc(14px + (100vw - 768px) * 0.00462963), 16px);
+    --type-body-sm-leading: clamp(22px, calc(22px + (100vw - 768px) * 0.00462963), 24px);
+    --type-label-eyebrow-size: clamp(12px, calc(12px + (100vw - 768px) * 0.00462963), 14px);
+    --type-label-eyebrow-leading: clamp(18px, calc(18px + (100vw - 768px) * 0.00462963), 20px);
+    --type-label-cta-size: clamp(12px, calc(12px + (100vw - 768px) * 0.002314815), 13px);
+    --type-label-cta-leading: 16px;
+    --type-label-meta-size: clamp(11px, calc(11px + (100vw - 768px) * 0.002314815), 12px);
+    --type-label-meta-leading: clamp(16px, calc(16px + (100vw - 768px) * 0.00462963), 18px);
+  }
+}
+
+@media (min-width: 75rem) {
+  :root {
+    --type-display-hero-size: 72px;
+    --type-display-hero-leading: 84px;
+    --type-display-hero-tracking: -0.015em;
+    --type-display-feature-size: 116px;
+    --type-display-feature-leading: 122px;
+    --type-display-feature-tracking: -0.03em;
+    --type-display-action-size: 64px;
+    --type-display-action-leading: 72px;
+    --type-display-action-tracking: 0em;
+    --type-heading-xl-size: 68px;
+    --type-heading-xl-leading: 76px;
+    --type-heading-xl-tracking: -0.01em;
+    --type-heading-l-size: 54px;
+    --type-heading-l-leading: 62px;
+    --type-heading-l-tracking: -0.015em;
+    --type-heading-m-size: 28px;
+    --type-heading-m-leading: 34px;
+    --type-heading-m-tracking: -0.01em;
+    --type-title-card-size: 24px;
+    --type-title-card-leading: 30px;
+    --type-title-card-tracking: -0.01em;
+    --type-body-lg-size: 22px;
+    --type-body-lg-leading: 34px;
+    --type-body-lg-tracking: -0.005em;
+    --type-body-md-size: 18px;
+    --type-body-md-leading: 28px;
+    --type-body-md-tracking: -0.005em;
+    --type-body-sm-size: 16px;
+    --type-body-sm-leading: 24px;
+    --type-body-sm-tracking: 0em;
+    --type-label-eyebrow-size: 14px;
+    --type-label-eyebrow-leading: 20px;
+    --type-label-eyebrow-tracking: 0.32em;
+    --type-label-cta-size: 13px;
+    --type-label-cta-leading: 16px;
+    --type-label-cta-tracking: 0.16em;
+    --type-label-meta-size: 12px;
+    --type-label-meta-leading: 18px;
+    --type-label-meta-tracking: 0.18em;
+  }
+}
+
+@utility type-display-hero {
+  font-family: var(--font-sans);
+  font-size: var(--type-display-hero-size);
+  line-height: var(--type-display-hero-leading);
+  font-weight: var(--type-display-hero-weight);
+  letter-spacing: var(--type-display-hero-tracking);
+}
+
+@utility type-display-feature {
+  font-family: var(--font-sans);
+  font-size: var(--type-display-feature-size);
+  line-height: var(--type-display-feature-leading);
+  font-weight: var(--type-display-feature-weight);
+  letter-spacing: var(--type-display-feature-tracking);
+}
+
+@utility type-display-action {
+  font-family: var(--font-sans);
+  font-size: var(--type-display-action-size);
+  line-height: var(--type-display-action-leading);
+  font-weight: var(--type-display-action-weight);
+  letter-spacing: var(--type-display-action-tracking);
+}
+
+@utility type-heading-xl {
+  font-family: var(--font-sans);
+  font-size: var(--type-heading-xl-size);
+  line-height: var(--type-heading-xl-leading);
+  font-weight: var(--type-heading-xl-weight);
+  letter-spacing: var(--type-heading-xl-tracking);
+}
+
+@utility type-heading-l {
+  font-family: var(--font-sans);
+  font-size: var(--type-heading-l-size);
+  line-height: var(--type-heading-l-leading);
+  font-weight: var(--type-heading-l-weight);
+  letter-spacing: var(--type-heading-l-tracking);
+}
+
+@utility type-heading-m {
+  font-family: var(--font-sans);
+  font-size: var(--type-heading-m-size);
+  line-height: var(--type-heading-m-leading);
+  font-weight: var(--type-heading-m-weight);
+  letter-spacing: var(--type-heading-m-tracking);
+}
+
+@utility type-title-card {
+  font-family: var(--font-sans);
+  font-size: var(--type-title-card-size);
+  line-height: var(--type-title-card-leading);
+  font-weight: var(--type-title-card-weight);
+  letter-spacing: var(--type-title-card-tracking);
+}
+
+@utility type-body-lg {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-lg-size);
+  line-height: var(--type-body-lg-leading);
+  font-weight: var(--type-body-lg-weight);
+  letter-spacing: var(--type-body-lg-tracking);
+}
+
+@utility type-body-md {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-md-size);
+  line-height: var(--type-body-md-leading);
+  font-weight: var(--type-body-md-weight);
+  letter-spacing: var(--type-body-md-tracking);
+}
+
+@utility type-body-sm {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-leading);
+  font-weight: var(--type-body-sm-weight);
+  letter-spacing: var(--type-body-sm-tracking);
+}
+
+@utility type-label-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--type-label-eyebrow-size);
+  line-height: var(--type-label-eyebrow-leading);
+  font-weight: var(--type-label-eyebrow-weight);
+  letter-spacing: var(--type-label-eyebrow-tracking);
+}
+
+@utility type-label-cta {
+  font-family: var(--font-sans);
+  font-size: var(--type-label-cta-size);
+  line-height: var(--type-label-cta-leading);
+  font-weight: var(--type-label-cta-weight);
+  letter-spacing: var(--type-label-cta-tracking);
+}
+
+@utility type-label-meta {
+  font-family: var(--font-sans);
+  font-size: var(--type-label-meta-size);
+  line-height: var(--type-label-meta-leading);
+  font-weight: var(--type-label-meta-weight);
+  letter-spacing: var(--type-label-meta-tracking);
+}
+
+@utility type-feature-support {
+  font-family: var(--font-sans);
+  font-size: var(--type-feature-support-size);
+  line-height: var(--type-feature-support-leading);
+  font-weight: var(--type-feature-support-weight);
+  letter-spacing: var(--type-feature-support-tracking);
+}
+
+@utility type-faq-question {
+  font-family: var(--font-sans);
+  font-size: var(--type-faq-question-size);
+  line-height: var(--type-faq-question-leading);
+  font-weight: var(--type-faq-question-weight);
+  letter-spacing: var(--type-faq-question-tracking);
+}
+
+@utility type-heading-editorial {
+  font-family: var(--font-sans);
+  font-size: var(--type-heading-editorial-size);
+  line-height: var(--type-heading-editorial-leading);
+  font-weight: var(--type-heading-editorial-weight);
+  letter-spacing: var(--type-heading-editorial-tracking);
+}
+
+@utility type-brand-header {
+  font-family: var(--font-sans);
+  font-size: var(--type-brand-header-size);
+  line-height: var(--type-brand-header-leading);
+  font-weight: var(--type-brand-header-weight);
+  letter-spacing: var(--type-brand-header-tracking);
+}
+
+@utility type-brand-footer {
+  font-family: var(--font-sans);
+  font-size: var(--type-brand-footer-size);
+  line-height: var(--type-brand-footer-leading);
+  font-weight: var(--type-brand-footer-weight);
+  letter-spacing: var(--type-brand-footer-tracking);
+}
+
+@utility type-navigation-header {
+  font-family: var(--font-sans);
+  font-size: var(--type-navigation-header-size);
+  line-height: var(--type-navigation-header-leading);
+  font-weight: var(--type-navigation-header-weight);
+  letter-spacing: var(--type-navigation-header-tracking);
+}
+
+@utility type-navigation-footer {
+  font-family: var(--font-sans);
+  font-size: var(--type-navigation-footer-size);
+  line-height: var(--type-navigation-footer-leading);
+  font-weight: var(--type-navigation-footer-weight);
+  letter-spacing: var(--type-navigation-footer-tracking);
+}
+
+@utility type-footer-meta {
+  font-family: var(--font-sans);
+  font-size: var(--type-footer-meta-size);
+  line-height: var(--type-footer-meta-leading);
+  font-weight: var(--type-footer-meta-weight);
+  letter-spacing: var(--type-footer-meta-tracking);
+}
+
+@utility type-label-section-number {
+  font-family: var(--font-sans);
+  font-size: var(--type-label-section-number-size);
+  line-height: var(--type-label-section-number-leading);
+  font-weight: var(--type-label-section-number-weight);
+  letter-spacing: var(--type-label-section-number-tracking);
+}
+
+@utility type-label-card-number {
+  font-family: var(--font-sans);
+  font-size: var(--type-label-card-number-size);
+  line-height: var(--type-label-card-number-leading);
+  font-weight: var(--type-label-card-number-weight);
+  letter-spacing: var(--type-label-card-number-tracking);
+}
+
+@utility type-body-intro {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-intro-size);
+  line-height: var(--type-body-intro-leading);
+  font-weight: var(--type-body-intro-weight);
+  letter-spacing: var(--type-body-intro-tracking);
+}
+
+@utility type-label-emphasis {
+  font-family: var(--font-sans);
+  font-size: var(--type-label-emphasis-size);
+  line-height: var(--type-label-emphasis-leading);
+  font-weight: var(--type-label-emphasis-weight);
+  letter-spacing: var(--type-label-emphasis-tracking);
+}
+
+@utility type-label-pagination {
+  font-family: var(--font-sans);
+  font-size: var(--type-label-pagination-size);
+  line-height: var(--type-label-pagination-leading);
+  font-weight: var(--type-label-pagination-weight);
+  letter-spacing: var(--type-label-pagination-tracking);
+}
+
+@utility type-label-pagination-active {
+  font-family: var(--font-sans);
+  font-size: var(--type-label-pagination-active-size);
+  line-height: var(--type-label-pagination-active-leading);
+  font-weight: var(--type-label-pagination-active-weight);
+  letter-spacing: var(--type-label-pagination-active-tracking);
+}
+
+@utility type-contact-detail {
+  font-family: var(--font-sans);
+  font-size: var(--type-contact-detail-size);
+  line-height: var(--type-contact-detail-leading);
+  font-weight: var(--type-contact-detail-weight);
+  letter-spacing: var(--type-contact-detail-tracking);
+}

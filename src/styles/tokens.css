@@ -1,0 +1,53 @@
+/* Single production system, copied from 01 — Visual System.
+   Prefix spacing tokens to avoid changing Tailwind's default numeric spacing. */
+@theme static {
+  --font-sans: "Inter", sans-serif;
+  --color-background: #050708;
+  --color-background-alternate: #0a1119;
+  --color-surface: #0b0f12;
+  --color-glass-fill: #0d1418;
+  --color-text-primary: #f5f7f7;
+  --color-text-body: #c5cdd3;
+  --color-text-muted: #a7b0b6;
+  --color-text-inverse: #050708;
+  --color-accent-cyan: #59e3ff;
+  --color-border: #222a30;
+  --color-grid-default: rgb(36 65 74 / 25%);
+  --color-grid-subtle: rgb(36 65 74 / 17%);
+  --color-divider-default: rgb(115 131 140 / 28%);
+  --color-divider-strong: rgb(115 131 140 / 62%);
+  --spacing-ews-8: 8px;
+  --spacing-ews-12: 12px;
+  --spacing-ews-16: 16px;
+  --spacing-ews-24: 24px;
+  --spacing-ews-32: 32px;
+  --spacing-ews-48: 48px;
+  --spacing-ews-64: 64px;
+  --spacing-ews-96: 96px;
+  --spacing-ews-128: 128px;
+  --spacing-ews-160: 160px;
+  --radius-12: 12px;
+  --radius-18: 18px;
+  --radius-28: 28px;
+  --container-wide: 1344px;
+  --container-content: 1280px;
+  --breakpoint-tablet: 48rem;
+  --breakpoint-desktop: 75rem;
+}
+
+:root {
+  color-scheme: dark;
+  --page-gutter: 24px;
+  /* Header owns this value once its approved geometry is implemented. */
+  --header-offset: 0px;
+
+  /* Compatibility aliases for opt-in starter files: no independent theme. */
+  --theme-background: var(--color-background);
+  --theme-surface: var(--color-surface);
+  --theme-border: var(--color-border);
+  --theme-text: var(--color-text-primary);
+  --theme-muted: var(--color-text-muted);
+  --theme-accent: var(--color-accent-cyan);
+  --theme-accent-text: var(--color-text-inverse);
+  --theme-radius: var(--radius-12);
+}

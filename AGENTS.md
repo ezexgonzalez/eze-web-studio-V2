@@ -68,13 +68,13 @@ La landing debe construir una secuencia clara: presentar, generar interés, demo
 - Centralizar los datos editables de cada sección fuera de sus componentes, en el módulo de configuración o contenido que corresponda.
 - Extender la configuración siguiendo patrones simples y explícitos cuando una sección necesite datos editables.
 - Mantener separados el contenido, la presentación y el comportamiento.
-- Usar contenido de ejemplo neutral en la plantilla madre.
-- No introducir información real o ficticia que vincule el starter con un cliente particular.
+- Usar únicamente contenido aprobado de Eze Web Studio V2 en el bundle activo.
+- Los ejemplos neutrales permanecen opt-in; no inventar contenido para completar pendientes.
 
 ## Validación antes de finalizar
 
-- Confirmar que el cambio sigue siendo reutilizable para distintos negocios.
-- Confirmar que no se hardcodearon datos de cliente.
+- Confirmar que el cambio respeta Figma FINAL / FROZEN y el alcance del bloque autorizado.
+- Confirmar que el contenido publicado está aprobado y los pendientes siguen explícitos.
 - Confirmar que las nuevas secciones tienen una función narrativa y una intención visual definidas.
 - Revisar la experiencia en mobile y desktop.
 - Ejecutar las verificaciones disponibles en el proyecto.

@@ -1,0 +1,62 @@
+@media (min-width: 48rem) {
+  :root { --page-gutter: clamp(24px, calc(24px + (100vw - 768px) * 0.092592593), 64px); }
+}
+
+@media (min-width: 75rem) {
+  :root { --page-gutter: clamp(64px, calc(64px + (100vw - 1200px) * 0.095238095), 96px); }
+}
+
+@layer components {
+  .ews-container {
+    width: min(calc(100% - var(--page-gutter) * 2), var(--container-limit));
+    margin-inline: auto;
+  }
+
+  .ews-container--wide { --container-limit: var(--container-wide); }
+  .ews-container--content { --container-limit: var(--container-content); }
+  .ews-container--fluid { --container-limit: 100%; }
+
+  /* Generic control; Hero/Nav dimensions and icon assets belong to Block 02. */
+  .ews-button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-ews-8);
+    padding: var(--spacing-ews-12) var(--spacing-ews-24);
+    border: 1px solid transparent;
+    border-radius: var(--radius-28);
+    cursor: pointer;
+    transition: color 200ms ease, background-color 200ms ease, border-color 200ms ease;
+  }
+
+  .ews-button--primary {
+    color: var(--color-text-inverse);
+    background: var(--color-accent-cyan);
+    border-color: var(--color-accent-cyan);
+  }
+
+  .ews-button--outline {
+    color: var(--color-text-primary);
+    background: var(--color-background);
+    border-color: var(--color-accent-cyan);
+  }
+
+  .ews-button--text {
+    color: var(--color-text-primary);
+    background: transparent;
+  }
+
+  .ews-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media (hover: hover) {
+    .ews-button--primary:hover:not(:disabled) { background: var(--color-text-primary); }
+    .ews-button--outline:hover:not(:disabled) { background: var(--color-surface); }
+    .ews-button--text:hover:not(:disabled) { color: var(--color-accent-cyan); }
+  }
+
+  .ews-button:active:not(:disabled) { border-color: var(--color-text-primary); }
+}

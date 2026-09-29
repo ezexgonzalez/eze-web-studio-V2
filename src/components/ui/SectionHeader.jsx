@@ -1,41 +1,19 @@
+// Optional helper for examples, not a required composition for EWS sections.
+// Callers own spacing, widths and the role appropriate to each composition.
 export function SectionHeader({
   eyebrow,
   title,
   description,
-  align = "left",
-  className = "",
+  align = 'left',
+  className = '',
+  titleClassName = 'type-heading-l',
+  descriptionClassName = 'type-body-md',
 }) {
-  const centered = align === "center"
-
   return (
-    <header
-      className={[
-        centered ? "mx-auto max-w-3xl text-center" : "",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-    >
-      {eyebrow ? (
-        <p className="mb-3 text-sm font-medium text-[var(--theme-text)]">
-          {eyebrow}
-        </p>
-      ) : null}
-      <h2 className="text-3xl font-semibold leading-tight text-[var(--theme-text)] sm:text-4xl">
-        {title}
-      </h2>
-      {description ? (
-        <p
-          className={[
-            "mt-4 max-w-2xl leading-relaxed text-[var(--theme-muted)]",
-            centered ? "mx-auto" : "",
-          ]
-            .filter(Boolean)
-            .join(" ")}
-        >
-          {description}
-        </p>
-      ) : null}
+    <header className={[align === 'center' ? 'text-center' : '', className].filter(Boolean).join(' ')}>
+      {eyebrow ? <p className="type-label-eyebrow text-accent-cyan">{eyebrow}</p> : null}
+      <h2 className={titleClassName}>{title}</h2>
+      {description ? <p className={`${descriptionClassName} text-text-body`}>{description}</p> : null}
     </header>
   )
 }

@@ -1,17 +1,14 @@
 export function Container({
-  as: Component = "div",
-  className = "",
+  as: Component = 'div',
+  variant = 'content',
+  className = '',
   children,
   ...props
 }) {
+  const width = ['wide', 'content', 'fluid'].includes(variant) ? variant : 'content'
   return (
     <Component
-      className={[
-        "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      className={['ews-container', `ews-container--${width}`, className].filter(Boolean).join(' ')}
       {...props}
     >
       {children}

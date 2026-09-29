@@ -1,35 +1,28 @@
 const variants = {
-  primary:
-    "border-[var(--theme-accent)] bg-[var(--theme-accent)] text-[var(--theme-accent-text)]",
-  secondary:
-    "border-[var(--theme-border)] bg-[var(--theme-surface)] text-[var(--theme-text)]",
-  ghost:
-    "border-transparent bg-transparent text-[var(--theme-text)]",
+  primary: 'ews-button--primary',
+  outline: 'ews-button--outline',
+  text: 'ews-button--text',
+  // Preserve the API used by the opt-in starter examples.
+  secondary: 'ews-button--outline',
+  ghost: 'ews-button--text',
 }
 
 export function Button({
   children,
   href,
-  variant = "primary",
-  className = "",
+  variant = 'primary',
+  className = '',
   external = false,
   ...props
 }) {
-  const classes = [
-    "inline-flex min-h-[2.875rem] items-center justify-center rounded-[var(--theme-radius)] border px-5 text-sm font-semibold transition duration-200 focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-[var(--theme-accent)]",
-    variants[variant] ?? variants.primary,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ")
+  const classes = ['ews-button type-label-cta', variants[variant] ?? variants.primary, className]
+    .filter(Boolean).join(' ')
 
   if (href) {
     return (
-      <a
-        className={classes}
-        href={href}
-        target={external ? "_blank" : undefined}
-        rel={external ? "noreferrer" : undefined}
+      <a className={classes} href={href}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noopener noreferrer' : undefined}
         {...props}
       >
         {children}
@@ -37,9 +30,5 @@ export function Button({
     )
   }
 
-  return (
-    <button className={classes} type="button" {...props}>
-      {children}
-    </button>
-  )
+  return <button className={classes} type="button" {...props}>{children}</button>
 }

@@ -58,6 +58,10 @@ Para el fondo animado del Hero, el orden de prueba actual es:
 
 No se instalan todas las librerías candidatas. Primero se hace un spike técnico; después se incorpora únicamente la solución elegida.
 
+## Estado de producción
+
+Foundation V2 implementada en `feature/ews-v2-production`. `App` conserva una composición explícita con main y skip link; las secciones se incorporan en bloques posteriores autorizados. Tokens y tipografía provienen del Visual System aprobado, con Inter 4.1 autoalojada. Ver `docs/FOUNDATION.md` para el contrato y los pendientes.
+
 ## Documentos importantes
 
 - `project-brief.md` — estado y dirección actual del proyecto.
