@@ -4,6 +4,7 @@
 @import "./styles/typography.css";
 @import "./styles/primitives.css";
 @import "./styles/header-hero.css";
+@import "./styles/problem-solution.css";
 
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
