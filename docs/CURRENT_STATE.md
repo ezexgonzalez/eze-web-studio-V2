@@ -587,7 +587,7 @@ QA: Chrome preview, Inter local real y SVG decodificados, comparison Figma/brows
 
 Responsive: Mobile <768; proceso en dos columnas y Solución progresivamente abierta en 768–1199; cuatro cards y Desktop editorial ≥1200. Saltos de copy maestro se liberan entre 1200–1439; altura flexible para conservar contenido. Ajuste local de keywords <390 para lectura en 320. Cajas de texto usan leading real sin alterar las posiciones de Figma. Inter optical sizing fijo solo en estas secciones. No hay desviaciones creativas.
 
-Bundle real before/after: JS 206.64 → 218.09 kB (gzip 63.96 → 66.44); CSS 40.44 → 49.57 (gzip 8.63 → 10.28). Inter 352.24 kB sin cambios. Sin renderer, rAF ni licencia/dependencia nueva.
+Bundle real before/after: JS 206.64 → 218.09 kB (gzip 63.96 → 66.44); CSS 40.44 → 49.59 (gzip 8.63 → 10.29). Inter 352.24 kB sin cambios. Sin renderer, rAF ni licencia/dependencia nueva.
 
 Documentación: `docs/PROBLEM_SOLUTION.md`. Evidencia: cuatro renders maestros y dos capturas continuas en `docs/qa/block-03/`.
 

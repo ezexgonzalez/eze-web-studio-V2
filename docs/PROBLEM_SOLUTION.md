@@ -49,6 +49,6 @@ Evidencia: `docs/qa/block-03/` contiene los cuatro renders de sección y dos cap
 
 ## Coste y siguiente bloque
 
-Baseline real: JS 206.64 kB / gzip 63.96; CSS 40.44 / gzip 8.63. Final: JS 218.09 / gzip 66.44; CSS 49.57 / gzip 10.28. Delta: JS +11.45 / gzip +2.48; CSS +9.13 / gzip +1.65. Inter 352.24 kB sin cambios. SVG pequeños incluidos por Vite. Sin dependencia, renderer ni loop nuevo; glows CSS estáticos solo Desktop.
+Baseline real: JS 206.64 kB / gzip 63.96; CSS 40.44 / gzip 8.63. Final: JS 218.09 / gzip 66.44; CSS 49.59 / gzip 10.29. Delta: JS +11.45 / gzip +2.48; CSS +9.15 / gzip +1.66. Inter 352.24 kB sin cambios. SVG pequeños incluidos por Vite. Sin dependencia, renderer ni loop nuevo; glows CSS estáticos solo Desktop.
 
 Block 04 — Proyectos es el siguiente bloque propuesto, **no autorizado**. Esperar decisión de Dirección.
