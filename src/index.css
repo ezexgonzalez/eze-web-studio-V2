@@ -5,6 +5,7 @@
 @import "./styles/primitives.css";
 @import "./styles/header-hero.css";
 @import "./styles/problem-solution.css";
+@import "./styles/projects.css";
 
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }

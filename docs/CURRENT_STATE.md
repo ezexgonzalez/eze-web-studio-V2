@@ -79,13 +79,13 @@ La diferencia existente corresponde al bloque Foundation.
 
 Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de motion/carrusel/iconos ni WebGL/Three.js en producción.
 
-Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfile sin cambios en Blocks 02 y 03.
+Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfile sin cambios en Blocks 02, 03 y 04.
 
-`App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection` → `ProblemSection` → `SolutionSection`.
+`App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection` → `ProblemSection` → `SolutionSection` → `ProjectsSection`.
 
 **Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-Problema y Solución están implementados y listos para revisión de Dirección. Todavía NO están montados: Proyectos, About, FAQ, Contacto ni Footer.
+Problema y Solución están CLOSED / APPROVED FOR CONTINUATION. Proyectos está implementado y montado; el gate browser permanece bloqueado y el bloque NO está cerrado. Todavía NO están montados: About, FAQ, Contacto ni Footer.
 
 Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
 
@@ -599,15 +599,21 @@ Siguiente bloque: Block 04 — Proyectos, **AUTHORIZED / NOT YET CLOSED**.
 
 ### BLOCK 04 — Proyectos
 
-**STATUS: AUTHORIZED / NOT YET CLOSED**
+**STATUS: IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**
 
-- carrusel Desktop según Figma;
-- Mobile con scroll-snap / swipe / peek;
-- estado activo único;
-- buttons + pagination sincronizados;
-- no autoplay;
-- no inventar proyectos o assets;
-- previews pueden permanecer vacíos hasta recibir assets aprobados.
+Base: `74c85a17836fb28561f5ea01087c20f839c18f16`. SHA de implementación: pendiente del commit de continuidad.
+
+Implementado: ProjectsSection explícito después de Solución, src/styles/projects.css, src/hooks/useProjectCarousel.js, copy aprobado en src/data/projects.js y siete SVG exactos locales en src/assets/projects/. Figma 73:42 / 183:6 inspeccionado con metadata, design context, screenshot y propiedades internas; no modificado.
+
+Desktop mantiene cuatro slots visuales asimétricos; Mobile viewport/peek y controles 44. Dataset real = **1** (fitness); proyectos 2–3, URLs y previews PENDING. Slots vacíos decorativos, aria-hidden, sin falsos articles/imágenes/copy. Pagination real **01 / 01** (desviación intencional de 01 / 03 del master). Anterior/siguiente y VER PROYECTO disabled nativos mientras no existan destinos reales.
+
+Un activeIndex compartido; arquitectura nativa preparada para más registros, scroll-snap Mobile/Transition, scrollend con fallback, botones/teclado, ResizeObserver, reduced-motion y cleanup. Sin autoplay ni dependencia/motion ornamental nuevo. Mobile <768, transición 768–1199, Desktop ≥1200. No se cambiaron componentes/estilos/assets protegidos.
+
+PASS: npm run check, git diff --check y verificación SSR de datos/semántica/disabled/no fake links, más rama multi-registro mediante fixture estructural aislado no publicado. Bundle JS 218.09 → 227.53 kB (gzip 66.44 → 68.35), CSS 49.59 → 57.03 (gzip 10.29 → 11.65), Inter 352.24 sin cambios.
+
+**QA browser NO realizado**: Chrome local no inicia por socket denegado; ejecución ampliada rechazada por sandbox_approval=false. Browser cloud rechaza localhost con ERR_BLOCKED_BY_CLIENT. Pendientes: capturas 1536/390, comparación Figma, seis viewports + bordes, consola, fuentes/assets reales, teclado/swipe y continuidad Solución → Proyectos. No declarar aprobado ni CLOSED hasta completar el gate. No se fabricaron PNG de evidencia.
+
+Documentación: docs/PROJECTS.md. Verificaciones y matriz pendiente: docs/qa/block-04/README.md. Bloque nuevo real: acceso permitido al preview en browser. Siguiente acción autorizada: completar QA de Block 04. Block 05 — About + FAQ sigue PENDING; Dirección debe autorizarlo.
 
 ### BLOCK 05 — About + FAQ
 
@@ -824,7 +830,7 @@ Estado actual:
 - Inter: local en repo;
 - iconografía aprobada: existe en Figma, exportar exacta cuando cada bloque la necesite;
 - Hero: SVG exactos de Figma locales en `src/assets/hero/`, incluyendo horizontes Desktop/Mobile y arrow; sin URLs temporales;
-- previews de proyectos: no existen en repo;
+- Proyectos: siete SVG exactos locales en `src/assets/projects/`, glows/flechas; previews de proyectos no existen en repo;
 - favicon / OG visual: pendientes de asset aprobado.
 
 Al exportar desde Figma:
@@ -1000,9 +1006,9 @@ Block 03 — Problema + Solución: **CLOSED / APPROVED FOR CONTINUATION**.
 
 ### PRODUCTION BLOCK 04 — PROYECTOS
 
-Status: **AUTHORIZED / NOT YET CLOSED**.
+Status: **IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**.
 
-Implementar únicamente la sección Proyectos y su carrusel Desktop/Mobile, preservando slots vacíos y datos incompletos sin inventar contenido. No avanzar a About + FAQ sin nueva aprobación de Dirección.
+Completar el gate browser de la implementación existente de Proyectos: render/compare/correct en masters, responsive, interacción y continuidad. Preservar slots vacíos y datos incompletos sin inventar contenido. No avanzar a About + FAQ sin nueva aprobación de Dirección.
 
 Header + Hero y Problema + Solución permanecen protegidos. El pulido no esencial del Hero sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica.
 
