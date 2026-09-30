@@ -1,6 +1,6 @@
 # BLOCK 02 — Header + Hero
 
-Estado: **CLOSED / READY FOR DIRECTION REVIEW**. Gate técnico y visual completado. La aprobación de Dirección no se presume; Block 03 todavía requiere autorización.
+Estado: **CLOSED / APPROVED FOR CONTINUATION**. Dirección autorizó avanzar a Block 03 el 30 de septiembre de 2026. El pulido adicional no esencial del Hero y sus efectos queda diferido a Block 08 — Motion o al QA final; no reabrir este bloque ahora salvo regresión verificable.
 
 Implementación: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e` en `feature/ews-v2-production`.
 
@@ -109,4 +109,4 @@ Sin blocker nuevo de Header + Hero. Destinos de secciones posteriores aún no mo
 
 ## Status
 
-**HEADER + HERO — CLOSED / READY FOR PROBLEMA + SOLUCIÓN**, sujeto a aprobación de Dirección. No se inició Block 03.
+**HEADER + HERO — CLOSED / APPROVED FOR CONTINUATION**. Block 03 — Problema + Solución está autorizado. No reabrir Header/Hero durante Block 03 salvo regresión verificable.
