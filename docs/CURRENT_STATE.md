@@ -575,7 +575,7 @@ Block 03 fue autorizado y está implementado; no reabrir Header/Hero salvo regre
 
 ### BLOCK 03 — Problema + Solución
 
-**STATUS: CLOSED / READY FOR DIRECTION REVIEW**
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
 
 Commit de implementación: `88196db865fc4ec14ec213873f4e6475a787e1f9`.
 
@@ -593,11 +593,13 @@ Documentación: `docs/PROBLEM_SOLUTION.md`. Evidencia: cuatro renders maestros y
 
 Blockers nuevos: ninguno. Favicon 404 preexistente, asset favicon/OG pendiente. Mobile validado por viewport Chrome, no dispositivo físico. Pendientes de contenido de bloques posteriores permanecen intactos.
 
-Siguiente propuesto: Block 04 — Proyectos, **PENDING / NOT AUTHORIZED**. Dirección debe autorizarlo.
+Dirección aprobó continuar el 30 de septiembre de 2026. No reabrir Problema + Solución salvo regresión verificable.
+
+Siguiente bloque: Block 04 — Proyectos, **AUTHORIZED / NOT YET CLOSED**.
 
 ### BLOCK 04 — Proyectos
 
-**STATUS: PENDING**
+**STATUS: AUTHORIZED / NOT YET CLOSED**
 
 - carrusel Desktop según Figma;
 - Mobile con scroll-snap / swipe / peek;
@@ -994,11 +996,15 @@ Eze Web Studio V2 solo puede considerarse Production FINAL / FROZEN cuando:
 
 ## 22. Próximo trabajo autorizado
 
-Block 03 — Problema + Solución: **CLOSED / READY FOR DIRECTION REVIEW**. Esperar revisión de Dirección.
+Block 03 — Problema + Solución: **CLOSED / APPROVED FOR CONTINUATION**.
 
-Siguiente bloque propuesto: Block 04 — Proyectos. **No está autorizado todavía**. No avanzar ni completar contenido pendiente por cuenta propia.
+### PRODUCTION BLOCK 04 — PROYECTOS
 
-Header + Hero permanece CLOSED / APPROVED FOR CONTINUATION y protegido. Su pulido no esencial sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica.
+Status: **AUTHORIZED / NOT YET CLOSED**.
+
+Implementar únicamente la sección Proyectos y su carrusel Desktop/Mobile, preservando slots vacíos y datos incompletos sin inventar contenido. No avanzar a About + FAQ sin nueva aprobación de Dirección.
+
+Header + Hero y Problema + Solución permanecen protegidos. El pulido no esencial del Hero sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica.
 
 ---
 
