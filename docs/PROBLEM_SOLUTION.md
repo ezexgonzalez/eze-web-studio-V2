@@ -1,6 +1,6 @@
 # BLOCK 03 — Problema + Solución
 
-Estado: **CLOSED / READY FOR DIRECTION REVIEW**. Branch `feature/ews-v2-production`. Commit de implementación: `88196db865fc4ec14ec213873f4e6475a787e1f9`.
+Estado: **CLOSED / APPROVED FOR CONTINUATION**. Dirección aprobó continuar el 30 de septiembre de 2026. Branch `feature/ews-v2-production`. Commit de implementación: `88196db865fc4ec14ec213873f4e6475a787e1f9`.
 
 ## Implementación y fuentes
 
@@ -51,4 +51,4 @@ Evidencia: `docs/qa/block-03/` contiene los cuatro renders de sección y dos cap
 
 Baseline real: JS 206.64 kB / gzip 63.96; CSS 40.44 / gzip 8.63. Final: JS 218.09 / gzip 66.44; CSS 49.59 / gzip 10.29. Delta: JS +11.45 / gzip +2.48; CSS +9.15 / gzip +1.66. Inter 352.24 kB sin cambios. SVG pequeños incluidos por Vite. Sin dependencia, renderer ni loop nuevo; glows CSS estáticos solo Desktop.
 
-Block 04 — Proyectos es el siguiente bloque propuesto, **no autorizado**. Esperar decisión de Dirección.
+Block 04 — Proyectos está **AUTHORIZED / NOT YET CLOSED**. No reabrir Problema + Solución durante ese bloque salvo regresión verificable.
