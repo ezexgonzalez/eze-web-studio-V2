@@ -77,51 +77,17 @@ La diferencia existente corresponde al bloque Foundation.
 
 ## 3. Estado técnico real actual
 
-Stack confirmado:
+Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de motion/carrusel/iconos ni WebGL/Three.js en producción.
 
-- React 19;
-- ReactDOM 19;
-- Vite 8;
-- Tailwind CSS 4;
-- ESLint;
-- JavaScript / JSX;
-- sin TypeScript operativo;
-- sin router;
-- sin CMS;
-- sin page builder;
-- sin registry dinámico de secciones;
-- sin librería de motion;
-- sin librería de carrusel;
-- sin icon library;
-- sin WebGL / Three.js instalado.
+Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfile sin cambios en Block 02.
 
-Dependencias runtime actuales:
+`App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection`.
 
-- `react`;
-- `react-dom`.
+**Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-No se agregaron dependencias en Foundation.
+Todavía NO están montados: Problema, Solución, Proyectos, About, FAQ, Contacto ni Footer.
 
-`App.jsx` actualmente conserva únicamente:
-
-- shell de sitio;
-- skip link;
-- `main#main-content`;
-- composición explícita preparada para sumar secciones por bloques.
-
-Todavía NO están montados:
-
-- Header;
-- Hero;
-- Problema;
-- Solución;
-- Proyectos;
-- About;
-- FAQ;
-- Contacto;
-- Footer.
-
-Por lo tanto, la landing visual todavía no está implementada. Foundation sí está cerrada.
+Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. Gate técnico cerrado; aprobación de Dirección pendiente. Detalle: `docs/HEADER_HERO.md`.
 
 ---
 
@@ -345,7 +311,7 @@ Mobile menu debe:
 - cerrar si el viewport pasa a Desktop;
 - impedir interacción accidental con contenido detrás.
 
-`--header-offset` sigue provisional en Foundation y debe definirse en Header + Hero.
+`--header-offset: 0px` confirmado en Block 02. Header no sticky/fixed: se desplaza con la página. Caja medida: 92 px Mobile/Tablet, 110 px Desktop; no obstruye anchors al navegar. Se conserva solo scroll-padding, sin duplicar scroll-margin. Nav Desktop desde 1200 px; MENÚ también en Tablet. Menú modal nativo con aislamiento, foco inicial en CERRAR y retorno a MENÚ; al entrar en Desktop devuelve foco al wordmark visible.
 
 ---
 
@@ -572,54 +538,40 @@ No reabrir Foundation salvo regresión verificable.
 
 ### BLOCK 02 — Header + Hero
 
-**STATUS: NEXT / AUTHORIZED**
+**STATUS: CLOSED / READY FOR DIRECTION REVIEW**
 
-Es el próximo bloque de implementación.
+Cierre del gate técnico/visual; no se presume aprobación de Dirección.
 
-Scope:
+Commit: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`.
 
-1. Header Desktop
-2. Header Mobile
-3. Mobile Navigation — Open
-4. Hero Desktop
-5. Hero Mobile
-6. grid
-7. fondo estático fiel
-8. spike técnico del efecto ambiental
-9. responsive del bloque
-10. accessibility / performance del bloque
+Implementado y validado:
 
-Regla crítica:
+- Header Desktop/Mobile y menú modal nativo sin librería;
+- Hero Desktop/Mobile y grid DOM independiente;
+- SVG estáticos exactos de Figma para horizonte, surface/body, rim, glow, estrellas e icono;
+- static visual gate 1536/390: posiciones, wraps, CTAs, horizonte, grid y whitespace comparados contra Figma;
+- glow ambiental nativo: Web Animations API, 16 s, opacity Desktop 1/0.88/1 y Mobile 1/0.94/1; rim/body inmóviles;
+- reduced motion real: JS cancela animación, base estática completa con glow a opacity 1;
+- suspensión fuera de pantalla / visibility, cleanup StrictMode y fallback sin Animation API/WebGL;
+- responsive 390/430/768/1024/1280/1536, más 767/1199/1200; sin overflow;
+- skip link, teclado, foco, Escape, cierre por destino, scroll lock y cierre Desktop;
+- Chrome preview de build, fuentes/assets cargados, cero errores JS de aplicación, `npm run check` y `git diff --check` PASS.
 
-**STATIC FIRST, MOTION SECOND.**
+MagicRings fue realmente probado en aislamiento y rechazado por corte angular/fade que apaga el horizonte y coste. ShaderGradient/Vanta no ejecutados, no declarados rechazados. Ganó solución SVG nativa permitida por el brief.
 
-Primero reproducir el Hero completo de forma fiel sin WebGL.
+Dependencias nuevas: ninguna. Licencia nueva en producción: ninguna; SVG del diseño propio. Licencia MagicRings verificada: MIT + Commons Clause; candidato eliminado del producto.
 
-La versión estática debe funcionar como:
+Bundle before/after: JS 190.66 → 206.64 kB, gzip 60.09 → 63.96; CSS 36.77 → 38.79, gzip 7.79 → 8.40. Inter 352.24 kB sin cambios. Sin renderer/GPU loop propio ni rAF decorativo.
 
-- baseline visual;
-- fallback;
-- reduced-motion;
-- fallback si WebGL no está disponible.
+Archivos principales: `src/components/layout/Navbar.jsx`, `src/components/sections/{HeroSection,HeroBackground}.jsx`, `src/hooks/useHorizonGlow.js`, `src/styles/header-hero.css`, `src/data/hero.js`, `src/components/ui/ArrowUpRight.jsx`, `src/assets/hero/`, `src/App.jsx`, `src/index.css`.
 
-Solo después de pasar visual QA estático se autoriza el spike.
+Ajustes técnicos intencionales: Inter optical master fijo local al bloque para fidelidad; cajas de texto Desktop ajustadas a leading real de 168/68 px dentro de cajas Figma 170/70 sin alterar posiciones; crop horizontal del horizonte en Tablet; padding interpola para evitar salto 1199/1200. Header no sticky/fixed, offset 0 confirmado.
 
-Static visual gate:
+Documentación/evidencia: `docs/HEADER_HERO.md`, `docs/qa/block-02/`.
 
-- render 1536;
-- render 390;
-- comparar con Figma;
-- corregir headline position;
-- wraps;
-- CTA geometry;
-- horizon curvature;
-- crop;
-- rim thickness;
-- glow;
-- grid;
-- spacing.
+Blockers nuevos: ninguno. Mobile validado en Chrome con viewports y DPR 3; no se midió hardware físico. Favicon/OG siguen pendientes de asset aprobado.
 
-No avanzar a motion antes de que este gate pase.
+Próximo bloque: Problema + Solución, **solo tras aprobación de Dirección**.
 
 ### BLOCK 03 — Problema + Solución
 
@@ -707,7 +659,7 @@ No rediseñar frames Figma frozen.
 
 **STATUS: PENDING**
 
-Integrar únicamente la solución ganadora del spike del Hero.
+Revisar únicamente la solución ganadora nativa del Hero ya integrada en Block 02; no introducir otro renderer por defecto. Motion de la landing completa sigue pendiente.
 
 Motion general:
 
@@ -758,66 +710,15 @@ Solo después puede declararse Production FINAL / FROZEN.
 
 ## 12. Hero effect research / decisión técnica vigente
 
-El Hero aprobado contiene:
+**Solución seleccionada y validada en Block 02: SVG exactos + Web Animations API nativa únicamente para opacity del glow.** Grid DOM estático, rim y body inmóviles. Sin dependencia, canvas ni renderer WebGL. CSS/JS no cambia silueta ni añade decoraciones. Detalle y mediciones: `docs/HEADER_HERO.md`.
 
-- horizonte / arco cyan;
-- rim light;
-- glow;
-- profundidad;
-- grid;
-- movimiento ambiental muy sutil.
+Policy FREE / OPEN SOURCE FIRST respetada. Primera prueba real: React Bits FREE / MagicRings, en spike aislado.
 
-La librería nunca define la forma final.
+MagicRings: **REJECTED**. Configuración controlada de un anillo cyan, scaleRate/noise/mouse/burst/parallax apagados. El corte angular del primer anillo y su fade cíclico apagan el horizonte; Mobile no conserva el arco. Corregirlo requeriría reescribir sustancialmente el shader. Spike JS completo 751.57 kB / gzip 201.87. Licencia verificada MIT + Commons Clause; Three.js MIT. Ninguna dependencia/código del spike permanece en producción.
 
-Policy:
+ShaderGradient y Vanta no se probaron; no son opciones rechazadas. La alternativa SVG nativa explícitamente permitida ganó sin requerir otros renderers.
 
-**FREE / OPEN SOURCE FIRST**
-
-Orden de exploración vigente:
-
-1. React Bits FREE / MagicRings
-2. ShaderGradient
-3. Vanta.js
-4. otra alternativa free/open-source solo si las anteriores fallan
-
-También puede ganar una solución CSS / SVG / canvas propia y ligera si reproduce mejor Figma.
-
-### MagicRings
-
-Estado:
-
-**SPIKE CANDIDATE, NO APROBADO TODAVÍA**
-
-Fue identificado como primera prueba potencial para aportar movimiento al rim, no para reemplazar toda la geometría del Hero.
-
-Debe probarse:
-
-- un solo horizonte estable;
-- cyan;
-- noise mínimo o nulo;
-- sin followMouse;
-- sin burst;
-- sin expansión evidente;
-- sin apagar el rim;
-- 1536 y 390;
-- reduced-motion;
-- fallback;
-- resize;
-- visibility pause;
-- StrictMode cleanup;
-- context lost;
-- DPR;
-- coste de bundle / GPU.
-
-Si para lograr fidelidad necesita alterar profundamente el shader o cambiar el diseño:
-
-**REJECT.**
-
-No instalar varias candidatas simultáneamente.
-
-Eliminar dependencias de spikes descartados.
-
-Licencia exacta de la versión/componente elegido debe verificarse antes de integrar.
+No reabrir búsqueda de librerías salvo regresión verificable o nueva decisión de Dirección. No convertir el Hero en un orb, aurora, ring de catálogo ni superficie diferente.
 
 ---
 
@@ -919,7 +820,7 @@ Estado actual:
 - wordmark: tipográfico;
 - Inter: local en repo;
 - iconografía aprobada: existe en Figma, exportar exacta cuando cada bloque la necesite;
-- Hero: Figma contiene geometría y referencia de glow/horizonte;
+- Hero: SVG exactos de Figma locales en `src/assets/hero/`, incluyendo horizontes Desktop/Mobile y arrow; sin URLs temporales;
 - previews de proyectos: no existen en repo;
 - favicon / OG visual: pendientes de asset aprobado.
 
@@ -1090,35 +991,17 @@ Eze Web Studio V2 solo puede considerarse Production FINAL / FROZEN cuando:
 
 ---
 
-## 22. Próximo trabajo autorizado
+## 22. Próximo trabajo / gate de Dirección
 
-### PRODUCTION BLOCK 02 — HEADER + HERO
+### PRODUCTION BLOCK 03 — PROBLEMA + SOLUCIÓN
 
-Status:
+Status: **PENDING DIRECTION APPROVAL**.
 
-**AUTHORIZED / NOT YET CLOSED**
+Header + Hero completó implementación, static visual gate, spike, responsive, accessibility/performance y validación de build. Está listo para revisión de Dirección.
 
-Secuencia obligatoria:
+No iniciar Block 03 hasta recibir aprobación explícita. Foundation continúa CLOSED / APPROVED. Figma no se modificó. Ningún bloque posterior fue implementado.
 
-1. confirmar Foundation;
-2. implementar Header Desktop/Mobile;
-3. implementar Mobile Navigation Open;
-4. implementar Hero Desktop/Mobile;
-5. implementar grid;
-6. construir horizonte/glow estático fiel;
-7. render 1536 + 390;
-8. comparar contra Figma;
-9. corregir hasta cerrar static visual gate;
-10. recién entonces hacer effect spike;
-11. elegir o rechazar solución;
-12. validar 390/430/768/1024/1280/1536;
-13. accessibility/performance;
-14. `npm run check`;
-15. commit;
-16. actualizar este documento;
-17. esperar aprobación de Dirección antes de Block 03.
-
-No implementar Problema + Solución durante este bloque.
+Al recibir autorización, leer este archivo, `docs/HEADER_HERO.md` y los nodos frozen correspondientes. No reabrir Header/Hero salvo regresión verificable.
 
 ---
 
