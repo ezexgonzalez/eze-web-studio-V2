@@ -8,6 +8,10 @@ Este repositorio ya no debe tratarse como una plantilla neutral durante la imple
 
 La base reutilizable que originó el proyecto sigue aportando patrones técnicos, ejemplos y estructura, pero no tiene prioridad sobre el brief actual, Figma aprobado ni las decisiones vigentes del proyecto.
 
+## Estado canónico antes de trabajar
+
+Antes de iniciar cualquier tarea de producción, leer `docs/CURRENT_STATE.md`. Ese archivo concentra el estado vigente, bloques cerrados/pendientes, decisiones de Figma, blockers y el próximo bloque autorizado. Si una tarea cambia el estado del proyecto, actualizar `docs/CURRENT_STATE.md` al cerrar el bloque.
+
 ## Principios de trabajo
 
 - Mantener los componentes claros, mantenibles y razonablemente reutilizables cuando exista reutilización real.
