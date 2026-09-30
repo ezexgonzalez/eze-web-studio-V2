@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 29 de septiembre de 2026.
+> Última actualización: 30 de septiembre de 2026.
 
 ---
 
@@ -538,9 +538,9 @@ No reabrir Foundation salvo regresión verificable.
 
 ### BLOCK 02 — Header + Hero
 
-**STATUS: CLOSED / READY FOR DIRECTION REVIEW**
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
 
-Cierre del gate técnico/visual; no se presume aprobación de Dirección.
+Dirección aprobó continuar con las secciones el 30 de septiembre de 2026. El bloque queda cerrado para producción corriente. No reabrir ahora el Hero para pulido adicional de efectos; cualquier mejora no esencial de motion/atmósfera queda diferida a Block 08 — Motion o al QA final, salvo regresión verificable.
 
 Commit: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`.
 
@@ -991,17 +991,17 @@ Eze Web Studio V2 solo puede considerarse Production FINAL / FROZEN cuando:
 
 ---
 
-## 22. Próximo trabajo / gate de Dirección
+## 22. Próximo trabajo autorizado
 
 ### PRODUCTION BLOCK 03 — PROBLEMA + SOLUCIÓN
 
-Status: **PENDING DIRECTION APPROVAL**.
+Status: **AUTHORIZED / NOT YET CLOSED**.
 
-Header + Hero completó implementación, static visual gate, spike, responsive, accessibility/performance y validación de build. Está listo para revisión de Dirección.
+Dirección autorizó avanzar con las secciones mientras el pulido adicional del Hero queda diferido. Header + Hero no debe reabrirse durante este bloque salvo regresión verificable causada por la nueva integración.
 
-No iniciar Block 03 hasta recibir aprobación explícita. Foundation continúa CLOSED / APPROVED. Figma no se modificó. Ningún bloque posterior fue implementado.
+Foundation continúa CLOSED / APPROVED. Figma no se modifica. Ningún bloque posterior a Block 03 queda autorizado todavía.
 
-Al recibir autorización, leer este archivo, `docs/HEADER_HERO.md` y los nodos frozen correspondientes. No reabrir Header/Hero salvo regresión verificable.
+Antes de implementar, leer este archivo, `docs/FOUNDATION.md`, `docs/HEADER_HERO.md`, `AGENTS.md` y los nodos FINAL / FROZEN de Problema + Solución en Desktop/Mobile.
 
 ---
 
