@@ -3,6 +3,7 @@
 @import "./styles/tokens.css";
 @import "./styles/typography.css";
 @import "./styles/primitives.css";
+@import "./styles/header-hero.css";
 
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }

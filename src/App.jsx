@@ -1,9 +1,12 @@
+import { Navbar } from './components/layout/Navbar'
+import { HeroSection } from './components/sections/HeroSection'
+
 function App() {
   return (
     <div className="site-shell min-h-screen bg-background text-text-primary">
       <a className="skip-link" href="#main-content">Ir al contenido</a>
-      {/* Sections are composed explicitly in their approved production blocks. */}
-      <main id="main-content" tabIndex="-1" />
+      <Navbar />
+      <main id="main-content" tabIndex="-1"><HeroSection /></main>
     </div>
   )
 }
