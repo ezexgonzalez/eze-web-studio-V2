@@ -2,7 +2,7 @@
 
 Estado: **IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**.
 
-Base sincronizada: `74c85a17836fb28561f5ea01087c20f839c18f16`, branch `feature/ews-v2-production`. El SHA de implementación se registra en CURRENT_STATE mediante el commit de continuidad. No se autoriza Block 05.
+Base sincronizada: `74c85a17836fb28561f5ea01087c20f839c18f16`, branch `feature/ews-v2-production`. Commit de implementación: `b0fc13568dbc7176b982dab68b7b7697780941ea`; el commit posterior de continuidad registra este SHA en CURRENT_STATE. No se autoriza Block 05.
 
 ## Fuentes Figma
 

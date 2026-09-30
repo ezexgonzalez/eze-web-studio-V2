@@ -601,7 +601,7 @@ Siguiente bloque: Block 04 — Proyectos, **AUTHORIZED / NOT YET CLOSED**.
 
 **STATUS: IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**
 
-Base: `74c85a17836fb28561f5ea01087c20f839c18f16`. SHA de implementación: pendiente del commit de continuidad.
+Base: `74c85a17836fb28561f5ea01087c20f839c18f16`. SHA de implementación: `b0fc13568dbc7176b982dab68b7b7697780941ea`.
 
 Implementado: ProjectsSection explícito después de Solución, src/styles/projects.css, src/hooks/useProjectCarousel.js, copy aprobado en src/data/projects.js y siete SVG exactos locales en src/assets/projects/. Figma 73:42 / 183:6 inspeccionado con metadata, design context, screenshot y propiedades internas; no modificado.
 
