@@ -1,6 +1,6 @@
 # BLOCK 03 — Problema + Solución
 
-Estado: **CLOSED / READY FOR DIRECTION REVIEW**. Branch `feature/ews-v2-production`. Commit de implementación: ver `docs/CURRENT_STATE.md`.
+Estado: **CLOSED / READY FOR DIRECTION REVIEW**. Branch `feature/ews-v2-production`. Commit de implementación: `88196db865fc4ec14ec213873f4e6475a787e1f9`.
 
 ## Implementación y fuentes
 

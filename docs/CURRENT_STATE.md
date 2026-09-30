@@ -79,15 +79,15 @@ La diferencia existente corresponde al bloque Foundation.
 
 Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de motion/carrusel/iconos ni WebGL/Three.js en producción.
 
-Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfile sin cambios en Block 02.
+Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfile sin cambios en Blocks 02 y 03.
 
-`App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection`.
+`App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection` → `ProblemSection` → `SolutionSection`.
 
 **Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-Todavía NO están montados: Problema, Solución, Proyectos, About, FAQ, Contacto ni Footer.
+Problema y Solución están implementados y listos para revisión de Dirección. Todavía NO están montados: Proyectos, About, FAQ, Contacto ni Footer.
 
-Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. Gate técnico cerrado; aprobación de Dirección pendiente. Detalle: `docs/HEADER_HERO.md`.
+Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
 
 ---
 
@@ -571,28 +571,29 @@ Documentación/evidencia: `docs/HEADER_HERO.md`, `docs/qa/block-02/`.
 
 Blockers nuevos: ninguno. Mobile validado en Chrome con viewports y DPR 3; no se midió hardware físico. Favicon/OG siguen pendientes de asset aprobado.
 
-Próximo bloque: Problema + Solución, **solo tras aprobación de Dirección**.
+Block 03 fue autorizado y está implementado; no reabrir Header/Hero salvo regresión verificable.
 
 ### BLOCK 03 — Problema + Solución
 
-**STATUS: PENDING**
+**STATUS: CLOSED / READY FOR DIRECTION REVIEW**
 
-Implementar únicamente después del cierre de Header + Hero.
+Commit de implementación: `88196db865fc4ec14ec213873f4e6475a787e1f9`.
 
-Problema:
+App explícito: Hero → ProblemSection → SolutionSection. Componentes en `src/components/sections/`, contenido en `src/data/{problem,solution}.js`, estilos locales en `src/styles/problem-solution.css`, diez SVG exactos en `src/assets/problem/`. Sin dependencia ni motion nuevo. Figma intacto.
 
-- ProcessCards conectadas Desktop;
-- secuencia vertical Mobile;
-- iconografía exacta;
-- resultado final diferenciado.
+Fuentes: Problema `44:40` / `169:6`; Solución `61:42` / `169:102`. Desktop mantiene cards/connectors/banner y composición editorial escalonada. Mobile mantiene secuencia vertical, gutters 24 y offsets 0/8/16; CONFIANZA 56/60 local. Glows CSS estáticos únicamente donde existen en los masters Desktop.
 
-Solución:
+QA: Chrome preview, Inter local real y SVG decodificados, comparison Figma/browser en 1536/390, alturas maestras 1086/1188 y 941/858. 390/430/768/1024/1280/1536 más 767/1199/1200 sin overflow ni collisions. Semántica, skip link y text resizing comprobados. Hero coincide píxel por píxel con Block 02 en ambos masters; archivos protegidos sin cambios. npm run check y git diff --check PASS; sin errores JS nuevos.
 
-- composición tipográfica expresiva;
-- Desktop escalonado;
-- Mobile vertical con offsets;
-- CLARIDAD / CONFIANZA / ACCIÓN;
-- excepción CONFIANZA 56/60 Mobile.
+Responsive: Mobile <768; proceso en dos columnas y Solución progresivamente abierta en 768–1199; cuatro cards y Desktop editorial ≥1200. Saltos de copy maestro se liberan entre 1200–1439; altura flexible para conservar contenido. Ajuste local de keywords <390 para lectura en 320. Cajas de texto usan leading real sin alterar las posiciones de Figma. Inter optical sizing fijo solo en estas secciones. No hay desviaciones creativas.
+
+Bundle real before/after: JS 206.64 → 218.09 kB (gzip 63.96 → 66.44); CSS 40.44 → 49.57 (gzip 8.63 → 10.28). Inter 352.24 kB sin cambios. Sin renderer, rAF ni licencia/dependencia nueva.
+
+Documentación: `docs/PROBLEM_SOLUTION.md`. Evidencia: cuatro renders maestros y dos capturas continuas en `docs/qa/block-03/`.
+
+Blockers nuevos: ninguno. Favicon 404 preexistente, asset favicon/OG pendiente. Mobile validado por viewport Chrome, no dispositivo físico. Pendientes de contenido de bloques posteriores permanecen intactos.
+
+Siguiente propuesto: Block 04 — Proyectos, **PENDING / NOT AUTHORIZED**. Dirección debe autorizarlo.
 
 ### BLOCK 04 — Proyectos
 
@@ -993,15 +994,11 @@ Eze Web Studio V2 solo puede considerarse Production FINAL / FROZEN cuando:
 
 ## 22. Próximo trabajo autorizado
 
-### PRODUCTION BLOCK 03 — PROBLEMA + SOLUCIÓN
+Block 03 — Problema + Solución: **CLOSED / READY FOR DIRECTION REVIEW**. Esperar revisión de Dirección.
 
-Status: **AUTHORIZED / NOT YET CLOSED**.
+Siguiente bloque propuesto: Block 04 — Proyectos. **No está autorizado todavía**. No avanzar ni completar contenido pendiente por cuenta propia.
 
-Dirección autorizó avanzar con las secciones mientras el pulido adicional del Hero queda diferido. Header + Hero no debe reabrirse durante este bloque salvo regresión verificable causada por la nueva integración.
-
-Foundation continúa CLOSED / APPROVED. Figma no se modifica. Ningún bloque posterior a Block 03 queda autorizado todavía.
-
-Antes de implementar, leer este archivo, `docs/FOUNDATION.md`, `docs/HEADER_HERO.md`, `AGENTS.md` y los nodos FINAL / FROZEN de Problema + Solución en Desktop/Mobile.
+Header + Hero permanece CLOSED / APPROVED FOR CONTINUATION y protegido. Su pulido no esencial sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica.
 
 ---
 
