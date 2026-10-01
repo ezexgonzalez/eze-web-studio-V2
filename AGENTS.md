@@ -12,6 +12,15 @@ La base reutilizable que originó el proyecto sigue aportando patrones técnicos
 
 Antes de iniciar cualquier tarea de producción, leer `docs/CURRENT_STATE.md`. Ese archivo concentra el estado vigente, bloques cerrados/pendientes, decisiones de Figma, blockers y el próximo bloque autorizado. Si una tarea cambia el estado del proyecto, actualizar `docs/CURRENT_STATE.md` al cerrar el bloque.
 
+## QA visual y browser
+
+- El QA visual/browser final de Eze Web Studio V2 lo realiza Eze manualmente.
+- Los agentes deben hacer QA técnico y estructural con las herramientas disponibles: `npm run check`, build, `git diff --check`, semántica, accesibilidad por código, responsive reasoning y cualquier prueba automatizable.
+- Si el entorno del agente no puede abrir Chrome/localhost, eso NO bloquea por sí solo el cierre técnico del bloque.
+- No inventar screenshots ni declarar comparación visual browser ↔ Figma si no ocurrió.
+- El agente debe dejar el bloque como `IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA` cuando corresponda. Dirección/Eze puede aprobarlo y autorizar continuidad después de su revisión manual.
+- No reintentar indefinidamente workarounds de browser sandbox ya conocidos como bloqueados.
+
 ## Principios de trabajo
 
 - Mantener los componentes claros, mantenibles y razonablemente reutilizables cuando exista reutilización real.
