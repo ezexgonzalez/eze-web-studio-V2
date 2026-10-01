@@ -48,3 +48,8 @@ Base sincronizada: `5dfccb20507b640d5055b0994c0f05f33de06b56`, working tree limp
 Todos los gates de browser siguen pendientes: masters, seis viewports y bordes, overflow, controls, Tab/Shift+Tab, fixture multi-record (Arrow/Home/End, swipe, snap, resize, sync), consola, fuentes/assets decodificados y continuidad. No hay evidencia PNG nueva ni afirmación de browser/interaction PASS. Dataset inspeccionado sin cambios: fitness único, URL/preview null; producción mantiene paginación 01/01 y disabled existentes. La comprobación de runtime aún no ocurrió.
 
 Estado conservado: **IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**. No se inicia Block 05.
+
+
+## Regla vigente de QA — Dirección
+
+Desde el 1 de octubre de 2026, el QA visual/browser final lo realiza Eze manualmente. Este documento conserva los intentos fallidos del agente como evidencia técnica, pero Chrome bloqueado deja de ser un blocker operativo para continuidad. No se fabrican capturas ni se sustituyen por renders sintéticos. Block 04 fue aprobado por Dirección para continuar.
