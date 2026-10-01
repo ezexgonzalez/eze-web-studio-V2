@@ -1,6 +1,6 @@
 # Block 04 — Proyectos
 
-Estado: **IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**.
+Estado: **CLOSED / APPROVED FOR CONTINUATION**.
 
 Base sincronizada: `74c85a17836fb28561f5ea01087c20f839c18f16`, branch `feature/ews-v2-production`. Commit de implementación: `b0fc13568dbc7176b982dab68b7b7697780941ea`; el commit posterior de continuidad registra este SHA en CURRENT_STATE. No se autoriza Block 05.
 
@@ -74,3 +74,10 @@ Base sincronizada: `5dfccb20507b640d5055b0994c0f05f33de06b56`, working tree limp
 Todos los gates de browser siguen pendientes: masters, seis viewports y bordes, overflow, controls, Tab/Shift+Tab, fixture multi-record (Arrow/Home/End, swipe, snap, resize, sync), consola, fuentes/assets decodificados y continuidad. No hay evidencia PNG nueva ni afirmación de browser/interaction PASS. Dataset inspeccionado sin cambios: fitness único, URL/preview null; producción mantiene paginación 01/01 y disabled existentes. La comprobación de runtime aún no ocurrió.
 
 Estado conservado: **IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**. No se inicia Block 05.
+
+
+## Dirección — cierre de Block 04
+
+El 1 de octubre de 2026 Dirección definió una regla operativa permanente: el QA visual/browser final lo realiza Eze manualmente. Los agentes deben hacer QA técnico, estructural, accesibilidad por código y validaciones disponibles, pero la imposibilidad de abrir Chrome en su sandbox NO debe bloquear el cierre técnico de futuros bloques.
+
+Block 04 queda **CLOSED / APPROVED FOR CONTINUATION** por Dirección. La ausencia de capturas browser generadas por el agente no invalida el cierre. Los pendientes de contenido (proyectos 2–3, URLs y previews) permanecen abiertos y siguen bloqueando el estado FINAL global, no la continuidad de implementación.
