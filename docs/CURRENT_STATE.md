@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 30 de septiembre de 2026.
+> Última actualización: 1 de octubre de 2026.
 
 ---
 
@@ -600,6 +600,8 @@ Siguiente bloque: Block 04 — Proyectos, **AUTHORIZED / NOT YET CLOSED**.
 ### BLOCK 04 — Proyectos
 
 **STATUS: IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**
+
+QA Completion Pass 2026-10-01 sobre `5dfccb20507b640d5055b0994c0f05f33de06b56`: npm run check y git diff --check PASS; build preview HTTP 200. Browser cloud sigue rechazando localhost con ERR_BLOCKED_BY_CLIENT; socket Unix local sigue denegado. No existe render evaluable, capturas ni validación de interacción/responsive/console. Sin correcciones de código ni fixture publicado: ningún defecto de diseño confirmado. Se necesita URL de preview accesible al browser remoto o entorno con Chrome local permitido. Detalle LOCATION / OBSERVED ISSUE / EXPECTED / CURRENT RESULT / FIX ATTEMPTED / BLOCKER en docs/PROJECTS.md y docs/qa/block-04/README.md. Estado sigue NOT CLOSED.
 
 Base: `74c85a17836fb28561f5ea01087c20f839c18f16`. SHA de implementación: `b0fc13568dbc7176b982dab68b7b7697780941ea`.
 
