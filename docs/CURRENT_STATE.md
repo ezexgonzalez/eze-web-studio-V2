@@ -85,7 +85,7 @@ Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfi
 
 **Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-Problema y Solución están CLOSED / APPROVED FOR CONTINUATION. Proyectos está implementado y montado; el gate browser permanece bloqueado y el bloque NO está cerrado. Todavía NO están montados: About, FAQ, Contacto ni Footer.
+Problema y Solución están CLOSED / APPROVED FOR CONTINUATION. Proyectos está CLOSED / APPROVED FOR CONTINUATION por Dirección. Todavía NO están montados: About, FAQ, Contacto ni Footer.
 
 Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
 
@@ -599,9 +599,9 @@ Siguiente bloque: Block 04 — Proyectos, **AUTHORIZED / NOT YET CLOSED**.
 
 ### BLOCK 04 — Proyectos
 
-**STATUS: IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
 
-QA Completion Pass 2026-10-01 sobre `5dfccb20507b640d5055b0994c0f05f33de06b56`: npm run check y git diff --check PASS; build preview HTTP 200. Browser cloud sigue rechazando localhost con ERR_BLOCKED_BY_CLIENT; socket Unix local sigue denegado. No existe render evaluable, capturas ni validación de interacción/responsive/console. Sin correcciones de código ni fixture publicado: ningún defecto de diseño confirmado. Se necesita URL de preview accesible al browser remoto o entorno con Chrome local permitido. Detalle LOCATION / OBSERVED ISSUE / EXPECTED / CURRENT RESULT / FIX ATTEMPTED / BLOCKER en docs/PROJECTS.md y docs/qa/block-04/README.md. Estado sigue NOT CLOSED.
+QA técnico de agente: npm run check y git diff --check PASS; build preview HTTP 200. El entorno de agentes no puede ejecutar browser QA de forma confiable. Dirección confirmó que el QA visual/browser de este proyecto lo realiza Eze manualmente y aprobó continuar. Esta limitación deja de ser blocker de cierre para agentes. Detalle técnico del intento queda en docs/PROJECTS.md y docs/qa/block-04/README.md.
 
 Base: `74c85a17836fb28561f5ea01087c20f839c18f16`. SHA de implementación: `b0fc13568dbc7176b982dab68b7b7697780941ea`.
 
@@ -619,7 +619,7 @@ Documentación: docs/PROJECTS.md. Verificaciones y matriz pendiente: docs/qa/blo
 
 ### BLOCK 05 — About + FAQ
 
-**STATUS: PENDING**
+**STATUS: AUTHORIZED / NOT YET CLOSED**
 
 About:
 
@@ -1004,15 +1004,15 @@ Eze Web Studio V2 solo puede considerarse Production FINAL / FROZEN cuando:
 
 ## 22. Próximo trabajo autorizado
 
-Block 03 — Problema + Solución: **CLOSED / APPROVED FOR CONTINUATION**.
+Blocks 01–04: **CLOSED / APPROVED FOR CONTINUATION**.
 
-### PRODUCTION BLOCK 04 — PROYECTOS
+### PRODUCTION BLOCK 05 — ABOUT + FAQ
 
-Status: **IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**.
+Status: **AUTHORIZED / NOT YET CLOSED**.
 
-Completar el gate browser de la implementación existente de Proyectos: render/compare/correct en masters, responsive, interacción y continuidad. Preservar slots vacíos y datos incompletos sin inventar contenido. No avanzar a About + FAQ sin nueva aprobación de Dirección.
+Implementar únicamente About + FAQ. El agente realiza QA técnico, estructural, responsive por código y validaciones disponibles; el QA visual/browser final lo realiza Eze manualmente. No bloquear el cierre técnico de un bloque por imposibilidad del entorno de abrir Chrome. No avanzar a Contacto + Footer sin nueva aprobación de Dirección.
 
-Header + Hero y Problema + Solución permanecen protegidos. El pulido no esencial del Hero sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica.
+Header + Hero, Problema + Solución y Proyectos permanecen protegidos. El pulido no esencial del Hero sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica.
 
 ---
 
