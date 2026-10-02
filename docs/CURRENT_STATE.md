@@ -653,19 +653,23 @@ QA técnico PASS: baseline/final npm run check (lint/build), git diff --check, R
 
 Bundle JS 232.93 → 238.12 kB (gzip 69.56 → 70.46), CSS 62.58 → 70.76 (gzip 12.59 → 13.76), Inter 352.24 sin cambios.
 
-Documentación: `docs/CONTACT_FOOTER.md`. QA visual/browser final, consola real, teclado físico, overflow y continuidad FAQ → Contacto → Footer pendientes de Eze; no comparación browser ↔ Figma ni screenshots fabricados. Instagram/HABLEMOS siguen null y pendientes anteriores permanecen. Dirección no cerró/aprobó Block 06. Próxima fase propuesta: Block 07 — Responsive Pass, pendiente de aprobación/autorización; no iniciado.
+Documentación: `docs/CONTACT_FOOTER.md`. QA visual/browser final, consola real, teclado físico, overflow y continuidad FAQ → Contacto → Footer pendientes de Eze; no comparación browser ↔ Figma ni screenshots fabricados. Instagram/HABLEMOS siguen null y pendientes anteriores permanecen. Dirección aprobó continuidad de Blocks 01–06 en la autorización vigente de Block 07; esta pasada sistémica actualiza sus contratos Desktop y fondos. El detalle anterior queda como baseline histórico.
 
-### BLOCK 07 — Responsive / Viewport Coherence / Visual Cleanup
+### BLOCK 07 — Desktop Scale / Viewport Coherence / Visual Cleanup
 
-**STATUS: AUTHORIZED / NOT YET CLOSED**
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
 
-Revisar toda la landing en:
+Dirección autorizó sustituir alturas/offsets literales Desktop: siete escenas min-height 100svh con contenido en flujo y crecimiento accesible; Footer de contenido compacto. Desktop considera width + height mediante clamp(vw/svh), ritmo vertical y geometría específica de cada sección. Mobile/Transition conservan composición.
 
-390 / 430 / 768 / 1024 / 1280 / 1536.
+Nuevo contrato centralizado en `src/styles/desktop-coherence.css`, roles en `typography.css`. Grid decorativo eliminado del DOM y CSS de Hero/Projects/About/Contact/Footer; Problem/Solution/FAQ no lo tenían. Fondos Background #050708 salvo About Alternate #0A1119. CTA Proyectos sin translateX(16px), mismo eje que información. Footer Desktop min-height 0, padding 48/48 y gaps 32.
 
-Resolver únicamente problemas de interpolación y continuidad.
+App/data/hooks/assets/dependencias intactos. Semántica, a11y, destinos/nulls y comportamiento protegidos. No motion nuevo ni modificaciones a useHorizonGlow.
 
-No rediseñar frames Figma frozen.
+QA técnico: baseline/final npm run check y git diff --check PASS; production preview/entry assets HTTP 200; React DOM/SSR/JSDOM verifica orden, IDs, grids ausentes, estrellas/steps/features, único proyecto disabled/01-01, FAQ null guards y fixture multi-record aislado. Sin React warnings en pruebas. Contrato CSS calculado para 1366×768, 1440×900, 1536×864, 1920×1080 y inspección de Mobile/Transition/bordes; no medición browser de overflow ni screenshots fabricados.
+
+Bundle JS 238.12 → 235.66 kB (gzip 70.46 → 70.22), CSS 70.76 → 70.65 (gzip 13.76 → 14.08), Inter intacto. Sin dependencias nuevas.
+
+Documentación: `docs/DESKTOP_COHERENCE_PASS.md`. Commit de implementación: se registra tras crear el commit. Pendiente: QA visual/browser de Eze, aprobación de Dirección y blockers de contenido existentes. **No APPROVED; Block 08 no autorizado.**
 
 ### BLOCK 08 — Motion
 
@@ -1007,9 +1011,9 @@ Blocks 01–06: **CLOSED / APPROVED FOR CONTINUATION**.
 
 ### PRODUCTION BLOCK 07 — DESKTOP SCALE / VIEWPORT COHERENCE / VISUAL CLEANUP
 
-Status: **AUTHORIZED / NOT YET CLOSED**.
+Status: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
 
-Resolver como una única pasada sistémica los hallazgos documentados en `docs/qa/MANUAL_QA_2026-10-02.md`:
+Implementación técnica completada como una única pasada sistémica para los hallazgos documentados en `docs/qa/MANUAL_QA_2026-10-02.md`:
 
 - adaptar la escala Desktop a monitores reales usando también altura de viewport;
 - hacer que Hero, Problema, Solución, Proyectos, About, FAQ y Contacto resuelvan aproximadamente una escena por viewport en condiciones Desktop normales;
@@ -1020,7 +1024,7 @@ Resolver como una única pasada sistémica los hallazgos documentados en `docs/q
 
 Figma sigue siendo referencia de jerarquía, composición y lenguaje, pero estas decisiones explícitas de Dirección tienen prioridad sobre coordenadas/alturas literales del master.
 
-El agente entrega **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**. Eze realiza el QA visual/browser final. No iniciar Block 08 — Motion hasta nueva aprobación.
+Implementación entregada: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**. Próxima acción: Eze realiza el QA visual/browser final sobre el nuevo contrato documentado en `docs/DESKTOP_COHERENCE_PASS.md`. No iniciar Block 08 — Motion hasta nueva aprobación.
 
 ---
 

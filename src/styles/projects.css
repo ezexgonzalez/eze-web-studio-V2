@@ -32,17 +32,7 @@
 .projects-cta:disabled { opacity: 1; cursor: default; }
 .projects-cta img { width: 14px; height: 14px; }
 .projects-backdrop { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-.projects-grid { position: absolute; inset: 0; }
-.projects-grid i { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--color-grid-subtle); }
-.projects-grid b { position: absolute; left: 0; right: 0; height: 1px; background: var(--color-grid-subtle); }
-.projects-grid-mobile i:nth-child(1) { left: 24px; }
-.projects-grid-mobile i:nth-child(2) { left: 50%; }
-.projects-grid-mobile i:nth-child(3) { right: 23px; }
-.projects-grid-mobile b:nth-of-type(1) { top: 110px; }
-.projects-grid-mobile b:nth-of-type(2) { top: 330px; }
-.projects-grid-mobile b:nth-of-type(3) { top: 550px; }
-.projects-grid-mobile b:nth-of-type(4) { top: 770px; }
-.projects-grid-desktop, .projects-glow-desktop { display: none; }
+.projects-glow-desktop { display: none; }
 .projects-glow-mobile { position: absolute; left: calc(50% - 195px); top: 92px; max-width: none; }
 
 @media (min-width: 48rem) and (max-width: 74.999rem) {
@@ -92,22 +82,7 @@
   .project-information { margin: 13px auto 0; max-width: 621px; }
   .project-information h3 { margin-top: 4px; }
   .project-description { margin-top: 4px; }
-  .projects-cta { margin-top: 14px; transform: translateX(16px); }
-  .projects-grid-mobile, .projects-glow-mobile { display: none; }
-  .projects-grid-desktop { display: block; left: 50%; width: 1536px; transform: translateX(-50%); }
-  .projects-grid-desktop i:nth-child(1) { left: 33px; }
-  .projects-grid-desktop i:nth-child(2) { left: 243px; }
-  .projects-grid-desktop i:nth-child(3) { left: 452px; }
-  .projects-grid-desktop i:nth-child(4) { left: 661px; }
-  .projects-grid-desktop i:nth-child(5) { left: 871px; }
-  .projects-grid-desktop i:nth-child(6) { left: 1080px; }
-  .projects-grid-desktop i:nth-child(7) { left: 1290px; }
-  .projects-grid-desktop i:nth-child(8) { left: 1499px; }
-  .projects-grid-desktop b:nth-of-type(1) { top: 0; }
-  .projects-grid-desktop b:nth-of-type(2) { top: 180px; }
-  .projects-grid-desktop b:nth-of-type(3) { top: 360px; }
-  .projects-grid-desktop b:nth-of-type(4) { top: 540px; }
-  .projects-grid-desktop b:nth-of-type(5) { top: 720px; }
-  .projects-grid-desktop b:nth-of-type(6) { top: 900px; }
+  .projects-cta { margin-top: 14px; }
+  .projects-glow-mobile { display: none; }
   .projects-glow-desktop { display: block; position: absolute; left: calc(50% - 608px); top: 40px; max-width: none; }
 }

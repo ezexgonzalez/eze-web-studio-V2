@@ -11,10 +11,6 @@ export function ContactSection({ details = contact }) {
 
   return (
     <section id={sectionIds.contacto} className="contact-section" aria-labelledby="contact-heading">
-      <div className="contact-footer-grid contact-grid" aria-hidden="true">
-        <div className="contact-footer-grid-mobile"><i /><i /><i /><b /><b /><b /></div>
-        <div className="contact-footer-grid-desktop"><i /><i /><i /><i /><i /><i /><i /><b /><b /></div>
-      </div>
       <div className="contact-layout">
         <header className="contact-prompt">
           <p className="contact-eyebrow type-label-eyebrow">{details.eyebrow}</p>

@@ -3,10 +3,6 @@ import { about } from '../../data/about'
 export function AboutSection() {
   return (
     <section id="estudio" className="about-section" aria-labelledby="about-heading">
-      <div className="about-grid" aria-hidden="true">
-        <div className="about-grid-mobile"><i /><i /><i /><b /><b /><b /></div>
-        <div className="about-grid-desktop"><i /><i /><i /><i /><i /><i /><b /><b /></div>
-      </div>
       <div className="about-layout">
         <header className="about-header">
           <p className="type-label-eyebrow">{about.eyebrow}</p>

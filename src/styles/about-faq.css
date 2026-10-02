@@ -2,9 +2,11 @@
 .about-section, .faq-section {
   position: relative;
   isolation: isolate;
-  background: var(--color-background-alternate);
+  background: var(--color-background);
   font-optical-sizing: none;
 }
+
+.about-section { background: var(--color-background-alternate); }
 
 .about-layout { position: relative; min-height: 753px; padding: 88px 24px 96px; }
 .about-header > p, .faq-header > p { color: var(--color-accent-cyan); }
@@ -15,17 +17,6 @@
 .about-pause-divider { display: block; width: 32px; height: 1px; margin-bottom: 24px; background: var(--color-divider-default); }
 .about-secondary { color: var(--color-text-muted); }
 .about-secondary span:first-child { display: block; }
-.about-grid { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-.about-grid-mobile, .about-grid-desktop { position: absolute; inset: 0; }
-.about-grid i { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--color-grid-subtle); }
-.about-grid b { position: absolute; left: 0; right: 0; height: 1px; background: var(--color-grid-subtle); }
-.about-grid-mobile i:nth-child(1) { left: 24px; }
-.about-grid-mobile i:nth-child(2) { left: 50%; }
-.about-grid-mobile i:nth-child(3) { right: 23px; }
-.about-grid-mobile b:nth-of-type(1) { top: 150px; }
-.about-grid-mobile b:nth-of-type(2) { top: 380px; }
-.about-grid-mobile b:nth-of-type(3) { top: 610px; }
-.about-grid-desktop { display: none; }
 
 .faq-layout { min-height: 936px; padding: 88px 24px 80px; }
 .faq-heading { margin-top: 16px; }
@@ -83,18 +74,6 @@
   .about-pause-divider { display: none; }
   .about-secondary { min-height: 72px; }
   .about-secondary span:first-child { display: inline; }
-  .about-grid-mobile { display: none; }
-  .about-grid-desktop { display: block; left: 50%; width: 1536px; transform: translateX(-50%); }
-  .about-grid-desktop i, .about-grid-desktop b { background: var(--color-grid-default); }
-  .about-grid-desktop i:nth-child(1) { left: 91px; }
-  .about-grid-desktop i:nth-child(2) { left: 367px; }
-  .about-grid-desktop i:nth-child(3) { left: 644px; }
-  .about-grid-desktop i:nth-child(4) { left: 921px; }
-  .about-grid-desktop i:nth-child(5) { left: 1199px; }
-  .about-grid-desktop i:nth-child(6) { left: 1446px; }
-  .about-grid-desktop b { left: 44px; right: 44px; }
-  .about-grid-desktop b:nth-of-type(1) { top: 116px; }
-  .about-grid-desktop b:nth-of-type(2) { top: 857px; }
 
   .faq-layout {
     display: grid;

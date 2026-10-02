@@ -23,12 +23,6 @@
 .hero-actions { display: flex; flex-direction: column; gap: 16px; margin-top: 81px; }
 .hero-actions .ews-button { height: 60px; width: 100%; }
 .hero-primary { box-shadow: 0 10px 24px rgb(38 221 244 / 28%); }
-.hero-grid { position: absolute; inset: 0; }
-.hero-grid i { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--color-grid-subtle); }
-.hero-grid b { position: absolute; left: 0; right: 0; height: 1px; background: var(--color-grid-subtle); }
-.hero-grid-mobile i:nth-child(1) { left: 24px; }
-.hero-grid-mobile i:nth-child(2) { left: 50%; }
-.hero-grid-mobile i:nth-child(3) { right: 23px; }
 .hero-mobile-horizon { position: absolute; width: 390px; height: 128px; bottom: 0; left: 50%; transform: translateX(-50%) scale(calc(100vw / 390px)); transform-origin: bottom center; }
 .hero-mobile-horizon img, .hero-desktop-scene img { position: absolute; max-width: none; }
 .horizon-mobile-glow { top: 0; left: 0; }
@@ -47,12 +41,11 @@
   .hero-actions { flex-direction: row; justify-content: center; gap: 27px; margin-top: 46px; }
   .hero-actions .hero-primary { width: 226px; }
   .hero-actions .hero-outline { width: 214px; }
-  .hero-mobile-horizon, .hero-grid-mobile { display: none; }
+  .hero-mobile-horizon { display: none; }
   .hero-desktop-scene { display: block; position: absolute; top: 0; left: 50%; width: 1536px; height: 992px; transform: translateX(-50%) scaleX(max(1, calc(100vw / 1536px))); transform-origin: top center; }
   .horizon-desktop-glow { top: 150px; left: 0; }
   .horizon-desktop-body { top: 172px; left: 0; }
   .horizon-desktop-rim { top: 153px; left: 0; }
-  .hero-grid-desktop i, .hero-grid-desktop b { background: var(--color-grid-default); }
 }
 @media (min-width: 75rem) {
   .header-inner { height: 110px; padding-top: 28px; align-items: flex-start; }

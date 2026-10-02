@@ -1,0 +1,102 @@
+/* Direction Block 07 supersedes frozen master offsets on Desktop.
+   Each composition has its own geometry; only scene spacing is shared.
+   Minimum heights allow content, text resizing and future copy to grow. */
+@media (min-width: 75rem) {
+  :root {
+    --scene-padding: clamp(32px, 5svh, 64px);
+    --scene-gap: clamp(16px, 2.5svh, 32px);
+  }
+
+  .hero, .problem-section, .solution-section, .projects-section { overflow: visible; }
+  .section-ambience { overflow: hidden; }
+  .hero { min-height: 100svh; }
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100svh;
+    padding-block: clamp(140px, 18svh, 200px) clamp(140px, 20svh, 240px);
+  }
+  .hero-description { margin-top: var(--scene-gap); }
+  .hero-actions { margin-top: clamp(24px, 4svh, 44px); transform: none; }
+  /* Keep the exported horizon silhouette; crop the decoration at scene bottom. */
+  .hero-desktop-scene { top: auto; bottom: 0; }
+
+  .problem-content, .solution-content, .projects-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100svh;
+    padding-block: var(--scene-padding);
+  }
+  .problem-intro .section-eyebrow, .solution-intro h2 { height: auto; }
+  .problem-intro h2 { margin-top: var(--scene-gap); }
+  .problem-description { margin-top: 16px; }
+  .problem-process { margin-top: var(--scene-gap); gap: clamp(24px, 2.3vw, 35px); }
+  .process-card { min-height: clamp(270px, 34svh, 340px); padding-block: clamp(16px, 2.1svh, 24px); padding-inline: 16px; }
+  .process-symbol { gap: 12px; }
+  .process-icon { width: clamp(56px, 7.4svh, 76px); height: clamp(56px, 7.4svh, 76px); }
+  .process-number { width: 32px; height: 32px; }
+  .process-copy { margin-top: 12px; }
+  .process-copy p { margin-top: 10px; }
+  .process-copy p span { display: inline; }
+  .process-description-01 span:nth-child(1)::after,
+  .process-description-01 span:nth-child(2)::after { content: none; }
+  .process-card:not(:last-child)::after { width: calc(clamp(24px, 2.3vw, 35px) + 1px); top: clamp(44px, 5.8svh, 60px); }
+  .process-card:first-child::after { width: calc(clamp(24px, 2.3vw, 35px) + 9px); }
+  .problem-result { margin-top: var(--scene-gap); min-height: 80px; padding: 16px 32px; }
+  .result-divider { height: 44px; margin-inline: 32px; }
+
+  .solution-features { margin-top: var(--scene-gap); }
+  .solution-feature-01 { margin-left: 13.60677%; }
+  .solution-feature-02 { margin-top: var(--scene-gap); }
+  .solution-feature-03 { margin-left: 65%; margin-top: var(--scene-gap); margin-right: 24px; }
+  .solution-description, .solution-feature-02 .solution-description,
+  .solution-feature-03 .solution-description { margin-top: 4px; }
+  .solution-description span { display: inline; }
+  .solution-notation, .solution-feature-02 .solution-notation,
+  .solution-feature-03 .solution-notation { top: 10px; height: calc(var(--type-display-feature-leading) + 4px); }
+  .solution-notation i { height: clamp(40px, 5.5svh, 60px); }
+  .solution-notation b { top: calc(46px + clamp(40px, 5.5svh, 60px)); }
+
+  .projects-heading-group { flex-basis: 40%; min-width: 0; }
+  .projects-header-divider { align-self: center; margin-top: 0; }
+  .projects-intro { align-self: center; margin-top: 0; width: min(400px, 38%); }
+  .projects-desktop-stage { flex: none; height: clamp(250px, 34svh, 420px); margin-top: var(--scene-gap); }
+  .projects-slot-previous { top: 12.880562%; height: 83.840749%; }
+  .projects-slot-active { height: 98.360656%; }
+  .projects-slot-next { top: 7.259953%; height: 92.740047%; }
+  .projects-slot-queue { top: 15.690867%; height: 80.796253%; }
+  .projects-controls { flex: none; margin-top: 12px; }
+  .project-information { margin-top: 8px; }
+  .projects-cta { transform: none; }
+
+  .about-layout, .faq-layout, .contact-layout {
+    min-height: 100svh;
+    align-items: center;
+    padding-block: var(--scene-padding);
+  }
+  .about-copy { margin-top: 0; }
+  .about-copy::before { top: 0; height: 100%; }
+  .about-primary, .about-secondary { min-height: 0; }
+  .about-pause { margin-top: clamp(24px, 3.2svh, 34px); }
+  .faq-header { padding-top: 0; }
+  .faq-item { padding-block: 16px 12px; }
+  .faq-item:nth-child(3), .faq-item:nth-child(4), .faq-item:nth-child(5) { padding-bottom: 12px; }
+  .faq-item[data-open="true"] { padding-bottom: 24px; }
+  .faq-panel { margin-top: 8px; }
+
+  .contact-heading { min-height: 0; }
+  .contact-description { min-height: 0; margin-top: var(--scene-gap); }
+  .contact-action { margin-top: 0; }
+  .contact-action::before { top: 0; height: 100%; }
+  .contact-cta { min-height: 72px; }
+  .contact-cta-label { min-height: 72px; font-size: var(--type-display-action-size); }
+  .contact-arrow { align-self: center; margin-top: 0; }
+  .contact-details { margin-top: 32px; }
+  .contact-detail + .contact-detail { margin-top: 24px; }
+
+  .footer-layout { min-height: 0; padding-block: 48px; }
+  .footer-main { margin-top: 32px; }
+  .footer-bottom { margin-top: 32px; }
+}

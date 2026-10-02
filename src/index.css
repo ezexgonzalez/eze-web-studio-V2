@@ -8,6 +8,7 @@
 @import "./styles/projects.css";
 @import "./styles/about-faq.css";
 @import "./styles/contact-footer.css";
+@import "./styles/desktop-coherence.css";
 
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }

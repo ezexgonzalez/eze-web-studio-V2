@@ -4,10 +4,6 @@ import { anchors, footerNavigation } from '../../data/navigation'
 export function Footer() {
   return (
     <footer className="site-footer">
-      <div className="contact-footer-grid footer-grid" aria-hidden="true">
-        <div className="contact-footer-grid-mobile"><i /><i /><i /><b /><b /></div>
-        <div className="contact-footer-grid-desktop"><i /><i /><i /><i /><i /><i /><b /><b /><b /><b /></div>
-      </div>
       <div className="footer-layout">
         <span className="footer-rule" aria-hidden="true" />
         <div className="footer-main">

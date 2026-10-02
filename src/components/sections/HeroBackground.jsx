@@ -20,19 +20,12 @@ export function HeroBackground() {
         <img className="horizon-desktop-glow" src={desktopGlow} alt="" width="1536" height="842" />
         <img className="horizon-desktop-body" src={desktopBody} alt="" width="1536" height="820" />
         <img className="horizon-desktop-rim" src={desktopRim} alt="" width="1536" height="839" />
-        <div className="hero-grid hero-grid-desktop">
-          {Array.from({ length: 15 }, (_, i) => <i key={`v${i}`} style={{ left: `${Math.floor(i * 108.5)}px` }} />)}
-          {Array.from({ length: 7 }, (_, i) => <b key={`h${i}`} style={{ top: `${100 + i * 128}px` }} />)}
-        </div>
         {stars.map(([x,y,size]) => <img className="hero-star" src={starAssets[size]} key={`${x}:${y}`} alt="" width={size+14} height={size+14} style={{ left:x-7, top:y-7 }} />)}
       </div>
       <div className="hero-mobile-horizon">
         <img className="horizon-mobile-glow" src={mobileGlow} alt="" width="390" height="128" />
         <img className="horizon-mobile-body" src={mobileBody} alt="" width="390" height="98" />
         <img className="horizon-mobile-rim" src={mobileRim} alt="" width="390" height="118" />
-      </div>
-      <div className="hero-grid hero-grid-mobile"><i /><i /><i />
-        {Array.from({ length: 5 }, (_, i) => <b key={i} style={{ top:108+i*168 }} />)}
       </div>
     </div>
   )

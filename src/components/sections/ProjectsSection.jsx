@@ -29,8 +29,6 @@ export function ProjectsSection({ items = projects }) {
   return (
     <section id="proyectos" className="projects-section" aria-labelledby="projects-heading">
       <div className="projects-backdrop" aria-hidden="true">
-        <div className="projects-grid projects-grid-mobile"><i /><i /><i /><b /><b /><b /><b /></div>
-        <div className="projects-grid projects-grid-desktop"><i /><i /><i /><i /><i /><i /><i /><i /><b /><b /><b /><b /><b /><b /></div>
         <img className="projects-glow-mobile" src={glowMobile} alt="" width="390" height="690" />
         <img className="projects-glow-desktop" src={glowDesktop} alt="" width="1242" height="901" />
       </div>
