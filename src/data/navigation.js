@@ -20,3 +20,10 @@ export const navigation = {
   ],
   cta: { label: 'HABLEMOS', href: anchors.contacto, external: false },
 }
+
+export const footerNavigation = [
+  { label: 'Proyectos', href: anchors.proyectos },
+  { label: 'Estudio', href: anchors.estudio },
+  { label: 'FAQ', href: anchors.faq },
+  { label: 'Contacto', href: anchors.contacto },
+]

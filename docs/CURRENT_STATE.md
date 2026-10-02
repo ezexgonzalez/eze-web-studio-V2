@@ -79,13 +79,13 @@ La diferencia existente corresponde al bloque Foundation.
 
 Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de motion/carrusel/iconos ni WebGL/Three.js en producción.
 
-Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfile sin cambios en Blocks 02–05.
+Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfile sin cambios en Blocks 02–06.
 
-`App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection` → `ProblemSection` → `SolutionSection` → `ProjectsSection` → `AboutSection` → `FAQSection`.
+`App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection` → `ProblemSection` → `SolutionSection` → `ProjectsSection` → `AboutSection` → `FAQSection` → `ContactSection`; `Footer` es sibling de main para conservar el landmark de pie de página.
 
 **Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-Problema y Solución están CLOSED / APPROVED FOR CONTINUATION. Proyectos está CLOSED / APPROVED FOR CONTINUATION por Dirección. About + FAQ están IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA. Todavía NO están montados: Contacto ni Footer.
+Problema y Solución están CLOSED / APPROVED FOR CONTINUATION. Proyectos está CLOSED / APPROVED FOR CONTINUATION por Dirección. About + FAQ están CLOSED / APPROVED FOR CONTINUATION por Dirección. Contacto + Footer están IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA. Todas las secciones están montadas; esto no declara la landing Production FINAL / FROZEN.
 
 Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
 
@@ -617,11 +617,11 @@ PASS: npm run check, git diff --check y verificación SSR de datos/semántica/di
 
 ### BLOCK 05 — About + FAQ
 
-**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
 
 Base: `e5b7cf05d471b96396db4ecd65cad545fae88cae`. Commit de implementación: `3ebf81a51327063fd6055951adf1ba33aabf2a4e`.
 
-Componentes: `src/components/sections/{AboutSection,FAQSection}.jsx`. Data: `src/data/about.js` y `src/data/faq.js`. Estilos locales: `src/styles/about-faq.css`. Assets: cuatro SVG exactos PLUS/MINUS Desktop/Mobile en `src/assets/faq/`. App explícito después de Projects; import en index.css. Foundation y componentes/hooks/estilos/assets de Blocks 01–04 intactos. Sin dependencia ni motion nuevo; Contacto/Footer no implementados.
+Componentes: `src/components/sections/{AboutSection,FAQSection}.jsx`. Data: `src/data/about.js` y `src/data/faq.js`. Estilos locales: `src/styles/about-faq.css`. Assets: cuatro SVG exactos PLUS/MINUS Desktop/Mobile en `src/assets/faq/`. App explícito después de Projects; import en index.css. Foundation y componentes/hooks/estilos/assets de Blocks 01–04 intactos. Sin dependencia ni motion nuevo; Contacto/Footer corresponden exclusivamente a Block 06.
 
 Figma inspeccionado sin modificar: About `81:45` / `183:44`; FAQ `89:45` / `191:9`, metadata, design context, renders, propiedades internas, styles y geometría. About split editorial Desktop con divider Strong y grid propio; stack Mobile con pausa/divisor 32 × 1. FAQ header izquierdo/lista derecha Desktop, stack Mobile. Tokens tipográficos y colores existentes. Mobile <768, Transition 768–1199 en stack, Desktop ≥1200 en split; contenido en flujo/alturas mínimas, sin recorte de texto.
 
@@ -633,26 +633,27 @@ QA técnico PASS: baseline y final npm run check (lint/build), git diff --check,
 
 Bundle JS 227.53 → 232.93 kB (gzip 68.35 → 69.56); CSS 57.03 → 62.58 (gzip 11.65 → 12.59); Inter 352.24 sin cambios. package.json/lockfile intactos.
 
-Documentación: `docs/ABOUT_FAQ.md`. Browser/visual QA, consola real, keyboard físico, overflow y continuidad Proyectos → About → FAQ pendientes de Eze según política vigente; no se declaró comparación browser ↔ Figma ni se fabricaron screenshots. Respuestas FAQ 02–05 siguen pendientes de aprobación. Dirección todavía no cerró/aprobó Block 05. Block 06 no autorizado.
+Documentación: `docs/ABOUT_FAQ.md`. La revisión visual manual de Eze y aprobación de Dirección quedaron registradas en la actualización previa de continuidad; no se declaró comparación browser ↔ Figma ni se fabricaron screenshots. Respuestas FAQ 02–05 siguen pendientes de aprobación. Dirección cerró/aprobó Block 05 y autorizó Block 06. About + FAQ permanecen protegidos.
 
 ### BLOCK 06 — Contact + Footer
 
-**STATUS: AUTHORIZED / NOT YET CLOSED**
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
 
-Contacto:
+Base limpia: `5d888e2c448e87613c7a1cd98c0149fadae79b71`. Commit de implementación: se registra por SHA en el commit documental de continuidad posterior.
 
-- split Desktop;
-- stack Mobile;
-- HABLEMOS tipográfico;
-- mailto real;
-- URL externa desacoplada mientras siga pendiente.
+Componentes: nuevo `src/components/sections/ContactSection.jsx`, Footer existente adaptado en `src/components/layout/Footer.jsx`. Contacto dentro de main después de FAQ, Footer fuera de main; App explícito, estilos locales `src/styles/contact-footer.css` importados desde index.css. Dos SVG exactos Desktop/Mobile en `src/assets/contact/`. Copy/labels y destinos en `src/data/contact.js`; footerNavigation reutiliza anchors de navigation.js; wordmark/copyright/label de volver arriba en siteConfig. Exports y valores previos compartidos intactos.
 
-Footer:
+Figma inspeccionado sin modificar: Contacto `95:66` / `191:46`; Footer `99:66` / `191:71`. Metadata, design context, renders y propiedades internas/styles/geometry. Contacto split editorial con divider Strong, CTA tipográfica y grid Default propio Desktop; stack con grid Subtle Mobile. Footer conserva aire 864 Desktop, regla, wordmark/nav horizontal y bottom en extremos; Mobile 470 con nav vertical/targets 44 y back-to-top 101 × 44. Se reutilizan tokens y typography de Foundation; sin motion, formulario, cards, efectos ni dependencia nuevos.
 
-- cierre silencioso;
-- anchors internos;
-- Volver arriba;
-- no volver a vender.
+Destinos: email real `mailto:hola@ezewebstudio.com`; HABLEMOS disabled nativo sin href mientras externalCtaUrl siga null; Instagram texto no clickable mientras instagramUrl siga null. Cuando se aprueben URLs en data, se renderizan anchors externos seguros. Sin destinos inventados ni cambios a Header/Hero. Todos los anchors #inicio/#proyectos/#estudio/#faq/#contacto existen y son únicos. Smooth scroll/offset/reduced-motion de Foundation intactos.
+
+Responsive por código en 390/430/768/1024/1280/1536, bordes 767/768 y 1199/1200, más mínimo 320. Mobile/Transition stack hasta 1200; gutters/fluid type existentes y ancho CTA progresivo en Transition. CTA Desktop estrecho interpola localmente 56 → 64 a 1536 para evitar colisión con arrow; sin cambiar token. Contenido en flujo, min-height y wrapping. Presupuesto de widths/colisiones calculado, no medido en browser.
+
+QA técnico PASS: baseline/final npm run check (lint/build), git diff --check, React DOM/JSDOM/SSR (mailto/foco DOM, disabled/sin href, Instagram texto, fixture seguro de URLs futuras solo en memoria, App/footer/anchors/IDs/pending data/unmount), sin React warnings detectados. XML/root geometry de SVG válidos; imports build correctos. Componentes/hooks/CSS/assets/data de secciones Blocks 01–05 intactos; package.json/lockfile intactos.
+
+Bundle JS 232.93 → 238.12 kB (gzip 69.56 → 70.46), CSS 62.58 → 70.76 (gzip 12.59 → 13.76), Inter 352.24 sin cambios.
+
+Documentación: `docs/CONTACT_FOOTER.md`. QA visual/browser final, consola real, teclado físico, overflow y continuidad FAQ → Contacto → Footer pendientes de Eze; no comparación browser ↔ Figma ni screenshots fabricados. Instagram/HABLEMOS siguen null y pendientes anteriores permanecen. Dirección no cerró/aprobó Block 06. Próxima fase propuesta: Block 07 — Responsive Pass, pendiente de aprobación/autorización; no iniciado.
 
 ### BLOCK 07 — Responsive Pass
 
@@ -820,6 +821,7 @@ Estado actual:
 - Hero: SVG exactos de Figma locales en `src/assets/hero/`, incluyendo horizontes Desktop/Mobile y arrow; sin URLs temporales;
 - Proyectos: siete SVG exactos locales en `src/assets/projects/`, glows/flechas; previews de proyectos no existen en repo;
 - FAQ: cuatro SVG exactos PLUS/MINUS Desktop/Mobile locales en `src/assets/faq/`; About no agrega assets;
+- Contacto: dos SVG exactos Arrow Right Desktop/Mobile locales en `src/assets/contact/`, incluyendo stroke bounds Mobile; Footer no agrega assets;
 - favicon / OG visual: pendientes de asset aprobado.
 
 Al exportar desde Figma:
@@ -991,21 +993,15 @@ Eze Web Studio V2 solo puede considerarse Production FINAL / FROZEN cuando:
 
 ## 22. Próximo trabajo autorizado
 
-Blocks 01–04: **CLOSED / APPROVED FOR CONTINUATION**.
-
-### PRODUCTION BLOCK 05 — ABOUT + FAQ
-
-Status: **CLOSED / APPROVED FOR CONTINUATION**.
-
-Implementación y validaciones técnicas terminadas. Eze realizó la revisión visual manual y Dirección autorizó continuar. Referencia técnica: `docs/ABOUT_FAQ.md`. No reabrir About + FAQ salvo regresión verificable.
-
-Header + Hero, Problema + Solución, Proyectos y About + FAQ permanecen protegidos. El pulido no esencial del Hero sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica. Respuestas FAQ 02–05 y pendientes previos de Proyectos/destinos permanecen pendientes; no completar con contenido inventado.
+Blocks 01–05: **CLOSED / APPROVED FOR CONTINUATION**.
 
 ### PRODUCTION BLOCK 06 — CONTACTO + FOOTER
 
-Status: **AUTHORIZED / NOT YET CLOSED**.
+Status: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
 
-Implementar únicamente Contacto + Footer. El QA visual/browser final lo realiza Eze manualmente. No avanzar a Responsive Pass / Motion sin nueva aprobación de Dirección.
+Implementación y QA técnico terminados. Eze realiza QA visual/browser de Contacto + Footer; checklist y fuentes en `docs/CONTACT_FOOTER.md`. Dirección decide aprobación/cierre. No avanzar a Block 07 — Responsive Pass / Block 08 — Motion sin aprobación explícita. Todas las secciones están montadas, pero siguen pendientes de contenido/destinos y QA global; no declarar Production FINAL / FROZEN.
+
+Foundation, Header/Hero, Problema/Solución, Proyectos y About/FAQ permanecen protegidos. Pulido no esencial del Hero diferido a Block 08 o QA final. Figma intacto. FAQ answers 02–05, Projects 02–03/URLs/previews, Instagram/HABLEMOS URLs y favicon/OG permanecen pendientes; no completar con contenido inventado.
 
 ---
 

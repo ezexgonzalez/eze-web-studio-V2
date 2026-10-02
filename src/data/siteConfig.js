@@ -5,4 +5,5 @@ export const siteConfig = {
   wordmark: 'EZE WEB STUDIO',
   navigation,
   footerNote: '© 2026 Eze Web Studio',
+  backToTopLabel: 'Volver arriba ↑',
 }

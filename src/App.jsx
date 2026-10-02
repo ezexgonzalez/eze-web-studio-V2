@@ -5,6 +5,8 @@ import { SolutionSection } from './components/sections/SolutionSection'
 import { ProjectsSection } from './components/sections/ProjectsSection'
 import { AboutSection } from './components/sections/AboutSection'
 import { FAQSection } from './components/sections/FAQSection'
+import { ContactSection } from './components/sections/ContactSection'
+import { Footer } from './components/layout/Footer'
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
         <ProjectsSection />
         <AboutSection />
         <FAQSection />
+        <ContactSection />
       </main>
+      <Footer />
     </div>
   )
 }
