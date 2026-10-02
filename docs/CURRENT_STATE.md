@@ -669,7 +669,7 @@ QA técnico: baseline/final npm run check y git diff --check PASS; production pr
 
 Bundle JS 238.12 → 235.66 kB (gzip 70.46 → 70.22), CSS 70.76 → 70.65 (gzip 13.76 → 14.08), Inter intacto. Sin dependencias nuevas.
 
-Documentación: `docs/DESKTOP_COHERENCE_PASS.md`. Commit de implementación: se registra tras crear el commit. Pendiente: QA visual/browser de Eze, aprobación de Dirección y blockers de contenido existentes. **No APPROVED; Block 08 no autorizado.**
+Documentación: `docs/DESKTOP_COHERENCE_PASS.md`. Commit de implementación: `1f8ef0ab69823d2f3564bf2cbe4b2af2724b2698`. Pendiente: QA visual/browser de Eze, aprobación de Dirección y blockers de contenido existentes. **No APPROVED; Block 08 no autorizado.**
 
 ### BLOCK 08 — Motion
 

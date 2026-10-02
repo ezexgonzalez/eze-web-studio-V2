@@ -81,4 +81,4 @@ Eze debe validar escala/aire, crop de horizonte/halo, wrapping, alturas naturale
 
 ## COMMIT
 
-El SHA de implementación se registra en la actualización de continuidad posterior al commit.
+Implementación: `1f8ef0ab69823d2f3564bf2cbe4b2af2724b2698` en `feature/ews-v2-production`. La actualización de continuidad posterior registra este SHA sin autoreferencia de commit.
