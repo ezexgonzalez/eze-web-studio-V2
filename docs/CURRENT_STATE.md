@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 1 de octubre de 2026.
+> Última actualización: 2 de octubre de 2026.
 
 ---
 
@@ -619,7 +619,7 @@ PASS: npm run check, git diff --check y verificación SSR de datos/semántica/di
 
 **STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
 
-Base: `e5b7cf05d471b96396db4ecd65cad545fae88cae`. Commit de implementación: se registra por SHA en el commit documental de continuidad posterior.
+Base: `e5b7cf05d471b96396db4ecd65cad545fae88cae`. Commit de implementación: `3ebf81a51327063fd6055951adf1ba33aabf2a4e`.
 
 Componentes: `src/components/sections/{AboutSection,FAQSection}.jsx`. Data: `src/data/about.js` y `src/data/faq.js`. Estilos locales: `src/styles/about-faq.css`. Assets: cuatro SVG exactos PLUS/MINUS Desktop/Mobile en `src/assets/faq/`. App explícito después de Projects; import en index.css. Foundation y componentes/hooks/estilos/assets de Blocks 01–04 intactos. Sin dependencia ni motion nuevo; Contacto/Footer no implementados.
 

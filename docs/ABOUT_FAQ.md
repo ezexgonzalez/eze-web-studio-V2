@@ -4,7 +4,7 @@
 
 Branch: `feature/ews-v2-production`. Base auditada y sincronizada: `e5b7cf05d471b96396db4ecd65cad545fae88cae`.
 
-Commit de implementación: se registra por SHA en el commit documental de continuidad posterior.
+Commit de implementación: `3ebf81a51327063fd6055951adf1ba33aabf2a4e`.
 
 ## Fuentes y alcance
 
