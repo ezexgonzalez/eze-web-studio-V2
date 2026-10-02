@@ -85,7 +85,7 @@ Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfi
 
 **Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-Problema y Solución están CLOSED / APPROVED FOR CONTINUATION. Proyectos está CLOSED / APPROVED FOR CONTINUATION por Dirección. About + FAQ están CLOSED / APPROVED FOR CONTINUATION por Dirección. Contacto + Footer están IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA. Todas las secciones están montadas; esto no declara la landing Production FINAL / FROZEN.
+Problema y Solución, Proyectos y About + FAQ están CLOSED / APPROVED FOR CONTINUATION. Contacto + Footer completó implementación y el QA manual global de Eze detectó issues sistémicos que pasan al Block 07. Todas las secciones están montadas; la landing entra ahora en Responsive / Coherence correction pass y todavía no es Production FINAL / FROZEN.
 
 Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
 
@@ -637,7 +637,7 @@ Documentación: `docs/ABOUT_FAQ.md`. La revisión visual manual de Eze y aprobac
 
 ### BLOCK 06 — Contact + Footer
 
-**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
 
 Base limpia: `5d888e2c448e87613c7a1cd98c0149fadae79b71`. Commit de implementación: `e2d09e1510299568396369c00092d8dc21a240db`.
 
@@ -655,9 +655,9 @@ Bundle JS 232.93 → 238.12 kB (gzip 69.56 → 70.46), CSS 62.58 → 70.76 (gzip
 
 Documentación: `docs/CONTACT_FOOTER.md`. QA visual/browser final, consola real, teclado físico, overflow y continuidad FAQ → Contacto → Footer pendientes de Eze; no comparación browser ↔ Figma ni screenshots fabricados. Instagram/HABLEMOS siguen null y pendientes anteriores permanecen. Dirección no cerró/aprobó Block 06. Próxima fase propuesta: Block 07 — Responsive Pass, pendiente de aprobación/autorización; no iniciado.
 
-### BLOCK 07 — Responsive Pass
+### BLOCK 07 — Responsive / Viewport Coherence / Visual Cleanup
 
-**STATUS: PENDING**
+**STATUS: AUTHORIZED / NOT YET CLOSED**
 
 Revisar toda la landing en:
 
@@ -991,29 +991,36 @@ Eze Web Studio V2 solo puede considerarse Production FINAL / FROZEN cuando:
 
 ---
 
-## Manual QA activo — 2 de octubre de 2026
+## Manual QA consolidado — 2 de octubre de 2026
 
-Eze está realizando el QA visual/browser completo de la landing. Hallazgos actuales documentados en:
+Eze completó esta pasada de QA visual/browser y consolidó los hallazgos prioritarios en:
 
 `docs/qa/MANUAL_QA_2026-10-02.md`
 
-Hallazgo sistémico prioritario: la implementación Desktop replica demasiado literalmente las alturas/escala del master y se percibe sobredimensionada en monitores normales. El Responsive Pass deberá incorporar altura real de viewport, apuntar a una escena por pantalla para las secciones principales y compactar el Footer como cierre editorial. No usar zoom ni transform-scale global.
-
-Mientras el QA manual siga EN CURSO, no iniciar Motion ni un pass de correcciones parciales. Consolidar primero los hallazgos de Eze.
+Hallazgos prioritarios: Desktop sobredimensionado por traducción literal del master, secciones principales fuera de escala respecto del viewport, Footer excesivamente alto, grid decorativo no deseado, backgrounds inconsistentes y desalineación del bloque inferior de Proyectos. Block 07 debe resolverlos como sistema. No usar zoom ni transform-scale global. Motion permanece bloqueado hasta cerrar esta pasada.
 
 ---
 
 ## 22. Próximo trabajo autorizado
 
-Blocks 01–05: **CLOSED / APPROVED FOR CONTINUATION**.
+Blocks 01–06: **CLOSED / APPROVED FOR CONTINUATION**.
 
-### PRODUCTION BLOCK 06 — CONTACTO + FOOTER
+### PRODUCTION BLOCK 07 — DESKTOP SCALE / VIEWPORT COHERENCE / VISUAL CLEANUP
 
-Status: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
+Status: **AUTHORIZED / NOT YET CLOSED**.
 
-Implementación y QA técnico terminados. Eze realiza QA visual/browser de Contacto + Footer; checklist y fuentes en `docs/CONTACT_FOOTER.md`. Dirección decide aprobación/cierre. No avanzar a Block 07 — Responsive Pass / Block 08 — Motion sin aprobación explícita. Todas las secciones están montadas, pero siguen pendientes de contenido/destinos y QA global; no declarar Production FINAL / FROZEN.
+Resolver como una única pasada sistémica los hallazgos documentados en `docs/qa/MANUAL_QA_2026-10-02.md`:
 
-Foundation, Header/Hero, Problema/Solución, Proyectos y About/FAQ permanecen protegidos. Pulido no esencial del Hero diferido a Block 08 o QA final. Figma intacto. FAQ answers 02–05, Projects 02–03/URLs/previews, Instagram/HABLEMOS URLs y favicon/OG permanecen pendientes; no completar con contenido inventado.
+- adaptar la escala Desktop a monitores reales usando también altura de viewport;
+- hacer que Hero, Problema, Solución, Proyectos, About, FAQ y Contacto resuelvan aproximadamente una escena por viewport en condiciones Desktop normales;
+- compactar Footer y devolverle función de cierre, sin forzarlo a una pantalla completa;
+- eliminar todo grid decorativo visible de la landing;
+- usar Background oscuro como base de toda la página salvo About, que conserva Background Alternate;
+- realinear el bloque inferior de Proyectos, especialmente el CTA actualmente desplazado.
+
+Figma sigue siendo referencia de jerarquía, composición y lenguaje, pero estas decisiones explícitas de Dirección tienen prioridad sobre coordenadas/alturas literales del master.
+
+El agente entrega **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**. Eze realiza el QA visual/browser final. No iniciar Block 08 — Motion hasta nueva aprobación.
 
 ---
 
