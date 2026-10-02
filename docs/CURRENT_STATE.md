@@ -637,7 +637,7 @@ Documentación: `docs/ABOUT_FAQ.md`. Browser/visual QA, consola real, keyboard f
 
 ### BLOCK 06 — Contact + Footer
 
-**STATUS: PENDING**
+**STATUS: AUTHORIZED / NOT YET CLOSED**
 
 Contacto:
 
@@ -995,11 +995,17 @@ Blocks 01–04: **CLOSED / APPROVED FOR CONTINUATION**.
 
 ### PRODUCTION BLOCK 05 — ABOUT + FAQ
 
-Status: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
+Status: **CLOSED / APPROVED FOR CONTINUATION**.
 
-Implementación y validaciones técnicas terminadas. Siguiente acción: Eze realiza QA visual/browser de About + FAQ y Dirección decide aprobación/cierre. Referencia y checklist en `docs/ABOUT_FAQ.md`. No avanzar a Contacto + Footer sin nueva aprobación explícita de Dirección.
+Implementación y validaciones técnicas terminadas. Eze realizó la revisión visual manual y Dirección autorizó continuar. Referencia técnica: `docs/ABOUT_FAQ.md`. No reabrir About + FAQ salvo regresión verificable.
 
-Header + Hero, Problema + Solución y Proyectos permanecen protegidos. El pulido no esencial del Hero sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica. Respuestas FAQ 02–05 y pendientes previos de Proyectos/destinos permanecen pendientes; no completar con contenido inventado.
+Header + Hero, Problema + Solución, Proyectos y About + FAQ permanecen protegidos. El pulido no esencial del Hero sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica. Respuestas FAQ 02–05 y pendientes previos de Proyectos/destinos permanecen pendientes; no completar con contenido inventado.
+
+### PRODUCTION BLOCK 06 — CONTACTO + FOOTER
+
+Status: **AUTHORIZED / NOT YET CLOSED**.
+
+Implementar únicamente Contacto + Footer. El QA visual/browser final lo realiza Eze manualmente. No avanzar a Responsive Pass / Motion sin nueva aprobación de Dirección.
 
 ---
 
