@@ -6,6 +6,7 @@
 @import "./styles/header-hero.css";
 @import "./styles/problem-solution.css";
 @import "./styles/projects.css";
+@import "./styles/about-faq.css";
 
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }

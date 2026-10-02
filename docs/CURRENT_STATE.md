@@ -79,13 +79,13 @@ La diferencia existente corresponde al bloque Foundation.
 
 Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de motion/carrusel/iconos ni WebGL/Three.js en producción.
 
-Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfile sin cambios en Blocks 02, 03 y 04.
+Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfile sin cambios en Blocks 02–05.
 
-`App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection` → `ProblemSection` → `SolutionSection` → `ProjectsSection`.
+`App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection` → `ProblemSection` → `SolutionSection` → `ProjectsSection` → `AboutSection` → `FAQSection`.
 
 **Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-Problema y Solución están CLOSED / APPROVED FOR CONTINUATION. Proyectos está CLOSED / APPROVED FOR CONTINUATION por Dirección. Todavía NO están montados: About, FAQ, Contacto ni Footer.
+Problema y Solución están CLOSED / APPROVED FOR CONTINUATION. Proyectos está CLOSED / APPROVED FOR CONTINUATION por Dirección. About + FAQ están IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA. Todavía NO están montados: Contacto ni Footer.
 
 Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
 
@@ -595,7 +595,7 @@ Blockers nuevos: ninguno. Favicon 404 preexistente, asset favicon/OG pendiente. 
 
 Dirección aprobó continuar el 30 de septiembre de 2026. No reabrir Problema + Solución salvo regresión verificable.
 
-Siguiente bloque: Block 04 — Proyectos, **AUTHORIZED / NOT YET CLOSED**.
+Block 04 — Proyectos está CLOSED / APPROVED FOR CONTINUATION por Dirección.
 
 ### BLOCK 04 — Proyectos
 
@@ -613,27 +613,27 @@ Un activeIndex compartido; arquitectura nativa preparada para más registros, sc
 
 PASS: npm run check, git diff --check y verificación SSR de datos/semántica/disabled/no fake links, más rama multi-registro mediante fixture estructural aislado no publicado. Bundle JS 218.09 → 227.53 kB (gzip 66.44 → 68.35), CSS 49.59 → 57.03 (gzip 10.29 → 11.65), Inter 352.24 sin cambios.
 
-**QA browser NO realizado**: Chrome local no inicia por socket denegado; ejecución ampliada rechazada por sandbox_approval=false. Browser cloud rechaza localhost con ERR_BLOCKED_BY_CLIENT. Pendientes: capturas 1536/390, comparación Figma, seis viewports + bordes, consola, fuentes/assets reales, teclado/swipe y continuidad Solución → Proyectos. No declarar aprobado ni CLOSED hasta completar el gate. No se fabricaron PNG de evidencia.
-
-Documentación: docs/PROJECTS.md. Verificaciones y matriz pendiente: docs/qa/block-04/README.md. Bloque nuevo real: acceso permitido al preview en browser. Siguiente acción autorizada: completar QA de Block 04. Block 05 — About + FAQ sigue PENDING; Dirección debe autorizarlo.
+**QA browser del agente no realizado** en Block 04; los intentos históricos y verificaciones están en docs/PROJECTS.md y docs/qa/block-04/README.md. Dirección trasladó el QA visual/browser a Eze y aprobó continuar. La limitación del entorno no es un blocker actual de cierre técnico. No se fabricaron PNG de evidencia.
 
 ### BLOCK 05 — About + FAQ
 
-**STATUS: AUTHORIZED / NOT YET CLOSED**
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
 
-About:
+Base: `e5b7cf05d471b96396db4ecd65cad545fae88cae`. Commit de implementación: se registra por SHA en el commit documental de continuidad posterior.
 
-- split editorial Desktop;
-- stack Mobile;
-- no retrato inventado.
+Componentes: `src/components/sections/{AboutSection,FAQSection}.jsx`. Data: `src/data/about.js` y `src/data/faq.js`. Estilos locales: `src/styles/about-faq.css`. Assets: cuatro SVG exactos PLUS/MINUS Desktop/Mobile en `src/assets/faq/`. App explícito después de Projects; import en index.css. Foundation y componentes/hooks/estilos/assets de Blocks 01–04 intactos. Sin dependencia ni motion nuevo; Contacto/Footer no implementados.
 
-FAQ:
+Figma inspeccionado sin modificar: About `81:45` / `183:44`; FAQ `89:45` / `191:9`, metadata, design context, renders, propiedades internas, styles y geometría. About split editorial Desktop con divider Strong y grid propio; stack Mobile con pausa/divisor 32 × 1. FAQ header izquierdo/lista derecha Desktop, stack Mobile. Tokens tipográficos y colores existentes. Mobile <768, Transition 768–1199 en stack, Desktop ≥1200 en split; contenido en flujo/alturas mínimas, sin recorte de texto.
 
-- accordion;
-- single-open;
-- primer item abierto en estado maestro;
-- touch targets Mobile;
-- respuestas 2–5 siguen pendientes.
+Copy intencional: About secondary usa **“en cada proyecto”** del brief vigente/CURRENT_STATE, por prioridad de Dirección, aunque Figma aún dice **“sobre cada proyecto”**. Resto del copy aprobado exacto.
+
+Un único openId; FAQ 01 abierto inicialmente y funcional. FAQ 02–05 CLOSED y disabled nativos mientras answer sea null; sin panel vacío ni falsa respuesta. Se habilitan automáticamente al cargar una respuesta aprobada no vacía. h2/h3/button, aria-expanded/controls, paneles asociados y hidden, IDs useId, focus-visible heredado, touch target ≥44. Sin motion nuevo.
+
+QA técnico PASS: baseline y final npm run check (lint/build), git diff --check, interacción real React DOM en JSDOM (abrir/cerrar/null/disabled/single-open/hidden/foco DOM/IDs/unmount, sin React warnings), fixture aislado multi-answer fuera del producto y composición App/semántica/copy. Respuestas 02–05 conservan null. Revisión responsive por código en 390/430/768/1024/1280/1536 más 767/1199/1200; geometría calculada, no medida en navegador. Cuatro SVG válidos y resueltos por build.
+
+Bundle JS 227.53 → 232.93 kB (gzip 68.35 → 69.56); CSS 57.03 → 62.58 (gzip 11.65 → 12.59); Inter 352.24 sin cambios. package.json/lockfile intactos.
+
+Documentación: `docs/ABOUT_FAQ.md`. Browser/visual QA, consola real, keyboard físico, overflow y continuidad Proyectos → About → FAQ pendientes de Eze según política vigente; no se declaró comparación browser ↔ Figma ni se fabricaron screenshots. Respuestas FAQ 02–05 siguen pendientes de aprobación. Dirección todavía no cerró/aprobó Block 05. Block 06 no autorizado.
 
 ### BLOCK 06 — Contact + Footer
 
@@ -770,27 +770,13 @@ Hero no debe tener:
 
 ## 14. Gate obligatorio de cada bloque
 
-Cada bloque sigue:
+La validación completa sigue **IMPLEMENT → RENDER → COMPARE → CORRECT → RESPONSIVE CHECK → CLOSE**.
 
-**IMPLEMENT → RENDER → COMPARE → CORRECT → RESPONSIVE CHECK → CLOSE**
+Por decisión vigente de Dirección, el agente realiza implementación fiel desde Figma y QA técnico/estructural disponible: npm run check, git diff --check, semántica, datos reales, interacción automatizable y responsive por código. Entrega **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA** cuando esos controles pasan. La imposibilidad conocida de abrir Chrome/localhost no bloquea esa entrega técnica ni exige nuevos intentos de sandbox.
 
-No acumular varias secciones sin validación visual.
+Eze realiza el QA visual/browser final: fonts/assets cargados, estado maestro de componentes, motion detenido durante QA geométrico, comparación con Figma, corrección de discrepancias materiales, viewports/bordes, teclado/foco, consola y continuidad de página. Dirección aprueba/cierra el bloque y autoriza el siguiente. No inventar screenshots ni declarar comparaciones no realizadas.
 
-Para bloques visuales:
-
-1. ejecutar browser real;
-2. esperar fonts/assets;
-3. fijar estado de componentes interactivos;
-4. detener/fijar motion durante QA geométrico;
-5. capturar viewport maestro;
-6. comparar con render de Figma;
-7. corregir discrepancias materiales;
-8. revisar responsive;
-9. revisar consola;
-10. ejecutar `npm run check`;
-11. recién entonces cerrar el bloque.
-
-Diferencias de antialiasing no justifican cambiar geometría.
+Diferencias de antialiasing no justifican cambiar geometría. El cierre técnico no equivale a Production FINAL / FROZEN.
 
 ---
 
@@ -833,6 +819,7 @@ Estado actual:
 - iconografía aprobada: existe en Figma, exportar exacta cuando cada bloque la necesite;
 - Hero: SVG exactos de Figma locales en `src/assets/hero/`, incluyendo horizontes Desktop/Mobile y arrow; sin URLs temporales;
 - Proyectos: siete SVG exactos locales en `src/assets/projects/`, glows/flechas; previews de proyectos no existen en repo;
+- FAQ: cuatro SVG exactos PLUS/MINUS Desktop/Mobile locales en `src/assets/faq/`; About no agrega assets;
 - favicon / OG visual: pendientes de asset aprobado.
 
 Al exportar desde Figma:
@@ -1008,11 +995,11 @@ Blocks 01–04: **CLOSED / APPROVED FOR CONTINUATION**.
 
 ### PRODUCTION BLOCK 05 — ABOUT + FAQ
 
-Status: **AUTHORIZED / NOT YET CLOSED**.
+Status: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
 
-Implementar únicamente About + FAQ. El agente realiza QA técnico, estructural, responsive por código y validaciones disponibles; el QA visual/browser final lo realiza Eze manualmente. No bloquear el cierre técnico de un bloque por imposibilidad del entorno de abrir Chrome. No avanzar a Contacto + Footer sin nueva aprobación de Dirección.
+Implementación y validaciones técnicas terminadas. Siguiente acción: Eze realiza QA visual/browser de About + FAQ y Dirección decide aprobación/cierre. Referencia y checklist en `docs/ABOUT_FAQ.md`. No avanzar a Contacto + Footer sin nueva aprobación explícita de Dirección.
 
-Header + Hero, Problema + Solución y Proyectos permanecen protegidos. El pulido no esencial del Hero sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica.
+Header + Hero, Problema + Solución y Proyectos permanecen protegidos. El pulido no esencial del Hero sigue diferido a Block 08 — Motion o QA final. Foundation permanece CLOSED / APPROVED. Figma no se modifica. Respuestas FAQ 02–05 y pendientes previos de Proyectos/destinos permanecen pendientes; no completar con contenido inventado.
 
 ---
 

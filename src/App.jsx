@@ -3,6 +3,8 @@ import { HeroSection } from './components/sections/HeroSection'
 import { ProblemSection } from './components/sections/ProblemSection'
 import { SolutionSection } from './components/sections/SolutionSection'
 import { ProjectsSection } from './components/sections/ProjectsSection'
+import { AboutSection } from './components/sections/AboutSection'
+import { FAQSection } from './components/sections/FAQSection'
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <ProblemSection />
         <SolutionSection />
         <ProjectsSection />
+        <AboutSection />
+        <FAQSection />
       </main>
     </div>
   )
