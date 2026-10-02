@@ -1,6 +1,6 @@
 # Block 05 — About + FAQ
 
-**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
 
 Branch: `feature/ews-v2-production`. Base auditada y sincronizada: `e5b7cf05d471b96396db4ecd65cad545fae88cae`.
 
@@ -99,3 +99,8 @@ Eze debe comparar About 1536/390 y FAQ 1536/390 contra los nodos indicados, con 
 No se intentó reabrir el browser sandbox ni se fabricaron screenshots. Pendiente de contenido real: respuestas FAQ 02–05. No bloquea la implementación del estado aprobado, pero requiere Dirección antes de publicar FAQ completo. Los pendientes previos de Proyectos/destinos/assets globales permanecen.
 
 Dirección cierra/aprueba Block 05 después de la revisión manual. Block 06 — Contacto + Footer no está autorizado ni implementado.
+
+
+## Dirección — cierre de Block 05
+
+El 2 de octubre de 2026 Eze completó la revisión visual manual y Dirección autorizó continuar. Block 05 queda **CLOSED / APPROVED FOR CONTINUATION**. No reabrir About + FAQ durante Block 06 salvo regresión verificable. Las respuestas FAQ 02–05 continúan pendientes de contenido real y siguen fuera del alcance de implementación hasta aprobación.
