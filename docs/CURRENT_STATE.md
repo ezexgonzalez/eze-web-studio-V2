@@ -991,6 +991,18 @@ Eze Web Studio V2 solo puede considerarse Production FINAL / FROZEN cuando:
 
 ---
 
+## Manual QA activo — 2 de octubre de 2026
+
+Eze está realizando el QA visual/browser completo de la landing. Hallazgos actuales documentados en:
+
+`docs/qa/MANUAL_QA_2026-10-02.md`
+
+Hallazgo sistémico prioritario: la implementación Desktop replica demasiado literalmente las alturas/escala del master y se percibe sobredimensionada en monitores normales. El Responsive Pass deberá incorporar altura real de viewport, apuntar a una escena por pantalla para las secciones principales y compactar el Footer como cierre editorial. No usar zoom ni transform-scale global.
+
+Mientras el QA manual siga EN CURSO, no iniciar Motion ni un pass de correcciones parciales. Consolidar primero los hallazgos de Eze.
+
+---
+
 ## 22. Próximo trabajo autorizado
 
 Blocks 01–05: **CLOSED / APPROVED FOR CONTINUATION**.
