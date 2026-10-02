@@ -639,7 +639,7 @@ Documentación: `docs/ABOUT_FAQ.md`. La revisión visual manual de Eze y aprobac
 
 **STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
 
-Base limpia: `5d888e2c448e87613c7a1cd98c0149fadae79b71`. Commit de implementación: se registra por SHA en el commit documental de continuidad posterior.
+Base limpia: `5d888e2c448e87613c7a1cd98c0149fadae79b71`. Commit de implementación: `e2d09e1510299568396369c00092d8dc21a240db`.
 
 Componentes: nuevo `src/components/sections/ContactSection.jsx`, Footer existente adaptado en `src/components/layout/Footer.jsx`. Contacto dentro de main después de FAQ, Footer fuera de main; App explícito, estilos locales `src/styles/contact-footer.css` importados desde index.css. Dos SVG exactos Desktop/Mobile en `src/assets/contact/`. Copy/labels y destinos en `src/data/contact.js`; footerNavigation reutiliza anchors de navigation.js; wordmark/copyright/label de volver arriba en siteConfig. Exports y valores previos compartidos intactos.
 
