@@ -1,3 +1,16 @@
+# SUPERSEDED BY FIGMA 02B — DESKTOP PRODUCTION
+
+El pass documentado abajo corresponde al intento técnico previo al nuevo Desktop Production Master. Dirección lo rechazó como source of truth visual porque dependía demasiado de interpretación CSS.
+
+Source of truth vigente desde 3 de octubre de 2026:
+- Figma page: `02B — Desktop Production` (`239:10`)
+- canonical Desktop master: `239:11`, 1440×900 por escena
+- Mobile: `03 — Mobile` FINAL / FROZEN
+
+No usar este documento para decidir geometría visual nueva. Puede consultarse solo como historial técnico y para entender qué cambios ya existen en CSS.
+
+---
+
 # Block 07 — Desktop coherence pass
 
 **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
