@@ -1,6 +1,5 @@
 <svg width="1560" height="1380" viewBox="0 0 1560 1380" fill="none" xmlns="http://www.w3.org/2000/svg">
 <ellipse cx="780" cy="690" rx="780" ry="690" fill="url(#paint0_radial_242_68)"/>
-<path d="M780 1C1210.35 1 1559 309.588 1559 690C1559 1070.41 1210.35 1379 780 1379C349.651 1379 1 1070.41 1 690C1 309.588 349.651 1 780 1Z" stroke="#68F2FF" stroke-opacity="0.95" stroke-width="2"/>
 <defs>
 <radialGradient id="paint0_radial_242_68" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(780 1324.8) scale(1560 1380)">
 <stop stop-color="#074052" stop-opacity="0.46"/>

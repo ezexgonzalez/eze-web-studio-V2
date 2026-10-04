@@ -25,9 +25,7 @@
 .hero-primary { box-shadow: 0 10px 24px rgb(38 221 244 / 28%); }
 .hero-mobile-horizon { position: absolute; width: 390px; height: 128px; bottom: 0; left: 50%; transform: translateX(-50%) scale(calc(100vw / 390px)); transform-origin: bottom center; }
 .hero-mobile-horizon img, .hero-desktop-scene img { position: absolute; max-width: none; }
-.horizon-mobile-glow { top: 0; left: 0; }
 .horizon-mobile-body { top: 30px; left: 0; }
-.horizon-mobile-rim { top: 10px; left: 0; }
 .hero-desktop-scene { display: none; }
 .hero-star { left: var(--tablet-star-x); top: var(--tablet-star-y); }
 /* Retain the 390x844 rhythm; shorter screens reduce air before content. */
@@ -52,9 +50,7 @@
   .hero-actions .hero-outline { width: 214px; }
   .hero-mobile-horizon { display: none; }
   .hero-desktop-scene { display: block; position: absolute; top: 0; left: 50%; width: 1536px; height: 992px; transform: translateX(-50%) scaleX(max(1, calc(100vw / 1536px))); transform-origin: top center; }
-  .horizon-desktop-glow { top: 150px; left: 0; }
   .horizon-desktop-body { top: 172px; left: 0; }
-  .horizon-desktop-rim { top: 153px; left: 0; }
 }
 /* 02B Production 242:66; auxiliary 251:66 and 251:101. */
 @media (min-width: 75rem) {
@@ -77,25 +73,36 @@
   .hero-actions .hero-outline { width: 214px; }
   .hero-mobile-horizon { display: none; }
   .hero-desktop-scene { display: block; position: absolute; left: 50%; width: 1440px; height: 900px; top: 0; transform: translateX(-50%); }
-  .hero-desktop-scene :is(picture, .horizon-light-sweep) { position: absolute; left: -60px; top: clamp(128px, calc(150px + (100svh - 900px) / 6), 200px); width: 1560px; height: 1380px; }
+  .hero-desktop-scene :is(picture, .hero-light-arc) { position: absolute; left: -60px; top: clamp(128px, calc(150px + (100svh - 900px) / 6), 200px); width: 1560px; height: 1380px; }
   .hero-desktop-scene picture img { top: 0; left: 0; width: auto; height: auto; }
   .hero-star { left: var(--production-star-x); top: var(--production-star-y); }
 }
 @media (min-width: 110rem) {
-  .hero-desktop-scene :is(picture, .horizon-light-sweep) { left: -300px; width: 2040px; height: 1700px; top: 200px; }
+  .hero-desktop-scene :is(picture, .hero-light-arc) { left: -300px; width: 2040px; height: 1700px; top: 200px; }
 }
 
-/* Decorative enhancement layers; base SVGs and all content geometry stay intact. */
-.hero-particles { position: absolute; inset: 0; opacity: .36; pointer-events: none; }
-.hero-particles-mobile { opacity: .24; }
+/* Diffuse arc uses the original crop; body/content geometry remains intact. */
+.hero-particles { position: absolute; inset: 0; opacity: .55; pointer-events: none; }
+.hero-particles-mobile { opacity: .4; }
 .hero-particles canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
-.horizon-light-sweep { position: absolute; pointer-events: none; }
-.horizon-light-soft { filter: blur(5px); }
-.hero-mobile-horizon > .horizon-light-sweep { top: 10px; left: 0; width: 390px; height: 118px; }
+.hero-light-arc { position: absolute; overflow: visible; pointer-events: none; }
+.hero-mobile-horizon > .hero-light-arc { top: 10px; left: 0; width: 390px; height: 118px; }
 @media (min-width: 48rem) and (max-width: 74.999rem) {
-  .hero-desktop-scene > .horizon-light-sweep { top: 153px; left: 0; width: 1536px; height: 839px; }
+  .hero-desktop-scene > .hero-light-arc { top: 153px; left: 0; width: 1536px; height: 839px; }
 }
 /* JS owns loop cancellation; CSS additionally guards first-paint preferences. */
 @media (prefers-reduced-motion: reduce) {
-  .hero-particles, .horizon-light-sweep { display: none; }
+  .hero-particles { display: none; }
+}
+
+/* Exactly one static arc variant is painted at each approved crop. */
+.hero-desktop-scene > .hero-light-arc { display: none; }
+@media (min-width: 48rem) and (max-width: 74.999rem) {
+  .hero-desktop-scene > [data-arc-variant="tablet"] { display: block; }
+}
+@media (min-width: 75rem) and (max-width: 109.999rem) {
+  .hero-desktop-scene > [data-arc-variant="production"] { display: block; }
+}
+@media (min-width: 110rem) {
+  .hero-desktop-scene > [data-arc-variant="wide"] { display: block; }
 }

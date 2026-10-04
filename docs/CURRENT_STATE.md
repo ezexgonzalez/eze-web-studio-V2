@@ -77,7 +77,7 @@ La diferencia existente corresponde al bloque Foundation.
 
 ## 3. Estado técnico real actual
 
-Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de carrusel/iconos ni Three.js. Block08 incorpora Motion y un campo WebGL OGL únicamente en el Hero, con fallback SVG intacto.
+Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de carrusel/iconos ni Three.js. Block08 incorpora Motion y un campo WebGL OGL únicamente en el Hero, con fallback SVG difuso y superficie preservada.
 
 Runtime dependencies: `react`, `react-dom`, `motion@14.0.0`, `ogl@1.0.11`. Los dos últimos se incorporan en Block08; versiones previas del lockfile conservadas.
 
@@ -676,23 +676,21 @@ Documentación: `docs/DESKTOP_PRODUCTION_IMPLEMENTATION.md`. Un único commit de
 
 Dirección autorizó Block08 sobre esta geometría protegida. La web global no se declara FINAL/FROZEN; revisión visual y cierre definitivo siguen a cargo de Eze.
 
-### BLOCK 08 — Hero Motion / Living Background
+### BLOCK 08B — Hero Motion Correction / Living Light Arc
 
 **STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
 
-Dirección autorizó dar vida al Hero sobre la geometría existente protegida. Implementación sobre baseline limpio `5dac6abcef1e238bbec0d0cac87ad74e5116f217`; spike aislado antes de integrar producción. React Bits FREE Particles upstream `ca44b3f9ee180676a06d7de8ec6bea84cddff85b` adaptado, licencia real MIT + Commons Clause, notices conservados; ogl1.0.11 Unlicense y Motion14.0.0 MIT, React19 compatible. No Pro ni motor propio/renderer de horizonte nuevo.
+Block08 result `5a30369a8b48559a84fe47ab65e064521d4d2cde` was visually rejected by Eze: static-looking particles, outlined ring/add-on highlight, weak atmosphere and upper light cut. Block08B supersedes its visual approach.
 
-70/28 partículas, DPR1.5/1, speed.045/.03, cyan/soft white, sin rotación. Interacción local bounded solo Desktop/fine mouse; capa pointer-events:none/listener pasivo, sin captura touch. Motion pathOffset/pathLength sobre los cuatro paths/viewBoxes exactos (Production/Wide/Transition/Mobile), highlight14% con centro más corto,12/14s, glow suave sincronizado. Base rim/body nunca se apagan;10 estrellas Desktop conservadas.
+Hard rim/glow images and segmented HorizonLightSweep removed from rendering. Body asset audit found embedded outlines; only those strokes removed from four SVGs, fills/geometry preserved. HeroLightArc renders three diffuse bands (light/halo/mist) synchronously, including static SSR/fallback. Exact four path guides/crops retained; no dash/progress stroke. One Motion clock drives broad energy-density travel, breathing, mist drift and bounded local Desktop pointer response; no surface wobble. Explicit visible SVG overflow and160px filter padding replace internally cropped light images.
 
-Glow Motion18s reemplaza WAAPI; useHorizonGlow eliminado, un owner por efecto. Hook común controla reduce/visibilidad/breakpoints; carga lazy solo visible/motion permitido. Inactivo desmonta y libera canvas/RAF/Motion/resources; fallo WebGL/shader/context/import deja fallback estático latched hasta reload. StrictMode conserva un canvas vivo. Sin cambio de Hero layout/copy/assets/height/framing ni otras secciones/datos.
+Particles remain React Bits FREE/OGL70/28, DPR1.5/1, now speed.65/.45 and clearer size/alpha with seeded independent brightness variation. No new dependencies. Shared reduced/visibility/failure/resource lifecycle retained. Static fallback is now the polished diffuse arc, not the old construction line. Ten stars preserved. Layout/copy/fonts/buttons/header/heights/framing/other sections/data intact.
 
-Archivos: HeroBackground, header-hero.css, useHeroMotionPreferences; effects HeroAtmosphere/HeroParticles/HorizonLightSweep/horizonPaths; vendor react-bits source/LICENSE; public/licenses/hero-motion.txt; package/lockfile; docs HERO_MOTION/HEADER_HERO/CURRENT_STATE. Commit único identificado por `feat: add living Hero particles and horizon light sweep`; resolver SHA con `git log -1 --format=%H --grep='^feat: add living Hero particles and horizon light sweep$'` (SHA real en reporte final).
+Files: HeroBackground, HeroLightArc, LivingArcMotion/livingArcMotion, HeroAtmosphere/HeroParticles, particles adapter, header-hero.css, four body assets, docs HERO_MOTION/HEADER_HERO/CURRENT_STATE; deleted HorizonLightSweep. Commit identified by `fix: rework Hero as a living atmospheric light arc`; resolver `git log -1 --format=%H --grep='^fix: rework Hero as a living atmospheric light arc$'`, SHA delivered in report.
 
-QA técnico PASS: npm run check/git diff --check;9 lifecycle tests aislados JSDOM/OGL simulado + Motion real, SSR estático completo/IDs únicos, paths/viewBoxes idénticos y CSS layout previo conservado. No browser visual/GPU/console/scroll PASS; Eze valida Desktop1366×768/1440×900/1536×864/1920×1080 y Mobile360×800/390×844/393×873/430×932. No screenshots fabricados ni dependencia de test retenida.
+Technical QA: npm run check/git diff --check PASS; isolated SSR/controller assertions for fallback/IDs/stars/exact guides/energy/pointer recovery/cleanup; SVG fill-preservation and protected layout checks. No browser visual/GPU PASS. Eze validates Desktop1366×768/1440×900/1536×864/1920×1080 and Mobile360×800/390×844/393×873/430×932. Concept implementation complete, visual success criteria remain pending manual review. Details `docs/HERO_MOTION.md`.
 
-Bundle baseline→final: initialJS241.88→243.67kB/gzip70.99→71.75; effects lazy107.90/gzip35.87; total loaded351.57/gzip107.62; CSS68.04→66.92/gzip13.51→13.40. Fuente intacta. Coste entregado de libs+adaptador, no GPU benchmark. Pendientes de contenido anteriores intactos. Detalle `docs/HERO_MOTION.md`.
-
-Próxima acción: QA visual Eze y decisión de Dirección. No motion de otras secciones ni implementación Block09 en esta pasada.
+Next: Eze visual QA / Direction decision. No later-section motion or Block09.
 
 ### BLOCK 09 — Accessibility + Performance
 
@@ -734,7 +732,7 @@ Solo después puede declararse Production FINAL / FROZEN.
 
 ## 12. Hero effect research / decisión técnica vigente
 
-Block08 selecciona React Bits FREE Particles (adaptación JS/CSS + OGL) y Motion para luz sobre el rim SVG exacto, con base SVG siempre presente. El antiguo glow WAAPI fue reemplazado, sin loops paralelos. Detalle técnico/licencias/spike/costes/fallback en `docs/HERO_MOTION.md`. Implementación lista; aprobación visual final pendiente de Eze.
+Block08B conserva React Bits FREE Particles (JS/CSS + OGL) y Motion, pero reemplaza rim duro/sweep por luz difusa viva guiada por los paths exactos. El fondo estático utiliza el mismo arco atmosférico. El antiguo glow WAAPI fue reemplazado, sin loops paralelos. Detalle técnico/licencias/spike/costes/fallback en `docs/HERO_MOTION.md`. Implementación lista; aprobación visual final pendiente de Eze.
 
 MagicRings permanece **REJECTED** por su corte/fade histórico y coste; no se volvió a probar en Block08. ShaderGradient/Vanta no ejecutados ni declarados rechazados. No renderer genérico sustituye el horizonte aprobado; no Pro.
 
@@ -1060,7 +1058,7 @@ Reglas obligatorias:
 - QA visual/browser final lo realiza Eze.
 
 Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
-Block08 Living Hero está implementado y pendiente de QA visual Eze; no iniciar otras fases sin Dirección.
+Block08 fue rechazado visualmente; la corrección08B Living Light Arc está implementada y pendiente de QA visual Eze; no iniciar otras fases sin Dirección.
 
 ---
 

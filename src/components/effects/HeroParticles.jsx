@@ -7,9 +7,9 @@ export function HeroParticles({ backgroundRef, desktop, interactive, onFailure }
   const containerRef = useRef(null)
   useEffect(() => createParticleField(containerRef.current, {
     particleCount: desktop ? 70 : 28,
-    speed: desktop ? 0.045 : 0.03,
+    speed: desktop ? 0.65 : 0.45,
     particleColors: colors,
-    particleBaseSize: desktop ? 36 : 28,
+    particleBaseSize: desktop ? 54 : 40,
     pixelRatio: Math.min(window.devicePixelRatio || 1, desktop ? 1.5 : 1),
     interactive,
     pointerTarget: backgroundRef.current.closest('.hero'),

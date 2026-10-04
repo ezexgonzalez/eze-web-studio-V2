@@ -88,7 +88,7 @@ const fragment = /* glsl */ `
       gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), 1.0);
     } else {
       float circle = smoothstep(0.5, 0.4, d) * 0.8;
-      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle * mix(0.35, 0.9, vRandom.z));
+      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle * mix(0.5, 0.95, vRandom.z) * (0.78 + 0.22 * sin(uTime * (0.6 + vRandom.x) + vRandom.w * 6.28)));
     }
   }
 `;

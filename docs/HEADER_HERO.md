@@ -137,7 +137,7 @@ Preferencia técnica:
 La geometría, tipografía, copy, CTAs y crop de 02B Desktop Production / 03 Mobile siguen protegidos.
 
 
-## Block 08 — Living Hero implementation
+## Block 08 — Living Hero implementation (superseded / visually rejected)
 
 **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**. Geometría Desktop02B y Mobile/framing preservada. Fondo estático anterior permanece como fallback; el hook WAAPI useHorizonGlow fue eliminado y reemplazado por un único owner Motion del glow.
 
@@ -146,3 +146,11 @@ React Bits FREE Particles adaptado (upstream ca44b3f9ee180676a06d7de8ec6bea84cdd
 Reduced-motion/offscreen/hidden cancela y desmonta efectos; un canvas vivo, recursos liberados y fallo WebGL/contexto/import deja fallback estático completo sin retries continuos. Chunk lazy107.90kB/gzip35.87; initialJS243.67/gzip71.75 frente241.88/gzip70.99. CSS66.92/gzip13.40 frente68.04/gzip13.51. Sin cambio de layout, assets, texto ni secciones posteriores.
 
 QA técnico: npm run check/git diff --check,9 tests JSDOM con OGL simulado y Motion real, SSR y equivalencia exacta de paths/declaraciones CSS. No GPU/render visual PASS ni screenshots fabricados; el juicio premium/calma/sweep/scroll/performance real lo realiza Eze. Detalle: `docs/HERO_MOTION.md`. Commit único identificado por `feat: add living Hero particles and horizon light sweep`; SHA real en reporte final.
+
+## Block 08B — Living Light Arc correction
+
+**IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**. Supersedes08's hard rim + short sweep concept. The approved curve is now only a guide for diffuse core/halo/mist bands, broad moving density and soft local Desktop light displacement. Removed exported rim/glow from DOM and removed embedded outlines from the four body SVGs; fills, body geometry, stars and all layout remain intact. Static/reduced/failure state renders the same diffuse arc without loops, synchronously including SSR.
+
+One Motion clock drives18/22s density travel, mist drift, intensity and450ms pointer recovery; no dash/loader, sharp stroke, old glow owner or hover on Mobile. Particle speeds.65/.45, size54/40, opacity.55/.4, seeded brightness; count70/28 and DPR1.5/1 unchanged. Inline SVG visible overflow/filter160px padding addresses internal upper glow crop; actual visual correction needs Eze browser review. No dependencies/data/other sections changed.
+
+Technical checks and implementation details in `docs/HERO_MOTION.md`; current source/state in `docs/CURRENT_STATE.md`. Prior08's visual result is not approved. Commit: `fix: rework Hero as a living atmospheric light arc` (actual SHA in delivery report). No Block09/later-section motion.

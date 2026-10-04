@@ -1,107 +1,55 @@
-# Block 08 — Living Hero
+# Block 08B — Living Light Arc
 
-**IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+**IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA** — 4 October 2026.
 
-## Baseline / scope
+## Baseline / rejected approach
 
-Synced clean production branch, baseline `5dac6abcef1e238bbec0d0cac87ad74e5116f217`; baseline lint/build PASS. Desktop02B and Mobile03/framing protected. No copy, typography, spacing, CTA, header, section-height, asset or later-section changes.
+Clean synced baseline `5a30369a8b48559a84fe47ab65e064521d4d2cde`; npm run check PASS. Eze rejected Block08: almost static particles, readable ring, add-on highlight, weak atmosphere and upper light cut. Its segmented pathOffset/pathLength sweep and exported glow/rim are superseded, not retained as competing layers. `useHorizonGlow.js` was already deleted in08; it remains absent.
 
-## Selected libraries / provenance
+Desktop02B and Mobile03/viewport framing remain protected. No layout, copy, header, typography, buttons, heights, other sections, data or interaction changes outside the Hero decoration.
 
-- React Bits FREE **Particles, JS/CSS variant**, inspected current official source at commit `ca44b3f9ee180676a06d7de8ec6bea84cddff85b`: https://github.com/DavidHDev/react-bits/blob/ca44b3f9ee180676a06d7de8ec6bea84cddff85b/src/content/Backgrounds/Particles/Particles.jsx . Copied/adapted source under `src/vendor/react-bits/particles.js`; not a newly authored particle engine.
-- Upstream license is **MIT + Commons Clause**, not plain MIT/OSI-open-source. It permits use as part of an application/website/product including commercial purposes, and restricts resale/redistribution of the components themselves. Current LICENSE retained next to copied code and in served notices; no Pro source used.
-- `ogl@1.0.11`, Unlicense, is the one renderer dependency required by upstream. Current npm metadata verified before installation; upstream https://github.com/oframe/ogl, license text from README.
-- `motion@14.0.0`, MIT, pinned from current npm registry. Peer range React/ReactDOM18 or19; existing React19.2.7 retained. Used JS `animate`, `motionValue`, `svgEffect` APIs inside React effects. Docs: https://motion.dev/docs/svg-effect and https://motion.dev/docs/animate . No Motion+.
-- Motion brings its own framer-motion/motion-dom/motion-utils14 dependencies and promotes existing tslib to runtime. No separate framer-motion dependency was added by us. All existing installed versions in lockfile remain unchanged.
-- Full React Bits/Motion family/OGL/tslib notices served at `/licenses/hero-motion.txt`; upstream vendor license also preserved in repo.
+## Arc construction / static line removal
 
-## Controlled spike / gate
+`HeroLightArc.jsx` renders one diffuse field per approved viewport crop. The four exact rim paths/viewBoxes remain geometry guides. No unblurred stroke, dash segment, progress offset, loader or exported rim image is rendered. Three bands: core9px/blur4, halo30px/blur14, mist64px/blur28; Mobile5/2.5,16/8,34/16. A broad multi-stop cyan/light-cyan gradient gives soft concentrations, never a hard white stroke.
 
-Before production edits, copied the current static Hero into an isolated temporary Vite app, installed only ogl/Motion, integrated Particles + exact-path Motion sweep, built it and ran lifecycle tests. Production remained unchanged until the technical spike passed.
+Asset audit found an additional bright outline embedded in ALL four body SVGs. Removed only stroke-only paths from Desktop/Production/Wide bodies and only the stroke attribute from Mobile's filled path. Fill/gradient/ellipse/path/viewBox/dimensions unchanged, verified against baseline. Original rim/glow asset files remain historical/unimported; they are not in the live composition. Ten static Desktop stars preserved.
 
-Nine isolated Vitest/JSDOM tests cover canvas/RAF ownership, explicit disposal, initialization/link failure, context loss, bounded pointer state, StrictMode preference subscription cleanup, actual Motion SVG integration, full-Hero reduced/offscreen/static fallback, cheaper Mobile configuration and WebGL failure latch. OGL is stubbed for deterministic lifecycle assertions. This exercises integration code, **not real GPU shader compilation/rendering or visual quality**. No test fixture or test-only packages retained in production.
+Static diffuse arc is rendered synchronously, including SSR, without Motion/WebGL. CSS paints only the appropriate Desktop variant; Mobile has its own variant. No portal/observer-dependent blank fallback.
 
-1440×900 and390×844 configurations map to the protected geometry; browser visual spike acceptance (premium/calm particles, sweep versus loader, text dominance) remains with Eze. No unavailable Chrome workaround retried, no fabricated screenshots or visual PASS. Candidate retained for that review; do not treat technical completion as final visual approval.
+## Living arc / pointer
 
-## Particles / configuration
+Motion remains the selected existing library. One18s Desktop/22s Mobile clock controls broad gradient travel (sinusoidal ±22% viewBox width), gentle density breathing, and mist drift (Desktop5px lateral/4px vertical, Mobile2px). Smooth periodic return avoids dash seam and visible lap reset. This is broad light-density motion, not a short bright spot orbiting a ring. Atmospheric mist is diffuse light volume; no smoke texture/noise renderer added.
 
-| Configuration | Desktop >=1200 | Mobile / Transition |
-| --- | --- | --- |
-| Particle count | 70 | 28 |
-| Speed (upstream time multiplier) | .045 | .03 |
-| DPR cap | 1.5 | 1 |
-| Point base size (upstream distance formula) | 36 | 28 |
-| Layer opacity | .36 | .24 |
-| Spread / camera distance | 8 /20 | 8 /20 |
-| Rotation | Disabled | Disabled |
-| Pointer | Fine mouse + hover only | Off |
+Desktop fine-hover mouse uses passive pointermove, SVG inverse screen CTM and96 curve samples. Response fades within140 SVG units of the curve. A150-unit radial mask reveals a diffuse local light duplicate, drifting upward at most5 SVG units and intensifying up to.5 alpha, eased over450ms. It shifts local light density rather than distorting the surface or making the whole ellipse wobble. Exit/blur returns smoothly. Touch/pen ignored, pointer-events:none, no capture/preventDefault. Mobile has no pointer listener.
 
-Palette #59E3FF/#75F6FF/#F5F7F7; original random positions/depth/sizes/drift retained. Small opacity diversity added using original vRandom.z. No camera rotation, click bursts or noise overlays. GPU positions update through the upstream shader; no per-particle React state. Point-size values are upstream inputs, not fixed CSS pixel sizes.
+Cleanup stops the single clock, removes listeners and resets gradient/mist/intensity/response to static state. Breakpoint changes restart only the current variant. Arc initialization failure goes through the shared static failure latch.
 
-### Pointer interaction
+## Particles correction
 
-Original React Bits hover translates the entire field. Replaced that part with a small localized shader addition: two uniforms and a bounded screen-space displacement, radius .24 NDC and maximum .014 NDC (about10px horizontally at1440). Strength eases over180ms. Original drift/position sampling/renderer retained; no replacement engine or substantial shader rewrite.
+Existing React Bits FREE Particles/OGL adapter retained. The previous speeds .045/.03 yielded near-frozen drift: raised to.65/.45 (14.4×/15×). Existing independent sinusoidal drift/depth retained, without rotation. Base-size input54/40 rather than36/28, layer opacity.55/.4 rather than.36/.24; shader alpha now independently breathes from seeded phase. Counts remain70/28, cyan/soft-white palette, DPR caps1.5/1. Sparse depth is preserved; actual apparent density/motion needs Eze review. Existing bounded local Desktop particle response and lifecycle remain intact.
 
-Passive window pointermove observes the Hero bounds, including UI overlays, without intercepting events. Touch/pen ignored; only Desktop fine-hover mouse enables listener. No capture, preventDefault, scroll handling or input overlay. Outside Hero/blur resets strength. Decorative layer and canvas use pointer-events:none.
+## Upper cut / crop audit
 
-## Horizon technique / exact geometry
+Previous exported glow contains a path only5px from its own SVG top and blur11; visible overflow was not guaranteed for that image viewport. The old sweep was also a separate bounded SVG. Both are removed from rendering. New inline SVG explicitly uses overflow:visible; blur filters use userSpace bounds padded160px on all sides, large enough for half-band width32 + blur28×3 + drift4. Regions use the visible viewBox +320px, not oversized full offscreen ellipse bounds. Core/halo/mist share the same positioning owner as the body picture.
 
-`horizonPaths.js` contains verbatim d/viewBox from production-rim, production-wide-rim, desktop-rim (Transition) and mobile-rim. Programmatic comparisons PASS. No morphing or approximated ellipse. Local asset files remain untouched.
+Preserved placement: Production1560×1380 atleft-60/topclamp128–200; Wide2040×1700 atleft-300/top200; Tablet1536×839 attop153; Mobile390×118 attop10 inside bottom-anchored horizon. The scene/horizon wrappers do not clip filters. Only the overall Hero background clips to the section boundary, preserving the intended page crop and preventing overflow into later sections. At shortest Desktop Production top128, upper light3σ extent stays about9px below section top. No internal SVG/filter top cut is imposed. Eze must verify the previously observed cut is visually resolved at all checkpoints; no browser PASS claimed.
 
-One SVG sweep uses four synchronized strokes: broad low-alpha cyan glow (blur5px), faint14% cyan shoulder,10% cyan sharp shoulder,5% soft-white centre. Common progress drives Motion pathOffset; each stroke gets its own short pathLength. Initial dash attributes prevent a full-rim enhancement flash before Motion binds. Base rim/body/glow are independent and never hidden.
+## Reduced motion / fallback / lifecycle
 
-Full traversal12s Desktop/Transition,14s Mobile; linear velocity, modulo-one looping. Enhancement intensity breathes .65–.9–.65 over9s. Layered stroke lengths/alpha soften the segment instead of drawing the entire rim like a loader. Eze must assess actual visual result.
+Shared preferences hook unchanged: reduced-motion/hidden/offscreen unmounts all live controllers/particles, stops continuous loops and disposes OGL. Static diffuse light + fill surfaces + stars always remain, including SSR and chunk import/WebGL/context failure. Failure latch stays until reload, no retry loop. Reduced motion has no pointer/travelling energy/particles. StrictMode ownership remains effect setup/cleanup; one canvas, one arc clock. No old glow animation owner remains.
 
-Sweep portals into the existing Desktop scene or Mobile horizon. Existing Production picture placement rule also positions sweep SVG, including wide crop, so no parallel geometry system. Transition153/1536×839 and Mobile10/390×118 match original rim placements. Mobile keeps proportional bottom-anchored horizon framing. All enhancement layers are absolute/decorative; no layout shift by CSS structure.
+## Libraries / licenses
 
-## Ambient glow / static stars
+No dependency added or changed: ogl1.0.11 Unlicense, motion14.0.0 MIT (React19 compatible). React Bits source ca44b3f9ee180676a06d7de8ec6bea84cddff85b is MIT + Commons Clause, not plain MIT; attribution/notices unchanged. No Pro, new renderer, particle engine rewrite or alternate library.
 
-Motion replaces `useHorizonGlow.js`, which is deleted. Single glow owner:18s opacity1/.84/.96/1 Desktop/Transition and1/.92/.98/1 Mobile. Body/base rim never animated. Cleanup stops controls and removes inline opacity, restoring full base glow.
+## Validation / performance
 
-All ten Desktop static star assets/positions retained as anchor lights and fallback. Mobile preserves its existing static composition, without adding new fixed stars. Combined density still needs Eze's visual review; no anchor asset removed speculatively.
+npm run check and git diff --check PASS. Isolated Vite SSR + deterministic arc-controller harness checks complete static diffuse fallback, unique SVG IDs, ten stars, four exact guide paths, continuous gradient changes, bounded pointer response/recovery, cleanup, and noninteractive configuration. Body XML comparison verifies only outline removals. Protected layout declarations and later-section/data/package diffs checked. These are structural/lifecycle tests, not real browser/GPU validation. Prior08's nine tests are historical, not claimed rerun for08B.
 
-## Reduced motion / fallback / visibility
+SVG blur is now the main arc cost: three painted blur bands plus one masked response; hidden crop variants do not paint. One Motion clock replaces multiple sweep/glow timelines. OGL still has one RAF and70/28 points. DPR caps unchanged. Production build compared to08 baseline: initial JS243.67→235.97kB (gzip71.75→71.42), effects107.90→107.77kB (gzip35.87→35.67), CSS66.92→67.05kB (gzip13.40→13.41). Some historical inline image payload leaves the entry bundle; no dependency changes. These are delivered byte sizes, not render-cost measurements. No measured FPS, GPU or battery claim; validate on real hardware.
 
-`useHeroMotionPreferences` owns reduced-motion, breakpoint/pointer queries, IntersectionObserver and visibilitychange. Effects load dynamically only while visible, document visible and motion allowed. Initial/SSR state is complete static Hero. Without IntersectionObserver, static fallback stays.
-
-Reduced-motion changes unmount particles/sweep/glow owner; no active decorative RAF or opacity loop remains. CSS adds a first-paint guard but JS owns cancellation. No effects chunk requested for a session that stays reduced/static.
-
-Offscreen/document.hidden unmounts enhancements, cancelling animations and destroying WebGL resources/context. Resume mounts a fresh field (random points may differ) and timelines start cleanly. StrictMode setup/cleanup leaves one live canvas and one field, with explicit listeners/observer/frame removal.
-
-Renderer init/render failure, shader-link failure, context loss or chunk import failure latches static fallback for the current page session. Contextlost cancels frame, removes canvas, deletes resources if possible and releases context. No automatic context-restoration retry loop; reload can retry. Full base assets remain underneath; no blank Hero. On normal teardown buffers/program/context are released.
-
-## Performance
-
-Same production toolchain/React baseline before/after, minified Vite output:
-
-| Asset | Baseline kB / gzip | Implementation kB / gzip |
-| --- | --- | --- |
-| Initial JS | 241.88 /70.99 | 243.67 /71.75 |
-| Lazy effects JS | None | 107.90 /35.87 |
-| Total JS if effects loaded | 241.88 /70.99 | 351.57 /107.62 |
-| CSS | 68.04 /13.51 | 66.92 /13.40 |
-| Inter | 352.24 | 352.24 |
-
-Initial gzip delta+.76kB; full loaded JS gzip delta+36.63kB. Lazy chunk is the **delivered dependency + adapter cost**, not an individual package size or GPU benchmark. OGL/Motion are only requested for an eligible visible Hero. No renderer overhead in static/reduced mode apart from lightweight preference subscriptions.
-
-Active system: one OGL canvas/RAF, one Motion path progress timeline, two opacity timelines (base glow and enhancement intensity); Motion shares its scheduler and may use native opacity animation where supported. Hidden/reduced/failed state: zero decorative animation loops/canvases; one visibility/preference owner remains to resume. No measured FPS, battery or physical GPU claim. Mobile scroll and actual device cost require Eze QA.
-
-## Validation / manual QA
-
-- Baseline/final npm run check PASS; git diff --check PASS. Production preview/initial and lazy JS/CSS/Inter/served notices HTTP200 (not browser QA).
-- Nine isolated lifecycle tests PASS (JSDOM/OGL stub; actual Motion API).
-- Actual React SSR: complete static Hero, no canvas/sweep, seven sections, ten existing stars, one real project, unique IDs.
-- AST CSS check: every previous Hero declaration unchanged; only placement selector expanded to include sweep and enhancement-only rules added.
-- All four rim path/viewBox pairs exactly equal local SVGs; HeroSection/content/data/assets/other sections/framing/styles unchanged.
-- Existing dependency versions unchanged; no test-only package in production manifest/lockfile.
-- Eze targets: Desktop1366×768/1440×900/1536×864/1920×1080; Mobile360×800/390×844/393×873/430×932. Check pointer subtlety, rim identity/brightness, particle density, text dominance, touch scrolling, chrome height changes, fallback/reduced-motion, visibility, console, fonts/assets, zoom and real performance.
-
-## Tuned / rejected options
-
-Only React Bits FREE Particles + Motion actually evaluated in this pass. Tuned from upstream count200/speed.1/base100/rotation/default-white to sparse cyan depth, lower inputs/DPR, no rotation and local gentle pointer response. Replaced upstream limited teardown with explicit failure/resource lifecycle. No generic rim library tried; MagicRings remains historically rejected, not retried here.
+Eze QA:1366×768,1440×900,1536×864,1920×1080; Mobile360×800,390×844,393×873,430×932. Check visible particle life, soft arc vs outline, pointer refinement, upper glow continuity, text dominance, touch scrolling, resize, reduced-motion/fallback, console and real cost. No fabricated screenshots or final visual approval.
 
 ## Commit / next
 
-One implementation commit: `feat: add living Hero particles and horizon light sweep`; resolve SHA with `git log -1 --format=%H --grep='^feat: add living Hero particles and horizon light sweep$'`. Actual SHA delivered in final report; no extra self-referential documentation commit.
-
-Next: Eze visual/browser QA of Hero motion. No later-section motion or Block09 implementation authorized by this delivery.
+One commit: `fix: rework Hero as a living atmospheric light arc`; resolve SHA with `git log -1 --format=%H --grep='^fix: rework Hero as a living atmospheric light arc$'`. Actual SHA delivered in final report. Next: Eze visual QA, no other-section motion or Block09.
