@@ -719,7 +719,7 @@ Bundle inicial236.02→237.49kB (gzip71.43→72.04); Hero lazy completo109.34→
 
 ### BLOCK 08E — Hero Motion Lab / Runtime Proof
 
-**STATUS: AUTHORIZED / DIAGNOSTIC FIRST — DO NOT INTEGRATE BLINDLY**
+**STATUS: HERO MOTION LAB — READY FOR EZE INTERACTIVE TUNING**
 
 08D is rejected after real-browser QA. The approved diffuse LOOK remains. The problem is now treated as a runtime/proof problem, not another tuning problem.
 
@@ -732,12 +732,15 @@ Concrete findings from repo review:
 
 New rule: no more 20–30 minute production passes without visible runtime proof.
 
-08E must create a temporary dev-only Hero Motion Lab with:
-- explicit runtime status for PARTICLES / ARC / POINTER / REDUCED MOTION;
-- no silent fallback while lab mode is active;
-- deliberately exaggerated motion preset to prove the systems are actually rendering and reacting;
-- live controls for particle speed/repulse/count/opacity and arc idle displacement/pointer radius/pointer strength/recovery;
-- a single URL/query/dev switch to open the lab without affecting production layout.
+08E entrega un Lab temporal exclusivamente con `npm run dev` + `?heroLab=1`; preview/deploy no lo activan. Panel fuera del aria-hidden/clipping del fondo: PARTICLES/ARC LOADING–RUNNING–FAILED, POINTER ACTIVE–INACTIVE, reduced motion ON–OFF, viewport, PAUSED explícito por visibilidad/reduce y errores completos. Canvas/count/DPR/travel y filtros reales visibles; timeout8s y stall3s reportados. RUNNING no equivale a aprobación visual.
+
+Flujo Lab único oficial4.4: ParticlesProvider + Particles, init estable, sin engine.load/hosts manuales. Preset60, speed2.5–4, opacity.35–.8, size3–7, repulse200/strength4; círculos cyan nativos deliberadamente claros para aislar rendering/movimiento. Arco conserva geometría/colores/bandas: displacement200–260/100–160/40–70, noise5×, radius350, local500, spring~.8s. Componentes/config/controller Lab separados; normal08D no monta en paralelo ni cambia fuera del switch.
+
+Sliders completos, checkboxes de confirmación visual, reset/retry y export JSON seleccionable. Sin guardar valores finales/localStorage ni integrar ajustes. Reduced motion bloquea efectos y lo explica; errores de provider/React/async/filtros/runtime visibles, nunca fallback silencioso. Mobile producción y demás secciones protegidos.
+
+Baseline sincronizado `e443dc009c2ba7d946d23dfb7ff7fea73739a126`; npm run check baseline/final y git diff --check PASS; dev HTTP/module transforms y parsing nativo4.4 PASS; bundle producción sin Lab UI/imports/CSS. No browser/perceptual PASS: Eze realiza prueba real. Archivos: HeroBackground + effects/lab (cuatro componentes, labSettings/createLabArc/CSS), docs HERO_MOTION/CURRENT_STATE. CSS, controladores/config producción, body/assets, datos, hooks, App, package/lockfile intactos. Sin dependencias nuevas.
+
+Commit único `dev: add Hero motion runtime proof lab`; resolver SHA con `git log -1 --format=%H --grep='^dev: add Hero motion runtime proof lab$'`, SHA completo en reporte. Detalle/uso en `docs/HERO_MOTION.md`.
 
 Gate:
 1. Eze confirms particles visibly move.
@@ -790,7 +793,7 @@ Solo después puede declararse Production FINAL / FROZEN.
 
 ## 12. Hero effect research / decisión técnica vigente
 
-Estado vigente de efectos: Block08C rechazado y superseded por08D. Dust nativo tsParticles React/slim4.4.0 y Motion + filtros SVG de displacement local/idle; OGL y clock/traslaciones anteriores eliminados. Aspecto difuso y fallback preservados. Detalle/licencias/costes en `docs/HERO_MOTION.md`. IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA; no aprobación visual anticipada.
+Estado vigente:08C y08D rechazados visualmente;08E Lab entregado para prueba/tuning interactivo de Eze. La configuración08D sigue siendo el baseline normal protegido hasta seleccionar valores finales. Dust nativo tsParticles React/slim4.4.0 y Motion + filtros SVG de displacement local/idle; OGL y clock/traslaciones anteriores eliminados. Aspecto difuso y fallback preservados. Detalle/licencias/costes y uso del Lab en `docs/HERO_MOTION.md`. Estado actual: HERO MOTION LAB — READY FOR EZE INTERACTIVE TUNING;08D no aprobado.
 
 MagicRings permanece **REJECTED** por su corte/fade histórico y coste; no se volvió a probar en Block08. ShaderGradient/Vanta no ejecutados ni declarados rechazados. No renderer genérico sustituye el horizonte aprobado; no Pro.
 
@@ -1116,7 +1119,7 @@ Reglas obligatorias:
 - QA visual/browser final lo realiza Eze.
 
 Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
-08C fue rechazado visualmente.08D sustituye su arquitectura y está IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA; no iniciar Block09 ni otras fases sin Dirección.
+08C y08D rechazados visualmente.08E está HERO MOTION LAB — READY FOR EZE INTERACTIVE TUNING; Eze debe confirmar runtime visual/exportar valores antes del próximo pass de producción. No iniciar Block09 ni otras fases sin Dirección.
 
 ---
 

@@ -1,6 +1,63 @@
-# Hero Motion — Block 08D
+# Hero Motion — Block 08E / Runtime Lab
 
-**IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA** — 4 October 2026.
+**HERO MOTION LAB — READY FOR EZE INTERACTIVE TUNING**
+
+08D is rejected. Its technical PASS did not prove visible motion in Eze's browser. No final tuning was integrated in08E. The normal08D production configuration and static appearance remain unchanged while a temporary diagnostic system proves runtime behavior.
+
+## Open the Lab locally
+
+```sh
+npm run dev
+```
+
+Open `http://localhost:5173/?heroLab=1` (use the port printed by Vite). This is **DEV ONLY**: `npm run preview`, production builds and deployed URLs do not activate the Lab even with the query. Remove the query/reload to return to the normal Hero. No persistent localStorage settings or automatic production changes.
+
+The guarded lazy import in HeroBackground replaces normal atmosphere only in Lab mode. A fixed panel is portaled to document.body, outside the decoration's aria-hidden/clipping layer. Navbar, Hero composition/type/copy/buttons, four guide paths, body assets, Mobile production and other sections are untouched. Production controllers/configuration/dependencies/CSS remain byte-for-byte unchanged. Lab CSS/components/presets are absent from production bundle imports.
+
+## Runtime status / failures
+
+Panel: PARTICLES (LOADING/RUNNING/FAILED), ARC (LOADING/RUNNING/FAILED), POINTER (ACTIVE/INACTIVE near the arc), REDUCED MOTION (ON/OFF), viewport width×height. PAUSED is additionally explicit for reduced motion, hidden documents or an offscreen Hero; there is no fabricated RUNNING while effects are blocked.
+
+Shows actual canvas dimensions, DPR, native count and max particle position travel over0.5s; shows actual arc scale/noise attributes. Empty canvas/count,8s load timeout or3s stalled positions/filter attributes become visible errors. This telemetry is runtime evidence, **not visual acceptance**.
+
+Provider init errors, official-wrapper rejected promises, React boundaries, arc setup/support/CTM failures and global runtime errors include stack/message in the panel. No preventDefault suppresses console errors. Unknown runtime errors stop both Lab layers and are displayed. Static background remains as a safety layer, but its presence never conceals a Lab error.
+
+The production constructor gate is displayed separately; Lab tests actual feDisplacementMap DOM support rather than assuming an absent constructor proves unsupported filters. If initialization fails, use Reset proof/retry; if engine init failed, reload the Lab to clear the official provider's initialization state.
+
+## Particles proof
+
+One supported official4.4 React flow: stable init callback + `ParticlesProvider` + `<Particles />`, as required by the installed official wrapper source. No manual tsParticles.load, custom hosts or second renderer in the Lab. Production's rejected adapter is deliberately untouched outside Lab and never mounts simultaneously.
+
+Proof:60 particles, speed2.5–4, opacity.35–.8, size3–7, cyan palette unchanged, native repulse200px/strength4,60FPS/DPR1. Diagnostic native circles remove sprite loading/softness/depth attenuation as possible blockers; this is intentionally conspicuous proof, not a particle aesthetic redesign. No click/touch capture. Fine-hover Desktop enables repulse; capability state is visible.
+
+## Arc proof
+
+Lab-only controller operates on the same exact guide paths, three existing blur/displacement filters and original colors/bands. Idle scales:mist200–260, halo100–160, core40–70. Noise evolves5× faster; transport is broader. Local radius350 SVG units, strength500 (halo.65/core.3 of that), radial mask resized accordingly, critically damped spring recovery about.8s. Filter padding512 is temporary and restored on cleanup; no geometry/crop offsets change. Mobile variant has lighter base bands and no pointer pipeline, as before; production Mobile is untouched.
+
+## Controls / Eze-owned gate
+
+Particle ranges:count, speed, opacity, size, repulse distance/strength. Arc ranges:mist/halo/core displacement, noise speed, pointer radius/strength, recovery. They affect only the Lab. Particle options use the official component lifecycle; arc setting changes restore/restart only the Lab controller. Reduced motion always stops both systems.
+
+First use the proof preset. Confirm via the panel's manual checkboxes: many visible particles; movement within1s; visible repulse; idle arc deformation; visible local arc response/recovery. Sliders remain available to diagnose a failure, but no final preset is chosen automatically. Reset proof returns to exaggerated settings. Exportar valores creates selectable JSON including settings, viewport and Eze's confirmation flags; copy it back for the subsequent production pass. No selected values enter production in08E.
+
+## Validation / scope
+
+- Synced baseline `e443dc009c2ba7d946d23dfb7ff7fea73739a126` (Direction docs-only update after08D); code baseline npm run check PASS.
+- npm run check / git diff --check PASS.
+- In-process Vite dev HTTP200/transformation for Lab URL and all Lab modules/CSS; actual slim4.4 option parsing confirms proof ranges/count/repulse/circle/DPR and public particle telemetry API.
+- Production build entry contains no heroLab switch, Lab UI/import/presets; no Lab stylesheet in emitted CSS. Production controllers, all section CSS/data/assets/hooks, package/lockfile and App unchanged.
+- Actual Motion Lab harness: exaggerated scales/mask, pointer ACTIVE/INACTIVE, spring recovery, attribute/bounds restoration and listener teardown PASS; no perceptual claim.
+- No browser/perceptual/console/rendering success asserted. Eze must confirm visible behavior in his real browser. The status means the diagnostic tool is delivered, not that motion is approved.
+
+Files: HeroBackground dev gate; `src/components/effects/lab/{HeroMotionLab,LabParticles,LabArc,LabBoundary}.jsx`, labSettings.js, createLabArc.js, hero-lab.css; docs HERO_MOTION/CURRENT_STATE. No new dependencies.
+
+Commit title: `dev: add Hero motion runtime proof lab`; exact SHA via `git log -1 --format=%H --grep='^dev: add Hero motion runtime proof lab$'` and delivery report. Next: Eze runs/exports the Lab results. No final settings, other-section motion or Block09.
+
+---
+
+## 08D implementation record — REJECTED
+
+**REJECTED BY EZE — EFFECTS STILL APPEAR STATIC IN REAL BROWSER** — 4 October 2026.
 
 ## Direction / superseded implementation
 
