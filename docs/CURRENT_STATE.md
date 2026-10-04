@@ -678,7 +678,7 @@ Dirección autorizó Block08 sobre esta geometría protegida. La web global no s
 
 ### BLOCK 08C — Hero Motion Polish / Living Arc Behavior
 
-**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+**STATUS: REJECTED BY EZE — VISUAL LIFE STILL INSUFFICIENT**
 
 Baseline `924e1ba2225abb255e2d63674ecce27b5490e9fe` (08B). Eze confirmed the diffuse arc direction is much closer; motion/interaction/particles still NOT APPROVED.08C retains that look and polishes behavior, not concept/layout.
 
@@ -693,6 +693,28 @@ Files: effects HeroLightArc/HeroParticles/livingArcMotion/new arcMotionState, He
 QA technical PASS: npm run check/git diff --check; SSR/controller assertions for static fallback/IDs/stars/exact guides,3/5s field changes, pointer recovery/cleanup and clock failure; actual Motion callbacks/stop in timer-backed Node RAF; OGL-stub5s time advance/counts/DPR/single RAF/disposal; protected layout checks. No real browser visual/GPU PASS. Eze checks Desktop1366×768/1440×900/1536×864/1920×1080 and Mobile360×800/390×844/393×873/430×932. Success criteria remain pending visual review. Details `docs/HERO_MOTION.md`.
 
 Next: Eze visual QA / Direction decision. No later-section motion or Block09.
+
+### BLOCK 08D — Hero Motion Architecture Correction
+
+**STATUS: AUTHORIZED / NOT YET CLOSED**
+
+Dirección diagnosticó que el problema ya no es conceptual sino arquitectónico: 08C sí mueve valores, pero casi todos los cambios están por debajo del umbral perceptual. El arco sigue siendo un path estático con gradiente/blur desplazados pocos píxeles y la respuesta al puntero es una copia local trasladada, no una deformación perceptible del campo de luz. El particle adapter también usa amplitudes y pointer strength demasiado pequeños para el resultado visual buscado.
+
+08D debe sustituir la arquitectura demasiado tímida, no seguir ajustando números menores.
+
+Decisión:
+- conservar el LOOK difuso aprobado de 08B/08C;
+- reemplazar el comportamiento invisible por motion perceptible;
+- Motion debe controlar una deformación/perturbación real del campo de luz, no actuar solo como clock;
+- reemplazar el adapter custom de React Bits/OGL si no puede entregar movimiento visible de forma confiable;
+- primera alternativa autorizada para partículas: tsParticles React/slim, MIT, con drift visible, opacity/size animation y hover response suave;
+- el arco debe usar el path exacto como guía invisible + capas difusas con displacement/noise y reacción local con spring, manteniendo geometría base;
+- acceptance visual manda: después de 3–5 s de observación debe ser evidente que el Hero está vivo;
+- no cambiar layout, copy, tipografía, CTA, crop ni fuentes de verdad Desktop/Mobile.
+
+QA visual/browser final sigue siendo de Eze. No pasar a Block09 hasta aprobación explícita.
+
+---
 
 ### BLOCK 09 — Accessibility + Performance
 
