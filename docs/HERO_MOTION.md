@@ -95,3 +95,27 @@ Desktop review:1366×768,1440×900,1536×864,1920×1080. Mobile:360×800,390×84
 ## Commit / next
 
 One implementation commit, title `fix: replace Hero motion with native dust and SVG displacement`. Resolve exact SHA with `git log -1 --format=%H --grep='^fix: replace Hero motion with native dust and SVG displacement$'`; full SHA in delivery report. Eze visual QA is next. No Block09 or motion in other sections.
+
+
+## Dirección — 08D rejected / runtime proof required
+
+Fecha: 4 de octubre de 2026.
+
+Eze realizó QA en browser real después de la migración a tsParticles + SVG displacement. Resultado: visualmente el Hero continúa casi idéntico al fallback estático y no existe una reacción visible al mouse.
+
+Repo review after rejection identified a process failure: the implementation can silently fall back to the static Hero whenever particles or arc initialization fail, so automated structural tests may pass while the actual live layer never appears.
+
+Additional concern: current tsParticles wiring uses a custom hybrid lifecycle (ParticlesProvider/useParticlesProvider + direct engine `tsParticles.load({ id, element, options })`) instead of the canonical React wrapper flow or a simple real-id engine mount. The screenshot still resembles the original fixed-star layer rather than a 60-particle live field.
+
+Decision: stop production tuning. Next pass is a dev-only Motion Lab with explicit runtime diagnostics and intentionally exaggerated settings. No subtle/premium tuning until Eze visually proves each subsystem works.
+
+Required proof order:
+1. particles render;
+2. particles move;
+3. particle hover responds;
+4. arc idle displacement renders;
+5. arc pointer displacement responds;
+6. return-to-rest works;
+7. only then reduce intensity and merge final settings.
+
+Silent fallbacks are disabled or visibly reported inside lab mode. Production fallback remains untouched outside lab mode.
