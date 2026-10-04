@@ -110,3 +110,28 @@ Sin blocker nuevo de Header + Hero. Destinos de secciones posteriores aún no mo
 ## Status
 
 **HEADER + HERO — CLOSED / APPROVED FOR CONTINUATION**. Block 03 — Problema + Solución está autorizado. No reabrir Header/Hero durante Block 03 salvo regresión verificable.
+
+
+## Dirección — Block 08 / Living Hero
+
+Fecha: 4 de octubre de 2026.
+
+Dirección reabre explícitamente el Hero para motion avanzado. La implementación actual de SVG + opacity breathing queda preservada como **static fallback / reduced-motion baseline**, pero deja de considerarse el efecto final.
+
+Objetivo:
+- incorporar partículas vivas e interactivas;
+- mantener las partículas discretas y cyan/blanco;
+- crear un highlight luminoso que recorra el rim exacto del horizonte aprobado;
+- enriquecer la respiración del glow sin deformar el arco;
+- interacción de puntero suave en Desktop;
+- Mobile más liviano y sin interacción que interfiera con scroll.
+
+Preferencia técnica:
+- React Bits FREE / Particles como primer candidato para el particle field;
+- Motion (MIT) como primer candidato para animar el path exacto del rim;
+- no particle engine propio;
+- no shader/orb/aurora que reemplace la silueta;
+- no React Bits Pro;
+- MagicRings continúa rechazado.
+
+La geometría, tipografía, copy, CTAs y crop de 02B Desktop Production / 03 Mobile siguen protegidos.
