@@ -1010,6 +1010,23 @@ Los hallazgos del QA manual llevaron a una recomposición específica en Figma. 
 
 ---
 
+## Mobile viewport framing — QA follow-up
+
+Durante el QA manual posterior a la reimplementación Desktop desde 02B, Eze detectó un issue sistémico Mobile: en dispositivos más altos que el master 390×844 algunas secciones cortas pueden terminar antes del viewport y dejar visible la sección siguiente.
+
+Decisión vigente:
+- Hero, Problema, Solución, Proyectos, About, FAQ y Contacto deben ocupar **como mínimo un viewport Mobile completo**;
+- usar min-height/min-block-size viewport-aware y permitir crecimiento natural;
+- no fijar height exacto, no cortar contenido y no introducir scroll-snap;
+- Footer conserva altura natural;
+- Mobile debe validarse también por altura real de dispositivo, no solo por ancho.
+
+Hallazgo detallado en `docs/qa/MANUAL_QA_2026-10-02.md` — Hallazgo 07.
+
+Este issue queda dentro del QA/correction pass actual. No iniciar Motion hasta resolverlo y completar revisión visual de Eze.
+
+---
+
 ## 22. Próximo trabajo autorizado
 
 Blocks 01–06: **CLOSED / APPROVED FOR CONTINUATION**.
