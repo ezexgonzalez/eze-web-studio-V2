@@ -7,6 +7,8 @@ Source of truth vigente desde 3 de octubre de 2026:
 - canonical Desktop master: `239:11`, 1440×900 por escena
 - Mobile: `03 — Mobile` FINAL / FROZEN
 
+Desde esta reimplementación el archivo `src/styles/desktop-coherence.css` fue eliminado. Detalle vigente: `docs/DESKTOP_PRODUCTION_IMPLEMENTATION.md`. El contenido siguiente describe únicamente el intento rechazado.
+
 No usar este documento para decidir geometría visual nueva. Puede consultarse solo como historial técnico y para entender qué cambios ya existen en CSS.
 
 ---

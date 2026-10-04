@@ -1,6 +1,6 @@
 /* Figma text roles. Shared roles use Mobile below 768, fluid transition
-   from 768 to 1200, and width/height-aware Desktop at 1200+. Specific Desktop-only roles
-   remain exact; their Mobile usage is decided by each approved section. */
+   from 768 to 1200, and fixed 02B Production roles at 1200+. Desktop geometry adapts spacing,
+   not UI scale; Mobile-specific roles remain unchanged. */
 :root {
   --type-display-hero-size: 48px;
   --type-display-hero-leading: 54px;
@@ -118,24 +118,24 @@
 
 @media (min-width: 48rem) {
   :root {
-    --type-display-hero-size: clamp(48px, calc(48px + (100vw - 768px) * 0.055555556), 72px);
-    --type-display-hero-leading: clamp(54px, calc(54px + (100vw - 768px) * 0.069444444), 84px);
-    --type-display-feature-size: clamp(60px, calc(60px + (100vw - 768px) * 0.12962963), 116px);
-    --type-display-feature-leading: clamp(64px, calc(64px + (100vw - 768px) * 0.134259259), 122px);
-    --type-display-action-size: clamp(48px, calc(48px + (100vw - 768px) * 0.037037037), 64px);
-    --type-display-action-leading: clamp(54px, calc(54px + (100vw - 768px) * 0.041666667), 72px);
-    --type-heading-xl-size: clamp(44px, calc(44px + (100vw - 768px) * 0.055555556), 68px);
-    --type-heading-xl-leading: clamp(50px, calc(50px + (100vw - 768px) * 0.060185185), 76px);
-    --type-heading-l-size: clamp(38px, calc(38px + (100vw - 768px) * 0.037037037), 54px);
-    --type-heading-l-leading: clamp(44px, calc(44px + (100vw - 768px) * 0.041666667), 62px);
+    --type-display-hero-size: clamp(48px, calc(48px + (100vw - 768px) * 0.037037037), 64px);
+    --type-display-hero-leading: clamp(54px, calc(54px + (100vw - 768px) * 0.041666667), 72px);
+    --type-display-feature-size: clamp(60px, calc(60px + (100vw - 768px) * 0.064814815), 88px);
+    --type-display-feature-leading: clamp(64px, calc(64px + (100vw - 768px) * 0.069444444), 94px);
+    --type-display-action-size: clamp(48px, calc(48px + (100vw - 768px) * 0.013888889), 54px);
+    --type-display-action-leading: clamp(54px, calc(54px + (100vw - 768px) * 0.018518519), 62px);
+    --type-heading-xl-size: clamp(44px, calc(44px + (100vw - 768px) * 0.027777778), 56px);
+    --type-heading-xl-leading: clamp(50px, calc(50px + (100vw - 768px) * 0.032407407), 64px);
+    --type-heading-l-size: clamp(38px, calc(38px + (100vw - 768px) * 0.023148148), 48px);
+    --type-heading-l-leading: clamp(44px, calc(44px + (100vw - 768px) * 0.027777778), 56px);
     --type-heading-m-size: clamp(26px, calc(26px + (100vw - 768px) * 0.00462963), 28px);
     --type-heading-m-leading: clamp(32px, calc(32px + (100vw - 768px) * 0.00462963), 34px);
     --type-title-card-size: clamp(22px, calc(22px + (100vw - 768px) * 0.00462963), 24px);
     --type-title-card-leading: clamp(28px, calc(28px + (100vw - 768px) * 0.00462963), 30px);
-    --type-body-lg-size: clamp(18px, calc(18px + (100vw - 768px) * 0.009259259), 22px);
-    --type-body-lg-leading: clamp(28px, calc(28px + (100vw - 768px) * 0.013888889), 34px);
-    --type-body-md-size: clamp(16px, calc(16px + (100vw - 768px) * 0.00462963), 18px);
-    --type-body-md-leading: clamp(26px, calc(26px + (100vw - 768px) * 0.00462963), 28px);
+    --type-body-lg-size: clamp(18px, calc(18px + (100vw - 768px) * 0.004629630), 20px);
+    --type-body-lg-leading: clamp(28px, calc(28px + (100vw - 768px) * 0.004629630), 30px);
+    --type-body-md-size: clamp(16px, calc(16px + (100vw - 768px) * 0.004629630), 18px);
+    --type-body-md-leading: clamp(26px, calc(26px + (100vw - 768px) * 0.004629630), 28px);
     --type-body-sm-size: clamp(14px, calc(14px + (100vw - 768px) * 0.00462963), 16px);
     --type-body-sm-leading: clamp(22px, calc(22px + (100vw - 768px) * 0.00462963), 24px);
     --type-label-eyebrow-size: clamp(12px, calc(12px + (100vw - 768px) * 0.00462963), 14px);
@@ -149,20 +149,20 @@
 
 @media (min-width: 75rem) {
   :root {
-    --type-display-hero-size: clamp(56px, min(4.7vw, 7.4svh), 72px);
-    --type-display-hero-leading: clamp(64px, min(5.5vw, 8.7svh), 84px);
+    --type-display-hero-size: 64px;
+    --type-display-hero-leading: 72px;
     --type-display-hero-tracking: -0.015em;
-    --type-display-feature-size: clamp(80px, min(7.6vw, 10.75svh), 116px);
-    --type-display-feature-leading: clamp(86px, min(8vw, 11.3svh), 122px);
+    --type-display-feature-size: 88px;
+    --type-display-feature-leading: 94px;
     --type-display-feature-tracking: -0.03em;
-    --type-display-action-size: clamp(48px, min(4.2vw, 6.1svh), 64px);
-    --type-display-action-leading: clamp(54px, min(4.7vw, 7svh), 72px);
+    --type-display-action-size: 54px;
+    --type-display-action-leading: 62px;
     --type-display-action-tracking: 0em;
-    --type-heading-xl-size: clamp(50px, min(4.5vw, 6.3svh), 68px);
-    --type-heading-xl-leading: clamp(58px, min(5vw, 7.2svh), 76px);
+    --type-heading-xl-size: 56px;
+    --type-heading-xl-leading: 64px;
     --type-heading-xl-tracking: -0.01em;
-    --type-heading-l-size: clamp(40px, min(3.6vw, 5.1svh), 54px);
-    --type-heading-l-leading: clamp(46px, min(4.1vw, 5.8svh), 62px);
+    --type-heading-l-size: 48px;
+    --type-heading-l-leading: 56px;
     --type-heading-l-tracking: -0.015em;
     --type-heading-m-size: 28px;
     --type-heading-m-leading: 34px;
@@ -170,11 +170,11 @@
     --type-title-card-size: 24px;
     --type-title-card-leading: 30px;
     --type-title-card-tracking: -0.01em;
-    --type-body-lg-size: clamp(20px, 2.55svh, 22px);
-    --type-body-lg-leading: clamp(30px, 3.9svh, 34px);
+    --type-body-lg-size: 20px;
+    --type-body-lg-leading: 30px;
     --type-body-lg-tracking: -0.005em;
-    --type-body-md-size: clamp(16px, 2.15svh, 18px);
-    --type-body-md-leading: clamp(26px, 3.3svh, 28px);
+    --type-body-md-size: 18px;
+    --type-body-md-leading: 28px;
     --type-body-md-tracking: -0.005em;
     --type-body-sm-size: 16px;
     --type-body-sm-leading: 24px;
@@ -188,12 +188,12 @@
     --type-label-meta-size: 12px;
     --type-label-meta-leading: 18px;
     --type-label-meta-tracking: 0.18em;
-    --type-feature-support-size: clamp(22px, 2.6svh, 28px);
-    --type-feature-support-leading: clamp(30px, 3.35svh, 36px);
-    --type-heading-editorial-size: clamp(42px, 5.1svh, 50px);
-    --type-heading-editorial-leading: clamp(50px, 6.2svh, 62px);
-    --type-faq-question-size: clamp(19px, 2.45svh, 21px);
-    --type-faq-question-leading: clamp(26px, 3.3svh, 28px);
+    --type-feature-support-size: 24px;
+    --type-feature-support-leading: 32px;
+    --type-heading-editorial-size: 44px;
+    --type-heading-editorial-leading: 54px;
+    --type-faq-question-size: 21px;
+    --type-faq-question-leading: 28px;
   }
 }
 

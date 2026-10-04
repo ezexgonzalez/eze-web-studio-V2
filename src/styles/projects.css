@@ -32,7 +32,6 @@
 .projects-cta:disabled { opacity: 1; cursor: default; }
 .projects-cta img { width: 14px; height: 14px; }
 .projects-backdrop { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-.projects-glow-desktop { display: none; }
 .projects-glow-mobile { position: absolute; left: calc(50% - 195px); top: 92px; max-width: none; }
 
 @media (min-width: 48rem) and (max-width: 74.999rem) {
@@ -46,43 +45,50 @@
   .project-information { max-width: 621px; margin-inline: auto; }
 }
 
+/* 02B Production 242:196; all active information shares the section centre. */
 @media (min-width: 75rem) {
-  .projects-content { max-width: 1536px; margin-inline: auto; padding: 67px 0 31px; }
-  .projects-header { display: flex; align-items: flex-start; margin-inline: clamp(64px, calc(64px + (100vw - 1200px) * .07142857), 88px); }
-  .projects-heading-group { flex: 0 0 480px; }
-  .projects-heading-group > p { margin-left: 1px; }
-  .projects-heading-group h2 { margin-top: 13px; }
+  .projects-section { overflow: visible; }
+  .projects-content { width: min(calc(100% - var(--production-gutter) * 2), 1280px); min-height: 100svh; margin-inline: auto; padding: clamp(32px, calc(64px + (100svh - 900px) * .242424242), 88px) 0 clamp(32px, calc(40px + (100svh - 900px) * .060606061), 64px); }
+  .projects-header { display: grid; grid-template-columns: 480px 1px minmax(0, 440px); column-gap: 0; align-items: start; }
+  .projects-heading-group h2 { margin-top: 16px; }
   .projects-heading-group h2 span, .projects-intro span { display: block; }
-  .projects-header-divider { display: block; flex: 0 0 1px; height: 61px; margin: 62px 34px 0 12px; background: var(--color-divider-strong); }
-  .projects-intro { margin-top: 61px; width: 400px; }
+  .projects-header-divider { display: block; height: 64px; margin-top: 44px; margin-left: 40px; background: var(--color-divider-strong); }
+  .projects-intro { margin: 44px 0 0 71px; width: 440px; }
   .projects-mobile-stage { display: none; }
-  .projects-desktop-stage { display: block; position: relative; height: 427px; margin-top: 15px; }
+  .projects-desktop-stage { display: block; position: relative; height: clamp(300px, calc(366px + (100svh - 900px) * .5), 366px); margin-top: clamp(8px, calc(20px + (100svh - 900px) * .090909091), 32px); }
   .projects-desktop-stage .projects-slot { position: absolute; box-shadow: 0 18px 36px rgb(0 0 0 / 38%); }
-  .projects-slot-previous { left: 11.9791667%; top: 55px; width: 16.4713542%; height: 358px; }
-  .projects-slot-active { left: 28.3203125%; top: 0; width: 40.4296875%; height: 420px; z-index: 2; }
-  .projects-slot-next { left: 68.75%; top: 31px; width: 14.2578125%; height: 396px; z-index: 1; }
-  .projects-slot-queue { left: 82.9427083%; top: 67px; width: 11.2630208%; height: 345px; }
-  .projects-controls { position: relative; width: 724px; margin: 25px auto 0; }
-  .projects-control { width: 200px; }
+  .projects-slot-previous { left: calc(50% - 490px); top: clamp(40px, calc(48px + (100svh - 900px) * .060606061), 48px); width: 220px; height: clamp(254px, calc(310px + (100svh - 900px) * .424242424), 310px); }
+  .projects-slot-active { left: calc(50% - 270px); top: 0; width: 540px; height: clamp(299px, calc(365px + (100svh - 900px) * .5), 365px); z-index: 2; }
+  .projects-slot-next { left: calc(50% + 270px); top: clamp(20px, calc(24px + (100svh - 900px) * .03030303), 24px); width: 190px; height: clamp(280px, calc(342px + (100svh - 900px) * .46969697), 342px); z-index: 1; }
+  .projects-slot-queue { left: calc(50% + 460px); top: clamp(48px, calc(56px + (100svh - 900px) * .060606061), 56px); width: 150px; height: clamp(248px, calc(302px + (100svh - 900px) * .409090909), 302px); }
+  .projects-controls { position: relative; width: 760px; margin: clamp(12px, calc(22px + (100svh - 900px) * .075757576), 22px) auto 0; }
+  .projects-control { width: 198px; }
   .projects-control picture, .projects-control img { width: 24px; height: 24px; }
   .projects-control picture { position: absolute; top: 10px; }
   .projects-control > span { display: block; position: absolute; top: 13px; color: var(--color-text-muted); }
-  .projects-control > i { display: block; position: absolute; top: 20px; width: 59px; height: 2px; background: var(--color-divider-default); }
+  .projects-control > i { display: block; position: absolute; top: 21px; width: 59px; height: 2px; background: var(--color-divider-default); }
   .projects-previous picture { left: 0; }
-  .projects-previous > span { left: 42px; }
-  .projects-previous > i { left: 141px; }
-  .projects-next { width: 199px; }
+  .projects-previous > span { left: 40px; }
+  .projects-previous > i { left: 139px; }
+  .projects-next { width: 202px; }
   .projects-next > i { left: 0; }
-  .projects-next > span { left: 92px; }
-  .projects-next picture { left: 175px; }
-  .projects-pagination { position: absolute; left: calc(50% - 42px); top: 10px; font-size: var(--type-label-pagination-size); line-height: var(--type-label-pagination-leading); font-weight: var(--type-label-pagination-weight); letter-spacing: var(--type-label-pagination-tracking); }
+  .projects-next > span { left: 75px; }
+  .projects-next picture { left: 178px; }
+  .projects-pagination { position: absolute; left: calc(50% - 44.5px); top: 12px; width: 89px; font-size: var(--type-label-pagination-size); line-height: var(--type-label-pagination-leading); font-weight: var(--type-label-pagination-weight); letter-spacing: var(--type-label-pagination-tracking); }
   .projects-pagination span { width: 28px; }
   .projects-pagination span:first-child { font-weight: var(--type-label-pagination-active-weight); }
-  .projects-pagination span:nth-child(2) { position: relative; top: 1px; width: 17px; }
-  .project-information { margin: 13px auto 0; max-width: 621px; }
-  .project-information h3 { margin-top: 4px; }
-  .project-description { margin-top: 4px; }
-  .projects-cta { margin-top: 14px; }
+  .projects-pagination span:nth-child(2) { width: 17px; }
+  .project-information { margin: clamp(12px, calc(16px + (100svh - 900px) * .03030303), 16px) auto 0; max-width: 700px; }
+  .project-information h3, .project-description { margin-top: 8px; }
+  .project-description { color: var(--color-text-muted); }
+  .projects-cta { margin-top: 24px; }
   .projects-glow-mobile { display: none; }
-  .projects-glow-desktop { display: block; position: absolute; left: calc(50% - 608px); top: 40px; max-width: none; }
+  .projects-backdrop::after { content: ''; position: absolute; width: 800px; height: 540px; left: calc(50% - 400px); top: 180px; border-radius: 50%; background: rgb(12 70 88 / 10%); filter: blur(90px); }
+}
+/* Narrow Desktop fits the existing composition by cropping decorative flanking slots. */
+@media (min-width: 75rem) and (max-width: 85.374rem) {
+  .projects-desktop-stage { overflow: clip; }
+  .projects-header { grid-template-columns: minmax(0, 480fr) 1px minmax(0, 440fr); gap: 32px; }
+  .projects-header-divider { margin-left: 0; }
+  .projects-intro { margin-left: 0; width: auto; }
 }

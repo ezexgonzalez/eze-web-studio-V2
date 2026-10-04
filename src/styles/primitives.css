@@ -2,8 +2,9 @@
   :root { --page-gutter: clamp(24px, calc(24px + (100vw - 768px) * 0.092592593), 64px); }
 }
 
+/* 02B canonical container: 1280px. 1366 check uses 48px gutters. */
 @media (min-width: 75rem) {
-  :root { --page-gutter: clamp(64px, calc(64px + (100vw - 1200px) * 0.095238095), 96px); }
+  :root { --production-gutter: clamp(48px, calc(48px + (100vw - 1366px) * .432432432), 80px); }
 }
 
 @layer components {

@@ -1,7 +1,6 @@
 import { projects, projectsSection } from '../../data/projects'
 import { useProjectCarousel } from '../../hooks/useProjectCarousel'
 import { Button } from '../ui/Button'
-import glowDesktop from '../../assets/projects/glow-desktop.svg'
 import glowMobile from '../../assets/projects/glow-mobile.svg'
 import arrowLeftDesktop from '../../assets/projects/arrow-left-desktop.svg'
 import arrowRightDesktop from '../../assets/projects/arrow-right-desktop.svg'
@@ -30,7 +29,6 @@ export function ProjectsSection({ items = projects }) {
     <section id="proyectos" className="projects-section" aria-labelledby="projects-heading">
       <div className="projects-backdrop" aria-hidden="true">
         <img className="projects-glow-mobile" src={glowMobile} alt="" width="390" height="690" />
-        <img className="projects-glow-desktop" src={glowDesktop} alt="" width="1242" height="901" />
       </div>
       <div className="projects-content">
         <header className="projects-header">

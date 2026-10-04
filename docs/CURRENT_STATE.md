@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 2 de octubre de 2026.
+> Última actualización: 4 de octubre de 2026.
 
 ---
 
@@ -85,7 +85,7 @@ Runtime dependencies: únicamente `react` y `react-dom`. `package.json` y lockfi
 
 **Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-Problema y Solución, Proyectos y About + FAQ están CLOSED / APPROVED FOR CONTINUATION. Contacto + Footer completó implementación y el QA manual global de Eze detectó issues sistémicos que pasan al Block 07. Todas las secciones están montadas; la landing entra ahora en Responsive / Coherence correction pass y todavía no es Production FINAL / FROZEN.
+Problema y Solución, Proyectos y About + FAQ están CLOSED / APPROVED FOR CONTINUATION. Contacto + Footer completó implementación y el QA manual global de Eze detectó issues sistémicos que pasan al Block 07. Todas las secciones están montadas; Desktop fue reimplementado desde 02B y está READY FOR EZE VISUAL QA; la implementación web todavía no es Production FINAL / FROZEN.
 
 Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
 
@@ -104,13 +104,14 @@ File key:
 Páginas:
 
 - `01 — Visual System` → FINAL;
-- `02 — Desktop` → FINAL / FROZEN;
+- `02 — Desktop` → HISTORICAL CREATIVE REFERENCE ONLY;
+- `02B — Desktop Production` (`239:10`) → CURRENT DESKTOP SOURCE OF TRUTH; canonical master `239:11`, FINAL / READY FOR FRONTEND HANDOFF en Figma;
 - `03 — Mobile` → FINAL / FROZEN;
 - `04 — Final Handoff` → READY FOR PRODUCTION.
 
 Viewports maestros:
 
-- Desktop: **1536 px**;
+- Desktop Production: **1440×900** por escena, Footer **1440×384**, master total **1440×6684**;
 - Mobile: **390 px**.
 
 Orden final aprobado:
@@ -140,7 +141,7 @@ Identidad:
 - alto control de spacing;
 - blanco / grises fríos;
 - cyan eléctrico como acento;
-- líneas y grid finos;
+- dividers y rails finos; sin grid decorativo;
 - composiciones editoriales;
 - Hero con mayor intensidad;
 - resto de la landing más calmo.
@@ -657,19 +658,23 @@ Documentación: `docs/CONTACT_FOOTER.md`. QA visual/browser final, consola real,
 
 ### BLOCK 07 — Desktop Production Reimplementation
 
-**STATUS: REOPENED / AUTHORIZED — IMPLEMENT FROM 02B**
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
 
-El primer coherence pass (`1f8ef0ab69823d2f3564bf2cbe4b2af2724b2698`) fue técnicamente válido pero visualmente rechazado por Dirección: seguía dependiendo de interpretación CSS y no de un Desktop Production master aprobado. Ese pass queda SUPERSEDED como referencia visual.
+Source of truth inspeccionado: 02B page `239:10`, master `239:11`, sección Hero `242:66`, Problem `242:118`, Solution `242:172`, Projects `242:196`, About `242:238`, FAQ `242:252`, Contact `242:287`, Footer `242:309`. Metadata + design context + renders revisados; auxiliaries Hero1366/1920 y Solution1366 revisados. 02 Desktop histórico no gobierna geometría. 03 Mobile FINAL/FROZEN intacto. El coherence pass `1f8ef0ab69823d2f3564bf2cbe4b2af2724b2698` permanece VISUALLY REJECTED / SUPERSEDED.
 
-Nuevo source of truth aprobado en Figma: `02B — Desktop Production`, page `239:10`; canonical master `Desktop Production Master — 1440`, node `239:11`. Desktop debe implementarse desde 02B. `02 — Desktop` queda como HISTORICAL CREATIVE REFERENCE. `03 — Mobile` permanece CURRENT MOBILE SOURCE OF TRUTH / FINAL / FROZEN.
+Implementación: eliminado `desktop-coherence.css` y su import; reemplazados los bloques Desktop históricos en estilos de sección. Typography fija Production64/72,88/94,54/62,56/64,48/56,44/54,20/30,24/32. Container1280; siete escenas min-height100svh con contenido en flujo; Footer natural384 en referencia. Grids siguen eliminados; Background #050708 salvo About #0A1119. Proyectos activo540×365 y preview/info/CTA sobre x720; runtime01/01, disabled/nulls conservados.
 
-App/data/hooks/assets/dependencias intactos. Semántica, a11y, destinos/nulls y comportamiento protegidos. No motion nuevo ni modificaciones a useHorizonGlow.
+Archivos: styles header-hero/problem-solution/projects/about-faq/contact-footer/typography/primitives, index.css, HeroBackground, ProjectsSection; seis SVG locales Production horizon/exportados read-only porque el crop histórico no reproducía02B. Mobile/Transition assets originales intactos; glows Problem/Solution/Projects reencuadrados según propiedades02B. No paths/estilos/nodos Figma editados, renderer nuevo ni motion.
 
-Figma 02B aprobado por Dirección: siete escenas Desktop de 1440×900 y Footer 1440×384; tipografía Production Hero 64/72, Feature 88/94, Action 54/62, Heading XL 56/64, Heading L 48/56, Heading Editorial 44/54, Body LG 20/30, Feature Support 24/32. Container máximo 1280. Grid decorativo eliminado. Background #050708 salvo About #0A1119. Proyectos comparte eje x=720 para preview/info/CTA. Runtime pagination sigue data-driven: 01/01 mientras exista un solo proyecto aprobado.
+Responsive:1366×768 container1270/m48,1440×900 container1280/m80 canónico,1536×864 m128 sin ampliar tipo,1920×1080 m320 con crop Hero auxiliar. Spacing/local preview heights reducen aire en pantallas cortas; no zoom/global scale/page snap. Mobile reglas intactas; Tablet stacking intacto y tipografía converge a Production. About runtime “en cada proyecto” conservado frente a “sobre” en Figma.
 
-Bundle JS 238.12 → 235.66 kB (gzip 70.46 → 70.22), CSS 70.76 → 70.65 (gzip 13.76 → 14.08), Inter intacto. Sin dependencias nuevas.
+QA técnico PASS: npm run check (baseline/final lint/build), git diff --check, preview/entry HTTP200, React SSR estructura/IDs/grids/10stars/4steps/3features/real-project-disabled/FAQ-null/mailto. SVGs válidos, CSS Mobile/Transition comparado, widths calculados1200/1280 y cuatro checkpoints. App/data/hooks/Navbar/FAQ/Contact/package/lockfile intactos. No browser visual PASS, consola real ni screenshots fabricados; Eze valida geometría final/overflow/zoom/interacción.
 
-Responsive QA checkpoints de 02B: 1366×768, 1440×900, 1536×864, 1920×1080. 1440×900 es el único canonical master; los demás son checkpoints. Frontend debe reemplazar el coherence pass anterior con una implementación fiel a 02B, manteniendo Mobile sin rediseño. Block 08 sigue bloqueado.
+Bundle JS235.66 →241.88kB (gzip70.22 →70.99), CSS70.65 →67.57 (gzip14.08 →13.43); fuente intacta. Sin dependencias nuevas. Pendientes de contenido existentes conservados.
+
+Documentación: `docs/DESKTOP_PRODUCTION_IMPLEMENTATION.md`. Un único commit de implementación identificado por título `feat: implement 02B Desktop Production`, sobre base `61b4a84d13dc655b9e0a3657aa1775aff6e858f4`; resolver SHA con `git log -1 --format=%H --grep='^feat: implement 02B Desktop Production$'` (SHA real en reporte final, sin commit documental extra/autoreferencia).
+
+Próxima acción: QA visual/browser de Eze y aprobación de Dirección. **No APPROVED/FINAL/FROZEN web; Block08 no autorizado.**
 
 ### BLOCK 08 — Motion
 
@@ -1011,7 +1016,7 @@ Blocks 01–06: **CLOSED / APPROVED FOR CONTINUATION**.
 
 ### PRODUCTION BLOCK 07 — DESKTOP PRODUCTION REIMPLEMENTATION
 
-Status: **AUTHORIZED / NOT YET CLOSED**.
+Status: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
 
 SOURCE OF TRUTH:
 - Desktop: Figma `02B — Desktop Production` page `239:10`.
@@ -1020,7 +1025,7 @@ SOURCE OF TRUTH:
 - Mobile: `03 — Mobile` permanece FINAL / FROZEN.
 - `02 — Desktop` histórico NO manda en producción.
 
-El coherence pass anterior queda superseded visualmente. No sumar otra capa de overrides interpretativos encima. Auditar qué puede reutilizarse y reconstruir/limpiar Desktop para que 1440×900 reproduzca 02B con claridad.
+El coherence pass anterior quedó eliminado del CSS activo. Implementación desde02B completada; detalle en `docs/DESKTOP_PRODUCTION_IMPLEMENTATION.md`. Próxima acción: Eze compara el browser real con el canonical1440×900 y checkpoints antes de aprobar continuidad.
 
 Reglas obligatorias:
 - implementar escala Production exacta y relaciones del master;
