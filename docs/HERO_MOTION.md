@@ -1,106 +1,97 @@
-# Block 08C — Living Arc Behavior
+# Hero Motion — Block 08D
 
 **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA** — 4 October 2026.
 
-## Baseline / scope
+## Direction / superseded implementation
 
-Clean synced baseline `924e1ba2225abb255e2d63674ecce27b5490e9fe`; baseline npm run check PASS. Eze accepted08B's visual direction as substantially closer, but did not approve its motion: arc/interaction too static, isolated bright particle points.08C preserves that diffuse arc concept and tunes life, not composition.
+08C (`219c7846384e2bd7e3a7411b12775232b7a36e7e`) is **REJECTED BY EZE**. Its diffuse arc LOOK is retained; its motion architecture is replaced. Small layer translations, a translated duplicate pointer path and low-amplitude OGL drift passed technical assertions but did not produce perceptible life in browser. Those assertions were not visual acceptance.
 
-Desktop02B/Mobile03 and viewport framing remain protected. No layout, copy, type, Header, CTA, surface asset, crop, filter size, section height, other section or data change. `useHorizonGlow.js` remains absent (deleted in08), no competing glow system.
+Clean synchronized baseline: `c1b864ad68fe7e715eea77b7e5d47c4c060c5d18`; baseline npm run check PASS. Removed `LivingArcMotion.jsx`, `livingArcMotion.js`, `arcMotionState.js`, the React Bits particle shader/adapter and its vendor license. OGL removed from manifest/lockfile and shipped notices. No retained alternate particle renderer or glow controller.
 
-## Preserved arc appearance / fallback
+## Protected appearance
 
-HeroLightArc retains08B's exact four guide paths/viewBoxes and three diffuse bands: Desktop core9/blur4, halo30/blur14, mist64/blur28; Mobile5/2.5,16/8,34/16. Original cyan gradient/base band opacities retained. No hard exported rim, unblurred outline, dash or progress stroke. Body fill-only assets from08B unchanged. Inline overflow:visible/filter padding160 and existing Production/Wide/Tablet/Mobile placements unchanged; no recurrence of the old internally cropped image layers.
+Desktop 02B / Mobile03 geometry, section framing, Navbar, copy, typography, CTAs, body/surface assets and all section CSS are unchanged. The four exact horizon paths/viewBoxes are unchanged. Their geometry is an invisible guide for three blurred bands, not a hard visible rim.
 
-Static diffuse field renders synchronously including SSR. No WebGL/Motion required for that fallback. Ten original Desktop stars remain; only while live atmosphere is eligible do they fade to18% as intentionally distant fixed anchors, so they no longer dominate moving dust. Reduced-motion CSS restores them immediately; inactive/failed state has original fallback opacity.
+Base bands preserved: Desktop mist64/blur28/alpha.28, halo30/blur14/.58, core9/blur4/.62; Mobile34/16/.28,16/8/.58,5/2.5/.62. Original cyan gradient and stop opacities unchanged. No exported rim, unblurred ellipse, dash, loader, travelling short highlight or path morph.
 
-## Arc motion
+## Particle engine / licenses
 
-Single existing Motion clock retained; `arcMotionState.js` owns independent continuous rates for broad energy drift, per-stop density shimmer, mist/halo drift and breathing. No new renderer, filter or animation owner. Active gradient spacing narrows from2× to1.3× viewBox width, making density drift easier to perceive without drawing a short travelling segment. Seven stops vary smoothly from72–100% of their base alpha, with staggered phases. Field intensity stays about.79–1.01.
+Pinned current official `@tsparticles/react`, `@tsparticles/engine`, `@tsparticles/slim` **4.4.0**, MIT. Verified npm package metadata and shipped source before installation; React wrapper peer range React/ReactDOM >=16.8 includes installed React19.2.7. Current source is the tsParticles monorepo, not the archived standalone React repository's v3 instructions.
 
-Energy travel combines slow rates.29/.47rad/s and amplitudes.24/.075×width; mist6px lateral/4px vertical, halo2.5px vertical maximum. Mobile runs at72% time rate with mist2.5/2px and halo1px. Core geometry stays fixed; the changing density/atmosphere supplies life. Analytic checks at3/5seconds verify state changes, not human visual acceptance.
+`ParticlesProvider` / `useParticlesProvider` register slim once with a stable callback. The field uses native `tsParticles.load`, with a small React ownership adapter because the official wrapper's async load does not catch failures and may finish after cleanup. Starts are serialized; each effect has a unique host/id. Pending cancelled loads are destroyed on resolution before the next starts; resolved containers are destroyed immediately on cleanup. No custom particle simulation, shader, movement loop or hover algorithm.
 
-A120s scalar Motion clock supplies frame callbacks; accumulated/clamped delta drives the field independently of scalar phase. Clock wrap cannot reset the light or produce a lap seam. No single short breathing cycle; frame stalls are capped50ms. Cleanup restores gradient bounds, every stop alpha, layer transforms, field alpha and pointer response to the exact static composition. Clock creation failure also restores before shared fallback.
+Native image shapes use three local radial-gradient dust sprites, with unique preload names and no recoloring. That avoids double-applying initial opacity in the SVG recoloring path. Soft elongated fragments inherit #59E3FF/#75F6FF/#A0F8FF; no white particles. Native random size/depth/opacity animation and independent directions supply variation. No links, collisions, gravity, rain, autoplay sequence or click behavior.
 
-## Pointer polish
-
-Desktop fine-hover mouse only. Existing passive/inverse SVG screen-CTM/96 curve-sample approach retained. Proximity radius140→180 SVG units; mask150→180; local diffuse response width24→36 (Mobile stays24), displacement5→9 units maximum, response alpha.5→.68, damping450→380ms. Broad local light disturbance, not whole-field follow, surface morph, hard line, bounce or repulsion. Response eases to rest on leave/blur. Touch/pen ignored, no capture/preventDefault; Mobile has no arc pointer listener.
-
-## Particle visual / motion polish
-
-React Bits FREE Particles/OGL adapter retained, not replaced with a new engine. Live shader replaces the near-solid circular disc and colour oscillation with a diffuse slightly elongated Gaussian light fragment: low-alpha halo + soft concentration, tapered outer edge, seeded orientation and brightness. Palette now directly matches the arc (#59E3FF/#75F6FF/#A0F8FF/#D6FAFF), avoiding isolated white star points.
-
-| Setting | Desktop | Mobile / Transition |
+| Setting | Desktop >=1200 | Mobile / Transition |
 | --- | --- | --- |
-| Count |70|28|
-| Speed multiplier |1.05|.72|
-| Base sprite input |160|120|
-| Actual sprite bounds |5–14 CSS px including transparent/diffuse halo|same|
-| Canvas layer opacity |.55|.4|
-| DPR cap |1.5|1|
-| Pointer |existing small local response|off|
+| Count, density disabled | 60 | 24 |
+| Native move speed range | .45–.9 | .25–.5 |
+| Approx. baseline CSS travel/sec before depth attenuation | 13.5–27 | 7.5–15 |
+| Sprite radius range, including transparent halo | 2.5–5px | 2.5–4px |
+| Animated opacity range | .18–.65 | .18–.65 |
+| Opacity / size animation speed | .35 / .65, unsynchronized | same |
+| Canvas layer alpha, unchanged | .55 | .4 |
+| FPS limit | 60 | 30 |
+| DPR | Native ratio when <=1.5; otherwise1 | 1 |
+| Native hover | Fine-hover Desktop only; repulse110px, factor1, speed/maxSpeed.7 | Disabled |
 
-Larger sprite inputs allocate room to glow, not an opaque bigger dot. Depth attenuates alpha35–100%, brightness varies calmly60–92%, peak fragment alpha remains below the previous point profile. Drift frequencies now have explicit nonzero minima: X.22–.42,Y.18–.38,Z.16–.30 per shader time; amplitudes bounded.2–.65/.2–.6/.15–.45 world units. Additional tiny screen drift.012NDC keeps distant fragments moving as well. Independent seeds/rates, gentle depth motion, no rotation/burst/glitter/smoke clouds.
+Native retina mode has no maximum-ratio option in4.4. Rather than patch engine internals or modify global devicePixelRatio, high-DPR Desktop opts out; Mobile always opts out. Reduced motion is owned by the existing preference hook, which unmounts this component completely.
 
-Colour, diffuse profile and smooth low-frequency alpha now relate dust to arc. Particles stay secondary: fewer Mobile points, capped sprite footprints, faint distant anchors, no extra fog layer.
+## Arc displacement architecture
 
-## Reduced motion / lifecycle / failure
+`HeroLightArc` remains the synchronous static fallback, with its original blur-only filters. Additional live filter definitions are unreferenced until the lazy controller attaches them: they do not render turbulence in static/reduced/failed states.
 
-Preferences hook unchanged: reduced/hidden/offscreen unmounts live controllers and OGL, cancels motion/RAF and releases listeners/observers/GPU resources. No continuous shimmer/floating/pointer interaction in reduced state. Static diffuse field/fill/stars remain. Import/WebGL/shader/context failure retains existing static latch until reload; no retries. StrictMode effect ownership remains one canvas and one arc clock. New clock init failure explicitly restores static SVG state.
+Each live filter: `feTurbulence` fractalNoise, one octave → flowing noise through `feOffset` → `feDisplacementMap` on the light band → optional local displacement → original Gaussian blur. Motion animates actual `baseFrequency`, noise offsets and displacement scales via `attrEffect` / MotionValues. Guide paths, body geometry and band transforms are never animated.
 
-## Libraries / performance
+| Band | Desktop idle scale | Mobile idle scale | Desktop local maximum scale |
+| --- | --- | --- | --- |
+| Mist | 80–132 | 34–58 | 160 |
+| Halo | 38–68 | 18–32 | 100 |
+| Core | 12–24 | 6–12 | 32 |
 
-No dependency/lockfile change: ogl1.0.11 Unlicense, motion14.0.0 MIT. React Bits source ca44b3f9ee180676a06d7de8ec6bea84cddff85b remains MIT + Commons Clause; attribution/notices untouched. No Pro or new engine.
+Scales are filter strengths, not pixel displacement promises: actual displacement depends on noise channels. Frequency flows between .009/.014 and .015/.009, with continuous eased13/17s noise transport and9/12/15s band modulation; Mobile transport19/23s and frequency18s. Distributed deformation changes the field itself, not only alpha. No custom scalar clock, path translation or opacity-only substitute. These settings require the human3–5s acceptance gate; numerical change alone does not prove success.
 
-One Motion clock plus one OGL RAF; same three diffuse blur bands and one local response as08B. No new blur surfaces/renderers.70/28 sprites capped14px with existing DPR limits; seven SVG stop alpha writes share the clock. No test packages retained. Real GPU/battery/FPS not measured; Eze must assess cost on hardware.
+## Local pointer field / spring recovery
 
-Build sizes against08B (kB raw / gzip):
+Desktop fine-hover mouse only; passive pointermove, no touch capture/preventDefault. Inverse SVG screen CTM maps the pointer to the guide;128 samples determine proximity within220 SVG units. A440×440 radial alpha mask localizes the noise map. Outside this mask a neutral50% channel map produces zero local displacement. The displaced light field receives this local map, not a duplicate shifted path.
 
-| Asset |08B|08C|
+Motion `springValue` controls mask position (stiffness110/damping27/mass1) and strength (75/20/1). A mapped strength drives each band's actual local displacement. Entry initializes the mask at the nearby pointer; subsequent movement follows smoothly. Leaving the curve/Hero or window blur releases strength; near-complete recovery is about1s, without elastic bounce. Springs stop when settled. Mobile has no local filter pipeline or pointer listeners.
+
+## Bounds / upper light cut
+
+SVG overflow remains visible. Static/live filters have256 units of padding instead of160, allowing blur plus displacement without an internal rectangular cut. Live filter regions are constrained to the Hero's visible area mapped into SVG space plus that padding, instead of rendering the full offscreen1380/1700px ellipse. ResizeObserver + resize update bounds; teardown restores original bounds. Hero's existing viewport decoration crop stays unchanged. No layout offsets or asset crop changes.
+
+## Visibility / reduced motion / independent fallback
+
+The existing `useHeroMotionPreferences` remains the single owner of IO, document visibility, breakpoints, hover capability and prefers-reduced-motion. Active effects mount only while visible, document active and motion allowed. Reduced/hidden/offscreen unmount destroys the particle container, stops Motion animations/springs, detaches attrEffect subscriptions, restores static filters and removes observers/listeners. No running displacement filter is referenced after cleanup.
+
+Particles and arc fail independently. Particle init/load/image failure removes its canvas and preserves full static stars; it does not stop arc motion. Arc setup failure restores blur-only filters; unsupported displacement leaves static bands. Lazy import failure leaves the whole static background. Ten approved stars fade to18% only after particle readiness, not merely after motion eligibility. CSS restores stars immediately for reduced motion. Content never depends on either effect.
+
+## Performance
+
+Initial JS baseline236.02kB/gzip71.43; old lazy Hero109.34/gzip36.28. Final production build:
+
+| Payload | Before08D | After08D |
 | --- | --- | --- |
-| Initial JS |235.97 /71.42|236.02 /71.43|
-| Lazy effects |107.77 /35.67|109.34 /36.28|
-| CSS |67.05 /13.41|67.19 /13.44|
+| Initial JS |236.02kB /gzip71.43|237.49kB /gzip72.04|
+| All lazy Hero JS, including native dynamic plugin chunks |109.34kB /gzip36.28|214.29kB /gzip70.40|
+| CSS |67.22kB /gzip13.44|67.22kB /gzip13.44|
 
-Full loaded JS gzip delta+.62kB; Inter352.24kB unchanged. Byte sizes are not GPU cost measurements.
+Initial JS increases1.47kB (gzip.61); total optional Hero payload increases104.95kB (gzip34.12). Isolated Vite bundle of engine+slim+React provider/hooks, with React external:211.48kB /gzip64.89 across11 chunks. This isolated package measurement is not additive to the application build: shared code and tree shaking differ. All16 actual lazy application chunks total214.29kB. Measurements exclude stale prior build artifacts; final build used --emptyOutDir. Source licenses are shipped locally in public/licenses/hero-motion.txt. Motion and tsParticles are reached only through the Hero's dynamic import; tsParticles additionally lazy-loads native container/plugin modules. No WebGL canvas or GPU context. One active 2D dust canvas, one tsParticles frame scheduler and one shared Motion frame scheduler; six idle Motion value animations share that scheduler. Pointer adds three spring values only while reacting, not another custom RAF.
 
-## Validation / review
+Three one-octave live SVG noise fields are referenced only for the visible variant. Mobile uses smaller field geometry/strengths, fewer particles,30FPS and DPR1. Static filters remain blur-only. No claim of measured browser FPS/GPU/memory: Eze must check real-device cost and visible life together. Sparse2D particles are cheaper than the removed custom WebGL renderer in architectural complexity; actual performance still requires browser review.
 
-- npm run check and git diff --check PASS.
-- Deterministic SSR/controller harness: complete static diffuse fallback, unique IDs/ten stars, four exact guide paths,3/5s Desktop/Wide/Mobile field changes, bounded pointer response/recovery, cleanup, noninteractive state and clock-failure restoration.
-- Actual Motion numeric clock delivers continuous callbacks and stops in a Node timer-backed RAF harness. This is real library execution, not a browser rendering test.
-- OGL-stub integration:5s Desktop/Mobile shader time advances to5.25/3.6, counts/DPR/uniforms correct, single RAF and idempotent disposal. Does not compile/render GLSL on a real GPU.
-- Protected Hero/Header CSS declarations, content/data/Mobile framing/dependency manifests unchanged; assets and later sections unchanged. New CSS only dims live fallback stars and restores them for reduce.
-- No browser visual/console/FPS PASS or fabricated screenshots. Apparent life/softness still requires Eze review.
+## Technical validation / visual gate
 
-Desktop review:1366×768,1440×900,1536×864,1920×1080. Mobile:360×800,390×844,393×873,430×932. Observe idle3–5s, pointer near curve/recovery, dust softness/speed/density, text dominance, upper glow, reduced/failure, resize/visibility, touch scrolling and actual cost. Do not treat technical motion assertions as visual approval.
+- npm run check baseline/final: PASS; git diff --check: PASS.
+- SSR harness: complete static bands/body/stars, unique SVG IDs, four exact guide paths, no canvas/hard rim/duplicate response path.
+- Actual4.4 slim/plugin/options harness: movement, image palette/preload, opacity/size animation, counts, native repulse and bounded DPR correctly parsed. Found/corrected native preload deduplication by assigning unique sprite names.
+- Actual Motion Node RAF/DOM lifecycle harness: local springs drive displacement, recover after blur, cleanup restores filters/attributes/bounds and prevents subsequent pointer writes. This is lifecycle verification, not a rendered/perceptual test.
+- All section styles, data, motion preference hook, body assets, layout and later sections unchanged. No OGL/custom shader/requestAnimationFrame in application effect code.
+- Browser appearance, console, FPS, clipping and3–5s idle/pointer acceptance are **PENDING EZE**, not marked PASS. No fabricated screenshots.
+
+Desktop review:1366×768,1440×900,1536×864,1920×1080. Mobile:360×800,390×844,393×873,430×932. Check visible dust drift, sparse softness, native hover, real idle arc shape changes, local reaction/recovery, no hard ellipse/upper cut, reduced/failure/visibility/resize, scrolling and performance.
 
 ## Commit / next
 
-One commit: `fix: polish living Hero arc and luminous dust behavior`; resolve SHA with `git log -1 --format=%H --grep='^fix: polish living Hero arc and luminous dust behavior$'`. Actual SHA in final report. Next: Eze visual QA. No later-section motion or Block09.
-
-
-## Dirección — rechazo de 08C y diagnóstico de arquitectura
-
-Fecha: 4 de octubre de 2026.
-
-Eze revisó 08C en browser real y lo rechazó visualmente: el Hero sigue percibiéndose prácticamente estático; la respuesta al mouse es apenas perceptible y las partículas no transmiten vida.
-
-Diagnóstico concreto del código:
-- `mistX` máximo 6 px y `mistY` 4 px sobre una escena de 1560×1380;
-- `haloY` máximo 2.5 px;
-- pointer response del arco desplaza una copia local un máximo de 9 unidades, no deforma realmente el campo;
-- radio local 180 SVG units, por lo que la reacción solo aparece muy cerca de la curva;
-- OGL particles usa `uPointerStrength = 0.014`, demasiado bajo para lectura visual clara;
-- el screen drift de partículas es 0.012 NDC y las frecuencias principales son 0.16–0.42 rad/s, por lo que en 3–5 segundos el movimiento puede parecer prácticamente estático;
-- Motion funciona principalmente como clock que actualiza atributos SVG, no como un sistema de deformación perceptible.
-
-Conclusión: no seguir afinando 08C con cambios marginales. 08D debe cambiar la arquitectura de motion manteniendo el aspecto difuso aprobado.
-
-Dirección técnica autorizada:
-- partículas: evaluar reemplazo del adapter React Bits/OGL por tsParticles React/slim (MIT), usando movimiento/opacity/size/interactivity nativos y configuración visible;
-- arco: conservar path exacto como guide invisible; usar Motion para animar valores reales de un sistema de displacement/noise + local spring response sobre capas de glow/mist;
-- no hard rim;
-- no orb/aurora/rays genéricos;
-- sin rediseño de Hero;
-- success gate humano: vida visible sin necesidad de explicar que “los valores están cambiando”.
+One implementation commit, title `fix: replace Hero motion with native dust and SVG displacement`. Resolve exact SHA with `git log -1 --format=%H --grep='^fix: replace Hero motion with native dust and SVG displacement$'`; full SHA in delivery report. Eze visual QA is next. No Block09 or motion in other sections.

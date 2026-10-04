@@ -1,10 +1,15 @@
+import { useCallback, useState } from 'react'
 import { HeroParticles } from './HeroParticles'
-import { LivingArcMotion } from './LivingArcMotion'
+import { ArcDisplacement } from './ArcDisplacement'
 
-export default function HeroAtmosphere({ backgroundRef, desktop, tablet, wide, interactive, onFailure, arcTarget }) {
+export default function HeroAtmosphere({ backgroundRef, desktop, tablet, wide, interactive, arcTarget, onParticleStatus }) {
+  const [particleFailed, setParticleFailed] = useState(false)
+  const [arcFailed, setArcFailed] = useState(false)
+  const failParticles = useCallback(() => { setParticleFailed(true); onParticleStatus(false) }, [onParticleStatus])
+  const failArc = useCallback(() => setArcFailed(true), [])
   const variant = tablet ? (desktop ? (wide ? 'wide' : 'production') : 'tablet') : 'mobile'
   return <>
-    <HeroParticles backgroundRef={backgroundRef} desktop={desktop} interactive={interactive} onFailure={onFailure} />
-    <LivingArcMotion target={arcTarget} variant={variant} backgroundRef={backgroundRef} interactive={interactive} onFailure={onFailure} />
+    {!particleFailed && <HeroParticles desktop={desktop} interactive={interactive} onFailure={failParticles} onStatus={onParticleStatus} />}
+    {!arcFailed && <ArcDisplacement target={arcTarget} variant={variant} backgroundRef={backgroundRef} interactive={interactive} onFailure={failArc} />}
   </>
 }

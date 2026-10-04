@@ -696,25 +696,26 @@ Next: Eze visual QA / Direction decision. No later-section motion or Block09.
 
 ### BLOCK 08D — Hero Motion Architecture Correction
 
-**STATUS: AUTHORIZED / NOT YET CLOSED**
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
 
-Dirección diagnosticó que el problema ya no es conceptual sino arquitectónico: 08C sí mueve valores, pero casi todos los cambios están por debajo del umbral perceptual. El arco sigue siendo un path estático con gradiente/blur desplazados pocos píxeles y la respuesta al puntero es una copia local trasladada, no una deformación perceptible del campo de luz. El particle adapter también usa amplitudes y pointer strength demasiado pequeños para el resultado visual buscado.
+08C permanece **REJECTED BY EZE** (`219c7846384e2bd7e3a7411b12775232b7a36e7e`). El LOOK difuso fue aprobado; su arquitectura de motion fue rechazada. Baseline limpio/sincronizado `c1b864ad68fe7e715eea77b7e5d47c4c060c5d18`; npm run check inicial PASS.
 
-08D debe sustituir la arquitectura demasiado tímida, no seguir ajustando números menores.
+Reemplazados el shader/adapter React Bits/OGL y Motion-clock/traslaciones/copiapath por dos propietarios claros: tsParticles React/engine/slim4.4.0 (MIT, peer React19 compatible) para dust nativo y Motion + SVG turbulence/displacement para el arco. Eliminados OGL, vendor React Bits, LivingArcMotion, livingArcMotion y arcMotionState. HeroLightArc conserva paths, bandas difusas, gradient/base alpha y fallback blur-only; no hard rim.
 
-Decisión:
-- conservar el LOOK difuso aprobado de 08B/08C;
-- reemplazar el comportamiento invisible por motion perceptible;
-- Motion debe controlar una deformación/perturbación real del campo de luz, no actuar solo como clock;
-- reemplazar el adapter custom de React Bits/OGL si no puede entregar movimiento visible de forma confiable;
-- primera alternativa autorizada para partículas: tsParticles React/slim, MIT, con drift visible, opacity/size animation y hover response suave;
-- el arco debe usar el path exacto como guía invisible + capas difusas con displacement/noise y reacción local con spring, manteniendo geometría base;
-- acceptance visual manda: después de 3–5 s de observación debe ser evidente que el Hero está vivo;
-- no cambiar layout, copy, tipografía, CTA, crop ni fuentes de verdad Desktop/Mobile.
+Dust: tres sprites locales cyan suaves,60 Desktop /24 Mobile–Transition, movimiento nativo independiente .45–.9/.25–.5, opacity/size animados, hover repulse110px moderado Desktop fine-pointer. DPR nativo hasta1.5 Desktop (altoDPR usa1), Mobile1; FPS60/30. Provider estable y cargas serializadas con host/id por montaje impiden que un load tardío destruya al sucesor. Un canvas2D, sin WebGL.
 
-QA visual/browser final sigue siendo de Eze. No pasar a Block09 hasta aprobación explícita.
+Arco: ruido fractal una octava por banda; Motion anima frecuencia/flujo y displacement mist80–132, halo38–68, core12–24; Mobile34–58/18–32/6–12. Pointer local con máscara radial440 y mapa neutro fuera del radio220; springs de Motion deforman el campo, no trasladan una copia. Recuperación aproximada1s. Padding256 y región live visible+padding evitan corte interno y coste de toda la elipse fuera de pantalla. Sin cambios de crop/layout ni touch handlers Mobile.
+
+Reduced/hidden/offscreen desmontan ambos efectos y restauran filtros estáticos; fallos de partículas/arco independientes. Estrellas originales completas hasta particle-ready y ante fallo; nunca dependen de efectos el contenido/CTA. Hook de preferencias intacto. Seis animaciones idle comparten scheduler Motion, separado del único scheduler nativo de partículas; cero RAFs propios.
+
+Archivos: effects HeroAtmosphere/HeroParticles/HeroLightArc/ArcDisplacement/arcDisplacement/heroParticleOptions, HeroBackground, tres sprites light-dust, package/lockfile, notices, docs HERO_MOTION/CURRENT_STATE; eliminaciones anteriores. **Todas las hojas CSS, body assets, App, data, hooks, otros componentes y geometría Desktop02B/Mobile03 permanecen intactos.**
+
+Validación técnica: npm run check y git diff --check PASS; SSR/static/IDs/path guides; plugins/opciones nativas4.4 (incluye corrección de nombres preload únicos); Motion spring/cleanup real en harness Node, no render visual. Browser/percepción/console/FPS pendientes de Eze: observar3–5s idle y pointer/recovery en1366×768/1440×900/1536×864/1920×1080, Mobile360×800/390×844/393×873/430×932. Los tests técnicos no prueban aprobación visual.
+
+Bundle inicial236.02→237.49kB (gzip71.43→72.04); Hero lazy completo109.34→214.29kB (gzip36.28→70.40), CSS67.22/gzip13.44 intacto. tsParticles aislado211.48/gzip64.89 con React external; no sumarlo al build. Detalle en `docs/HERO_MOTION.md`. No avance a Block09. Pendientes reales de contenido anteriores intactos. Commit único identificado por `fix: replace Hero motion with native dust and SVG displacement`; resolver SHA con `git log -1 --format=%H --grep='^fix: replace Hero motion with native dust and SVG displacement$'` (SHA completo en reporte final, sin segundo commit documental/autorreferencia).
 
 ---
+
 
 ### BLOCK 09 — Accessibility + Performance
 
@@ -756,7 +757,7 @@ Solo después puede declararse Production FINAL / FROZEN.
 
 ## 12. Hero effect research / decisión técnica vigente
 
-Block08C conserva el aspecto difuso de08B y React Bits FREE Particles (JS/CSS + OGL) y Motion, pero reemplaza rim duro/sweep por luz difusa viva guiada por los paths exactos. El fondo estático utiliza el mismo arco atmosférico. El antiguo glow WAAPI fue reemplazado, sin loops paralelos. Detalle técnico/licencias/spike/costes/fallback en `docs/HERO_MOTION.md`. Implementación lista; aprobación visual final pendiente de Eze.
+Estado vigente de efectos: Block08C rechazado y superseded por08D. Dust nativo tsParticles React/slim4.4.0 y Motion + filtros SVG de displacement local/idle; OGL y clock/traslaciones anteriores eliminados. Aspecto difuso y fallback preservados. Detalle/licencias/costes en `docs/HERO_MOTION.md`. IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA; no aprobación visual anticipada.
 
 MagicRings permanece **REJECTED** por su corte/fade histórico y coste; no se volvió a probar en Block08. ShaderGradient/Vanta no ejecutados ni declarados rechazados. No renderer genérico sustituye el horizonte aprobado; no Pro.
 
@@ -1082,7 +1083,7 @@ Reglas obligatorias:
 - QA visual/browser final lo realiza Eze.
 
 Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
-Block08 fue rechazado visualmente; el polish08C Living Arc Behavior está implementado y pendiente de QA visual Eze; no iniciar otras fases sin Dirección.
+08C fue rechazado visualmente.08D sustituye su arquitectura y está IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA; no iniciar Block09 ni otras fases sin Dirección.
 
 ---
 

@@ -18,6 +18,8 @@ export function HeroBackground() {
   const preferences = useHeroMotionPreferences(backgroundRef)
   const [Atmosphere, setAtmosphere] = useState(null)
   const [failed, setFailed] = useState(false)
+  const [particlesReady, setParticlesReady] = useState(false)
+  const particleStatus = useCallback(ready => setParticlesReady(ready), [])
   const fail = useCallback(() => setFailed(true), [])
   useEffect(() => {
     if (!preferences.active || failed) return
@@ -28,7 +30,7 @@ export function HeroBackground() {
     return () => { cancelled = true }
   }, [preferences.active, failed, fail])
   return (
-    <div className={`hero-background${preferences.active && !failed && Atmosphere ? ' hero-atmosphere-active' : ''}`} aria-hidden="true" ref={backgroundRef}>
+    <div className={`hero-background${preferences.active && !failed && particlesReady ? ' hero-atmosphere-active' : ''}`} aria-hidden="true" ref={backgroundRef}>
       <div className="hero-desktop-scene" ref={setDesktopTarget}>
         <picture><source media="(min-width: 1760px)" srcSet={productionWideBody} /><source media="(min-width: 1200px)" srcSet={productionBody} /><img className="horizon-desktop-body" src={desktopBody} alt="" width="1536" height="820" /></picture>
         {['tablet', 'production', 'wide'].map(variant => <HeroLightArc variant={variant} key={variant} />)}
@@ -39,7 +41,7 @@ export function HeroBackground() {
         <HeroLightArc variant="mobile" />
       </div>
       {preferences.active && !failed && Atmosphere && <Atmosphere backgroundRef={backgroundRef}
-        {...preferences} arcTarget={preferences.tablet ? desktopTarget : mobileTarget} onFailure={fail} />}
+        {...preferences} arcTarget={preferences.tablet ? desktopTarget : mobileTarget} onParticleStatus={particleStatus} />}
     </div>
   )
 }
