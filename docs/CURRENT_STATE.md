@@ -696,7 +696,7 @@ Next: Eze visual QA / Direction decision. No later-section motion or Block09.
 
 ### BLOCK 08D — Hero Motion Architecture Correction
 
-**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+**STATUS: REJECTED BY EZE — EFFECTS STILL APPEAR STATIC IN REAL BROWSER**
 
 08C permanece **REJECTED BY EZE** (`219c7846384e2bd7e3a7411b12775232b7a36e7e`). El LOOK difuso fue aprobado; su arquitectura de motion fue rechazada. Baseline limpio/sincronizado `c1b864ad68fe7e715eea77b7e5d47c4c060c5d18`; npm run check inicial PASS.
 
@@ -716,6 +716,39 @@ Bundle inicial236.02→237.49kB (gzip71.43→72.04); Hero lazy completo109.34→
 
 ---
 
+
+### BLOCK 08E — Hero Motion Lab / Runtime Proof
+
+**STATUS: AUTHORIZED / DIAGNOSTIC FIRST — DO NOT INTEGRATE BLINDLY**
+
+08D is rejected after real-browser QA. The approved diffuse LOOK remains. The problem is now treated as a runtime/proof problem, not another tuning problem.
+
+Concrete findings from repo review:
+- screenshot still shows approximately the original fixed-star count, not a clearly visible 60-particle field;
+- current tsParticles integration does not follow the official React wrapper pattern and manually calls `tsParticles.load({ id, element, options })`; official v4 guidance uses a real target id or the official `Particles` component/provider lifecycle;
+- current code silently falls back on particle or arc failures, making a broken live effect look identical to the static approved Hero;
+- arc runtime also silently exits/falls back if its feature gate or filter setup fails;
+- therefore technical tests can pass while the browser shows no motion.
+
+New rule: no more 20–30 minute production passes without visible runtime proof.
+
+08E must create a temporary dev-only Hero Motion Lab with:
+- explicit runtime status for PARTICLES / ARC / POINTER / REDUCED MOTION;
+- no silent fallback while lab mode is active;
+- deliberately exaggerated motion preset to prove the systems are actually rendering and reacting;
+- live controls for particle speed/repulse/count/opacity and arc idle displacement/pointer radius/pointer strength/recovery;
+- a single URL/query/dev switch to open the lab without affecting production layout.
+
+Gate:
+1. Eze confirms particles visibly move.
+2. Eze confirms pointer visibly affects particles.
+3. Eze confirms arc visibly moves while idle.
+4. Eze confirms pointer visibly disturbs the arc.
+5. Only then tune intensity downward toward premium final values and integrate into production.
+
+No Block09 until this proof is achieved.
+
+---
 
 ### BLOCK 09 — Accessibility + Performance
 
