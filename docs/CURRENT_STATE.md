@@ -676,20 +676,41 @@ Documentación: `docs/DESKTOP_PRODUCTION_IMPLEMENTATION.md`. Un único commit de
 
 Próxima acción: QA visual/browser de Eze y aprobación de Dirección. **No APPROVED/FINAL/FROZEN web; Block08 no autorizado.**
 
-### BLOCK 08 — Motion
+### BLOCK 08 — Hero Motion / Living Background
 
-**STATUS: PENDING**
+**STATUS: AUTHORIZED / NOT YET CLOSED**
 
-Revisar únicamente la solución ganadora nativa del Hero ya integrada en Block 02; no introducir otro renderer por defecto. Motion de la landing completa sigue pendiente.
+Dirección reabre explícitamente el Hero para darle vida visual después de aprobar la geometría Desktop Production y el framing Mobile. El fondo actual (horizon/body/rim/glow/stars) pasa a considerarse el esqueleto estático/fallback, no el efecto final.
+
+Objetivo autorizado:
+- partículas vivas e interactivas;
+- halo/rim con un highlight que recorra la curva;
+- glow ambiental con respiración más rica;
+- interacción sutil y profesional;
+- mantener exactamente la silueta/composición del Hero aprobada.
+
+Preferencia técnica de Dirección: usar componentes/librerías existentes, NO construir un particle engine o animation system desde cero.
+
+Primera estrategia a probar:
+1. React Bits FREE / Particles para el campo de partículas interactivo;
+2. Motion (MIT) para animar un highlight sobre el path exacto del rim SVG aprobado;
+3. mantener los SVG actuales como base/fallback y reduced-motion state.
+
+No usar React Bits Pro ni cambiar el Hero por un shader/orb/aurora genérico. No introducir Light Rays si sustituye visualmente la curva aprobada. La integración debe preservar el arco existente y añadir vida sobre él.
+
+El agente debe ejecutar un spike real, medir bundle/performance, validar Mobile/Desktop/reduced-motion/visibility/cleanup y conservar solo dependencias realmente seleccionadas.
 
 Motion general:
 
-- sutil;
-- corto;
+- sutil pero perceptiblemente vivo;
 - ambiental;
-- sin movimiento decorativo gratuito.
+- profesional;
+- sin estética gamer;
+- sin movimiento decorativo gratuito;
+- interacción de puntero contenida;
+- no reveal global por defecto.
 
-No reveal global por defecto.
+En Hero, el motion puede tener más presencia que en el resto de la landing, siempre subordinado a headline y CTAs.
 
 ### BLOCK 09 — Accessibility + Performance
 
@@ -739,7 +760,7 @@ MagicRings: **REJECTED**. Configuración controlada de un anillo cyan, scaleRate
 
 ShaderGradient y Vanta no se probaron; no son opciones rechazadas. La alternativa SVG nativa explícitamente permitida ganó sin requerir otros renderers.
 
-No reabrir búsqueda de librerías salvo regresión verificable o nueva decisión de Dirección. No convertir el Hero en un orb, aurora, ring de catálogo ni superficie diferente.
+Dirección reabrió explícitamente la búsqueda de librerías para Block 08. MagicRings sigue REJECTED; el nuevo objetivo no es sustituir el horizonte sino animar el sistema aprobado con partículas + highlight de rim. No convertir el Hero en un orb, aurora, ring de catálogo ni superficie diferente.
 
 ---
 
