@@ -135,3 +135,14 @@ Preferencia técnica:
 - MagicRings continúa rechazado.
 
 La geometría, tipografía, copy, CTAs y crop de 02B Desktop Production / 03 Mobile siguen protegidos.
+
+
+## Block 08 — Living Hero implementation
+
+**IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**. Geometría Desktop02B y Mobile/framing preservada. Fondo estático anterior permanece como fallback; el hook WAAPI useHorizonGlow fue eliminado y reemplazado por un único owner Motion del glow.
+
+React Bits FREE Particles adaptado (upstream ca44b3f9ee180676a06d7de8ec6bea84cddff85b, MIT + Commons Clause; notices conservados), ogl1.0.11 Unlicense y Motion14.0.0 MIT. 70/28 partículas, DPR1.5/1, speed.045/.03, sin rotación. Reacción local muy suave solo Desktop/fine mouse, sin interceptar UI/touch. Highlight sobre los cuatro paths SVG exactos, segmento14% con capas cyan/white y glow sincronizadas,12/14s; base rim intacto. Los diez stars Desktop siguen presentes.
+
+Reduced-motion/offscreen/hidden cancela y desmonta efectos; un canvas vivo, recursos liberados y fallo WebGL/contexto/import deja fallback estático completo sin retries continuos. Chunk lazy107.90kB/gzip35.87; initialJS243.67/gzip71.75 frente241.88/gzip70.99. CSS66.92/gzip13.40 frente68.04/gzip13.51. Sin cambio de layout, assets, texto ni secciones posteriores.
+
+QA técnico: npm run check/git diff --check,9 tests JSDOM con OGL simulado y Motion real, SSR y equivalencia exacta de paths/declaraciones CSS. No GPU/render visual PASS ni screenshots fabricados; el juicio premium/calma/sweep/scroll/performance real lo realiza Eze. Detalle: `docs/HERO_MOTION.md`. Commit único identificado por `feat: add living Hero particles and horizon light sweep`; SHA real en reporte final.

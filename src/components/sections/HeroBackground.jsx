@@ -1,5 +1,5 @@
-import { useRef } from 'react'
-import { useHorizonGlow } from '../../hooks/useHorizonGlow'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useHeroMotionPreferences } from '../../hooks/useHeroMotionPreferences'
 import desktopGlow from '../../assets/hero/desktop-glow.svg'
 import desktopBody from '../../assets/hero/desktop-body.svg'
 import desktopRim from '../../assets/hero/desktop-rim.svg'
@@ -20,20 +20,35 @@ const stars = [[144,216,3],[166,354,4],[237,482,4],[328,694,3],[901,292,3],[1193
 const starAssets = { 2: star2, 3: star3, 4: star4 }
 export function HeroBackground() {
   const backgroundRef = useRef(null)
-  useHorizonGlow(backgroundRef)
+  const [desktopTarget, setDesktopTarget] = useState(null)
+  const [mobileTarget, setMobileTarget] = useState(null)
+  const preferences = useHeroMotionPreferences(backgroundRef)
+  const [Atmosphere, setAtmosphere] = useState(null)
+  const [failed, setFailed] = useState(false)
+  const fail = useCallback(() => setFailed(true), [])
+  useEffect(() => {
+    if (!preferences.active || failed) return
+    let cancelled = false
+    import('../effects/HeroAtmosphere').then(module => {
+      if (!cancelled) setAtmosphere(() => module.default)
+    }).catch(() => { if (!cancelled) fail() })
+    return () => { cancelled = true }
+  }, [preferences.active, failed, fail])
   return (
     <div className="hero-background" aria-hidden="true" ref={backgroundRef}>
-      <div className="hero-desktop-scene">
+      <div className="hero-desktop-scene" ref={setDesktopTarget}>
         <picture><source media="(min-width: 1760px)" srcSet={productionWideGlow} /><source media="(min-width: 1200px)" srcSet={productionGlow} /><img className="horizon-desktop-glow" src={desktopGlow} alt="" width="1536" height="842" /></picture>
         <picture><source media="(min-width: 1760px)" srcSet={productionWideBody} /><source media="(min-width: 1200px)" srcSet={productionBody} /><img className="horizon-desktop-body" src={desktopBody} alt="" width="1536" height="820" /></picture>
         <picture><source media="(min-width: 1760px)" srcSet={productionWideRim} /><source media="(min-width: 1200px)" srcSet={productionRim} /><img className="horizon-desktop-rim" src={desktopRim} alt="" width="1536" height="839" /></picture>
         {stars.map(([x,y,size], index) => <img className="hero-star" src={starAssets[size]} key={`${x}:${y}`} alt="" width={size+14} height={size+14} style={{ '--tablet-star-x': `${x-7}px`, '--tablet-star-y': `${y-7}px`, '--production-star-x': `${productionStars[index][0]-7}px`, '--production-star-y': `${productionStars[index][1]-7}px` }} />)}
       </div>
-      <div className="hero-mobile-horizon">
+      <div className="hero-mobile-horizon" ref={setMobileTarget}>
         <img className="horizon-mobile-glow" src={mobileGlow} alt="" width="390" height="128" />
         <img className="horizon-mobile-body" src={mobileBody} alt="" width="390" height="98" />
         <img className="horizon-mobile-rim" src={mobileRim} alt="" width="390" height="118" />
       </div>
+      {preferences.active && !failed && Atmosphere && <Atmosphere backgroundRef={backgroundRef}
+        {...preferences} sweepTarget={preferences.tablet ? desktopTarget : mobileTarget} onFailure={fail} />}
     </div>
   )
 }
