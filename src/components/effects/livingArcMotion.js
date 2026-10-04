@@ -1,8 +1,11 @@
 import { animate } from 'motion'
+import { arcMotionState } from './arcMotionState'
 
 export function createLivingArcMotion(svg, { background, interactive }, animateClock = animate) {
   const gradient = svg.querySelector('[data-arc-energy]')
   const mist = svg.querySelector('[data-arc-layer="mist"]')
+  const halo = svg.querySelector('[data-arc-layer="halo"]')
+  const stops = [...gradient.querySelectorAll('stop')].map(node => ({ node, opacity: Number(node.getAttribute('stop-opacity')) }))
   const field = svg.querySelector('[data-arc-field]')
   const response = svg.querySelector('[data-arc-response]')
   const pointerMask = svg.querySelector('[data-arc-pointer]')
@@ -14,6 +17,7 @@ export function createLivingArcMotion(svg, { background, interactive }, animateC
   let pointer = { x: -1000, y: -1000, strength: 0 }
   let current = { ...pointer }
   let previousTime = performance.now()
+  let elapsed = 0
   function move(event) {
     if (event.pointerType && event.pointerType !== 'mouse') return
     const matrix = svg.getScreenCTM()
@@ -22,26 +26,42 @@ export function createLivingArcMotion(svg, { background, interactive }, animateC
     const bounds = background.getBoundingClientRect()
     const inside = event.clientX >= bounds.left && event.clientX <= bounds.right && event.clientY >= bounds.top && event.clientY <= bounds.bottom
     const distance = Math.min(...samples.map(sample => Math.hypot(sample.x - point.x, sample.y - point.y)))
-    pointer = { x: point.x, y: point.y, strength: inside ? Math.max(0, 1 - distance / 140) : 0 }
+    pointer = { x: point.x, y: point.y, strength: inside ? Math.max(0, 1 - distance / 180) : 0 }
   }
   function leave() { pointer.strength = 0 }
-  // One Motion clock: broad energy density travels back/forth without a dash seam.
-  const clock = animateClock(0, 1, { duration: mobile ? 22 : 18, repeat: Infinity, ease: 'linear', onUpdate: phase => {
-    const angle = phase * Math.PI * 2
-    const now = performance.now()
-    const ease = 1 - Math.exp(-Math.min(now - previousTime, 50) / 450)
-    previousTime = now
-    if (pointer.strength > 0 && current.strength < .001) { current.x = pointer.x; current.y = pointer.y }
-    current.x += (pointer.x - current.x) * ease
-    current.y += (pointer.y - current.y) * ease
-    current.strength += (pointer.strength - current.strength) * ease
-    gradient.setAttribute('gradientTransform', `translate(${Math.sin(angle) * width * .22} 0)`)
-    mist.setAttribute('transform', `translate(${Math.sin(angle * 2) * (mobile ? 2 : 5)} ${Math.cos(angle) * (mobile ? 2 : 4)})`)
-    field.style.opacity = String(.86 + .14 * Math.sin(angle * 2))
-    pointerMask.setAttribute('cx', current.x); pointerMask.setAttribute('cy', current.y)
-    response.setAttribute('transform', `translate(0 ${-5 * current.strength})`)
-    response.setAttribute('opacity', current.strength * .5)
-  } })
+  // Keep the static look, but tighten live density spacing so drift is readable.
+  gradient.setAttribute('x1', -width * .15)
+  gradient.setAttribute('x2', width * 1.15)
+  // One clock; accumulated time stays continuous across clock repetitions.
+  let clock
+  function restore() {
+    gradient.removeAttribute('gradientTransform'); mist.removeAttribute('transform'); halo.removeAttribute('transform'); field.style.opacity = ''
+    gradient.setAttribute('x1', -width * .5); gradient.setAttribute('x2', width * 1.5)
+    stops.forEach(({ node, opacity }) => node.setAttribute('stop-opacity', opacity))
+    response.setAttribute('opacity', '0'); response.removeAttribute('transform')
+  }
+  try {
+    clock = animateClock(0, 1, { duration: 120, repeat: Infinity, ease: 'linear', onUpdate: () => {
+      const now = performance.now()
+      const delta = Math.max(0, Math.min(now - previousTime, 50))
+      elapsed += delta / 1000
+      const state = arcMotionState(elapsed, width, mobile)
+      const ease = 1 - Math.exp(-delta / 380)
+      previousTime = now
+      if (pointer.strength > 0 && current.strength < .001) { current.x = pointer.x; current.y = pointer.y }
+      current.x += (pointer.x - current.x) * ease
+      current.y += (pointer.y - current.y) * ease
+      current.strength += (pointer.strength - current.strength) * ease
+      gradient.setAttribute('gradientTransform', `translate(${state.energyX} 0)`)
+      stops.forEach(({ node, opacity }, i) => node.setAttribute('stop-opacity', opacity * state.shimmer(i)))
+      mist.setAttribute('transform', `translate(${state.mistX} ${state.mistY})`)
+      halo.setAttribute('transform', `translate(0 ${state.haloY})`)
+      field.style.opacity = String(state.intensity)
+      pointerMask.setAttribute('cx', current.x); pointerMask.setAttribute('cy', current.y)
+      response.setAttribute('transform', `translate(0 ${-9 * current.strength})`)
+      response.setAttribute('opacity', current.strength * .68)
+    } })
+  } catch (error) { restore(); throw error }
   if (interactive && typeof DOMPoint !== 'undefined') {
     window.addEventListener('pointermove', move, { passive: true })
     window.addEventListener('blur', leave)
@@ -52,7 +72,6 @@ export function createLivingArcMotion(svg, { background, interactive }, animateC
     window.removeEventListener('pointermove', move)
     window.removeEventListener('blur', leave)
     document.removeEventListener('pointerleave', leave)
-    gradient.removeAttribute('gradientTransform'); mist.removeAttribute('transform'); field.style.opacity = ''
-    response.setAttribute('opacity', '0'); response.removeAttribute('transform')
+    restore()
   }
 }

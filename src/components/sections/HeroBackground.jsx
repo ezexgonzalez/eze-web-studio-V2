@@ -28,7 +28,7 @@ export function HeroBackground() {
     return () => { cancelled = true }
   }, [preferences.active, failed, fail])
   return (
-    <div className="hero-background" aria-hidden="true" ref={backgroundRef}>
+    <div className={`hero-background${preferences.active && !failed && Atmosphere ? ' hero-atmosphere-active' : ''}`} aria-hidden="true" ref={backgroundRef}>
       <div className="hero-desktop-scene" ref={setDesktopTarget}>
         <picture><source media="(min-width: 1760px)" srcSet={productionWideBody} /><source media="(min-width: 1200px)" srcSet={productionBody} /><img className="horizon-desktop-body" src={desktopBody} alt="" width="1536" height="820" /></picture>
         {['tablet', 'production', 'wide'].map(variant => <HeroLightArc variant={variant} key={variant} />)}

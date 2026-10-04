@@ -676,19 +676,21 @@ Documentación: `docs/DESKTOP_PRODUCTION_IMPLEMENTATION.md`. Un único commit de
 
 Dirección autorizó Block08 sobre esta geometría protegida. La web global no se declara FINAL/FROZEN; revisión visual y cierre definitivo siguen a cargo de Eze.
 
-### BLOCK 08B — Hero Motion Correction / Living Light Arc
+### BLOCK 08C — Hero Motion Polish / Living Arc Behavior
 
 **STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
 
-Block08 result `5a30369a8b48559a84fe47ab65e064521d4d2cde` was visually rejected by Eze: static-looking particles, outlined ring/add-on highlight, weak atmosphere and upper light cut. Block08B supersedes its visual approach.
+Baseline `924e1ba2225abb255e2d63674ecce27b5490e9fe` (08B). Eze confirmed the diffuse arc direction is much closer; motion/interaction/particles still NOT APPROVED.08C retains that look and polishes behavior, not concept/layout.
 
-Hard rim/glow images and segmented HorizonLightSweep removed from rendering. Body asset audit found embedded outlines; only those strokes removed from four SVGs, fills/geometry preserved. HeroLightArc renders three diffuse bands (light/halo/mist) synchronously, including static SSR/fallback. Exact four path guides/crops retained; no dash/progress stroke. One Motion clock drives broad energy-density travel, breathing, mist drift and bounded local Desktop pointer response; no surface wobble. Explicit visible SVG overflow and160px filter padding replace internally cropped light images.
+Exact path guides, band widths/blurs/base alpha, surface fills/assets, crop/filter160px padding, layout/copy/type/Header/CTA/heights/Mobile framing unchanged. One Motion clock now drives independent density shimmer, narrower live gradient spacing, mist+halo drift and calm breathing. Continuous accumulated time avoids clock lap resets. Desktop local pointer radius180, soft drift up to9units, alpha.68 and380ms recovery; Mobile no pointer.
 
-Particles remain React Bits FREE/OGL70/28, DPR1.5/1, now speed.65/.45 and clearer size/alpha with seeded independent brightness variation. No new dependencies. Shared reduced/visibility/failure/resource lifecycle retained. Static fallback is now the polished diffuse arc, not the old construction line. Ten stars preserved. Layout/copy/fonts/buttons/header/heights/framing/other sections/data intact.
+React Bits/OGL particle field retains70/28 and DPR1.5/1. Replaced solid dot profile with diffuse elongated light specks in arc cyan/soft cyan-white; minimum nonzero independent drift plus tiny depth-aware/screen motion. Speed1.05/.72, sprite input160/120 but footprint capped5–14 CSS px including halo; layer opacity.55/.4. Ten fixed fallback stars intentionally faint18% only while atmosphere runs, normal in reduce/inactive/failure. No new dependency/engine/filter system.
 
-Files: HeroBackground, HeroLightArc, LivingArcMotion/livingArcMotion, HeroAtmosphere/HeroParticles, particles adapter, header-hero.css, four body assets, docs HERO_MOTION/HEADER_HERO/CURRENT_STATE; deleted HorizonLightSweep. Commit identified by `fix: rework Hero as a living atmospheric light arc`; resolver `git log -1 --format=%H --grep='^fix: rework Hero as a living atmospheric light arc$'`, SHA delivered in report.
+Reduced/hidden/offscreen/failed state restores static diffuse composition and cancels live controllers/resources. Clock-init failure restores all SVG attributes. Existing OGL failure latch and resource cleanup preserved. Assets/data/other sections/package/lockfile unchanged.
 
-Technical QA: npm run check/git diff --check PASS; isolated SSR/controller assertions for fallback/IDs/stars/exact guides/energy/pointer recovery/cleanup; SVG fill-preservation and protected layout checks. No browser visual/GPU PASS. Eze validates Desktop1366×768/1440×900/1536×864/1920×1080 and Mobile360×800/390×844/393×873/430×932. Concept implementation complete, visual success criteria remain pending manual review. Details `docs/HERO_MOTION.md`.
+Files: effects HeroLightArc/HeroParticles/livingArcMotion/new arcMotionState, HeroBackground, header-hero.css, vendor particles, docs HERO_MOTION/HEADER_HERO/CURRENT_STATE. Commit identified by `fix: polish living Hero arc and luminous dust behavior`; resolver `git log -1 --format=%H --grep='^fix: polish living Hero arc and luminous dust behavior$'`; actual SHA delivered in report.
+
+QA technical PASS: npm run check/git diff --check; SSR/controller assertions for static fallback/IDs/stars/exact guides,3/5s field changes, pointer recovery/cleanup and clock failure; actual Motion callbacks/stop in timer-backed Node RAF; OGL-stub5s time advance/counts/DPR/single RAF/disposal; protected layout checks. No real browser visual/GPU PASS. Eze checks Desktop1366×768/1440×900/1536×864/1920×1080 and Mobile360×800/390×844/393×873/430×932. Success criteria remain pending visual review. Details `docs/HERO_MOTION.md`.
 
 Next: Eze visual QA / Direction decision. No later-section motion or Block09.
 
@@ -732,7 +734,7 @@ Solo después puede declararse Production FINAL / FROZEN.
 
 ## 12. Hero effect research / decisión técnica vigente
 
-Block08B conserva React Bits FREE Particles (JS/CSS + OGL) y Motion, pero reemplaza rim duro/sweep por luz difusa viva guiada por los paths exactos. El fondo estático utiliza el mismo arco atmosférico. El antiguo glow WAAPI fue reemplazado, sin loops paralelos. Detalle técnico/licencias/spike/costes/fallback en `docs/HERO_MOTION.md`. Implementación lista; aprobación visual final pendiente de Eze.
+Block08C conserva el aspecto difuso de08B y React Bits FREE Particles (JS/CSS + OGL) y Motion, pero reemplaza rim duro/sweep por luz difusa viva guiada por los paths exactos. El fondo estático utiliza el mismo arco atmosférico. El antiguo glow WAAPI fue reemplazado, sin loops paralelos. Detalle técnico/licencias/spike/costes/fallback en `docs/HERO_MOTION.md`. Implementación lista; aprobación visual final pendiente de Eze.
 
 MagicRings permanece **REJECTED** por su corte/fade histórico y coste; no se volvió a probar en Block08. ShaderGradient/Vanta no ejecutados ni declarados rechazados. No renderer genérico sustituye el horizonte aprobado; no Pro.
 
@@ -1058,7 +1060,7 @@ Reglas obligatorias:
 - QA visual/browser final lo realiza Eze.
 
 Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
-Block08 fue rechazado visualmente; la corrección08B Living Light Arc está implementada y pendiente de QA visual Eze; no iniciar otras fases sin Dirección.
+Block08 fue rechazado visualmente; el polish08C Living Arc Behavior está implementado y pendiente de QA visual Eze; no iniciar otras fases sin Dirección.
 
 ---
 

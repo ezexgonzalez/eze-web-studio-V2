@@ -106,3 +106,9 @@
 @media (min-width: 110rem) {
   .hero-desktop-scene > [data-arc-variant="wide"] { display: block; }
 }
+
+/* Fixed fallback stars become faint distant anchors while the living dust runs. */
+.hero-atmosphere-active .hero-star { opacity: .18; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-atmosphere-active .hero-star { opacity: 1; }
+}

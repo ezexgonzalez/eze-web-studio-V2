@@ -1,55 +1,80 @@
-# Block 08B — Living Light Arc
+# Block 08C — Living Arc Behavior
 
 **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA** — 4 October 2026.
 
-## Baseline / rejected approach
+## Baseline / scope
 
-Clean synced baseline `5a30369a8b48559a84fe47ab65e064521d4d2cde`; npm run check PASS. Eze rejected Block08: almost static particles, readable ring, add-on highlight, weak atmosphere and upper light cut. Its segmented pathOffset/pathLength sweep and exported glow/rim are superseded, not retained as competing layers. `useHorizonGlow.js` was already deleted in08; it remains absent.
+Clean synced baseline `924e1ba2225abb255e2d63674ecce27b5490e9fe`; baseline npm run check PASS. Eze accepted08B's visual direction as substantially closer, but did not approve its motion: arc/interaction too static, isolated bright particle points.08C preserves that diffuse arc concept and tunes life, not composition.
 
-Desktop02B and Mobile03/viewport framing remain protected. No layout, copy, header, typography, buttons, heights, other sections, data or interaction changes outside the Hero decoration.
+Desktop02B/Mobile03 and viewport framing remain protected. No layout, copy, type, Header, CTA, surface asset, crop, filter size, section height, other section or data change. `useHorizonGlow.js` remains absent (deleted in08), no competing glow system.
 
-## Arc construction / static line removal
+## Preserved arc appearance / fallback
 
-`HeroLightArc.jsx` renders one diffuse field per approved viewport crop. The four exact rim paths/viewBoxes remain geometry guides. No unblurred stroke, dash segment, progress offset, loader or exported rim image is rendered. Three bands: core9px/blur4, halo30px/blur14, mist64px/blur28; Mobile5/2.5,16/8,34/16. A broad multi-stop cyan/light-cyan gradient gives soft concentrations, never a hard white stroke.
+HeroLightArc retains08B's exact four guide paths/viewBoxes and three diffuse bands: Desktop core9/blur4, halo30/blur14, mist64/blur28; Mobile5/2.5,16/8,34/16. Original cyan gradient/base band opacities retained. No hard exported rim, unblurred outline, dash or progress stroke. Body fill-only assets from08B unchanged. Inline overflow:visible/filter padding160 and existing Production/Wide/Tablet/Mobile placements unchanged; no recurrence of the old internally cropped image layers.
 
-Asset audit found an additional bright outline embedded in ALL four body SVGs. Removed only stroke-only paths from Desktop/Production/Wide bodies and only the stroke attribute from Mobile's filled path. Fill/gradient/ellipse/path/viewBox/dimensions unchanged, verified against baseline. Original rim/glow asset files remain historical/unimported; they are not in the live composition. Ten static Desktop stars preserved.
+Static diffuse field renders synchronously including SSR. No WebGL/Motion required for that fallback. Ten original Desktop stars remain; only while live atmosphere is eligible do they fade to18% as intentionally distant fixed anchors, so they no longer dominate moving dust. Reduced-motion CSS restores them immediately; inactive/failed state has original fallback opacity.
 
-Static diffuse arc is rendered synchronously, including SSR, without Motion/WebGL. CSS paints only the appropriate Desktop variant; Mobile has its own variant. No portal/observer-dependent blank fallback.
+## Arc motion
 
-## Living arc / pointer
+Single existing Motion clock retained; `arcMotionState.js` owns independent continuous rates for broad energy drift, per-stop density shimmer, mist/halo drift and breathing. No new renderer, filter or animation owner. Active gradient spacing narrows from2× to1.3× viewBox width, making density drift easier to perceive without drawing a short travelling segment. Seven stops vary smoothly from72–100% of their base alpha, with staggered phases. Field intensity stays about.79–1.01.
 
-Motion remains the selected existing library. One18s Desktop/22s Mobile clock controls broad gradient travel (sinusoidal ±22% viewBox width), gentle density breathing, and mist drift (Desktop5px lateral/4px vertical, Mobile2px). Smooth periodic return avoids dash seam and visible lap reset. This is broad light-density motion, not a short bright spot orbiting a ring. Atmospheric mist is diffuse light volume; no smoke texture/noise renderer added.
+Energy travel combines slow rates.29/.47rad/s and amplitudes.24/.075×width; mist6px lateral/4px vertical, halo2.5px vertical maximum. Mobile runs at72% time rate with mist2.5/2px and halo1px. Core geometry stays fixed; the changing density/atmosphere supplies life. Analytic checks at3/5seconds verify state changes, not human visual acceptance.
 
-Desktop fine-hover mouse uses passive pointermove, SVG inverse screen CTM and96 curve samples. Response fades within140 SVG units of the curve. A150-unit radial mask reveals a diffuse local light duplicate, drifting upward at most5 SVG units and intensifying up to.5 alpha, eased over450ms. It shifts local light density rather than distorting the surface or making the whole ellipse wobble. Exit/blur returns smoothly. Touch/pen ignored, pointer-events:none, no capture/preventDefault. Mobile has no pointer listener.
+A120s scalar Motion clock supplies frame callbacks; accumulated/clamped delta drives the field independently of scalar phase. Clock wrap cannot reset the light or produce a lap seam. No single short breathing cycle; frame stalls are capped50ms. Cleanup restores gradient bounds, every stop alpha, layer transforms, field alpha and pointer response to the exact static composition. Clock creation failure also restores before shared fallback.
 
-Cleanup stops the single clock, removes listeners and resets gradient/mist/intensity/response to static state. Breakpoint changes restart only the current variant. Arc initialization failure goes through the shared static failure latch.
+## Pointer polish
 
-## Particles correction
+Desktop fine-hover mouse only. Existing passive/inverse SVG screen-CTM/96 curve-sample approach retained. Proximity radius140→180 SVG units; mask150→180; local diffuse response width24→36 (Mobile stays24), displacement5→9 units maximum, response alpha.5→.68, damping450→380ms. Broad local light disturbance, not whole-field follow, surface morph, hard line, bounce or repulsion. Response eases to rest on leave/blur. Touch/pen ignored, no capture/preventDefault; Mobile has no arc pointer listener.
 
-Existing React Bits FREE Particles/OGL adapter retained. The previous speeds .045/.03 yielded near-frozen drift: raised to.65/.45 (14.4×/15×). Existing independent sinusoidal drift/depth retained, without rotation. Base-size input54/40 rather than36/28, layer opacity.55/.4 rather than.36/.24; shader alpha now independently breathes from seeded phase. Counts remain70/28, cyan/soft-white palette, DPR caps1.5/1. Sparse depth is preserved; actual apparent density/motion needs Eze review. Existing bounded local Desktop particle response and lifecycle remain intact.
+## Particle visual / motion polish
 
-## Upper cut / crop audit
+React Bits FREE Particles/OGL adapter retained, not replaced with a new engine. Live shader replaces the near-solid circular disc and colour oscillation with a diffuse slightly elongated Gaussian light fragment: low-alpha halo + soft concentration, tapered outer edge, seeded orientation and brightness. Palette now directly matches the arc (#59E3FF/#75F6FF/#A0F8FF/#D6FAFF), avoiding isolated white star points.
 
-Previous exported glow contains a path only5px from its own SVG top and blur11; visible overflow was not guaranteed for that image viewport. The old sweep was also a separate bounded SVG. Both are removed from rendering. New inline SVG explicitly uses overflow:visible; blur filters use userSpace bounds padded160px on all sides, large enough for half-band width32 + blur28×3 + drift4. Regions use the visible viewBox +320px, not oversized full offscreen ellipse bounds. Core/halo/mist share the same positioning owner as the body picture.
+| Setting | Desktop | Mobile / Transition |
+| --- | --- | --- |
+| Count |70|28|
+| Speed multiplier |1.05|.72|
+| Base sprite input |160|120|
+| Actual sprite bounds |5–14 CSS px including transparent/diffuse halo|same|
+| Canvas layer opacity |.55|.4|
+| DPR cap |1.5|1|
+| Pointer |existing small local response|off|
 
-Preserved placement: Production1560×1380 atleft-60/topclamp128–200; Wide2040×1700 atleft-300/top200; Tablet1536×839 attop153; Mobile390×118 attop10 inside bottom-anchored horizon. The scene/horizon wrappers do not clip filters. Only the overall Hero background clips to the section boundary, preserving the intended page crop and preventing overflow into later sections. At shortest Desktop Production top128, upper light3σ extent stays about9px below section top. No internal SVG/filter top cut is imposed. Eze must verify the previously observed cut is visually resolved at all checkpoints; no browser PASS claimed.
+Larger sprite inputs allocate room to glow, not an opaque bigger dot. Depth attenuates alpha35–100%, brightness varies calmly60–92%, peak fragment alpha remains below the previous point profile. Drift frequencies now have explicit nonzero minima: X.22–.42,Y.18–.38,Z.16–.30 per shader time; amplitudes bounded.2–.65/.2–.6/.15–.45 world units. Additional tiny screen drift.012NDC keeps distant fragments moving as well. Independent seeds/rates, gentle depth motion, no rotation/burst/glitter/smoke clouds.
 
-## Reduced motion / fallback / lifecycle
+Colour, diffuse profile and smooth low-frequency alpha now relate dust to arc. Particles stay secondary: fewer Mobile points, capped sprite footprints, faint distant anchors, no extra fog layer.
 
-Shared preferences hook unchanged: reduced-motion/hidden/offscreen unmounts all live controllers/particles, stops continuous loops and disposes OGL. Static diffuse light + fill surfaces + stars always remain, including SSR and chunk import/WebGL/context failure. Failure latch stays until reload, no retry loop. Reduced motion has no pointer/travelling energy/particles. StrictMode ownership remains effect setup/cleanup; one canvas, one arc clock. No old glow animation owner remains.
+## Reduced motion / lifecycle / failure
 
-## Libraries / licenses
+Preferences hook unchanged: reduced/hidden/offscreen unmounts live controllers and OGL, cancels motion/RAF and releases listeners/observers/GPU resources. No continuous shimmer/floating/pointer interaction in reduced state. Static diffuse field/fill/stars remain. Import/WebGL/shader/context failure retains existing static latch until reload; no retries. StrictMode effect ownership remains one canvas and one arc clock. New clock init failure explicitly restores static SVG state.
 
-No dependency added or changed: ogl1.0.11 Unlicense, motion14.0.0 MIT (React19 compatible). React Bits source ca44b3f9ee180676a06d7de8ec6bea84cddff85b is MIT + Commons Clause, not plain MIT; attribution/notices unchanged. No Pro, new renderer, particle engine rewrite or alternate library.
+## Libraries / performance
 
-## Validation / performance
+No dependency/lockfile change: ogl1.0.11 Unlicense, motion14.0.0 MIT. React Bits source ca44b3f9ee180676a06d7de8ec6bea84cddff85b remains MIT + Commons Clause; attribution/notices untouched. No Pro or new engine.
 
-npm run check and git diff --check PASS. Isolated Vite SSR + deterministic arc-controller harness checks complete static diffuse fallback, unique SVG IDs, ten stars, four exact guide paths, continuous gradient changes, bounded pointer response/recovery, cleanup, and noninteractive configuration. Body XML comparison verifies only outline removals. Protected layout declarations and later-section/data/package diffs checked. These are structural/lifecycle tests, not real browser/GPU validation. Prior08's nine tests are historical, not claimed rerun for08B.
+One Motion clock plus one OGL RAF; same three diffuse blur bands and one local response as08B. No new blur surfaces/renderers.70/28 sprites capped14px with existing DPR limits; seven SVG stop alpha writes share the clock. No test packages retained. Real GPU/battery/FPS not measured; Eze must assess cost on hardware.
 
-SVG blur is now the main arc cost: three painted blur bands plus one masked response; hidden crop variants do not paint. One Motion clock replaces multiple sweep/glow timelines. OGL still has one RAF and70/28 points. DPR caps unchanged. Production build compared to08 baseline: initial JS243.67→235.97kB (gzip71.75→71.42), effects107.90→107.77kB (gzip35.87→35.67), CSS66.92→67.05kB (gzip13.40→13.41). Some historical inline image payload leaves the entry bundle; no dependency changes. These are delivered byte sizes, not render-cost measurements. No measured FPS, GPU or battery claim; validate on real hardware.
+Build sizes against08B (kB raw / gzip):
 
-Eze QA:1366×768,1440×900,1536×864,1920×1080; Mobile360×800,390×844,393×873,430×932. Check visible particle life, soft arc vs outline, pointer refinement, upper glow continuity, text dominance, touch scrolling, resize, reduced-motion/fallback, console and real cost. No fabricated screenshots or final visual approval.
+| Asset |08B|08C|
+| --- | --- | --- |
+| Initial JS |235.97 /71.42|236.02 /71.43|
+| Lazy effects |107.77 /35.67|109.34 /36.28|
+| CSS |67.05 /13.41|67.19 /13.44|
+
+Full loaded JS gzip delta+.62kB; Inter352.24kB unchanged. Byte sizes are not GPU cost measurements.
+
+## Validation / review
+
+- npm run check and git diff --check PASS.
+- Deterministic SSR/controller harness: complete static diffuse fallback, unique IDs/ten stars, four exact guide paths,3/5s Desktop/Wide/Mobile field changes, bounded pointer response/recovery, cleanup, noninteractive state and clock-failure restoration.
+- Actual Motion numeric clock delivers continuous callbacks and stops in a Node timer-backed RAF harness. This is real library execution, not a browser rendering test.
+- OGL-stub integration:5s Desktop/Mobile shader time advances to5.25/3.6, counts/DPR/uniforms correct, single RAF and idempotent disposal. Does not compile/render GLSL on a real GPU.
+- Protected Hero/Header CSS declarations, content/data/Mobile framing/dependency manifests unchanged; assets and later sections unchanged. New CSS only dims live fallback stars and restores them for reduce.
+- No browser visual/console/FPS PASS or fabricated screenshots. Apparent life/softness still requires Eze review.
+
+Desktop review:1366×768,1440×900,1536×864,1920×1080. Mobile:360×800,390×844,393×873,430×932. Observe idle3–5s, pointer near curve/recovery, dust softness/speed/density, text dominance, upper glow, reduced/failure, resize/visibility, touch scrolling and actual cost. Do not treat technical motion assertions as visual approval.
 
 ## Commit / next
 
-One commit: `fix: rework Hero as a living atmospheric light arc`; resolve SHA with `git log -1 --format=%H --grep='^fix: rework Hero as a living atmospheric light arc$'`. Actual SHA delivered in final report. Next: Eze visual QA, no other-section motion or Block09.
+One commit: `fix: polish living Hero arc and luminous dust behavior`; resolve SHA with `git log -1 --format=%H --grep='^fix: polish living Hero arc and luminous dust behavior$'`. Actual SHA in final report. Next: Eze visual QA. No later-section motion or Block09.

@@ -154,3 +154,11 @@ QA técnico: npm run check/git diff --check,9 tests JSDOM con OGL simulado y Mot
 One Motion clock drives18/22s density travel, mist drift, intensity and450ms pointer recovery; no dash/loader, sharp stroke, old glow owner or hover on Mobile. Particle speeds.65/.45, size54/40, opacity.55/.4, seeded brightness; count70/28 and DPR1.5/1 unchanged. Inline SVG visible overflow/filter160px padding addresses internal upper glow crop; actual visual correction needs Eze browser review. No dependencies/data/other sections changed.
 
 Technical checks and implementation details in `docs/HERO_MOTION.md`; current source/state in `docs/CURRENT_STATE.md`. Prior08's visual result is not approved. Commit: `fix: rework Hero as a living atmospheric light arc` (actual SHA in delivery report). No Block09/later-section motion.
+
+## Block 08C — Living Arc Behavior polish
+
+**IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**. Eze confirmó que el look difuso08B es más cercano; motion todavía no aprobado.08C conserva paths, band widths/blur/base alpha, surfaces, crop, padding160, content/layout/framing y afina comportamiento: energía/shimmer independientes, drift mist+halo, clock continuo sin reset y respuesta local Desktop9units/radius180/.68alpha/380ms. Mobile más lento y sin hover.
+
+Partículas React Bits/OGL70/28 ahora usan halo Gaussian/speck difuso, paleta del arco, frecuencias mínimas no cero y drift leve de profundidad/pantalla. Speed1.05/.72, sprite footprint5–14px, DPR1.5/1; no dots opacos, bursts ni engine nuevo. Diez estrellas originales quedan18% solo durante motion como anclas distantes; fallback/reduce recupera el original. Cleanup/preferencias/context fallback intactos; falla de clock devuelve SVG estático exacto. Sin dependencias/assets/data/otras secciones modificados.
+
+QA técnico: lint/build/diff, SSR/controller3/5s/recovery/restoration, clock Motion real (RAF Node simulado), partículas OGL stub5s/time/count/DPR/disposal, CSS protegido intacto. No GPU/browser visual PASS. Detalle actual `docs/HERO_MOTION.md`; snapshot `docs/CURRENT_STATE.md`. Commit: `fix: polish living Hero arc and luminous dust behavior` (SHA real en reporte). No Block09/later-section motion.

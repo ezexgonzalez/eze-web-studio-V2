@@ -23,7 +23,7 @@ export function HeroLightArc({ variant }) {
       </filter>)}
       <radialGradient id={`${id}-pointer`}><stop stopColor="white" /><stop offset="1" stopColor="black" /></radialGradient>
       <mask id={`${id}-local`} maskUnits="userSpaceOnUse" x="-160" y="-160" width={width + 320} height={height + 320}>
-        <circle data-arc-pointer cx="-1000" cy="-1000" r="150" fill={`url(#${id}-pointer)`} />
+        <circle data-arc-pointer cx="-1000" cy="-1000" r="180" fill={`url(#${id}-pointer)`} />
       </mask>
     </defs>
     <g data-arc-field>
@@ -31,7 +31,7 @@ export function HeroLightArc({ variant }) {
         strokeWidth={layer.width} opacity={layer.opacity} filter={`url(#${id}-${layer.name})`} />)}
     </g>
     <g mask={`url(#${id}-local)`}>
-      <path data-arc-response d={path} stroke="#75F6FF" strokeWidth="24" opacity="0" filter={`url(#${id}-halo)`} />
+      <path data-arc-response d={path} stroke="#75F6FF" strokeWidth={mobile ? 24 : 36} opacity="0" filter={`url(#${id}-halo)`} />
     </g>
   </svg>
 }

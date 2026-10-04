@@ -32,11 +32,13 @@ const vertex = /* glsl */ `
   uniform float uSpread;
   uniform float uBaseSize;
   uniform float uSizeRandomness;
+  uniform float uPixelRatio;
   uniform vec2 uPointer;
   uniform float uPointerStrength;
 
   varying vec4 vRandom;
   varying vec3 vColor;
+  varying float vDepth;
 
   void main() {
     vRandom = random;
@@ -47,9 +49,9 @@ const vertex = /* glsl */ `
 
     vec4 mPos = modelMatrix * vec4(pos, 1.0);
     float t = uTime;
-    mPos.x += sin(t * random.z + 6.28 * random.w) * mix(0.1, 1.5, random.x);
-    mPos.y += sin(t * random.y + 6.28 * random.x) * mix(0.1, 1.5, random.w);
-    mPos.z += sin(t * random.w + 6.28 * random.y) * mix(0.1, 1.5, random.z);
+    mPos.x += sin(t * mix(0.22, 0.42, random.z) + 6.28 * random.w) * mix(0.2, 0.65, random.x);
+    mPos.y += sin(t * mix(0.18, 0.38, random.y) + 6.28 * random.x) * mix(0.2, 0.6, random.w);
+    mPos.z += sin(t * mix(0.16, 0.3, random.w) + 6.28 * random.y) * mix(0.15, 0.45, random.z);
 
     vec4 mvPos = viewMatrix * mPos;
 
@@ -59,7 +61,13 @@ const vertex = /* glsl */ `
       gl_PointSize = (uBaseSize * (1.0 + uSizeRandomness * (random.x - 0.5))) / length(mvPos.xyz);
     }
 
+    // The larger sprite is mostly diffuse halo, not a larger solid dot.
+    gl_PointSize = clamp(gl_PointSize, 5.0 * uPixelRatio, 14.0 * uPixelRatio);
+    vDepth = clamp(20.0 / length(mvPos.xyz), 0.35, 1.0);
     gl_Position = projectionMatrix * mvPos;
+    // Small screen-space drift keeps distant fragments alive as well.
+    gl_Position.xy += vec2(sin(t * 0.3 + random.w * 6.28),
+      cos(t * 0.24 + random.x * 6.28)) * 0.012 * gl_Position.w;
     // Local, bounded reaction; the upstream drift/depth/colour remain unchanged.
     vec2 screenPosition = gl_Position.xy / gl_Position.w;
     vec2 away = screenPosition - uPointer;
@@ -73,23 +81,26 @@ const fragment = /* glsl */ `
   precision highp float;
 
   uniform float uTime;
-  uniform float uAlphaParticles;
   varying vec4 vRandom;
   varying vec3 vColor;
+  varying float vDepth;
 
   void main() {
     vec2 uv = gl_PointCoord.xy;
     float d = length(uv - vec2(0.5));
 
-    if(uAlphaParticles < 0.5) {
-      if(d > 0.5) {
-        discard;
-      }
-      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), 1.0);
-    } else {
-      float circle = smoothstep(0.5, 0.4, d) * 0.8;
-      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle * mix(0.5, 0.95, vRandom.z) * (0.78 + 0.22 * sin(uTime * (0.6 + vRandom.x) + vRandom.w * 6.28)));
-    }
+    // A diffuse, slightly elongated light fragment with no opaque disc edge.
+    float angle = vRandom.y * 6.28;
+    vec2 centered = uv - vec2(0.5);
+    vec2 rotated = mat2(cos(angle), -sin(angle), sin(angle), cos(angle)) * centered;
+    float radius = length(rotated * vec2(0.82, 1.18));
+    float halo = exp(-radius * radius * 18.0);
+    float core = exp(-radius * radius * 90.0);
+    float edge = 1.0 - smoothstep(0.32, 0.5, d);
+    float breathing = 0.76 + 0.16 * sin(uTime * (0.32 + vRandom.x * 0.2) + vRandom.w * 6.28);
+    float alpha = (halo * 0.38 + core * 0.26) * edge * breathing
+      * mix(0.55, 0.95, vRandom.z) * vDepth;
+    gl_FragColor = vec4(vColor, alpha);
   }
 `;
 
@@ -192,8 +203,8 @@ export function createParticleField(container, {
       vertex, fragment,
       uniforms: {
         uTime: { value: 0 }, uSpread: { value: particleSpread },
-        uBaseSize: { value: particleBaseSize * pixelRatio }, uSizeRandomness: { value: 1 },
-        uAlphaParticles: { value: 1 }, uPointer: { value: pointer }, uPointerStrength: { value: 0 },
+        uBaseSize: { value: particleBaseSize * pixelRatio }, uSizeRandomness: { value: 1 }, uPixelRatio: { value: pixelRatio },
+        uPointer: { value: pointer }, uPointerStrength: { value: 0 },
       }, transparent: true, depthTest: false,
     })
     if (!gl.getProgramParameter(program.program, gl.LINK_STATUS)) throw new Error('Particle shader unavailable')
