@@ -1,3 +1,15 @@
+/* Mobile scenes fill the visible viewport and still grow with their content. */
+@media (max-width: 47.999rem) {
+  :root { --mobile-scene-height: 100svh; }
+  @supports (height: 100dvh) {
+    :root { --mobile-scene-height: 100dvh; }
+  }
+  .hero, .problem-section, .solution-section, .projects-section,
+  .about-section, .faq-section, .contact-section {
+    min-block-size: var(--mobile-scene-height);
+  }
+}
+
 @media (min-width: 48rem) {
   :root { --page-gutter: clamp(24px, calc(24px + (100vw - 768px) * 0.092592593), 64px); }
 }

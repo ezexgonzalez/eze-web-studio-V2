@@ -6,7 +6,7 @@
   font-optical-sizing: none;
 }
 
-.contact-layout { min-height: 754px; padding: 88px 24px 96px; }
+.contact-layout { padding: 88px 24px 96px; }
 .contact-prompt, .contact-action { min-width: 0; }
 .contact-eyebrow { color: var(--color-accent-cyan); }
 .contact-heading { margin-top: 20px; }

@@ -14,13 +14,13 @@
 .mobile-navigation-links { padding: 118px var(--page-gutter) 48px; display: flex; flex-direction: column; align-items: flex-start; gap: 44px; }
 .mobile-navigation-links > a { font-size: 38px; line-height: 44px; font-weight: 600; letter-spacing: -0.015em; min-height: 44px; }
 .mobile-navigation-links > .mobile-navigation-contact { margin-top: 32px; font-size: 48px; line-height: 54px; font-weight: 400; letter-spacing: 0; color: var(--color-accent-cyan); }
-.hero { position: relative; isolation: isolate; overflow: clip; min-height: 844px; background: var(--color-background); }
+.hero { position: relative; isolation: isolate; overflow: clip; background: var(--color-background); }
 .hero-background { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
-.hero-content { position: relative; padding: 154px 24px 160px; }
+.hero-content { position: relative; }
 .hero-heading { margin: 0; }
 .hero-heading > span { display: block; }
 .hero-description { margin: 19px 0 0; font-size: var(--type-body-md-size); line-height: var(--type-body-md-leading); font-weight: 400; letter-spacing: -0.005em; color: var(--color-text-body); }
-.hero-actions { display: flex; flex-direction: column; gap: 16px; margin-top: 81px; }
+.hero-actions { display: flex; flex-direction: column; gap: 16px; }
 .hero-actions .ews-button { height: 60px; width: 100%; }
 .hero-primary { box-shadow: 0 10px 24px rgb(38 221 244 / 28%); }
 .hero-mobile-horizon { position: absolute; width: 390px; height: 128px; bottom: 0; left: 50%; transform: translateX(-50%) scale(calc(100vw / 390px)); transform-origin: bottom center; }
@@ -30,6 +30,14 @@
 .horizon-mobile-rim { top: 10px; left: 0; }
 .hero-desktop-scene { display: none; }
 .hero-star { left: var(--tablet-star-x); top: var(--tablet-star-y); }
+/* Retain the 390x844 rhythm; shorter screens reduce air before content. */
+@media (max-width: 47.999rem) {
+  .hero-content {
+    padding: clamp(112px, calc(154px + (var(--mobile-scene-height) - 844px) * .5), 154px)
+      24px clamp(144px, calc(160px + (var(--mobile-scene-height) - 844px) * .363636364), 160px);
+  }
+  .hero-actions { margin-top: clamp(32px, calc(81px + (var(--mobile-scene-height) - 844px) * .5), 81px); }
+}
 @media (max-width: 389px) {
   .header-brand { font-size: 15px; }
   .hero-heading { font-size: clamp(38px, 12.3vw, 48px); line-height: 1.125; }

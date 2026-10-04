@@ -1023,7 +1023,13 @@ Decisión vigente:
 
 Hallazgo detallado en `docs/qa/MANUAL_QA_2026-10-02.md` — Hallazgo 07.
 
-Este issue queda dentro del QA/correction pass actual. No iniciar Motion hasta resolverlo y completar revisión visual de Eze.
+**MOBILE VIEWPORT FRAMING — IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+Implementado sobre baseline limpio/sincronizado `8f0184826ba11259d936d18692421f8e169e67a2`. Contrato común en primitives.css limitado a <768: min-block-size100svh,100dvh si soportado, en los siete section roots. Eliminados mínimos Mobile844/753/936/754; wrappers crecen naturalmente. Hero conserva390×844 y reduce solo aire en alturas menores; horizonte bottom:0 y assets intactos. Footer excluido, reglas existentes intactas. No cambios Tablet/Desktop02B, contenido, componentes/hooks, assets, typography, navegación, motion o dependencias. 03 Mobile permanece FINAL/FROZEN; no Mobile redesign.
+
+Archivos: `src/styles/{primitives,header-hero,about-faq,contact-footer}.css`, este documento y `docs/MOBILE_VIEWPORT_FRAMING.md`. QA técnico: npm run check baseline/final PASS, git diff --check PASS; AST CSS comprueba siete raíces, scope Mobile, media blocks Tablet/Desktop idénticos, reglas Footer/horizonte idénticas. Cálculos preparados para360×800/390×844/393×873/430×932; browser/zoom/chrome/section-start QA pendiente de Eze, sin screenshots ni browser PASS fabricados.
+
+Commit único identificado por `fix: frame mobile sections to the visible viewport`; resolver SHA con `git log -1 --format=%H --grep='^fix: frame mobile sections to the visible viewport$'` (SHA real en reporte final, sin segundo commit documental). Próxima acción: revisión visual Eze; no iniciar Motion ni pulido Desktop. Pendientes de contenido anteriores conservados.
 
 ---
 
