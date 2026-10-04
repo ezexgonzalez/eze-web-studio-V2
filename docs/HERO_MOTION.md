@@ -78,3 +78,29 @@ Desktop review:1366×768,1440×900,1536×864,1920×1080. Mobile:360×800,390×84
 ## Commit / next
 
 One commit: `fix: polish living Hero arc and luminous dust behavior`; resolve SHA with `git log -1 --format=%H --grep='^fix: polish living Hero arc and luminous dust behavior$'`. Actual SHA in final report. Next: Eze visual QA. No later-section motion or Block09.
+
+
+## Dirección — rechazo de 08C y diagnóstico de arquitectura
+
+Fecha: 4 de octubre de 2026.
+
+Eze revisó 08C en browser real y lo rechazó visualmente: el Hero sigue percibiéndose prácticamente estático; la respuesta al mouse es apenas perceptible y las partículas no transmiten vida.
+
+Diagnóstico concreto del código:
+- `mistX` máximo 6 px y `mistY` 4 px sobre una escena de 1560×1380;
+- `haloY` máximo 2.5 px;
+- pointer response del arco desplaza una copia local un máximo de 9 unidades, no deforma realmente el campo;
+- radio local 180 SVG units, por lo que la reacción solo aparece muy cerca de la curva;
+- OGL particles usa `uPointerStrength = 0.014`, demasiado bajo para lectura visual clara;
+- el screen drift de partículas es 0.012 NDC y las frecuencias principales son 0.16–0.42 rad/s, por lo que en 3–5 segundos el movimiento puede parecer prácticamente estático;
+- Motion funciona principalmente como clock que actualiza atributos SVG, no como un sistema de deformación perceptible.
+
+Conclusión: no seguir afinando 08C con cambios marginales. 08D debe cambiar la arquitectura de motion manteniendo el aspecto difuso aprobado.
+
+Dirección técnica autorizada:
+- partículas: evaluar reemplazo del adapter React Bits/OGL por tsParticles React/slim (MIT), usando movimiento/opacity/size/interactivity nativos y configuración visible;
+- arco: conservar path exacto como guide invisible; usar Motion para animar valores reales de un sistema de displacement/noise + local spring response sobre capas de glow/mist;
+- no hard rim;
+- no orb/aurora/rays genéricos;
+- sin rediseño de Hero;
+- success gate humano: vida visible sin necesidad de explicar que “los valores están cambiando”.
