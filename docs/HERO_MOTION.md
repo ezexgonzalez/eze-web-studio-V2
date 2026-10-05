@@ -176,3 +176,36 @@ Required proof order:
 7. only then reduce intensity and merge final settings.
 
 Silent fallbacks are disabled or visibly reported inside lab mode. Production fallback remains untouched outside lab mode.
+
+
+## Block 08F — Halo Quality + Velocity Wake Lab
+
+**HERO MOTION LAB PHASE 2 — READY FOR EZE TUNING** (5 de octubre de 2026).
+
+DEV only: `npm run dev`, abrir `/?heroLab=1`. Producción no cambia. No nuevos paquetes ni integración de valores finales.
+
+### Baseline preservado
+
+Export aprobado por Eze en browser real 1920×945: particles count1/speed0.1/opacity0.575/size1.5/distance200/strength2.4; arc mist0/halo0/core0/noiseSpeed1/radius110/pointerStrength620/recovery1. Render, repulse, arc runtime y deformación local confirmados por Eze; particle drift NO confirmado. Partículas conservan el motor/rangos existentes; no se retocaron en este pass. Cero displacement idle: se omiten los tres loops de escala cero. Noise/flow siguen disponibles para el campo local sostenido.
+
+### Calidad del halo
+
+Nueve controles Lab independientes: width/blur/opacity para core, halo y mist. Inicio core5/2/0.625, halo20/8.5/0.475, mist50/21/0.24. No son valores finales. Misma geometría/gradiente. Controlador separado actualiza filtros estáticos y vivos, restaura atributos al salir y conserva halo limpio con reduced motion.
+
+### Velocity wake
+
+Un único listener de pointer del arco alimenta la deformación sostenida y el wake. Velocidad real CSS px/ms entre eventos; dirección calculada en SVG por transformación CTM. Primer evento, posición quieta, movimiento lento y muestras separadas por más de150ms no disparan. Requiere proximidad al arco (radio del baseline) y superar threshold. Salir del Hero/blur resetea historia.
+
+Pool fijo de tres slots, sin reciclar slots activos ni crear nodos por evento. Cooldown inicial100ms. Cada slot atenúa temporalmente el mist original y secundariamente halo mediante máscara radial negra sobre fondo blanco; copia local de ambos se desplaza en dirección real, expande radio, aumenta blur y pierde opacidad. Core no tiene máscara ni copia de wake. Held deformation original del core permanece.
+
+Inicio: enabled true, threshold0.9px/ms, distance60SVG units, lifetime700ms, radius85, expansion85 adicionales (final170), opacity0.7, mist influence0.85, halo influence0.25, cooldown100ms. Impulso multiplicado por speed/threshold, limitado a0.5–1.5 del distance configurado (default máximo90). Influencias controlan copia y atenuación original. Controles exportan `haloQuality` y `wake`, además de `particles` y `arc`.
+
+Motion anima progreso únicamente durante wakes activos; ningún RAF propio, canvas nuevo o trabajo periódico específico del wake. Telemetría informa velocidad/dirección/slots activos. Al pausar, cambiar controles/variante, reducir motion o desmontar: detener animaciones, remover máscaras/copias y restaurar originales. Mobile/fine-hover unavailable no monta wake ni held pointer. Reduced motion conserva calidad estática, sin interacción ni wake.
+
+### Validación y aceptación pendiente
+
+npm run check PASS; git diff --check PASS. Harness aislado con Motion real y DOM simulado: baseline exacto, dirección/velocidad, quieto/lento/fuera, cooldown, máximo3, desplazamiento/fade temporal, core intacto, restauración máscaras/nodos PASS. Build production idéntico a08E; Lab fuera del bundle productivo. Transformación Vite de módulos Lab PASS. Esto NO es prueba de apariencia browser.
+
+Eze debe verificar: reposo limpio; pointer lento deforma; salida recupera; swipe rápido abre y empuja humo en su dirección; al detenerse disipa. Nuevos controles y wake sin aprobación visual todavía. No screenshots ni éxito visual fabricado. No integrar producción hasta nuevo export/decisión de Eze.
+
+Commit de implementación: `dev: add halo quality and velocity wake lab`; SHA mediante `git log -1 --format=%H --grep='^dev: add halo quality and velocity wake lab$'`.

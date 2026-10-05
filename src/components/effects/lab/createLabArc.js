@@ -1,7 +1,8 @@
 import { animate, attrEffect, mapValue, motionValue, springValue } from 'motion'
+import { createVelocityWake } from './velocityWake'
 
 // Motion owns all animated attributes. No custom clock or requestAnimationFrame.
-export function createLabArc(svg, { background, interactive, settings, onPointer }) {
+export function createLabArc(svg, { background, interactive, settings, quality, wakeSettings, onWakeTelemetry, onError, onPointer }) {
   const mobile = svg.dataset.arcVariant === 'mobile'
   const filters = [...svg.querySelectorAll('[data-arc-filter]')]
   if (filters.length !== 3) throw new Error(`Expected 3 live arc filters; found ${filters.length}`)
@@ -10,12 +11,14 @@ export function createLabArc(svg, { background, interactive, settings, onPointer
   const animations = []
   const values = []
   let observer
+  let wake
   const remember = value => { values.push(value); return value }
   const loop = (value, keyframes, duration) => {
     animations.push(animate(value, keyframes, { duration, repeat: Infinity, ease: 'easeInOut' }))
   }
   const restore = () => {
     observer?.disconnect()
+    wake?.stop()
     window.removeEventListener('resize', resize)
     window.removeEventListener('pointermove', move)
     window.removeEventListener('blur', leave)
@@ -39,7 +42,7 @@ export function createLabArc(svg, { background, interactive, settings, onPointer
   let pointerActive = false
   function pointerStatus(active) { if (active !== pointerActive) { pointerActive = active; onPointer(active) } }
   let samples = []
-  function leave() { strength.set(0); pointerStatus(false) }
+  function leave() { strength.set(0); pointerStatus(false); wake?.reset() }
   function move(event) {
     if (event.pointerType && event.pointerType !== 'mouse') return
     const matrix = svg.getScreenCTM()
@@ -47,9 +50,11 @@ export function createLabArc(svg, { background, interactive, settings, onPointer
     const bounds = background.getBoundingClientRect()
     if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) { leave(); return }
     const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse())
-    const distance = Math.min(...samples.map(sample => Math.hypot(sample.x - point.x, sample.y - point.y)))
+    const nearest = samples.reduce((best, sample) => Math.hypot(sample.x - point.x, sample.y - point.y) < Math.hypot(best.x - point.x, best.y - point.y) ? sample : best, samples[0])
+    const distance = Math.hypot(nearest.x - point.x, nearest.y - point.y)
+    wake?.move(event, point, nearest, distance < settings.radius)
     const proximity = Math.max(0, 1 - distance / settings.radius)
-    if (!proximity) { leave(); return }
+    if (!proximity) { strength.set(0); pointerStatus(false); return }
     if (strength.get() < .01) { x.jump(point.x - settings.radius); y.jump(point.y - settings.radius) }
     x.set(point.x - settings.radius); y.set(point.y - settings.radius)
     strength.set(proximity); pointerStatus(true)
@@ -86,7 +91,7 @@ export function createLabArc(svg, { background, interactive, settings, onPointer
       const [minimum, maximum] = ranges[index]
       const scale = remember(motionValue(minimum))
       bind(idle, { scale })
-      loop(scale, [minimum, maximum, minimum], (9 + index * 3) / settings.noiseSpeed)
+      if (maximum > 0) loop(scale, [minimum, maximum, minimum], (9 + index * 3) / settings.noiseSpeed)
       if (!mobile) {
         const image = filter.querySelector('[data-arc-pointer]')
         const local = filter.querySelector('[data-arc-local]')
@@ -110,7 +115,8 @@ export function createLabArc(svg, { background, interactive, settings, onPointer
     if (interactive && !mobile && typeof DOMPoint !== 'undefined') {
       const path = svg.querySelector('[data-arc-layer="core"]')
       const length = path.getTotalLength()
-      samples = Array.from({ length: 128 }, (_, index) => path.getPointAtLength(length * index / 128))
+      samples = Array.from({ length: 512 }, (_, index) => path.getPointAtLength(length * index / 512))
+      if (wakeSettings.enabled) wake = createVelocityWake(svg, wakeSettings, quality, onWakeTelemetry, onError)
       window.addEventListener('pointermove', move, { passive: true })
       window.addEventListener('blur', leave)
       document.addEventListener('pointerleave', leave)

@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 4 de octubre de 2026.
+> Última actualización: 5 de octubre de 2026.
 
 ---
 
@@ -1119,7 +1119,13 @@ Reglas obligatorias:
 - QA visual/browser final lo realiza Eze.
 
 Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
-08C y08D rechazados visualmente.08E está HERO MOTION LAB — READY FOR EZE INTERACTIVE TUNING; Eze debe confirmar runtime visual/exportar valores antes del próximo pass de producción. No iniciar Block09 ni otras fases sin Dirección.
+08C y08D rechazados visualmente.08E obtuvo baseline real-browser aprobado por Eze: render/repulse/arc runtime/held deformation YES; particle drift NO, viewport1920×945.
+
+**08F — HERO MOTION LAB PHASE 2 — READY FOR EZE TUNING.** Solo `npm run dev` + `?heroLab=1`; producción intacta. Baseline particles1/0.1/0.575/1.5/200/2.4; arc0/0/0/1/110/620/1 preservado. Nueve controles haloQuality; wake threshold0.9, impulso60 (factor máximo1.5),700ms, radio85+85, opacidad0.7, influencias mist0.85/halo0.25, cooldown100ms. Pool3 SVG+Motion: atenuación original mist/halo + copia desplazada según velocidad real; core intacto para wake. Held deformation conservada. Reduced motion/falta fine hover detiene interacción; halo estático con calidad Lab permanece. Export añade haloQuality/wake. No dependencias, producción/layout/otras secciones/Mobile framing sin cambios.
+
+Archivos: `src/components/effects/lab/{HeroMotionLab,LabArc,LabHaloQuality,createLabArc,labSettings,velocityWake}` y `docs/{CURRENT_STATE,HERO_MOTION}.md`. npm run check y git diff --check PASS; harness Motion real/DOM simulado verifica gating, dirección, pool/cooldown, disipación y cleanup. Build producción idéntico08E. Apariencia del nuevo halo/wake pendiente de Eze; sin QA browser fabricado.
+
+Commit único: `dev: add halo quality and velocity wake lab`; resolver SHA con `git log -1 --format=%H --grep='^dev: add halo quality and velocity wake lab$'`. Próximo paso: Eze ajusta Lab/exporta; no integrar valores finales ni iniciar otras fases sin Dirección.
 
 ---
 

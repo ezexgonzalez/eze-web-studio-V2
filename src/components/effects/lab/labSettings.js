@@ -1,5 +1,5 @@
-export const particleProof = { count: 60, speed: 3.25, opacity: .575, size: 5, distance: 200, strength: 4 }
-export const arcProof = { mist: 260, halo: 160, core: 70, noiseSpeed: 5, radius: 350, pointerStrength: 500, recovery: .8 }
+export const particleProof = { count: 1, speed: .1, opacity: .575, size: 1.5, distance: 200, strength: 2.4 }
+export const arcProof = { mist: 0, halo: 0, core: 0, noiseSpeed: 1, radius: 110, pointerStrength: 620, recovery: 1 }
 export const particleControls = [
   ['count', 'Count', 1, 200, 1], ['speed', 'Speed (range center)', .1, 10, .05],
   ['opacity', 'Opacity (range center)', .05, 1, .025], ['size', 'Size (range center)', 1, 16, .5],
@@ -12,7 +12,7 @@ export const arcControls = [
   ['recovery', 'Spring recovery (seconds)', .3, 2, .1],
 ]
 
-// Deliberately conspicuous diagnostic settings; never imported by production.
+// Eze-exported interaction baseline; never imported by production.
 export function labParticleOptions(settings, interactive) {
   return {
     fullScreen: { enable: false }, detectRetina: false, fpsLimit: 60,
@@ -34,3 +34,22 @@ export function labParticleOptions(settings, interactive) {
     },
   }
 }
+
+export const haloQualityProof = { coreWidth: 5, coreBlur: 2, coreOpacity: .625, haloWidth: 20, haloBlur: 8.5, haloOpacity: .475, mistWidth: 50, mistBlur: 21, mistOpacity: .24 }
+export const haloQualityControls = ['core', 'halo', 'mist'].flatMap(name => [
+  [`${name}Width`, `${name.toUpperCase()} WIDTH`, 1, 100, .5],
+  [`${name}Blur`, `${name.toUpperCase()} BLUR`, 0, 40, .5],
+  [`${name}Opacity`, `${name.toUpperCase()} OPACITY`, 0, 1, .025],
+])
+export const wakeProof = { enabled: true, speedThreshold: .9, distance: 60, lifetime: 700, radius: 85, expansion: 85, opacity: .7, mistInfluence: .85, haloInfluence: .25, cooldown: 100 }
+export const wakeControls = [
+  ['speedThreshold', 'Speed threshold (CSS px/ms)', .2, 3, .05],
+  ['distance', 'Wake impulse (SVG units; velocity multiplier capped at 1.5)', 0, 120, 5],
+  ['lifetime', 'Lifetime (ms)', 200, 1500, 50],
+  ['radius', 'Initial radius (SVG units)', 30, 200, 5],
+  ['expansion', 'Added radius at end (SVG units)', 0, 200, 5],
+  ['opacity', 'Wake copy opacity', 0, 1, .025],
+  ['mistInfluence', 'Mist influence / local attenuation', 0, 1, .025],
+  ['haloInfluence', 'Halo influence / local attenuation', 0, 1, .025],
+  ['cooldown', 'Spawn interval (ms)', 80, 500, 10],
+]

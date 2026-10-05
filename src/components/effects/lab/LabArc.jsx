@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { createLabArc } from './createLabArc'
 
-export function LabArc({ target, variant, backgroundRef, interactive, settings, onStatus, onError, onPointer, onTelemetry }) {
+export function LabArc({ target, variant, backgroundRef, interactive, settings, quality, wakeSettings, onWakeTelemetry, onStatus, onError, onPointer, onTelemetry }) {
   useEffect(() => {
     if (!target) return
     let stop
@@ -13,7 +13,7 @@ export function LabArc({ target, variant, backgroundRef, interactive, settings, 
       if (svg.getBoundingClientRect().width === 0) throw new Error(`Arc variant ${variant} has zero rendered width.`)
       if (!svg.getScreenCTM()) throw new Error('Arc has no screen transform matrix.')
       if (interactive && typeof DOMPoint === 'undefined') throw new Error('DOMPoint unavailable: cannot map the mouse to the arc.')
-      stop = createLabArc(svg, { background: backgroundRef.current, interactive, settings, onPointer })
+      stop = createLabArc(svg, { background: backgroundRef.current, interactive, settings, quality, wakeSettings, onWakeTelemetry, onError, onPointer })
       onStatus('RUNNING')
       let previous = ''
       let lastChange = performance.now()
@@ -30,6 +30,6 @@ export function LabArc({ target, variant, backgroundRef, interactive, settings, 
       }, 500)
     } catch (error) { onError('ARC', error) }
     return () => { window.clearInterval(poll); stop?.(); onPointer(false) }
-  }, [target, variant, backgroundRef, interactive, settings, onStatus, onError, onPointer, onTelemetry])
+  }, [target, variant, backgroundRef, interactive, settings, quality, wakeSettings, onWakeTelemetry, onStatus, onError, onPointer, onTelemetry])
   return null
 }
