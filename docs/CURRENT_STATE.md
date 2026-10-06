@@ -753,6 +753,30 @@ No Block09 until this proof is achieved.
 
 ---
 
+### BLOCK 08G — Volumetric Wake Lab
+
+**STATUS: AUTHORIZED / LAB-FIRST**
+
+08F wake is visually rejected by Eze. Halo quality is accepted as current baseline:
+core 11/5.5/0.625, halo 20/8.5/0.475, mist 50/20.5/0.24.
+Held-pointer deformation baseline remains radius110 / pointerStrength620 / recovery1s.
+
+Root cause of rejected wake: current `velocityWake.js` duplicates clipped portions of the mist/halo path and translates/expands them. This inevitably reads as a broken line segment, not smoke.
+
+08G must replace the wake visual model entirely:
+- no duplicated path segment as wake payload;
+- keep a brief local attenuation on original mist;
+- spawn a local volumetric plume made from soft light/fog blobs or textured wisps;
+- advect plume along pointer velocity;
+- add small divergence/turbulence and expansion;
+- fade/dissipate without enlarging a visible line;
+- core remains intact;
+- slow/held pointer keeps existing deformation only.
+
+Lab-first. Production integration remains blocked until Eze approves the plume behavior.
+
+---
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
