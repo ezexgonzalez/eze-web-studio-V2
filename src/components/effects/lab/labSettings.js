@@ -35,21 +35,24 @@ export function labParticleOptions(settings, interactive) {
   }
 }
 
-export const haloQualityProof = { coreWidth: 5, coreBlur: 2, coreOpacity: .625, haloWidth: 20, haloBlur: 8.5, haloOpacity: .475, mistWidth: 50, mistBlur: 21, mistOpacity: .24 }
+export const haloQualityProof = { coreWidth: 11, coreBlur: 5.5, coreOpacity: .625, haloWidth: 20, haloBlur: 8.5, haloOpacity: .475, mistWidth: 50, mistBlur: 20.5, mistOpacity: .24 }
 export const haloQualityControls = ['core', 'halo', 'mist'].flatMap(name => [
   [`${name}Width`, `${name.toUpperCase()} WIDTH`, 1, 100, .5],
   [`${name}Blur`, `${name.toUpperCase()} BLUR`, 0, 40, .5],
   [`${name}Opacity`, `${name.toUpperCase()} OPACITY`, 0, 1, .025],
 ])
-export const wakeProof = { enabled: true, speedThreshold: .9, distance: 60, lifetime: 700, radius: 85, expansion: 85, opacity: .7, mistInfluence: .85, haloInfluence: .25, cooldown: 100 }
-export const wakeControls = [
+export const plumeProof = { enabled: true, speedThreshold: 1.1, lifetime: 900, travel: 110, blobCount: 8, baseRadius: 26, spread: 24, drag: .82, opacity: .65, mistCut: .7, haloCut: .12, turbulence: 8, cooldown: 100 }
+export const plumeControls = [
   ['speedThreshold', 'Speed threshold (CSS px/ms)', .2, 3, .05],
-  ['distance', 'Wake impulse (SVG units; velocity multiplier capped at 1.5)', 0, 120, 5],
-  ['lifetime', 'Lifetime (ms)', 200, 1500, 50],
-  ['radius', 'Initial radius (SVG units)', 30, 200, 5],
-  ['expansion', 'Added radius at end (SVG units)', 0, 200, 5],
-  ['opacity', 'Wake copy opacity', 0, 1, .025],
-  ['mistInfluence', 'Mist influence / local attenuation', 0, 1, .025],
-  ['haloInfluence', 'Halo influence / local attenuation', 0, 1, .025],
+  ['lifetime', 'Lifetime (ms)', 300, 1600, 50],
+  ['travel', 'Plume travel (SVG units; speed response capped at 1.5)', 20, 200, 5],
+  ['blobCount', 'Wisp count per slot', 6, 10, 1],
+  ['baseRadius', 'Base radius (SVG units; variation ±12)', 16, 50, 1],
+  ['spread', 'Wisp spread (± degrees)', 0, 40, 1],
+  ['drag', 'Drag / deceleration', 0, 1, .02],
+  ['opacity', 'Plume opacity', 0, 1, .025],
+  ['mistCut', 'Mist cut', 0, 1, .025],
+  ['haloCut', 'Halo cut (core always 0)', 0, .25, .01],
+  ['turbulence', 'Plume turbulence (SVG units)', 0, 20, 1],
   ['cooldown', 'Spawn interval (ms)', 80, 500, 10],
 ]

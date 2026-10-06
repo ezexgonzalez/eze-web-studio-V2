@@ -4,7 +4,7 @@ import { LabParticles } from './LabParticles'
 import { LabArc } from './LabArc'
 import { LabHaloQuality } from './LabHaloQuality'
 import { LabBoundary } from './LabBoundary'
-import { particleProof, arcProof, particleControls, arcControls, haloQualityProof, haloQualityControls, wakeProof, wakeControls } from './labSettings'
+import { particleProof, arcProof, particleControls, arcControls, haloQualityProof, haloQualityControls, plumeProof, plumeControls } from './labSettings'
 import './hero-lab.css'
 
 function environment() {
@@ -23,8 +23,8 @@ export default function HeroMotionLab({ backgroundRef, preferences, arcTarget, o
   const [particles, setParticles] = useState(particleProof)
   const [arc, setArc] = useState(arcProof)
   const [haloQuality, setHaloQuality] = useState(haloQualityProof)
-  const [wake, setWake] = useState(wakeProof)
-  const [wakeTelemetry, setWakeTelemetry] = useState('No wakes triggered')
+  const [plume, setPlume] = useState(plumeProof)
+  const [plumeTelemetry, setPlumeTelemetry] = useState('No plumes triggered')
   const [particleStatus, setParticleStatus] = useState('LOADING')
   const [arcStatus, setArcStatus] = useState('LOADING')
   const [pointer, setPointer] = useState(false)
@@ -32,7 +32,7 @@ export default function HeroMotionLab({ backgroundRef, preferences, arcTarget, o
   const [telemetry, setTelemetry] = useState(null)
   const [arcTelemetry, setArcTelemetry] = useState('')
   const [exported, setExported] = useState('')
-  const [confirmed, setConfirmed] = useState({ rest: false, held: false, return: false, wake: false, fade: false })
+  const [confirmed, setConfirmed] = useState({ rest: false, held: false, return: false, right: false, left: false, fade: false, core: false })
   const [revision, setRevision] = useState(0)
   const report = useCallback((system, error) => {
     const detail = error?.stack || error?.message || String(error)
@@ -64,15 +64,15 @@ export default function HeroMotionLab({ backgroundRef, preferences, arcTarget, o
   const failedArc = errors.some(error => error.system === 'ARC' || error.system === 'RUNTIME')
   const blocked = env.reduced ? 'prefers-reduced-motion' : env.hidden ? 'document hidden' : typeof IntersectionObserver === 'undefined' ? 'IntersectionObserver unavailable' : 'Hero outside viewport / waiting for visibility'
   const reset = () => {
-    setParticles(particleProof); setArc(arcProof); setHaloQuality(haloQualityProof); setWake(wakeProof); setWakeTelemetry('No wakes triggered'); setErrors([]); setTelemetry(null); setArcTelemetry('')
+    setParticles(particleProof); setArc(arcProof); setHaloQuality(haloQualityProof); setPlume(plumeProof); setPlumeTelemetry('No plumes triggered'); setErrors([]); setTelemetry(null); setArcTelemetry('')
     setParticleStatus('LOADING'); setArcStatus('LOADING'); setPointer(false)
-    setConfirmed({ rest: false, held: false, return: false, wake: false, fade: false })
+    setConfirmed({ rest: false, held: false, return: false, right: false, left: false, fade: false, core: false })
     setExported(''); setRevision(value => value + 1)
   }
   const proofComplete = Object.values(confirmed).every(Boolean)
   const panel = <aside className="hero-lab-panel" aria-label="Hero motion diagnostic lab">
-    <h2>HERO MOTION LAB PHASE 2 — DEV ONLY</h2>
-    <p>Baseline exportado por Eze. Reposo limpio; calidad y wake todavía en prueba.</p>
+    <h2>HERO MOTION LAB PHASE 3 — DEV ONLY</h2>
+    <p>Baseline exportado por Eze. Reposo limpio; calidad aprobada; plume volumétrico en prueba.</p>
     <dl aria-live="polite">
       <dt>PARTICLES</dt><dd>{failedParticles ? 'FAILED' : active ? particleStatus : 'PAUSED'}</dd>
       <dt>ARC</dt><dd>{failedArc ? 'FAILED' : active ? arcStatus : 'PAUSED'}</dd>
@@ -88,19 +88,19 @@ export default function HeroMotionLab({ backgroundRef, preferences, arcTarget, o
     <p>RUNNING indica runtime activo; la prueba visual la confirmás vos.</p>
     <details open={errors.length > 0}><summary>Errores ({errors.length})</summary>{errors.map((error, index) => <pre key={index}>{error.system}: {error.detail}</pre>)}{!errors.length && <p>Sin errores capturados.</p>}</details>
     <fieldset><legend>Confirmación visual — Eze</legend>
-      {Object.entries({ rest: 'Reposo limpio', held: 'Pointer lento deforma localmente', return: 'Al salir vuelve suavemente', wake: 'Swipe rápido abre y empuja niebla en su dirección', fade: 'Al detenerme el wake se disipa' }).map(([key, label]) =>
+      {Object.entries({ rest: 'Reposo limpio', held: 'Pointer lento deforma localmente', return: 'Al salir vuelve suavemente', right: 'Swipe a derecha libera nube irregular hacia derecha', left: 'Swipe a izquierda libera nube irregular hacia izquierda', fade: 'Nube se separa, expande, frena y desaparece', core: 'Core permanece continuo' }).map(([key, label]) =>
         <label key={key}><input type="checkbox" checked={confirmed[key]} onChange={event => setConfirmed(current => ({ ...current, [key]: event.target.checked }))} /> {label}</label>)}
     </fieldset>
-    <p>{proofComplete ? 'Proof confirmado por Eze. Podés ajustar y exportar; producción no se modifica.' : 'Verificá las cinco condiciones de Phase 2. Particle drift sigue NO confirmado por Eze.'}</p>
+    <p>{proofComplete ? 'Proof confirmado por Eze. Podés ajustar y exportar; producción no se modifica.' : 'Verificá las siete condiciones de Phase 3. Particle drift sigue NO confirmado por Eze.'}</p>
     <p>Baseline real browser: render YES; particle repulse YES; arc runtime YES; held deformation YES; particle drift NO. 1920 × 945.</p>
-    <p>VELOCITY WAKE: {active && preferences.interactive && wake.enabled ? wakeTelemetry : 'INACTIVE'}</p>
+    <p>VOLUMETRIC PLUME: {active && !failedArc && preferences.interactive && plume.enabled ? plumeTelemetry : 'INACTIVE'}</p>
     <Controls title="PARTICLES" definitions={particleControls} settings={particles} onChange={setParticles} />
     <Controls title="ARC" definitions={arcControls} settings={arc} onChange={setArc} />
     <Controls title="HALO QUALITY" definitions={haloQualityControls} settings={haloQuality} onChange={setHaloQuality} />
-    <fieldset><legend>VELOCITY WAKE</legend><label><input type="checkbox" checked={wake.enabled} onChange={event => setWake(current => ({ ...current, enabled: event.target.checked }))} /> Enabled</label></fieldset>
-    <Controls title="VELOCITY WAKE VALUES" definitions={wakeControls} settings={wake} onChange={setWake} />
+    <fieldset><legend>VOLUMETRIC PLUME</legend><label><input type="checkbox" checked={plume.enabled} onChange={event => setPlume(current => ({ ...current, enabled: event.target.checked }))} /> Enabled</label></fieldset>
+    <Controls title="VOLUMETRIC PLUME VALUES" definitions={plumeControls} settings={plume} onChange={setPlume} />
     <button type="button" onClick={reset}>Reset Eze baseline / retry</button>
-    <button type="button" onClick={() => setExported(JSON.stringify({ block: '08F', particles, arc, haloQuality, wake, confirmed, viewport: [env.width, env.height], reducedMotion: env.reduced }, null, 2))}>Exportar valores</button>
+    <button type="button" onClick={() => setExported(JSON.stringify({ block: '08G', particles, arc, haloQuality, plume, confirmed, viewport: [env.width, env.height], reducedMotion: env.reduced }, null, 2))}>Exportar valores</button>
     <button type="button" onClick={() => window.location.reload()}>Recargar Lab</button>
     {exported && <label>Copiá este JSON para el próximo pass<textarea readOnly value={exported} rows={12} onFocus={event => event.target.select()} /></label>}
     <a href={window.location.pathname}>Salir del Lab</a>
@@ -113,7 +113,7 @@ export default function HeroMotionLab({ backgroundRef, preferences, arcTarget, o
     </LabBoundary>}
     {active && !failedArc && <LabBoundary system="ARC" onError={report} key={`arc-${revision}`}>
       <LabArc target={arcTarget} variant={variant} backgroundRef={backgroundRef} interactive={preferences.interactive}
-        settings={arc} quality={haloQuality} wakeSettings={wake} onWakeTelemetry={setWakeTelemetry} onStatus={setArcStatus} onError={report} onPointer={setPointer} onTelemetry={setArcTelemetry} />
+        settings={arc} quality={haloQuality} plumeSettings={plume} onPlumeTelemetry={setPlumeTelemetry} onStatus={setArcStatus} onError={report} onPointer={setPointer} onTelemetry={setArcTelemetry} />
     </LabBoundary>}
     {createPortal(panel, document.body)}
   </>

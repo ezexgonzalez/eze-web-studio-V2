@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 5 de octubre de 2026.
+> Última actualización: 6 de octubre de 2026.
 
 ---
 
@@ -755,25 +755,19 @@ No Block09 until this proof is achieved.
 
 ### BLOCK 08G — Volumetric Wake Lab
 
-**STATUS: AUTHORIZED / LAB-FIRST**
+**STATUS: HERO MOTION LAB PHASE 3 — READY FOR EZE TUNING**
 
-08F wake is visually rejected by Eze. Halo quality is accepted as current baseline:
-core 11/5.5/0.625, halo 20/8.5/0.475, mist 50/20.5/0.24.
-Held-pointer deformation baseline remains radius110 / pointerStrength620 / recovery1s.
+08F wake visualmente rechazado por Eze. `velocityWake.js` retirado: duplicaba fragmentos de mist/halo y producía una línea rota. Baseline halo aprobado en Lab: core11/5.5/0.625; halo20/8.5/0.475; mist50/20.5/0.24. Held radius110 / strength620 / recovery1s e idle0/0/0 preservados. Particles1/speed0.1 intactos; drift sigue NO confirmado.
 
-Root cause of rejected wake: current `velocityWake.js` duplicates clipped portions of the mist/halo path and translates/expands them. This inevitably reads as a broken line segment, not smoke.
+`volumetricWake.js`: pool fijo3,8 wisps por slot (controles6–10), sin path duplicado. Volúmenes elípticos con gradientes cyan, blur y turbulencia local. Anchor deriva del punto del arco y su normal; origen alrededor de la envolvente del mist. Velocidad CSS px/ms y dirección SVG reales, threshold1.1, cooldown100; solo pointer rápido/cercano. Corte original alargado/orientado, tamaño fijo: mist0.7, halo0.12, core0; recuperación del corte350ms. Plume lifetime900ms, travel110 con respuesta de velocidad limitada1–1.5, radios26±12, expansión1.7, spread±24°, drag0.82, opacity0.65, turbulence8. Impacto inicial150ms seguido de divergencia/expansión/fade. Sin loop propio/renderer/dependencia.
 
-08G must replace the wake visual model entirely:
-- no duplicated path segment as wake payload;
-- keep a brief local attenuation on original mist;
-- spawn a local volumetric plume made from soft light/fog blobs or textured wisps;
-- advect plume along pointer velocity;
-- add small divergence/turbulence and expansion;
-- fade/dissipate without enlarging a visible line;
-- core remains intact;
-- slow/held pointer keeps existing deformation only.
+Lab `npm run dev` → `?heroLab=1`, export `plume` + `haloQuality` + `arc`/`particles`. Reduced motion/hidden/outside/unmount cancela animaciones, restaura máscaras y elimina pool; halo estático conserva calidad aprobada. Mobile/falta fine-hover no monta plume/held. Cambiar blobCount reconstruye pool con cleanup. Producción, layout, copy, framing y otras secciones protegidos.
 
-Lab-first. Production integration remains blocked until Eze approves the plume behavior.
+QA técnico: npm run check PASS; git diff --check PASS; Vite DEV transforms PASS. Motion real con DOM simulado: baselines, gating/XY/cooldown/pool3, wisps6–10, cero paths copiados, drag/divergencia/expansión/fade, corte fijo/core intacto y cleanup PASS. Build producción idéntico08F. No se declara apariencia, consola o performance de browser PASS; validación visual del plume pendiente de Eze.
+
+Archivos: Lab HeroMotionLab/LabArc/createLabArc/labSettings; nuevos pointerVelocity.js/volumetricWake.js; eliminado velocityWake.js; docs CURRENT_STATE/HERO_MOTION. Commit único `dev: replace copied arc wake with volumetric plume lab`; SHA mediante `git log -1 --format=%H --grep='^dev: replace copied arc wake with volumetric plume lab$'`.
+
+Próximo paso: Eze prueba siete condiciones visuales en Lab y exporta valores. No integrar producción ni iniciar Block09 sin Dirección.
 
 ---
 
@@ -1145,11 +1139,11 @@ Reglas obligatorias:
 Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
 08C y08D rechazados visualmente.08E obtuvo baseline real-browser aprobado por Eze: render/repulse/arc runtime/held deformation YES; particle drift NO, viewport1920×945.
 
-**08F — HERO MOTION LAB PHASE 2 — READY FOR EZE TUNING.** Solo `npm run dev` + `?heroLab=1`; producción intacta. Baseline particles1/0.1/0.575/1.5/200/2.4; arc0/0/0/1/110/620/1 preservado. Nueve controles haloQuality; wake threshold0.9, impulso60 (factor máximo1.5),700ms, radio85+85, opacidad0.7, influencias mist0.85/halo0.25, cooldown100ms. Pool3 SVG+Motion: atenuación original mist/halo + copia desplazada según velocidad real; core intacto para wake. Held deformation conservada. Reduced motion/falta fine hover detiene interacción; halo estático con calidad Lab permanece. Export añade haloQuality/wake. No dependencias, producción/layout/otras secciones/Mobile framing sin cambios.
+**08F: WAKE VISUALLY REJECTED; HALO QUALITY ACCEPTED AS LAB BASELINE.** Commit08F `fa96f2455106ed5fd115144cc1df1b8eb7fbfbbc`. Su wake de fragmentos copiados fue reemplazado, no retocado.
 
-Archivos: `src/components/effects/lab/{HeroMotionLab,LabArc,LabHaloQuality,createLabArc,labSettings,velocityWake}` y `docs/{CURRENT_STATE,HERO_MOTION}.md`. npm run check y git diff --check PASS; harness Motion real/DOM simulado verifica gating, dirección, pool/cooldown, disipación y cleanup. Build producción idéntico08E. Apariencia del nuevo halo/wake pendiente de Eze; sin QA browser fabricado.
+**08G: HERO MOTION LAB PHASE 3 — READY FOR EZE TUNING.** Volumetric plume SVG+Motion independiente del path; pool3×8, atenuación alargada temporal de mist/halo sin tocar core, drag/divergencia/fade y controles/export `plume`. Baseline halo/held aprobado preservado. Detalle y QA técnico en Block08G y docs/HERO_MOTION.md. Producción y otras secciones intactas. Commit `dev: replace copied arc wake with volumetric plume lab` (resolver SHA por git log).
 
-Commit único: `dev: add halo quality and velocity wake lab`; resolver SHA con `git log -1 --format=%H --grep='^dev: add halo quality and velocity wake lab$'`. Próximo paso: Eze ajusta Lab/exporta; no integrar valores finales ni iniciar otras fases sin Dirección.
+Próximo paso autorizado: Eze ajusta/valida plume en browser real. No integrar valores finales ni iniciar otras fases sin aprobación.
 
 ---
 

@@ -180,7 +180,7 @@ Silent fallbacks are disabled or visibly reported inside lab mode. Production fa
 
 ## Block 08F — Halo Quality + Velocity Wake Lab
 
-**HERO MOTION LAB PHASE 2 — READY FOR EZE TUNING** (5 de octubre de 2026).
+**08F HISTÓRICO — WAKE VISUALLY REJECTED / HALO QUALITY ACCEPTED**. Implementado el5 de octubre; rechazo y nuevo baseline el6 de octubre. Arquitectura y valores siguientes documentan08F, ya reemplazado por08G.
 
 DEV only: `npm run dev`, abrir `/?heroLab=1`. Producción no cambia. No nuevos paquetes ni integración de valores finales.
 
@@ -231,3 +231,48 @@ Direction for 08G:
 - core stays intact;
 - no wake on slow hover;
 - lab-first, no production integration until Eze approval.
+
+
+## Block 08G — Volumetric Light-Wake Lab
+
+**HERO MOTION LAB PHASE 3 — READY FOR EZE TUNING** — 6 de octubre de2026.
+
+### Qué se reemplazó / qué permanece
+
+08F copiaba un fragmento de stroke; el resultado percibido por Eze fue una línea rota, no humo. `velocityWake.js`, su payload, máscaras crecientes y controles exclusivos de copia se retiraron. El tracker de velocidad se conserva separado en `pointerVelocity.js`; no hay paths/clones/strokes en el nuevo plume.
+
+HaloQuality por defecto exacto aprobado: core11/5.5/0.625; halo20/8.5/0.475; mist50/20.5/0.24. Reset conserva estos valores. Held-pointer radius110/strength620/recovery1s e idle displacement0/0/0 permanecen. Particles1/speed0.1 y demás configuración08F intactos; sin nuevo trabajo tsParticles.
+
+### Plume y corte de impacto
+
+`volumetricWake.js` preconstruye3 slots,8 wisps por slot (controles6–10). Cada volumen es una elipse rellena por gradiente radial transparente, sin borde, con blur compartido por slot y turbulencia de un octave exclusivamente en la nube. Cyan26DDF4/59E3FF/75F6FF, mínimo A0F8FF de menor intensidad. Radio26±12, siluetas superpuestas, centro difuso y bordes transparentes. La percepción final como niebla, sin burbujas/fragmentos/línea, debe confirmarla Eze.
+
+Anchor: punto más cercano del path aprobado más offset normal de45% del mistWidth hacia lado del impacto. El path solo determina origen y normal; nunca forma el gráfico del wake.
+
+Mist/halo originales reciben máscaras blancas con tres atenuaciones elípticas suaves, largas y orientadas al gesto. Tamaño fijo (rx1.9×baseRadius, ry0.65×baseRadius); no expansión de hueco. MistCut0.7, haloCut0.12, coreCut siempre0 sin control. Recuperación del corte en350ms. El núcleo conserva sus atributos originales, incluida su deformación sostenida aprobada.
+
+### Velocidad, divergencia y disipación
+
+Mismo listener del arco, sin nueva suscripción global. Tracker mide velocidad CSS px/ms; dirección obtenida de posiciones transformadas por CTM inversa. No primer-evento, quieto, lento, fuera de proximidad, muestras separadas >150ms o eventos durante cooldown. Threshold1.1, cooldown100ms; slots ocupados no se reciclan. Blur/salida del Hero resetea historia.
+
+Un Motion progress por slot activo (sin repeat): impacto inicial hasta150ms mantiene concentración y dirección coherente; después divergen trayectorias deterministas hasta±spread24°. Wisps viajan55–85% o90–110% del impulso, con travel110 y multiplicador de velocidad limitado1–1.5. Mayor velocidad aumenta tamaño hasta1.175 y separación por distancia. Drag0.82 controla curva exponencial normalizada: impulso temprano y drift desacelerado. Radios crecen1.7×, blur5.5→9.5, opacity0.65→0. Turbulence8 aumenta ligeramente/offset se desplaza solo durante wake; no turbulencia extra sobre arco. Lifetime900ms; al completar, volumen hidden, corte0 y slot disponible.
+
+### Controles / export
+
+Enabled más speedThreshold, lifetime, travel/plumeTravel, blobCount, baseRadius, spread, drag, opacity/plumeOpacity, mistCut, haloCut, turbulence, cooldown. Export08G añade `plume` con estos campos; conserva `haloQuality`, `arc`, `particles`, viewport/reduced/confirmaciones. Variación de radio±12, expansión1.7 y coreCut0 son constantes documentadas. Cambio de parámetros/blobCount desmonta/restaura y construye pool limpio.
+
+Acceso DEV: `npm run dev` y `/?heroLab=1`. Normal DEV y producción intactos. No cambios HeroLightArc/geometry, estilos de producción, copy, Navbar, framing Mobile, otras secciones o dependencias.
+
+### Lifecycle / reduced / performance
+
+Sin RAF propio, canvas/WebGL o loop permanente del wake. Pool máximo30 wisps con count10; por defecto24. Solo tres superficies de filtro locales acotadas, ocultas cuando idle. Un animation progress por slot ocupado; sin asignación de nodos por pointermove. El coste real de browser/GPU no fue medido.
+
+Reduced motion, visibility/offscreen y unmount cancelan Motion, remueven nodos/máscaras y restauran originales. Held y plume no se montan sin active+fine hover; Mobile sin interacción plume. Calidad aprobada permanece en filtro estático con reduced motion. Fallos se muestran en panel, sin fallback silencioso de Lab.
+
+### QA y puerta visual
+
+npm run check y git diff --check PASS. Vite transforma módulos DEV PASS. Harness aislado con Motion real/DOM simulado: baseline exacto, velocidad/direcciónXY, gating de quieto/lento/fuera, cooldown/pool3, ningún path generado,3×8 wisps, corte fijo/core sin máscara, divergencia/radios/drag/fade, cleanup durante y después de animación, rebuild6/10 PASS. Bundle producción con mismos assets/hashes08F; Lab excluido. Estas pruebas verifican comportamiento técnico; no apariencia renderizada.
+
+Eze debe confirmar siete checks: reposo limpio; held lento; recuperación al salir; nube irregular hacia derecha; nube hacia izquierda; separación/expansión/freno/fade; core continuo. No screenshot ni browser/console/visual PASS inventados. No integrar producción hasta export/aprobación.
+
+Commit único `dev: replace copied arc wake with volumetric plume lab`; SHA mediante `git log -1 --format=%H --grep='^dev: replace copied arc wake with volumetric plume lab$'`.
