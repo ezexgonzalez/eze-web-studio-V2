@@ -361,3 +361,22 @@ Repo diagnosis:
 - Since approved idle displacement is 0 and particle count/speed are effectively minimized, a failed/disabled interaction looks almost identical to the intended rest state.
 
 Direction: 08I is activation/debug cleanup only. Remove the Lab switch from normal Hero, keep Lab files only as inactive development history/tooling if desired, ensure production interaction mounts on eligible Desktop, and expose failures only through DEV console diagnostics. No new motion design.
+
+
+## 08I rejected / live filter ownership root cause
+
+Date: 6 October 2026.
+
+HeroLab removal succeeded, but Eze still sees no interaction in normal Hero.
+
+Root cause identified by repo inspection:
+- HeroLightArc React markup owns the visible path `filter` attribute and renders the static filter URL.
+- createArcDisplacement imperatively changes that same attribute to the live filter URL.
+- HeroParticles eventually invokes onStatus(true), updating HeroBackground.particlesReady.
+- HeroBackground re-renders, so React reapplies the static filter prop to HeroLightArc paths.
+- ArcDisplacement remains mounted and its effect does not rerun because its dependencies are unchanged.
+- pointer listeners and Motion values can therefore keep running while visible paths are no longer connected to the live filter graph.
+
+This is a React/imperative DOM ownership conflict, not a tuning problem.
+
+Direction for 08J: one owner per visible filter state. Prefer explicit static/live layers or declarative live/static filter selection. Production re-renders must not detach the live filters. Approved 08G values remain frozen.
