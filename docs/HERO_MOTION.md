@@ -328,3 +328,19 @@ npm run check y git diff --check PASS. Vite transforma módulos DEV PASS. Harnes
 Eze debe confirmar siete checks: reposo limpio; held lento; recuperación al salir; nube irregular hacia derecha; nube hacia izquierda; separación/expansión/freno/fade; core continuo. No screenshot ni browser/console/visual PASS inventados. No integrar producción hasta export/aprobación.
 
 Commit único `dev: replace copied arc wake with volumetric plume lab`; SHA mediante `git log -1 --format=%H --grep='^dev: replace copied arc wake with volumetric plume lab$'`.
+
+
+## 08H rejected / production activation diagnosis
+
+Date: 6 October 2026.
+
+Eze reports that the approved 08G interaction is not visible in the normal Hero after 08H, and HeroLab remains active/mountable.
+
+Repo diagnosis:
+- HeroBackground still computes `labMode` from `?heroLab=1`.
+- When labMode is true, the production HeroAtmosphere branch is explicitly skipped.
+- Production ArcDisplacement mounts only when `interactive` is true (Desktop >=1200 and fine hover pointer).
+- ArcDisplacement can return silently on capability/CTM/DOMPoint gates, so the user may see the polished static fallback with no indication the live controller did not mount.
+- Since approved idle displacement is 0 and particle count/speed are effectively minimized, a failed/disabled interaction looks almost identical to the intended rest state.
+
+Direction: 08I is activation/debug cleanup only. Remove the Lab switch from normal Hero, keep Lab files only as inactive development history/tooling if desired, ensure production interaction mounts on eligible Desktop, and expose failures only through DEV console diagnostics. No new motion design.
