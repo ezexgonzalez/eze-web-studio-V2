@@ -1,8 +1,8 @@
-# Hero Motion — Block 08I / Production Activation Fix
+# Hero Motion — Block 08J / Live Filter Ownership Fix
 
-**HERO MOTION PRODUCTION ACTIVATION — READY FOR EZE VISUAL QA**
+**HERO LIVE FILTER OWNERSHIP — READY FOR EZE VISUAL QA**
 
-6 de octubre de2026. 08H fue rechazado por falta de interacción visible en el Hero normal. 08I elimina la competencia del Lab y explicita los gates en DEV; conserva sin cambios el export aprobado08G. Esta sección gobierna el runtime; los accesos Lab descritos en el historial08E–08G ya no están disponibles desde el sitio.
+6 de octubre de2026. 08I retiró el Lab, pero fue rechazado por falta de interacción visible. 08J elimina el conflicto de ownership de los filtros: React conecta el gráfico estático/live y Motion controla sus valores internos. Export08G sin cambios. Esta sección gobierna el runtime; los accesos Lab históricos siguen desactivados.
 
 ## Valores aprobados / fuente única
 
@@ -28,6 +28,22 @@ HeroLightArc pinta esta calidad sin esperar import/JS effects: los tres filtros 
 - `particleOptions.js` comparte mapping aprobado; el contenedor pasa a opacity1, igual al Lab probado, sin el multiplicador08D0.55/0.4. Count1 y speed0.1 preservados.
 - 08I retira query switch, import dinámico, estado, panel de error y render del Lab en HeroBackground. `?heroLab=1` ya no cambia el Hero ni en DEV. Los archivos Lab permanecen como historial inactivo, sin entry point desde el sitio. HeroAtmosphere es el único dueño de efectos cuando preferences.active, salvo fallo de import con fallback estático. No dependencia ni asset nuevo.
 
+
+## Block 08J — Ownership declarativo
+
+Diagnóstico de Dirección: HeroLightArc declaraba el filtro estático, mientras createArcDisplacement sustituía imperativamente el mismo atributo por el live. El render del padre provocado por particlesReady exponía esta competencia y podía desconectar el gráfico vivo sin desmontar listeners/controlador. Se eliminó el ownership compartido, sin retuning.
+
+HeroLightArc recibe `live` y React selecciona el URL para los mismos tres paths mist/halo/core. No hay un segundo halo ni una capa duplicada. createArcDisplacement ya no escribe ni preserva/restaura `path.filter`; sigue controlando noise, feDisplacementMap, máscara local, springs y plume como antes.
+
+ArcDisplacement comunica la variante lista solo después de inicializar el controlador. HeroAtmosphere transmite ese estado a HeroBackground mediante callback estable. React conecta LIVE únicamente para la variante visible inicializada y con active+interactive, sin fallo; gate fallido conserva STATIC. Fallo/cleanup revoca readiness; reduced motion, fuera del viewport, documento oculto o pointer no elegible seleccionan STATIC y desmontan controlador según el lifecycle vigente. Cambio Production/Wide selecciona STATIC hasta que la nueva variante esté lista. No cambios Mobile.
+
+particlesReady se conserva exclusivamente para hero-atmosphere-active / opacidad de estrellas. No participa en liveArc. Su rerender reutiliza los URLs live declarativos y no reinicia ArcDisplacement: callbacks y dependencias del controlador son estables.
+
+DEV consola: arc filter mode LIVE/STATIC, particles ready, arc mounted/plume ready. Un efecto post-commit comprueba que cada path visible mist/halo/core apunta al ID del filtro live correspondiente después de particle readiness. console.assert reporta FAIL si alguno se desconecta; registra post-particle render filter mode LIVE solo si las tres conexiones coinciden. Sin panel, polling, MutationObserver, reescritura por frame, timer ni remount por render.
+
+Validación08J: npm run check y git diff --check PASS. Harness temporal del JSX real del padre con hooks de estado simulados + React SSR: controller-ready, particlesReady true/false, renders adicionales, variante Wide, fallo y active/interactive false conservan la selección esperada; tres paths por variante, sin halo duplicado. No es prueba de reconciliación DOM/browser. Aserción DEV verifica DOM real cuando Eze abre el sitio. Harness gates/lifecycle y Motion real held/recovery/plume/cleanup con DOM simulado PASS. Valores08G, particle files, plume, estilos/assets/layout/data/dependencias sin cambios. QA visual pendiente de Eze.
+
+Archivos: HeroBackground.jsx, HeroLightArc.jsx, HeroAtmosphere.jsx, ArcDisplacement.jsx, arcDisplacement.js, CURRENT_STATE y HERO_MOTION. Commit `fix: give React sole ownership of Hero arc filters`; SHA mediante `git log -1 --format=%H --grep='^fix: give React sole ownership of Hero arc filters$'`. No Block09 autorizado.
 
 ## Block 08I — Activación y diagnóstico DEV
 

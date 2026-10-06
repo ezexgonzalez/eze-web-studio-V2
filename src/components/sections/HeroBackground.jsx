@@ -20,7 +20,28 @@ export function HeroBackground() {
   const [Atmosphere, setAtmosphere] = useState(null)
   const [failed, setFailed] = useState(false)
   const [particlesReady, setParticlesReady] = useState(false)
-  const particleStatus = useCallback(ready => setParticlesReady(ready), [])
+  const [readyArc, setReadyArc] = useState(null)
+  const arcStatus = useCallback((variant, ready) => {
+    setReadyArc(current => ready ? variant : current === variant ? null : current)
+  }, [])
+  const particleStatus = useCallback(ready => {
+    if (import.meta.env.DEV && ready) console.info('[HeroMotion] particles ready')
+    setParticlesReady(ready)
+  }, [])
+  const variant = preferences.wide ? 'wide' : 'production'
+  const liveArc = preferences.active && preferences.interactive && !failed && readyArc === variant ? variant : null
+  useEffect(() => {
+    if (!import.meta.env.DEV) return
+    console.info(`[HeroMotion] arc filter mode: ${liveArc ? 'LIVE' : 'STATIC'}`)
+    if (!particlesReady || !liveArc) return
+    const svg = desktopTarget?.querySelector(`[data-arc-variant="${liveArc}"]`)
+    const connected = ['mist', 'halo', 'core'].every(name => {
+      const filter = svg?.querySelector(`[data-arc-filter="${name}"]`)
+      return !!filter && svg.querySelector(`[data-arc-layer="${name}"]`)?.getAttribute('filter') === `url(#${filter.id})`
+    })
+    console.assert(connected, '[HeroMotion] FAIL: post-particle render detached LIVE filters')
+    if (connected) console.info('[HeroMotion] post-particle render filter mode: LIVE')
+  }, [liveArc, particlesReady, desktopTarget])
   const fail = useCallback(() => setFailed(true), [])
   useEffect(() => {
     if (!preferences.active || failed) return
@@ -39,7 +60,7 @@ export function HeroBackground() {
     <div className={`hero-background${preferences.active && !failed && particlesReady ? ' hero-atmosphere-active' : ''}`} aria-hidden="true" ref={backgroundRef}>
       <div className="hero-desktop-scene" ref={setDesktopTarget}>
         <picture><source media="(min-width: 1760px)" srcSet={productionWideBody} /><source media="(min-width: 1200px)" srcSet={productionBody} /><img className="horizon-desktop-body" src={desktopBody} alt="" width="1536" height="820" /></picture>
-        {['tablet', 'production', 'wide'].map(variant => <HeroLightArc variant={variant} key={variant} />)}
+        {['tablet', 'production', 'wide'].map(variant => <HeroLightArc variant={variant} live={liveArc === variant} key={variant} />)}
         {stars.map(([x,y,size], index) => <img className="hero-star" src={starAssets[size]} key={`${x}:${y}`} alt="" width={size+14} height={size+14} style={{ '--tablet-star-x': `${x-7}px`, '--tablet-star-y': `${y-7}px`, '--production-star-x': `${productionStars[index][0]-7}px`, '--production-star-y': `${productionStars[index][1]-7}px` }} />)}
       </div>
       <div className="hero-mobile-horizon" ref={setMobileTarget}>
@@ -47,7 +68,7 @@ export function HeroBackground() {
         <HeroLightArc variant="mobile" />
       </div>
       {preferences.active && !failed && Atmosphere && <Atmosphere backgroundRef={backgroundRef}
-        {...preferences} arcTarget={preferences.tablet ? desktopTarget : mobileTarget} onParticleStatus={particleStatus} />}
+        {...preferences} arcTarget={preferences.tablet ? desktopTarget : mobileTarget} onParticleStatus={particleStatus} onArcStatus={arcStatus} />}
     </div>
   )
 }

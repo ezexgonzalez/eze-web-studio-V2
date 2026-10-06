@@ -821,7 +821,7 @@ No Block09 until Eze confirms the normal Hero interaction is visible.
 
 ### BLOCK 08J — Live Filter Ownership Fix
 
-**STATUS: AUTHORIZED / ROOT-CAUSE FIX**
+**STATUS: HERO LIVE FILTER OWNERSHIP — READY FOR EZE VISUAL QA**
 
 Real-browser QA after 08I: HeroLab is gone, but the normal Hero still has no visible held deformation/plume.
 
@@ -836,13 +836,17 @@ Root cause found in repo:
 
 This explains why the Lab worked but normal production looked static.
 
-08J must fix ownership, not tune visuals:
-- React and imperative Motion code must not fight over the same `filter` attribute.
-- Preferred: render explicit static and live path layers and toggle/own visibility cleanly, OR make React render the correct live filter whenever production interaction is active.
-- no mutation that can be overwritten by unrelated parent re-renders.
-- remove `particlesReady` as a cause of arc DOM reset if that state is only needed for star opacity; isolate that visual concern.
-- verify re-render after particle readiness does not detach live filters.
-- preserve all approved 08G values.
+08J implementado:
+- HeroLightArc recibe live; React es el único dueño de path.filter para mist/halo/core. Un solo conjunto de paths por variante, sin halo duplicado;
+- createArcDisplacement deja de escribir/restaurar path.filter. Motion conserva exclusivamente valores del gráfico vivo y plume;
+- callback estable ArcDisplacement → HeroAtmosphere → HeroBackground anuncia variante lista tras setup, y revoca en fallo/cleanup;
+- active+interactive y variante lista seleccionan LIVE. Unsupported/fallo/reduced/hidden/offscreen/no pointer fino seleccionan STATIC; Mobile/framing intactos;
+- particlesReady se conserva para estrellas, no decide liveArc ni reinicia controlador;
+- DEV console informa modo LIVE/STATIC y comprueba en DOM los tres URLs live después de particle readiness mediante console.assert. Sin debug panel ni hacks imperativos.
+
+QA técnico: npm run check y git diff --check PASS. JSX real del padre con estado simulado + React SSR conserva los filtros tras particlesReady, renders adicionales, cambio de variante y fallback; no se presenta como QA browser. Harness gates y Motion real held/recovery/plume/cleanup con DOM simulado PASS. Runtime assertion DEV permite verificar conexión en el browser de Eze.
+
+Sin cambios de settings08G (110/620/1, quality, plume, particles), estilos/layout/assets/data/dependencias. Archivos: HeroBackground, HeroLightArc, HeroAtmosphere, ArcDisplacement, arcDisplacement.js y docs CURRENT_STATE/HERO_MOTION. Commit `fix: give React sole ownership of Hero arc filters`; SHA vía `git log -1 --format=%H --grep='^fix: give React sole ownership of Hero arc filters$'`.
 
 No Block09 until Eze confirms normal Hero held deformation + plume are visible.
 
@@ -888,7 +892,7 @@ Solo después puede declararse Production FINAL / FROZEN.
 
 ## 12. Hero effect research / decisión técnica vigente
 
-Estado vigente:08G aprobado por Eze y export integrado en08H. Motion + SVG held/plume, halo estático de calidad aprobada y particles count1 en flujo oficial React/slim4.4.0. OGL/old controller/hybrid hosts/duplicated path wake retirados. 08I retira el acceso Lab desde el sitio, incluso DEV; diagnósticos solo consola DEV, sin UI/debug en Hero normal. Guía residual body featherizada; QA visual del resultado de producción pendiente de Eze. Detalle actual en docs/HERO_MOTION.md, sección08I.
+Estado vigente:08G aprobado por Eze y export integrado en08H. Motion + SVG held/plume, halo estático de calidad aprobada y particles count1 en flujo oficial React/slim4.4.0. OGL/old controller/hybrid hosts/duplicated path wake retirados. 08I retira el acceso Lab desde el sitio, incluso DEV; diagnósticos solo consola DEV, sin UI/debug en Hero normal. Guía residual body featherizada; QA visual del resultado de producción pendiente de Eze. 08J conecta filtros live/estáticos declarativamente desde React; Motion solo controla valores internos. Detalle actual en docs/HERO_MOTION.md, sección08J.
 
 MagicRings permanece **REJECTED** por su corte/fade histórico y coste; no se volvió a probar en Block08. ShaderGradient/Vanta no ejecutados ni declarados rechazados. No renderer genérico sustituye el horizonte aprobado; no Pro.
 
@@ -1222,9 +1226,11 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08H: REJECTED BY EZE — PRODUCTION EFFECT NOT VISIBLE.** Calidad aprobada, held110/620/1, idle0, plume1600ms/0.075/threshold1 y partícula mínima integrados. Controladores/particle wrapper compartidos con LabDEV, sin UI/instrumentación en producción. Borde duro del cuerpo featherizado sin cambiar layout/geometry. Detalle de valores/QA/files/commit en Block08H y docs/HERO_MOTION.md.
 
-**08I: HERO MOTION PRODUCTION ACTIVATION — READY FOR EZE VISUAL QA.** Switch Lab retirado de todo runtime normal; HeroAtmosphere es único dueño, Desktop/fine-hover exactos, gates y errores explicados solo en consola DEV. Sin cambios de valores aprobados. Validación técnica PASS.
+**08I: REJECTED BY EZE — LIVE FILTER OWNERSHIP BUG.** Switch Lab retirado de todo runtime normal; HeroAtmosphere es único dueño, Desktop/fine-hover exactos, gates y errores explicados solo en consola DEV. Sin cambios de valores aprobados. Validación técnica PASS.
 
-Próximo paso autorizado: Eze valida held/plume en Hero normal, consulta diagnósticos DEV si hay bloqueo y confirma guía residual. No iniciar otras fases sin Dirección.
+**08J: HERO LIVE FILTER OWNERSHIP — READY FOR EZE VISUAL QA.** React selecciona STATIC/LIVE; Motion no escribe path.filter. particlesReady conserva estrellas sin desconectar filtros. Aserción DEV de los tres paths; valores aprobados intactos, validación técnica PASS.
+
+Próximo paso autorizado: Eze verifica held/plume y persistencia LIVE después de particles ready en Hero normal, más reduced/fallback y guía residual. No iniciar otras fases sin Dirección.
 
 ---
 

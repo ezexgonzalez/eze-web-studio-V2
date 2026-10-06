@@ -85,8 +85,6 @@ export function createArcDisplacement(svg, { background, interactive, settings, 
     const dy = remember(motionValue(-60))
     const ranges = [settings.mist, settings.halo, settings.core].map((value, index) => [value * [200 / 260, 100 / 160, 40 / 70][index], value])
     filters.forEach((filter, index) => {
-      const layer = svg.querySelector(`[data-arc-layer="${filter.dataset.arcFilter}"]`)
-      preserve(layer, ['filter'])
       preserve(filter, ['x', 'y', 'width', 'height'])
       const noise = filter.querySelector('[data-arc-noise]')
       const flow = filter.querySelector('[data-arc-flow]')
@@ -105,7 +103,6 @@ export function createArcDisplacement(svg, { background, interactive, settings, 
         bind(image, { x, y })
         bind(local, { scale: remember(mapValue(strength, [0, 1], [0, [settings.pointerStrength, settings.pointerStrength * .65, settings.pointerStrength * .3][index]])) })
       }
-      layer.setAttribute('filter', `url(#${filter.id})`)
     })
     loop(frequency, ['.009 .014', '.015 .009', '.009 .014'], (mobile ? 18 : 14) / settings.noiseSpeed)
     loop(dx, [-100, 160, -100], (mobile ? 19 : 13) / settings.noiseSpeed)

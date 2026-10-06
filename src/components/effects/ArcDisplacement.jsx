@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { createArcDisplacement } from './arcDisplacement'
 import { arcSettings, haloQuality, plumeSettings } from './heroMotionSettings'
 
-export function ArcDisplacement({ target, variant, backgroundRef, interactive, onFailure }) {
+export function ArcDisplacement({ target, variant, backgroundRef, interactive, onFailure, onStatus }) {
   useEffect(() => {
     const blocked = reason => {
       if (import.meta.env.DEV) console.warn(`[HeroMotion] arc blocked — ${reason}`, { variant })
@@ -13,6 +13,7 @@ export function ArcDisplacement({ target, variant, backgroundRef, interactive, o
     let stop
     const failed = (system, error) => {
       if (import.meta.env.DEV) console.warn(`[HeroMotion] ${system} initialization/runtime failed`, error)
+      onStatus?.(variant, false)
       onFailure()
     }
     try {
@@ -27,12 +28,16 @@ export function ArcDisplacement({ target, variant, backgroundRef, interactive, o
       if (!backgroundRef.current) { blocked('Hero background not ready'); return }
       stop = createArcDisplacement(svg, { background: backgroundRef.current, interactive,
         settings: arcSettings, quality: haloQuality, plumeSettings, onError: failed })
+      onStatus?.(variant, true)
       if (import.meta.env.DEV) {
         console.info('[HeroMotion] arc mounted', { variant })
         if (plumeSettings.enabled) console.info('[HeroMotion] plume ready')
       }
     } catch (error) { failed('arc', error) }
-    return () => stop?.()
-  }, [target, variant, backgroundRef, interactive, onFailure])
+    return () => {
+      stop?.()
+      onStatus?.(variant, false)
+    }
+  }, [target, variant, backgroundRef, interactive, onFailure, onStatus])
   return null
 }
