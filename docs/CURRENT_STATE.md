@@ -819,6 +819,35 @@ No Block09 until Eze confirms the normal Hero interaction is visible.
 
 ---
 
+### BLOCK 08J — Live Filter Ownership Fix
+
+**STATUS: AUTHORIZED / ROOT-CAUSE FIX**
+
+Real-browser QA after 08I: HeroLab is gone, but the normal Hero still has no visible held deformation/plume.
+
+Root cause found in repo:
+- `HeroLightArc.jsx` renders each visible path with a React-owned static `filter="url(#...)"` prop.
+- `createArcDisplacement()` imperatively swaps that same DOM attribute to the live filter.
+- `HeroParticles` later calls `onStatus(true)`, which updates `particlesReady` in `HeroBackground`.
+- that parent state update re-renders `HeroLightArc`;
+- React reconciles the path `filter` prop back to the static filter URL;
+- `ArcDisplacement` does not re-run because its effect dependencies did not change;
+- result: controller/listeners remain mounted, but the visible arc is again painted through the static filters, so pointer/plume changes happen on filters no longer attached to the visible paths.
+
+This explains why the Lab worked but normal production looked static.
+
+08J must fix ownership, not tune visuals:
+- React and imperative Motion code must not fight over the same `filter` attribute.
+- Preferred: render explicit static and live path layers and toggle/own visibility cleanly, OR make React render the correct live filter whenever production interaction is active.
+- no mutation that can be overwritten by unrelated parent re-renders.
+- remove `particlesReady` as a cause of arc DOM reset if that state is only needed for star opacity; isolate that visual concern.
+- verify re-render after particle readiness does not detach live filters.
+- preserve all approved 08G values.
+
+No Block09 until Eze confirms normal Hero held deformation + plume are visible.
+
+---
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
