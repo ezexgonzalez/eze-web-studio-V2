@@ -209,3 +209,25 @@ npm run check PASS; git diff --check PASS. Harness aislado con Motion real y DOM
 Eze debe verificar: reposo limpio; pointer lento deforma; salida recupera; swipe rápido abre y empuja humo en su dirección; al detenerse disipa. Nuevos controles y wake sin aprobación visual todavía. No screenshots ni éxito visual fabricado. No integrar producción hasta nuevo export/decisión de Eze.
 
 Commit de implementación: `dev: add halo quality and velocity wake lab`; SHA mediante `git log -1 --format=%H --grep='^dev: add halo quality and velocity wake lab$'`.
+
+
+## 08F rejected wake / 08G volumetric plume direction
+
+Date: 6 October 2026.
+
+Eze approved the current halo quality direction but rejected the 08F velocity wake. Exported 08F baseline:
+- haloQuality: core11/blur5.5/op0.625; halo20/8.5/0.475; mist50/20.5/0.24.
+- held deformation: radius110, pointerStrength620, recovery1s.
+- wake tested: threshold1.25, distance55, lifetime1100, radius50, expansion90, opacity1, mistInfluence0.625, haloInfluence0.475, cooldown100.
+
+Visual diagnosis from current code: `velocityWake.js` masks and duplicates the original mist/halo path, then translates and expands that clipped path section. The result naturally looks like a line segment breaking and growing, not smoke being torn/pushed.
+
+Direction for 08G:
+- preserve halo quality and held deformation;
+- remove duplicated-path wake payload;
+- use a local volumetric plume built from soft cyan mist blobs / wisps, optionally textured with SVG turbulence;
+- retain only a short-lived soft attenuation on original mist at impact;
+- push plume in real pointer velocity direction with drag, divergence and fade;
+- core stays intact;
+- no wake on slow hover;
+- lab-first, no production integration until Eze approval.
