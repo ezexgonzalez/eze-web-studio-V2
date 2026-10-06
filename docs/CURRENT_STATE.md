@@ -791,7 +791,7 @@ Commit único `feat: integrate approved Hero light motion into production`; SHA 
 
 ### BLOCK 08I — Production Activation Fix
 
-**STATUS: AUTHORIZED / NARROW FIX**
+**STATUS: HERO MOTION PRODUCTION ACTIVATION — READY FOR EZE VISUAL QA**
 
 Real-browser QA after 08H:
 - Eze does not see the approved held/plume interaction in the normal Hero;
@@ -804,13 +804,16 @@ Repo diagnosis:
 - production arc failure/unsupported gates remain silent, so normal Hero can fall back without visible diagnostics;
 - idle arc displacement is intentionally zero and particles are count1/speed0.1, so production looks static until interaction is actually active.
 
-08I must:
-1. remove/disable the Lab query switch from the normal Hero path now that tuning is finished;
-2. ensure normal Hero mounts the approved production interaction on eligible Desktop fine-pointer devices;
-3. add a DEV-only console/runtime diagnostic for production effect activation/failure, not a visible panel;
-4. verify the same held deformation + plume controller used in 08G is the one mounted in normal Hero;
-5. preserve reduced motion and non-fine-pointer safety;
-6. no new visual tuning.
+08I implementado (6 de octubre):
+- retirados query heroLab, import Lab, estado/error/portal/render desde HeroBackground; el Lab permanece como código histórico sin acceso desde el sitio, incluso en DEV;
+- HeroAtmosphere es el único efecto importado/montado con preferences.active, con fallback si falla el import;
+- eligibility exacta Desktop75rem + matchMedia('(hover: hover) and (pointer: fine)'), sin nuevos requisitos; reduced/hidden/offscreen conservados y Mobile sin interacción mouse;
+- DEV console muestra active/interactive y motivo, arc mounted/plume ready y cada fallo de SVG/CTM/ancho/DOMPoint/feDisplacementMap/import/setup con error real; sin panel ni polling;
+- export08G, held110/620/1, idle0, haloQuality, plume y partículas intactos. Controller/volumetricWake/settings/CSS/assets/data/dependencias sin cambios.
+
+Archivos: HeroBackground.jsx, ArcDisplacement.jsx, useHeroMotionPreferences.js, docs/HERO_MOTION.md y CURRENT_STATE. npm run check baseline/final y git diff --check PASS; harness efecto/hook con DOM/media simulados PASS, gates/cleanup/config identity; Motion real held/recovery/plume/cleanup PASS. No browser visual PASS declarado. La exclusión por query está comprobada; sin query la causa específica en el browser de Eze requiere los nuevos diagnósticos.
+
+Commit `fix: activate production Hero without Lab switch`; SHA mediante `git log -1 --format=%H --grep='^fix: activate production Hero without Lab switch$'`.
 
 No Block09 until Eze confirms the normal Hero interaction is visible.
 
@@ -856,7 +859,7 @@ Solo después puede declararse Production FINAL / FROZEN.
 
 ## 12. Hero effect research / decisión técnica vigente
 
-Estado vigente:08G aprobado por Eze y export integrado en08H. Motion + SVG held/plume, halo estático de calidad aprobada y particles count1 en flujo oficial React/slim4.4.0. OGL/old controller/hybrid hosts/duplicated path wake retirados. Lab soloDEV consume misma implementación; no UI/debug en Hero normal. Guía residual body featherizada; QA visual del resultado de producción pendiente de Eze. Detalle actual en docs/HERO_MOTION.md, sección08H.
+Estado vigente:08G aprobado por Eze y export integrado en08H. Motion + SVG held/plume, halo estático de calidad aprobada y particles count1 en flujo oficial React/slim4.4.0. OGL/old controller/hybrid hosts/duplicated path wake retirados. 08I retira el acceso Lab desde el sitio, incluso DEV; diagnósticos solo consola DEV, sin UI/debug en Hero normal. Guía residual body featherizada; QA visual del resultado de producción pendiente de Eze. Detalle actual en docs/HERO_MOTION.md, sección08I.
 
 MagicRings permanece **REJECTED** por su corte/fade histórico y coste; no se volvió a probar en Block08. ShaderGradient/Vanta no ejecutados ni declarados rechazados. No renderer genérico sustituye el horizonte aprobado; no Pro.
 
@@ -1188,9 +1191,11 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08G: BASELINE APPROVED BY EZE; INTEGRATED IN 08H.** Export seleccionado supera presets históricos.
 
-**08H: HERO MOTION — PRODUCTION INTEGRATED / READY FOR EZE VISUAL QA.** Calidad aprobada, held110/620/1, idle0, plume1600ms/0.075/threshold1 y partícula mínima integrados. Controladores/particle wrapper compartidos con LabDEV, sin UI/instrumentación en producción. Borde duro del cuerpo featherizado sin cambiar layout/geometry. Detalle de valores/QA/files/commit en Block08H y docs/HERO_MOTION.md.
+**08H: REJECTED BY EZE — PRODUCTION EFFECT NOT VISIBLE.** Calidad aprobada, held110/620/1, idle0, plume1600ms/0.075/threshold1 y partícula mínima integrados. Controladores/particle wrapper compartidos con LabDEV, sin UI/instrumentación en producción. Borde duro del cuerpo featherizado sin cambiar layout/geometry. Detalle de valores/QA/files/commit en Block08H y docs/HERO_MOTION.md.
 
-Próximo paso autorizado: Eze valida Hero normal en producción/preview y confirma guía residual. No iniciar otras fases sin Dirección.
+**08I: HERO MOTION PRODUCTION ACTIVATION — READY FOR EZE VISUAL QA.** Switch Lab retirado de todo runtime normal; HeroAtmosphere es único dueño, Desktop/fine-hover exactos, gates y errores explicados solo en consola DEV. Sin cambios de valores aprobados. Validación técnica PASS.
+
+Próximo paso autorizado: Eze valida held/plume en Hero normal, consulta diagnósticos DEV si hay bloqueo y confirma guía residual. No iniciar otras fases sin Dirección.
 
 ---
 

@@ -7,7 +7,10 @@ export function useHeroMotionPreferences(backgroundRef) {
   const [preferences, setPreferences] = useState(initialPreferences)
   useEffect(() => {
     const background = backgroundRef.current
-    if (!background || typeof IntersectionObserver === 'undefined') return
+    if (!background || typeof IntersectionObserver === 'undefined') {
+      if (import.meta.env.DEV) console.warn('[HeroMotion] activation blocked —', !background ? 'Hero background not ready' : 'IntersectionObserver unavailable')
+      return
+    }
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
     const desktop = window.matchMedia('(min-width: 75rem)')
     const tablet = window.matchMedia('(min-width: 48rem)')
@@ -15,11 +18,21 @@ export function useHeroMotionPreferences(backgroundRef) {
     const pointer = window.matchMedia('(hover: hover) and (pointer: fine)')
     const queries = [reduced, desktop, tablet, wide, pointer]
     let visible = false
+    let lastDiagnostic
     function synchronize() {
       const next = {
         active: visible && !document.hidden && !reduced.matches,
         desktop: desktop.matches, tablet: tablet.matches, wide: wide.matches,
         interactive: desktop.matches && pointer.matches,
+      }
+      if (import.meta.env.DEV) {
+        const activeReason = reduced.matches ? 'reduced motion' : document.hidden ? 'document hidden' : !visible ? 'outside viewport' : 'eligible'
+        const pointerReason = !desktop.matches ? 'Desktop breakpoint' : !pointer.matches ? 'pointer capability' : 'eligible'
+        const diagnostic = `active=${next.active} — ${activeReason}; interactive=${next.interactive} — ${pointerReason}`
+        if (diagnostic !== lastDiagnostic) {
+          console.info(`[HeroMotion] ${diagnostic}`)
+          lastDiagnostic = diagnostic
+        }
       }
       setPreferences(current => Object.keys(next).every(key => current[key] === next[key]) ? current : next)
     }

@@ -1,8 +1,8 @@
-# Hero Motion — Block 08H / Production Integration
+# Hero Motion — Block 08I / Production Activation Fix
 
-**HERO MOTION — PRODUCTION INTEGRATED / READY FOR EZE VISUAL QA**
+**HERO MOTION PRODUCTION ACTIVATION — READY FOR EZE VISUAL QA**
 
-6 de octubre de2026. Eze aprobó el resultado08G y autorizó integrar su export. Esta sección gobierna producción; el historial08E–08G más abajo describe estados anteriores y no implica que producción siga en08D.
+6 de octubre de2026. 08H fue rechazado por falta de interacción visible en el Hero normal. 08I elimina la competencia del Lab y explicita los gates en DEV; conserva sin cambios el export aprobado08G. Esta sección gobierna el runtime; los accesos Lab descritos en el historial08E–08G ya no están disponibles desde el sitio.
 
 ## Valores aprobados / fuente única
 
@@ -26,7 +26,24 @@ HeroLightArc pinta esta calidad sin esperar import/JS effects: los tres filtros 
 - ArcDisplacement usa el probe real de feDisplacementMap, no el constructor ausente que bloqueaba08D. Motion se monta solo con preferencias activas e interacción fine-hover Desktop. Unsupported/error deja halo estático; fallo de partículas no detiene arco.
 - `ParticleField.jsx` comparte flujo oficial ParticlesProvider + Particles/init una vez. Retirados engine.load manual, custom hosts/queue y renderer de partículas duplicado. Lab conserva diagnóstico en LabParticles, fuera del controlador común. Producción no tiene polling/telemetría/panel/sliders/export.
 - `particleOptions.js` comparte mapping aprobado; el contenedor pasa a opacity1, igual al Lab probado, sin el multiplicador08D0.55/0.4. Count1 y speed0.1 preservados.
-- DEV Lab permanece con `npm run dev` + `?heroLab=1`, usa la misma lógica y valores de partida. Imports/UI/CSS de Lab excluidos del build de producción. No dependencia ni asset nuevo.
+- 08I retira query switch, import dinámico, estado, panel de error y render del Lab en HeroBackground. `?heroLab=1` ya no cambia el Hero ni en DEV. Los archivos Lab permanecen como historial inactivo, sin entry point desde el sitio. HeroAtmosphere es el único dueño de efectos cuando preferences.active, salvo fallo de import con fallback estático. No dependencia ni asset nuevo.
+
+
+## Block 08I — Activación y diagnóstico DEV
+
+La rama Lab bloqueaba explícitamente el import/montaje de HeroAtmosphere cuando la query estaba activa. Fuera de esa query no se demuestra una causa única de la ausencia visual: los gates silenciosos podían dejar solo el fallback, indistinguible del reposo aprobado con idle0 y una partícula. No se afirma éxito visual por pruebas estructurales.
+
+Se conserva exactamente Desktop `(min-width: 75rem)` y `window.matchMedia('(hover: hover) and (pointer: fine)')`. El arco solo monta con interactive y una atmósfera activa; reduced motion, documento oculto y Hero fuera del viewport desmontan efectos. Mobile no recibe mouse interaction. Sin cambios de geometría, CSS, assets, copy, partículas ni valores.
+
+Solo DEV, consola `[HeroMotion]`:
+- active e interactive con razones: reduced motion, documento oculto, fuera del viewport, breakpoint Desktop o capacidad pointer; solo al cambiar el estado/motivo;
+- arc mounted y plume ready después de crear el controlador compartido; indican setup, no aprobación perceptual;
+- console.warn específico para SVG target pendiente/no encontrado, feDisplacementMap, getScreenCTM, ancho cero, DOMPoint y background;
+- error real de import de atmósfera, setup de arco o callback de fallo del plume. Sin panel, polling o telemetría nueva.
+
+Validación08I: baseline sincronizado desde8bd0a59; npm run check y git diff --check PASS. Harness temporal ejecuta el efecto/hook reales con DOM/media simulados: gates, errores, montaje, referencias exactas de settings, cleanup, desktop/pointer/reduced/hidden/offscreen PASS. Harness Motion real de held/recovery/plume/cleanup PASS. Diagnósticos ausentes del build productivo; query/Lab ausentes de HeroBackground. Settings/controller/plume/particles, estilos, assets, datos y dependencias sin diff. QA visual/browser pendiente de Eze.
+
+Archivos: HeroBackground.jsx, ArcDisplacement.jsx, useHeroMotionPreferences.js, docs/CURRENT_STATE.md y este documento. Commit único `fix: activate production Hero without Lab switch`; SHA mediante `git log -1 --format=%H --grep='^fix: activate production Hero without Lab switch$'`. No siguiente bloque autorizado.
 
 ## Guía residual — diagnóstico y corrección
 
