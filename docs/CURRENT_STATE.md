@@ -773,7 +773,7 @@ Eze aprobó el resultado y exportó valores para08H. Los números anteriores des
 
 ### BLOCK 08H — Hero Motion Production Integration
 
-**STATUS: HERO MOTION — PRODUCTION INTEGRATED / READY FOR EZE VISUAL QA**
+**STATUS: REJECTED BY EZE — PRODUCTION EFFECT NOT VISIBLE / LAB STILL MOUNTABLE**
 
 08G aprobado e integrado en Hero normal. Fuente única `heroMotionSettings.js`: particles1/0.1/0.575/1.5/200/2.4; arc mist0/halo0/core0/noise1/radius110/strength620/recovery1; quality core11/5.5/0.625, halo20/8.5/0.475, mist50/20.5/0.24; plume enabled, threshold1/lifetime1600/travel110/count8/radius30/spread24/drag1/opacity0.075/mistCut0.7/haloCut0.12/turbulence8/cooldown100. Mapping/rangos de partículas iguales al Lab.
 
@@ -786,6 +786,33 @@ Validación: npm run check baseline/final y git diff --check PASS; Motion real/D
 Archivos principales: effects HeroLightArc/ArcDisplacement/arcDisplacement/HeroAtmosphere/HeroParticles/heroParticleOptions; shared heroMotionSettings/ParticleField/particleOptions/volumetricWake/pointerVelocity; Lab consume shared logic (viejos archivos duplicados removidos); header-hero.css; docs CURRENT_STATE/HERO_MOTION. HeroBackground y su switch DEV no precisaron cambios.
 
 Commit único `feat: integrate approved Hero light motion into production`; SHA vía `git log -1 --format=%H --grep='^feat: integrate approved Hero light motion into production$'`. Próximo paso: Eze QA del Hero normal. No iniciar Block09 ni declarar FINAL/FROZEN.
+
+---
+
+### BLOCK 08I — Production Activation Fix
+
+**STATUS: AUTHORIZED / NARROW FIX**
+
+Real-browser QA after 08H:
+- Eze does not see the approved held/plume interaction in the normal Hero;
+- Hero Lab is still mountable/active through `?heroLab=1`.
+
+Repo diagnosis:
+- `HeroBackground.jsx` still has a module-level `labMode` query switch;
+- while `labMode` is true, production `HeroAtmosphere` is explicitly NOT imported/mounted;
+- normal production arc is additionally gated by `interactive`, which requires Desktop >=1200 + `(hover:hover) and (pointer:fine)`;
+- production arc failure/unsupported gates remain silent, so normal Hero can fall back without visible diagnostics;
+- idle arc displacement is intentionally zero and particles are count1/speed0.1, so production looks static until interaction is actually active.
+
+08I must:
+1. remove/disable the Lab query switch from the normal Hero path now that tuning is finished;
+2. ensure normal Hero mounts the approved production interaction on eligible Desktop fine-pointer devices;
+3. add a DEV-only console/runtime diagnostic for production effect activation/failure, not a visible panel;
+4. verify the same held deformation + plume controller used in 08G is the one mounted in normal Hero;
+5. preserve reduced motion and non-fine-pointer safety;
+6. no new visual tuning.
+
+No Block09 until Eze confirms the normal Hero interaction is visible.
 
 ---
 
