@@ -26,6 +26,9 @@
 .hero-mobile-horizon { position: absolute; width: 390px; height: 128px; bottom: 0; left: 50%; transform: translateX(-50%) scale(calc(100vw / 390px)); transform-origin: bottom center; }
 .hero-mobile-horizon img, .hero-desktop-scene img { position: absolute; max-width: none; }
 .horizon-mobile-body { top: 30px; left: 0; }
+/* The surface SVG has a binary fill edge, not a rim stroke. Feather that alpha
+   boundary so it cannot read as a second guide beneath the approved light stack. */
+.horizon-desktop-body, .horizon-mobile-body { filter: blur(3px); }
 .hero-desktop-scene { display: none; }
 .hero-star { left: var(--tablet-star-x); top: var(--tablet-star-y); }
 /* Retain the 390x844 rhythm; shorter screens reduce air before content. */
@@ -82,8 +85,7 @@
 }
 
 /* Diffuse arc uses the original crop; body/content geometry remains intact. */
-.hero-particles { position: absolute; inset: 0; opacity: .55; pointer-events: none; }
-.hero-particles-mobile { opacity: .4; }
+.hero-particles { position: absolute; inset: 0; opacity: 1; pointer-events: none; }
 .hero-particles canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
 .hero-light-arc { position: absolute; overflow: visible; pointer-events: none; }
 .hero-mobile-horizon > .hero-light-arc { top: 10px; left: 0; width: 390px; height: 118px; }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { createLabArc } from './createLabArc'
+import { createArcDisplacement } from '../arcDisplacement'
 
 export function LabArc({ target, variant, backgroundRef, interactive, settings, quality, plumeSettings, onPlumeTelemetry, onStatus, onError, onPointer, onTelemetry }) {
   useEffect(() => {
@@ -13,7 +13,7 @@ export function LabArc({ target, variant, backgroundRef, interactive, settings, 
       if (svg.getBoundingClientRect().width === 0) throw new Error(`Arc variant ${variant} has zero rendered width.`)
       if (!svg.getScreenCTM()) throw new Error('Arc has no screen transform matrix.')
       if (interactive && typeof DOMPoint === 'undefined') throw new Error('DOMPoint unavailable: cannot map the mouse to the arc.')
-      stop = createLabArc(svg, { background: backgroundRef.current, interactive, settings, quality, plumeSettings, onPlumeTelemetry, onError, onPointer })
+      stop = createArcDisplacement(svg, { background: backgroundRef.current, interactive, settings, quality, plumeSettings, onPlumeActivity: activity => onPlumeTelemetry(activity.speed === undefined ? `active ${activity.active}/3` : `${activity.speed.toFixed(2)} px/ms; direction ${activity.x.toFixed(2)}, ${activity.y.toFixed(2)}; active ${activity.active}/3`), onError, onPointer })
       onStatus('RUNNING')
       let previous = ''
       let lastChange = performance.now()

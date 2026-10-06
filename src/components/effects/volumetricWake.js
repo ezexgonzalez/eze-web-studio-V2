@@ -7,11 +7,11 @@ let sequence = 0
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
 
 // One progress animation per occupied slot. No clock, path clone, or node allocation on pointermove.
-export function createVolumetricWake(svg, settings, quality, onTelemetry, onError) {
-  const id = `lab-plume-${++sequence}`
+export function createVolumetricWake(svg, settings, quality, onActivity, onError) {
+  const id = `hero-plume-${++sequence}`
   const defs = document.createElementNS(ns, 'defs')
   const root = document.createElementNS(ns, 'g')
-  root.setAttribute('data-lab-plumes', '')
+  root.setAttribute('data-hero-plumes', '')
   const make = (tag, attributes, parent) => {
     const node = document.createElementNS(ns, tag)
     for (const [name, value] of Object.entries(attributes)) node.setAttribute(name, value)
@@ -115,7 +115,7 @@ export function createVolumetricWake(svg, settings, quality, onTelemetry, onErro
         slot.animation = animate(slot.progress, 1, { duration: settings.lifetime / 1000, ease: 'linear', onComplete: () => {
           slot.busy = false; cloud.setAttribute('opacity', 0); anchor.setAttribute('visibility', 'hidden')
           cuts.forEach(band => band[index].setAttribute('opacity', 0))
-          onTelemetry(`active ${slots.filter(item => item.busy).length}/3`)
+          onActivity?.({ active: slots.filter(item => item.busy).length })
         } })
       }
     }
@@ -131,7 +131,7 @@ export function createVolumetricWake(svg, settings, quality, onTelemetry, onErro
       if (!slot) return
       lastSpawn = event.timeStamp
       slot.start(nearest, velocity, normal, point)
-      onTelemetry(`${velocity.speed.toFixed(2)} px/ms; direction ${velocity.x.toFixed(2)}, ${velocity.y.toFixed(2)}; active ${slots.filter(item => item.busy).length}/3`)
+      onActivity?.({ speed: velocity.speed, x: velocity.x, y: velocity.y, active: slots.filter(item => item.busy).length })
     },
     stop,
   }

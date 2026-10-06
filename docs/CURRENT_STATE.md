@@ -77,9 +77,9 @@ La diferencia existente corresponde al bloque Foundation.
 
 ## 3. Estado técnico real actual
 
-Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de carrusel/iconos ni Three.js. Block08 incorpora Motion y un campo WebGL OGL únicamente en el Hero, con fallback SVG difuso y superficie preservada.
+Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de carrusel/iconos ni Three.js. Block08H integra Motion + SVG held/plume y una partícula tsParticles nativa en el Hero, con fallback estático; OGL/WebGL anteriores retirados.
 
-Runtime dependencies: `react`, `react-dom`, `motion@14.0.0`, `ogl@1.0.11`. Los dos últimos se incorporan en Block08; versiones previas del lockfile conservadas.
+Runtime dependencies actuales: `react`, `react-dom`, `motion@14.0.0`, `@tsparticles/{engine,react,slim}@4.4.0`. Sin nueva dependencia en08H.
 
 `App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection` → `ProblemSection` → `SolutionSection` → `ProjectsSection` → `AboutSection` → `FAQSection` → `ContactSection`; `Footer` es sibling de main para conservar el landmark de pie de página.
 
@@ -755,7 +755,7 @@ No Block09 until this proof is achieved.
 
 ### BLOCK 08G — Volumetric Wake Lab
 
-**STATUS: HERO MOTION LAB PHASE 3 — READY FOR EZE TUNING**
+**STATUS: BASELINE APPROVED BY EZE / INTEGRATED IN 08H**
 
 08F wake visualmente rechazado por Eze. `velocityWake.js` retirado: duplicaba fragmentos de mist/halo y producía una línea rota. Baseline halo aprobado en Lab: core11/5.5/0.625; halo20/8.5/0.475; mist50/20.5/0.24. Held radius110 / strength620 / recovery1s e idle0/0/0 preservados. Particles1/speed0.1 intactos; drift sigue NO confirmado.
 
@@ -767,7 +767,25 @@ QA técnico: npm run check PASS; git diff --check PASS; Vite DEV transforms PASS
 
 Archivos: Lab HeroMotionLab/LabArc/createLabArc/labSettings; nuevos pointerVelocity.js/volumetricWake.js; eliminado velocityWake.js; docs CURRENT_STATE/HERO_MOTION. Commit único `dev: replace copied arc wake with volumetric plume lab`; SHA mediante `git log -1 --format=%H --grep='^dev: replace copied arc wake with volumetric plume lab$'`.
 
-Próximo paso: Eze prueba siete condiciones visuales en Lab y exporta valores. No integrar producción ni iniciar Block09 sin Dirección.
+Eze aprobó el resultado y exportó valores para08H. Los números anteriores describen el preset08G inicial; el export integrado vigente está en08H.
+
+---
+
+### BLOCK 08H — Hero Motion Production Integration
+
+**STATUS: HERO MOTION — PRODUCTION INTEGRATED / READY FOR EZE VISUAL QA**
+
+08G aprobado e integrado en Hero normal. Fuente única `heroMotionSettings.js`: particles1/0.1/0.575/1.5/200/2.4; arc mist0/halo0/core0/noise1/radius110/strength620/recovery1; quality core11/5.5/0.625, halo20/8.5/0.475, mist50/20.5/0.24; plume enabled, threshold1/lifetime1600/travel110/count8/radius30/spread24/drag1/opacity0.075/mistCut0.7/haloCut0.12/turbulence8/cooldown100. Mapping/rangos de partículas iguales al Lab.
+
+Un solo arc controller y plume/tracker compartidos; retirado controlador08D, gate del constructor y montaje manual/custom hosts tsParticles. ParticlesProvider + Particles oficial/init única también compartido. Lab solo DEV, instrumentación/panel/polling fuera de producción. Cero path clones de wake. Core no se atenúa por plume. Static SVG aplica calidad aprobada en cuatro crops; reduced/hidden/offscreen cancela efectos/restaura filtros/pool y conserva fondo completo. Mobile framing y touch intactos.
+
+Guía residual: identificado borde binario del relleno body bajo el arco, no rim/stroke extra. Feather3px solo del cuerpo, sin tocar paths/geometry/assets ni calidad core/halo/mist. Test geométrico de alpha confirma transición suavizada; desaparición perceptual pendiente de Eze. No parche de coreOpacity ni overlay.
+
+Validación: npm run check baseline/final y git diff --check PASS; Motion real/DOM simulado held/recovery/idle0/plume/cleanup PASS; SSR fallback completo calidad/IDs PASS; particle options iguales08G; DEV transforms/build sin Lab UI/query/telemetry PASS; estilos de layout/framing protegidos por comparación exacta. No browser/console/FPS PASS fabricados. Initial JS238.02kB gzip72.29; Hero lazy135.81 gzip43.31; CSS67.26 gzip13.45. Sin nuevas dependencias ni cambios de datos/copy/type/Navbar/otras secciones.
+
+Archivos principales: effects HeroLightArc/ArcDisplacement/arcDisplacement/HeroAtmosphere/HeroParticles/heroParticleOptions; shared heroMotionSettings/ParticleField/particleOptions/volumetricWake/pointerVelocity; Lab consume shared logic (viejos archivos duplicados removidos); header-hero.css; docs CURRENT_STATE/HERO_MOTION. HeroBackground y su switch DEV no precisaron cambios.
+
+Commit único `feat: integrate approved Hero light motion into production`; SHA vía `git log -1 --format=%H --grep='^feat: integrate approved Hero light motion into production$'`. Próximo paso: Eze QA del Hero normal. No iniciar Block09 ni declarar FINAL/FROZEN.
 
 ---
 
@@ -811,7 +829,7 @@ Solo después puede declararse Production FINAL / FROZEN.
 
 ## 12. Hero effect research / decisión técnica vigente
 
-Estado vigente:08C y08D rechazados visualmente;08E Lab entregado para prueba/tuning interactivo de Eze. La configuración08D sigue siendo el baseline normal protegido hasta seleccionar valores finales. Dust nativo tsParticles React/slim4.4.0 y Motion + filtros SVG de displacement local/idle; OGL y clock/traslaciones anteriores eliminados. Aspecto difuso y fallback preservados. Detalle/licencias/costes y uso del Lab en `docs/HERO_MOTION.md`. Estado actual: HERO MOTION LAB — READY FOR EZE INTERACTIVE TUNING;08D no aprobado.
+Estado vigente:08G aprobado por Eze y export integrado en08H. Motion + SVG held/plume, halo estático de calidad aprobada y particles count1 en flujo oficial React/slim4.4.0. OGL/old controller/hybrid hosts/duplicated path wake retirados. Lab soloDEV consume misma implementación; no UI/debug en Hero normal. Guía residual body featherizada; QA visual del resultado de producción pendiente de Eze. Detalle actual en docs/HERO_MOTION.md, sección08H.
 
 MagicRings permanece **REJECTED** por su corte/fade histórico y coste; no se volvió a probar en Block08. ShaderGradient/Vanta no ejecutados ni declarados rechazados. No renderer genérico sustituye el horizonte aprobado; no Pro.
 
@@ -1141,9 +1159,11 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08F: WAKE VISUALLY REJECTED; HALO QUALITY ACCEPTED AS LAB BASELINE.** Commit08F `fa96f2455106ed5fd115144cc1df1b8eb7fbfbbc`. Su wake de fragmentos copiados fue reemplazado, no retocado.
 
-**08G: HERO MOTION LAB PHASE 3 — READY FOR EZE TUNING.** Volumetric plume SVG+Motion independiente del path; pool3×8, atenuación alargada temporal de mist/halo sin tocar core, drag/divergencia/fade y controles/export `plume`. Baseline halo/held aprobado preservado. Detalle y QA técnico en Block08G y docs/HERO_MOTION.md. Producción y otras secciones intactas. Commit `dev: replace copied arc wake with volumetric plume lab` (resolver SHA por git log).
+**08G: BASELINE APPROVED BY EZE; INTEGRATED IN 08H.** Export seleccionado supera presets históricos.
 
-Próximo paso autorizado: Eze ajusta/valida plume en browser real. No integrar valores finales ni iniciar otras fases sin aprobación.
+**08H: HERO MOTION — PRODUCTION INTEGRATED / READY FOR EZE VISUAL QA.** Calidad aprobada, held110/620/1, idle0, plume1600ms/0.075/threshold1 y partícula mínima integrados. Controladores/particle wrapper compartidos con LabDEV, sin UI/instrumentación en producción. Borde duro del cuerpo featherizado sin cambiar layout/geometry. Detalle de valores/QA/files/commit en Block08H y docs/HERO_MOTION.md.
+
+Próximo paso autorizado: Eze valida Hero normal en producción/preview y confirma guía residual. No iniciar otras fases sin Dirección.
 
 ---
 

@@ -1,4 +1,56 @@
-# Hero Motion — Block 08E / Runtime Lab
+# Hero Motion — Block 08H / Production Integration
+
+**HERO MOTION — PRODUCTION INTEGRATED / READY FOR EZE VISUAL QA**
+
+6 de octubre de2026. Eze aprobó el resultado08G y autorizó integrar su export. Esta sección gobierna producción; el historial08E–08G más abajo describe estados anteriores y no implica que producción siga en08D.
+
+## Valores aprobados / fuente única
+
+`src/components/effects/heroMotionSettings.js` contiene exactamente el export de Dirección:
+
+```json
+{
+  "particles": { "count": 1, "speed": 0.1, "opacity": 0.575, "size": 1.5, "distance": 200, "strength": 2.4 },
+  "arc": { "mist": 0, "halo": 0, "core": 0, "noiseSpeed": 1, "radius": 110, "pointerStrength": 620, "recovery": 1 },
+  "haloQuality": { "coreWidth": 11, "coreBlur": 5.5, "coreOpacity": 0.625, "haloWidth": 20, "haloBlur": 8.5, "haloOpacity": 0.475, "mistWidth": 50, "mistBlur": 20.5, "mistOpacity": 0.24 },
+  "plume": { "enabled": true, "speedThreshold": 1, "lifetime": 1600, "travel": 110, "blobCount": 8, "baseRadius": 30, "spread": 24, "drag": 1, "opacity": 0.075, "mistCut": 0.7, "haloCut": 0.12, "turbulence": 8, "cooldown": 100 }
+}
+```
+
+HeroLightArc pinta esta calidad sin esperar import/JS effects: los tres filtros estáticos/vivos comparten width/blur/opacity, incluidas las variantes Mobile/Tablet/Production/Wide. Sin cambio de paths, crop, viewBox ni framing. Particle options conservan exactamente el mapping/rangos nativos usados por el Lab aprobado (speed/opacity/size son centros de rango); un solo registro de partículas, sin tuning adicional.
+
+## Integración y cleanup
+
+- Un solo controlador `arcDisplacement.js`, extraído del Lab y reemplazando el antiguo controlador08D. Held radius110/strength620/recovery1, idle scales0; no se restauraron los loops de idle displacement.
+- `volumetricWake.js` y `pointerVelocity.js` ahora son compartidos por producción/Lab. Pool3×8, sin path clones, sin nodos por pointermove ni clock propio. El plume usa exactamente threshold1/lifetime1600/travel110/baseRadius30/drag1/opacity0.075; resto del modelo08G sin tuning. Mist cut y halo cut alargados/fijos, core sin atenuación. Held existente conserva su respuesta local del core.
+- ArcDisplacement usa el probe real de feDisplacementMap, no el constructor ausente que bloqueaba08D. Motion se monta solo con preferencias activas e interacción fine-hover Desktop. Unsupported/error deja halo estático; fallo de partículas no detiene arco.
+- `ParticleField.jsx` comparte flujo oficial ParticlesProvider + Particles/init una vez. Retirados engine.load manual, custom hosts/queue y renderer de partículas duplicado. Lab conserva diagnóstico en LabParticles, fuera del controlador común. Producción no tiene polling/telemetría/panel/sliders/export.
+- `particleOptions.js` comparte mapping aprobado; el contenedor pasa a opacity1, igual al Lab probado, sin el multiplicador08D0.55/0.4. Count1 y speed0.1 preservados.
+- DEV Lab permanece con `npm run dev` + `?heroLab=1`, usa la misma lógica y valores de partida. Imports/UI/CSS de Lab excluidos del build de producción. No dependencia ni asset nuevo.
+
+## Guía residual — diagnóstico y corrección
+
+No se encontró un rim exportado extra, stroke de body ni path de highlight duplicado en el DOM activo. Sí hay un borde alpha duro de las superficies SVG body: el relleno se corta en una ellipse/path binario justamente debajo del arco, con color distinto del fondo. Se conserva su geometría/gradiente/posición/asset y se featheriza únicamente el alpha del body mediante blur3px en el img; no se bajó coreOpacity ni se cambió la calidad elegida, no hay overlay para esconder un stroke.
+
+Diagnóstico aislado sobre geometría alpha de production-body parseada del SVG: en x200/400/1160/1360 el salto máximo154–186 pasa a24–29 con feather3px. Es una prueba de borde geométrico, no render browser. El renderer SVG externo no estaba disponible; no se usó como evidencia browser. Eze debe confirmar visualmente que esa transición ya no se percibe como guía y que no queda otra contribución visible del core. No se declara aceptación visual del fix antes de su QA.
+
+## Reduced motion / lifecycle / fallback
+
+useHeroMotionPreferences sigue siendo único dueño de reduced, visibilidad y breakpoints. Reduced/hidden/offscreen desmonta HeroAtmosphere: wrapper destruye canvas, controlador cancela Motion/springs/observers/listeners, elimina pool y restaura filtros/máscaras. No held/plume/loops continuos en reduced motion. Halo completo de calidad aprobada permanece renderizado estáticamente, con body featherizado y stars. Mobile/Tablet sin fine Desktop hover no monta el controlador interactivo; no captura touch ni cambia framing. Import/setup/canvas failures preservan contenido, CTA y fondo estático.
+
+## Validación técnica / límites
+
+npm run check baseline/final PASS; git diff --check PASS. Motion real + DOM simulado: export exacto, held displacement y recuperación, idle0, fast plume, cleanup durante wake/restauración y ausencia de writes después del unmount PASS. Pool/XY/cooldown/divergencia/drag/fade y core intacto PASS. Opciones de partículas comparadas contra función08G desde git: idénticas. SSR estático completo con calidad aprobada y IDs de filtros únicos en cuatro crops, sin canvas/debug UI PASS. Vite DEV transforma Lab/shared modules PASS. Build contiene cero query/UI/telemetría Lab. CSS assert: reglas de layout/framing idénticas, cambios limitados a feather body y multiplicador de partículas. Datos, Navbar, App, copy/type, assets y otras secciones sin cambios.
+
+Bundle antes/después: inicial237.59→238.02kB (gzip72.06→72.29); lazy HeroAtmosphere130.89→135.81kB (gzip41.02→43.31); CSS67.24→67.26kB (gzip13.45→13.45). No nueva dependencia; no FPS/GPU/console/browser QA medidos. Eze valida en producción/preview: held, recovery, dirección/fade de plume, guía residual, reduced y cuatro Desktop checkpoints. El estado entregado es integrado, listo para QA; no FINAL/FROZEN ni autorización Block09.
+
+## Commit
+
+Único commit `feat: integrate approved Hero light motion into production`; SHA mediante `git log -1 --format=%H --grep='^feat: integrate approved Hero light motion into production$'`. SHA exacto en reporte final.
+
+---
+
+# Historial — Block 08E / Runtime Lab
 
 **HERO MOTION LAB — READY FOR EZE INTERACTIVE TUNING**
 

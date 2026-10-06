@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import { horizonPaths } from './horizonPaths'
+import { haloQuality } from './heroMotionSettings'
 
 const pointerMask = `data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="440" height="440"><defs><radialGradient id="m"><stop stop-color="white"/><stop offset=".35" stop-color="white" stop-opacity=".8"/><stop offset="1" stop-color="white" stop-opacity="0"/></radialGradient></defs><circle cx="220" cy="220" r="220" fill="url(#m)"/></svg>')}`
 
@@ -10,11 +11,9 @@ export function HeroLightArc({ variant }) {
   const width = Number(viewBox.split(' ')[2])
   const height = Number(viewBox.split(' ')[3])
   const mobile = variant === 'mobile'
-  const layers = [
-    { name: 'mist', width: mobile ? 34 : 64, blur: mobile ? 16 : 28, opacity: .28 },
-    { name: 'halo', width: mobile ? 16 : 30, blur: mobile ? 8 : 14, opacity: .58 },
-    { name: 'core', width: mobile ? 5 : 9, blur: mobile ? 2.5 : 4, opacity: .62 },
-  ]
+  const layers = ['mist', 'halo', 'core'].map(name => ({ name,
+    width: haloQuality[`${name}Width`], blur: haloQuality[`${name}Blur`], opacity: haloQuality[`${name}Opacity`],
+  }))
   const bounds = { filterUnits: 'userSpaceOnUse', x: -256, y: -256, width: width + 512, height: height + 512, colorInterpolationFilters: 'sRGB' }
   return <svg className="hero-light-arc" data-arc-variant={variant} viewBox={viewBox} fill="none" aria-hidden="true">
     <defs>

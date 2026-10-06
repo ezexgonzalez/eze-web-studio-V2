@@ -9,7 +9,7 @@ export default function HeroAtmosphere({ backgroundRef, desktop, tablet, wide, i
   const failArc = useCallback(() => setArcFailed(true), [])
   const variant = tablet ? (desktop ? (wide ? 'wide' : 'production') : 'tablet') : 'mobile'
   return <>
-    {!particleFailed && <HeroParticles desktop={desktop} interactive={interactive} onFailure={failParticles} onStatus={onParticleStatus} />}
-    {!arcFailed && <ArcDisplacement target={arcTarget} variant={variant} backgroundRef={backgroundRef} interactive={interactive} onFailure={failArc} />}
+    {!particleFailed && <HeroParticles interactive={interactive} onFailure={failParticles} onStatus={onParticleStatus} />}
+    {interactive && !arcFailed && <ArcDisplacement target={arcTarget} variant={variant} backgroundRef={backgroundRef} interactive={interactive} onFailure={failArc} />}
   </>
 }

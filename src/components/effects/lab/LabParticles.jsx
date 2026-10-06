@@ -1,19 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
-import Particles, { ParticlesProvider } from '@tsparticles/react'
-import { loadSlim } from '@tsparticles/slim'
+import { ParticleField } from '../ParticleField'
 import { labParticleOptions } from './labSettings'
-
-let initialization
-let initializationError
-const errors = new EventTarget()
-function initialize(engine) {
-  initialization ??= loadSlim(engine).catch(error => {
-    initializationError = error
-    errors.dispatchEvent(new CustomEvent('failed', { detail: error }))
-    throw error
-  })
-  return initialization
-}
 
 export function LabParticles({ settings, interactive, onStatus, onError, onTelemetry, onReady }) {
   const containerRef = useRef(null)
@@ -30,9 +17,6 @@ export function LabParticles({ settings, interactive, onStatus, onError, onTelem
   }, [onStatus, onError, onReady])
   useEffect(() => {
     onStatus('LOADING')
-    const fail = event => onError('PARTICLES', event.detail)
-    errors.addEventListener('failed', fail)
-    if (initializationError) fail({ detail: initializationError })
     let previous = new Map()
     let lastMovement = performance.now()
     const timeout = window.setTimeout(() => {
@@ -58,14 +42,11 @@ export function LabParticles({ settings, interactive, onStatus, onError, onTelem
       } catch (error) { onError('PARTICLES', error) }
     }, 500)
     return () => {
-      errors.removeEventListener('failed', fail)
       window.clearTimeout(timeout); window.clearInterval(poll)
       containerRef.current = null
       onReady(false)
     }
   }, [onError, onTelemetry, onReady, onStatus])
-  return <ParticlesProvider init={initialize}>
-    <Particles id="hero-lab-particles" options={options} particlesLoaded={loaded}
-      style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 1 }} />
-  </ParticlesProvider>
+  const failed = useCallback(error => onError('PARTICLES', error), [onError])
+  return <ParticleField options={options} onLoaded={loaded} onFailure={failed} />
 }
