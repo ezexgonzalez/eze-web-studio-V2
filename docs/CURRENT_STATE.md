@@ -821,7 +821,7 @@ No Block09 until Eze confirms the normal Hero interaction is visible.
 
 ### BLOCK 08J — Live Filter Ownership Fix
 
-**STATUS: HERO LIVE FILTER OWNERSHIP — READY FOR EZE VISUAL QA**
+**STATUS: NOT VISUALLY APPROVED — NO EFFECT OBSERVED BY EZE**
 
 Real-browser QA after 08I: HeroLab is gone, but the normal Hero still has no visible held deformation/plume.
 
@@ -852,6 +852,31 @@ No Block09 until Eze confirms normal Hero held deformation + plume are visible.
 
 ---
 
+### BLOCK 08K — Runtime Verification / Rendered Effect
+
+**STATUS: AUTHORIZED — DIAGNOSE FIRST, NO BLIND REWORK**
+
+Eze rechecked normal Hero after 08J and still sees no live interaction. Do not assert another single cause without the real browser chain.
+
+Confirmed code facts (HEAD 82707143716f6686dbaa8f2940c4f1294aa956c2):
+- Idle mist/halo/core displacement are zero; particles count1/speed0.1. At rest the Hero is nearly static by configuration.
+- HeroBackground now owns declarative STATIC/LIVE filter selection, but DOM mode alone does not prove rendered pixels change.
+- ArcDisplacement returns without retry on several transient gates (SVG target, CTM, bounding size, background readiness). It can therefore miss a later-ready target.
+- Arc controller requires Desktop>=1200 and fine hover; reduced motion/offscreen disable activation.
+
+Proof order BEFORE changes to effects:
+1. confirm branch and asset served;
+2. inspect visible SVG variant and data-arc-mode;
+3. verify path filters point to live definitions;
+4. test synthetic/real pointer on visible curve and log screen-to-SVG distance;
+5. observe local filter displacement scale become >0;
+6. observe plume slots spawn on a fast pointer crossing;
+7. confirm visible pixel change; if values move but pixels do not, diagnose SVG filter/mask/painting;
+8. fix only proven failed gate and make transient readiness recoverable.
+
+No new visual tuning, packages, layout changes, or full Lab. A single DEV-only diagnostic is acceptable. Eze owns final visual QA. Do not begin Block 09.
+
+---
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
@@ -1228,7 +1253,7 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08I: REJECTED BY EZE — LIVE FILTER OWNERSHIP BUG.** Switch Lab retirado de todo runtime normal; HeroAtmosphere es único dueño, Desktop/fine-hover exactos, gates y errores explicados solo en consola DEV. Sin cambios de valores aprobados. Validación técnica PASS.
 
-**08J: HERO LIVE FILTER OWNERSHIP — READY FOR EZE VISUAL QA.** React selecciona STATIC/LIVE; Motion no escribe path.filter. particlesReady conserva estrellas sin desconectar filtros. Aserción DEV de los tres paths; valores aprobados intactos, validación técnica PASS.
+**08J: NOT APPROVED BY EZE — no visible production interaction.** React selecciona STATIC/LIVE; Motion no escribe path.filter. particlesReady conserva estrellas sin desconectar filtros. Aserción DEV de los tres paths; valores aprobados intactos, validación técnica PASS.
 
 Próximo paso autorizado: Eze verifica held/plume y persistencia LIVE después de particles ready en Hero normal, más reduced/fallback y guía residual. No iniciar otras fases sin Dirección.
 
