@@ -53,10 +53,10 @@
   .faq-header, .faq-list { max-width: 848px; }
 }
 
-/* 02B Production 242:238 / 242:252. Explicit editorial offsets, no generic centring. */
+/* 02C Desktop Fit 266:210 / 266:218. Natural content height and expandable FAQ. */
 @media (min-width: 75rem) {
-  .about-layout, .faq-layout { width: min(calc(100% - var(--production-gutter) * 2), 1280px); min-height: 100svh; margin-inline: auto; display: grid; align-items: start; }
-  .about-layout { grid-template-columns: minmax(0, 560fr) minmax(0, 528fr); column-gap: 136px; padding: clamp(278px, calc(308px + (100svh - 900px) * .227272727), 350px) 24px 120px 32px; }
+  .about-layout, .faq-layout { width: min(calc(100% - 64px), 1280px); margin-inline: auto; display: grid; align-items: start; }
+  .about-layout { grid-template-columns: minmax(0, 560fr) minmax(0, 528fr); column-gap: 136px; padding: 96px 24px 136px 32px; }
   .about-heading { margin-top: 24px; }
   .about-heading span, .about-primary span { display: block; }
   .about-copy { position: relative; margin-top: 38px; }
@@ -65,12 +65,12 @@
   .about-pause-divider { display: none; }
   .about-secondary span:first-child { display: inline; }
   .about-secondary span:last-child { display: block; }
-  .faq-layout { grid-template-columns: minmax(0, 540fr) minmax(0, 656fr); column-gap: 84px; padding: clamp(178px, calc(214px + (100svh - 900px) * .272727273), 254px) 0 clamp(88px, calc(120px + (100svh - 900px) * .242424242), 152px); }
+  .faq-layout { grid-template-columns: minmax(0, 540fr) minmax(0, 656fr); column-gap: 84px; padding: 80px 0 86px; }
   .faq-header { min-width: 0; padding-top: 26px; }
   .faq-heading { margin-top: 24px; }
   .faq-list { margin-top: 0; border-top: 0; border-bottom: 1px solid var(--color-divider-default); }
-  .faq-item { border-top: 1px solid var(--color-divider-default); padding: 24px 0 16px; }
-  .faq-item[data-open="true"] { padding-bottom: 30px; }
+  .faq-item { border-top: 1px solid var(--color-divider-default); padding: 16px 0; }
+  .faq-item[data-open="true"] { padding-bottom: 26px; }
   .faq-toggle { grid-template-columns: minmax(0, 1fr) 20px; gap: 0; }
   .faq-icon, .faq-icon img { width: 20px; height: 20px; }
   .faq-panel { margin-top: 6px; }

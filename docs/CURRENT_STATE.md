@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 6 de octubre de 2026.
+> Última actualización: 8 de octubre de 2026.
 
 ---
 
@@ -85,7 +85,7 @@ Runtime dependencies actuales: `react`, `react-dom`, `motion@14.0.0`, `@tspartic
 
 **Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-Problema y Solución, Proyectos y About + FAQ están CLOSED / APPROVED FOR CONTINUATION. Contacto + Footer completó implementación y el QA manual global de Eze detectó issues sistémicos que pasan al Block 07. Todas las secciones están montadas; Desktop fue reimplementado desde 02B y está READY FOR EZE VISUAL QA; la implementación web todavía no es Production FINAL / FROZEN.
+Problema y Solución, Proyectos y About + FAQ están CLOSED / APPROVED FOR CONTINUATION. Contacto + Footer completó implementación y el QA manual global de Eze detectó issues sistémicos que pasan al Block 07. Todas las secciones están montadas; Desktop fue reimplementado desde 02B y las secciones afectadas fueron recompuestas desde 02C Desktop Fit en 08L, READY FOR EZE VISUAL QA; la implementación web todavía no es Production FINAL / FROZEN.
 
 Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
 
@@ -105,13 +105,15 @@ Páginas:
 
 - `01 — Visual System` → FINAL;
 - `02 — Desktop` → HISTORICAL CREATIVE REFERENCE ONLY;
-- `02B — Desktop Production` (`239:10`) → CURRENT DESKTOP SOURCE OF TRUTH; canonical master `239:11`, FINAL / READY FOR FRONTEND HANDOFF en Figma;
+- `02C — Desktop Fit` (`266:94`) → CURRENT GEOMETRY SOURCE for 08L modified Desktop sections; master `266:95`1440×5256, compact `268:66`1366×5124; dirección aprobada, implementación pendiente de QA visual Eze;
+- `02B — Desktop Production` (`239:10`, master `239:11`) → historical geometry for modified sections; Projects remains FROZEN in its existing implementation;
 - `03 — Mobile` → FINAL / FROZEN;
 - `04 — Final Handoff` → READY FOR PRODUCTION.
 
 Viewports maestros:
 
-- Desktop Production: **1440×900** por escena, Footer **1440×384**, master total **1440×6684**;
+- Desktop Fit 02C: Hero900, Problem768, Solution768, Projects900, About512, FAQ624, Contact560, Footer224; master **1440×5256**. Referencias de composición, no alturas runtime fijas;
+- Desktop02B historical:1440×6684;
 - Mobile: **390 px**.
 
 Orden final aprobado:
@@ -877,6 +879,24 @@ Proof order BEFORE changes to effects:
 No new visual tuning, packages, layout changes, or full Lab. A single DEV-only diagnostic is acceptable. Eze owns final visual QA. Do not begin Block 09.
 
 ---
+### BLOCK 08L — Desktop Fit Production Implementation
+
+**STATUS: DESKTOP FIT IMPLEMENTED / READY FOR EZE VISUAL QA**
+
+8 de octubre de2026. Figma02C (`266:94`), master1440 `266:95`5256high y compact1366 `268:66`5124high inspeccionados mediante metadata/design context/renders. Secciones Hero266:96, Problem266:124, Solution266:147, About266:210, FAQ266:218, Contact266:234, Footer266:254. 02C reemplaza geometría02B únicamente aquí. Projects266:178 FROZEN; Mobile03 FINAL/FROZEN.
+
+Cambios: header CTA160×44; Hero CTA210/196×52, grupo430/gap24 y separación32. Problem intro64/cards320,296×272/banner624×80. Solution feature80/86 local, escalonado174/356/538/rows158. About header96/copy134; FAQ header106/list80/open148/closed76 conservando targets44; Contact left112/right134/divider352. Footer natural224 con divisor2px viewport-wide y contenido64/144.
+
+Alturas derivadas de flujo/padding con contenido actual: Problem768/Solution768/About512/FAQ624/Contact560/Footer224. Sin min100svh Desktop para estos bloques, fixed section heights, escala global o nueva capa de overrides. Contenido/zoom/FAQ puede crecer. Hero/Projects conservan viewport escénico. Contenedores modificados1280, márgenes43/80/128/320 a1366/1440/1536/1920; Projects conserva su gutter original.
+
+Archivos: src/styles/header-hero.css, problem-solution.css, about-faq.css, contact-footer.css; docs/DESKTOP_FIT_IMPLEMENTATION.md y CURRENT_STATE. Reemplazadas reglas Desktop02B y eliminadas excepciones obsoletas, sin duplicación de sistemas. Componentes/hooks/data/assets/dependencias/primitivas/type global sin diff. Mobile/Tablet prefijos idénticos; Hero Motion y todas las reglas de escena/efectos protegidas. Copy About “en cada proyecto”, FAQnull y Projects01/01 preservados.
+
+Validación: baseline limpio4585816; npm run check baseline/final y git diff --check PASS; comparaciones de archivos protegidos/prefijos Mobile-Tablet PASS; SVGs locales no vacíos/XML válidos; React SSR semántica/IDs/content PASS; razonamiento de anchuras en1366×768,1440×900,1536×864,1920×945,1920×1080 y1200 sin colisiones obvias. No browser/overflow/pointer visual PASS declarado. 08K continúa con su estado previo:08L protege el efecto sin reabrirlo ni certificar interacción. Eze hace QA visual final.
+
+Commit único `feat: implement 02C Desktop Fit geometry`; SHA con `git log -1 --format=%H --grep='^feat: implement 02C Desktop Fit geometry$'`. Próximo paso: Eze QA de02C, no Production FINAL ni Block09 autorizado.
+
+---
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
@@ -1217,7 +1237,9 @@ Commit único identificado por `fix: frame mobile sections to the visible viewpo
 
 Blocks 01–06: **CLOSED / APPROVED FOR CONTINUATION**.
 
-### PRODUCTION BLOCK 07 — DESKTOP PRODUCTION REIMPLEMENTATION
+### PRODUCTION BLOCK 07 — DESKTOP PRODUCTION REIMPLEMENTATION (historial)
+
+02C Desktop Fit sustituye la geometría 02B de las secciones modificadas en 08L. Las referencias y reglas siguientes describen la entrega histórica de Block 07; el contrato vigente está en Block 08L y `docs/DESKTOP_FIT_IMPLEMENTATION.md`. Proyectos permanece protegido.
 
 Status: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
 
@@ -1228,7 +1250,7 @@ SOURCE OF TRUTH:
 - Mobile: `03 — Mobile` permanece FINAL / FROZEN.
 - `02 — Desktop` histórico NO manda en producción.
 
-El coherence pass anterior quedó eliminado del CSS activo. Implementación desde02B completada; detalle en `docs/DESKTOP_PRODUCTION_IMPLEMENTATION.md`. Dirección autorizó Block08 sobre este baseline protegido. Próxima acción actual: Eze revisa el Hero motion implementado, sin reabrir composición Desktop/Mobile.
+El coherence pass anterior quedó eliminado del CSS activo. Implementación desde02B completada; detalle en `docs/DESKTOP_PRODUCTION_IMPLEMENTATION.md`. Dirección autorizó Block08 sobre este baseline protegido. La siguiente acción de aquella entrega fue revisar Hero Motion; la acción vigente es el QA visual de 08L, con Hero Motion y Mobile protegidos.
 
 Reglas obligatorias:
 - implementar escala Production exacta y relaciones del master;
@@ -1255,7 +1277,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08J: NOT APPROVED BY EZE — no visible production interaction.** React selecciona STATIC/LIVE; Motion no escribe path.filter. particlesReady conserva estrellas sin desconectar filtros. Aserción DEV de los tres paths; valores aprobados intactos, validación técnica PASS.
 
-Próximo paso autorizado: Eze verifica held/plume y persistencia LIVE después de particles ready en Hero normal, más reduced/fallback y guía residual. No iniciar otras fases sin Dirección.
+**08L: DESKTOP FIT IMPLEMENTED / READY FOR EZE VISUAL QA.** Nueva autoridad02C para geometría de las secciones modificadas; naturales About/FAQ/Contact/Footer, Solution80/86 y cards272. Hero Motion/Projects/Mobile protegidos. Ver docs/DESKTOP_FIT_IMPLEMENTATION.md.
+
+Próximo paso autorizado: Eze revisa visualmente02C en los cinco Desktop checkpoints; mantiene pendiente la comprobación runtime del Hero según08K. No iniciar otras fases sin Dirección.
 
 ---
 
