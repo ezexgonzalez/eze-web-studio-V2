@@ -56,7 +56,7 @@
 /* 02C Desktop Fit 266:210 / 266:218. Natural content height and expandable FAQ. */
 @media (min-width: 75rem) {
   .about-layout, .faq-layout { width: min(calc(100% - 64px), 1280px); margin-inline: auto; display: grid; align-items: start; }
-  .about-layout { grid-template-columns: minmax(0, 560fr) minmax(0, 528fr); column-gap: 136px; padding: 96px 24px 136px 32px; }
+  .about-layout { grid-template-columns: minmax(0, 560fr) minmax(0, 528fr); column-gap: 168px; padding: 96px 24px 136px 0; }
   .about-heading { margin-top: 24px; }
   .about-heading span, .about-primary span { display: block; }
   .about-copy { position: relative; margin-top: 38px; }

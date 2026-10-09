@@ -1,6 +1,8 @@
-# Block 08L — Desktop Fit implementation
+# Desktop Fit implementation — Blocks 08L / 08M
 
-**DESKTOP FIT IMPLEMENTED / READY FOR EZE VISUAL QA**
+**08M TARGETED CORRECTIONS IMPLEMENTED / READY FOR EZE VISUAL QA**
+
+The 08L record below is historical where superseded by the explicit Direction corrections in 08M. Those corrections take precedence over Figma 02C; they do not change Hero, Projects, Contact, Mobile or Tablet.
 
 8 October 2026. Branch `feature/ews-v2-production`; clean synchronized baseline `4585816` (`fix: use explicit JSX import for Hero arc controller`). No new dependencies, copy, assets, components or behavior.
 
@@ -10,11 +12,11 @@ Figma `aw1k9uSQJhmNGeODZY7BC3`, page `02C — Desktop Fit` (`266:94`), master `2
 
 02C supersedes 02B geometry only for these modified Desktop sections. Projects `266:178` is FROZEN: existing runtime components, CSS, data and behavior remain untouched, including its original responsive container. 03 — Mobile remains FINAL/FROZEN; Transition 768–1199 remains unchanged. Interaction/semantic contracts and approved repo copy take precedence over accidental text variants in Figma. Hero Motion is protected; this block does not close the earlier 08K runtime verification gate.
 
-## Section geometry / 02B → 02C
+## Block 08L record — Section geometry / 02B → 02C
 
 Positions below are source measurements and CSS flow arithmetic, **not measured browser bounds**. Content may grow with wrapping/zoom; no page heights are hard-coded.
 
-| Section | Superseded 02B | 02C implementation at 1440×900 |
+| Section | Superseded 02B | 08L implementation at 1440×900 (before 08M) |
 | --- | --- | --- |
 | Hero | Nav176×54, actions226/214×60; CTA gap to copy48 at900 | Nav160×44; header x80/y24,44-high content. Hero actions210/196×52, horizontal gap24, total430; copy gap32, actions y590. Hero64/72, description20/30 and y330 content remain. |
 | Problem | 900 scene; intro y80/gap24; cards y376/300high; banner y724/88high | Intro y64/gap16, natural224high; cards y320, four296×272/gap32. Ring56, icon40, number32; title y131, body y173 within card. Connectors y368. Banner y624/min80. Natural section768. |
@@ -62,3 +64,47 @@ Eze should review the five Desktop sizes, 1199/1200 transition, Mobile regressio
 ## Commit
 
 One commit `feat: implement 02C Desktop Fit geometry`. Resolve exact SHA with `git log -1 --format=%H --grep='^feat: implement 02C Desktop Fit geometry$'`; full SHA in delivery report. This subject avoids a self-referential hash and a second documentation-only commit.
+
+
+## Block 08M — Direction visual QA corrections
+
+8 October 2026. Clean synchronized baseline: `0c11e18b9d8916bb80ea8e780bbc28c7b19cc582`. Status: **READY FOR EZE VISUAL QA**. No new Figma interpretation; Eze's explicit correction brief supersedes 02C in these four locations.
+
+### Viewport rhythm: Problem and Solution
+
+Desktop `>=1200` only: `.problem-content, .solution-content` now have `min-height: 100svh` and column flex flow. They retain content-derived growth, no fixed height, no clipping or UI scaling.
+
+Problem uses `justify-content: space-between`. The existing 64px top/bottom padding, 32px minimum margins before cards/result, 272px card minimum, 80px compact result and typography remain. Extra vertical space goes equally into the two inter-block gaps.
+
+Solution keeps intro at 64px, first feature margin at 48px and bottom padding at 72px. Its feature list grows with `flex: 1` and distributes available space using `justify-content: space-between`; the 24px gap remains a floor. Keywords stay 80/86, rows minimum 158px; all horizontal offsets, rails and accents are unchanged.
+
+With current master wraps (768px natural content), the expected flow arithmetic is:
+
+| Viewport | Section minimum | Problem cards / result y | Solution feature y positions |
+| --- | --- | --- | --- |
+| 1366×768 | 768 | 320 / 624 | 174 / 356 / 538 |
+| 1440×900 | 900 | 386 / 756 | 174 / 422 / 670 |
+| 1536×864 | 864 | 368 / 720 | 174 / 404 / 634 |
+| 1920×945 | 945 | 408.5 / 801 | 174 / 444.5 / 715 |
+
+These are CSS arithmetic, not browser measurements. Text growth increases section height instead of enlarging the type/cards or hiding content. At 1440, Problem's two clear gaps become 98px; Solution's two gaps become 90px.
+
+### About alignment
+
+`.about-layout` loses its 32px left padding; column gap changes 136 → 168px. Its right padding, column ratio, top/bottom padding and copy/divider styles remain. At the required widths, its heading shares FAQ's container left edge (43 / 80 / 128 / 320px). Moving the same 32px into the gap preserves copy x808 and divider x744 at 1440, column widths and natural reference height512. Copy, background and main typography unchanged.
+
+### Footer local editorial typography
+
+Desktop `.footer-layout` scopes existing utility variables: wordmark18/28 with tracking .18em; navigation15/24; copyright/back-to-top14/22. `.footer-bottom` consumes these local metadata variables instead of the global Body SM role. `typography.css` is untouched.
+
+All interactive nav/back-to-top targets remain >=44px. The main row remains44px because of navigation targets, the lower row remains44px, and padding64/36 + gap36 remains: natural reference height224. The full-viewport 2px top rule and container are unchanged. The wordmark is a noninteractive paragraph; it does not need a touch target.
+
+### Files and protection
+
+Only existing Desktop rules in `problem-solution.css`, `about-faq.css`, `contact-footer.css` changed, plus this document and `CURRENT_STATE.md`. No appended overrides or duplicated selectors. Mobile/Tablet prefixes, Contact rules, FAQ rules, Hero/Navbar/Motion, Projects, components/hooks/data/assets, global tokens/type/primitives and dependencies are identical to baseline. Navigation/copy/null destinations unchanged.
+
+### Validation / review
+
+`npm run check` baseline/final (lint/build) and `git diff --check`: PASS. Source comparisons and width/height arithmetic: PASS at all four requested checkpoints and the 1200px Desktop boundary. No browser visual, overflow or interaction PASS asserted. Eze should verify viewport distribution, About/FAQ alignment, Footer type/height and protected sections in the real browser. Existing content/runtime verification pending items remain; no Production FINAL declaration.
+
+Commit subject: `fix: correct Desktop Fit viewport rhythm and footer type`. Resolve its SHA via `git log -1 --format=%H --grep='^fix: correct Desktop Fit viewport rhythm and footer type$'`; exact SHA in final delivery report.

@@ -85,7 +85,7 @@ Runtime dependencies actuales: `react`, `react-dom`, `motion@14.0.0`, `@tspartic
 
 **Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-Problema y Solución, Proyectos y About + FAQ están CLOSED / APPROVED FOR CONTINUATION. Contacto + Footer completó implementación y el QA manual global de Eze detectó issues sistémicos que pasan al Block 07. Todas las secciones están montadas; Desktop fue reimplementado desde 02B y las secciones afectadas fueron recompuestas desde 02C Desktop Fit en 08L, READY FOR EZE VISUAL QA; la implementación web todavía no es Production FINAL / FROZEN.
+Problema y Solución, Proyectos y About + FAQ están CLOSED / APPROVED FOR CONTINUATION. Contacto + Footer completó implementación y el QA manual global de Eze detectó issues sistémicos que pasan al Block 07. Todas las secciones están montadas; Desktop fue reimplementado desde 02B y las secciones afectadas fueron recompuestas desde 02C Desktop Fit en 08L, con correcciones Desktop de Dirección en 08M (READY FOR EZE VISUAL QA); la implementación web todavía no es Production FINAL / FROZEN.
 
 Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
 
@@ -113,6 +113,7 @@ Páginas:
 Viewports maestros:
 
 - Desktop Fit 02C: Hero900, Problem768, Solution768, Projects900, About512, FAQ624, Contact560, Footer224; master **1440×5256**. Referencias de composición, no alturas runtime fijas;
+- Excepciones Desktop de Dirección en 08M: Problema y Solución recuperan mínimo 100svh con escala compacta; About alinea su título con FAQ; Footer reduce solo tipografía local y conserva altura/divisor. Estas decisiones prevalecen sobre 02C.
 - Desktop02B historical:1440×6684;
 - Mobile: **390 px**.
 
@@ -897,6 +898,24 @@ Commit único `feat: implement 02C Desktop Fit geometry`; SHA con `git log -1 --
 
 ---
 
+### BLOCK 08M — Desktop Fit Visual QA Corrections
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+8 de octubre de 2026. Correcciones explícitas de Eze sobre baseline limpio/sincronizado `0c11e18b9d8916bb80ea8e780bbc28c7b19cc582`; prevalecen sobre Figma 02C donde difieren.
+
+- Problema y Solución: `min-height: 100svh` Desktop en wrappers de contenido, flujo flex vertical y crecimiento natural. Problema distribuye aire entre intro/cards/resultado; la lista de Solución crece y distribuye sus tres features. Cards mínimo272, keywords80/86, banner80, rails/iconos/offsets conservados; sin escala artificial.
+- About: padding izquierdo32→0 y gap136→168. Título/eyebrow comparten eje con FAQ; copy/divisor y altura natural512 de referencia conservados.
+- Footer: variables tipográficas solo locales Desktop, wordmark18/28/tracking.18em, nav15/24, metadata14/22. Targets44, estructura/altura natural224 y divisor full-width intactos.
+
+Archivos: `src/styles/problem-solution.css`, `about-faq.css`, `contact-footer.css`; `docs/DESKTOP_FIT_IMPLEMENTATION.md` y este documento. Sin overrides adicionales, librerías, cambio de copy/assets/components ni comportamiento. Hero/Navbar/Motion, Proyectos, Contacto, FAQ, Mobile/Tablet y tipografía global protegidos.
+
+Validación técnica: npm run check baseline/final (lint/build) PASS; git diff --check PASS; comparación de prefijos Mobile/Tablet y reglas protegidas PASS; matemática de composición/anchura en1366×768,1440×900,1536×864,1920×945 y borde1200. Mínimos de escena respetan viewport y permiten crecimiento de texto. Browser/overflow/alineación visual pendiente de Eze, sin PASS visual fabricado. 08K conserva su estado previo.
+
+Commit: `fix: correct Desktop Fit viewport rhythm and footer type`; SHA con `git log -1 --format=%H --grep='^fix: correct Desktop Fit viewport rhythm and footer type$'`. Próximo paso: Eze revisa estas cuatro correcciones; no Production FINAL ni siguiente fase autorizada.
+
+---
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
@@ -1279,7 +1298,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08L: DESKTOP FIT IMPLEMENTED / READY FOR EZE VISUAL QA.** Nueva autoridad02C para geometría de las secciones modificadas; naturales About/FAQ/Contact/Footer, Solution80/86 y cards272. Hero Motion/Projects/Mobile protegidos. Ver docs/DESKTOP_FIT_IMPLEMENTATION.md.
 
-Próximo paso autorizado: Eze revisa visualmente02C en los cinco Desktop checkpoints; mantiene pendiente la comprobación runtime del Hero según08K. No iniciar otras fases sin Dirección.
+**08M: CORRECCIONES DESKTOP IMPLEMENTADAS / READY FOR EZE VISUAL QA.** Problema/Solución mínimo100svh con escala Fit, eje About/FAQ compartido, Footer tipografía local menor y estructura intacta. Las excepciones de Dirección prevalecen sobre 02C.
+
+Próximo paso autorizado: Eze revisa 08M en1366×768,1440×900,1536×864,1920×945; mantiene pendiente la comprobación runtime del Hero según08K. No iniciar otras fases sin Dirección.
 
 ---
 
