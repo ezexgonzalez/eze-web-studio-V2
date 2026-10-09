@@ -396,3 +396,10 @@ Root cause identified by repo inspection:
 This is a React/imperative DOM ownership conflict, not a tuning problem.
 
 Direction for 08J: one owner per visible filter state. Prefer explicit static/live layers or declarative live/static filter selection. Production re-renders must not detach the live filters. Approved 08G values remain frozen.
+
+
+## 08K — Verify rendered behavior instead of readiness flags
+
+8 October 2026: Eze still sees no live effect in the normal Hero after 08J. Commit 82707143716f6686dbaa8f2940c4f1294aa956c2 has not passed manual browser QA.
+
+Do not claim root cause without runtime proof. Idle displacement values are zero for mist/halo/core and particles count1/speed0.1, so at-rest output is intentionally near-static. ArcDisplacement has readiness gates that can return without retry. Prove actual served branch, visible variant, LIVE filter URLs, pointer mapping, positive local scale, plume spawn, and finally visual pixels. Fix the first failed link in that chain. If attributes animate yet pixels remain static, investigate SVG compositing/masks/clipping rather than retuning values.
