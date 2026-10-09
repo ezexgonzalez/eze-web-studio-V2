@@ -25,18 +25,17 @@
   color: var(--color-text-primary);
   text-align: left;
 }
-.contact-cta:disabled { opacity: 1; cursor: default; }
 .contact-cta-label { white-space: nowrap; }
 .contact-arrow { position: relative; display: block; flex: none; width: 34px; height: 24px; }
 .contact-arrow img { position: absolute; left: -1.3px; top: -1.8384px; width: 38px; height: 28px; max-width: none; }
 .contact-rule, .footer-rule { display: block; height: 2px; background: var(--color-divider-strong); }
-.contact-rule { margin-top: 16px; }
+.contact-rule { margin-top: 16px; transition: background-color 300ms ease; }
 .contact-details { margin-top: 48px; }
 .contact-detail + .contact-detail { margin-top: 28px; }
 .contact-detail-label { color: var(--color-text-muted); }
 .contact-detail-value { min-width: 0; margin-top: 4px; overflow-wrap: anywhere; }
 .contact-detail-value a { display: inline-block; max-width: 100%; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: color 450ms ease, text-decoration-color 450ms ease; }
-.contact-cta[href] { transition: color 450ms ease; }
+.contact-cta[href] { transition: color 300ms ease; }
 .contact-detail-value a:focus-visible, .contact-cta[href]:focus-visible { color: var(--color-accent-cyan); text-decoration-color: currentColor; }
 
 .footer-layout { min-height: 470px; padding: 72px 24px 64px; }
@@ -72,7 +71,9 @@
   .contact-action { position: relative; max-width: 440px; margin-top: 22px; }
   .contact-action::before { content: ''; position: absolute; left: calc(var(--editorial-gap) * -.5); top: -36px; width: 1px; height: 352px; background: var(--color-divider-strong); }
   .contact-cta { gap: 16px; min-height: 62px; }
-  .contact-arrow { width: 56px; height: 48px; }
+  .contact-arrow { width: 56px; height: 48px; transition: transform 300ms ease; }
+  .contact-cta:focus-visible .contact-arrow { transform: translateX(6px); }
+  .contact-cta:focus-visible + .contact-rule { background: rgb(89 227 255 / 55%); }
   .contact-arrow img { left: 0; top: 0; width: 56px; height: 48px; }
   .contact-rule { margin-top: 24px; }
   .contact-details { margin-top: 48px; }
@@ -104,6 +105,11 @@
   .contact-detail-value a:hover, .contact-cta[href]:hover { color: var(--color-accent-cyan); text-decoration-color: currentColor; }
   .footer-navigation a:hover, .footer-back-to-top:hover { color: var(--color-text-primary); }
 }
+@media (min-width: 75rem) and (hover: hover) and (pointer: fine) {
+  .contact-cta:hover .contact-arrow { transform: translateX(6px); }
+  .contact-cta:hover + .contact-rule { background: rgb(89 227 255 / 55%); }
+}
 @media (prefers-reduced-motion: reduce) {
-  .contact-detail-value a, .contact-cta[href], .footer-navigation a, .footer-back-to-top { transition: none; }
+  .contact-detail-value a, .contact-cta[href], .contact-arrow, .contact-rule, .footer-navigation a, .footer-back-to-top { transition: none; }
+  .contact-cta:is(:hover, :focus-visible) .contact-arrow { transform: none; }
 }

@@ -67,15 +67,15 @@
 /* 02C Desktop Fit 266:96 / compact 268:67. Motion scene below is protected. */
 @media (min-width: 75rem) {
   :root { --header-offset: 68px; }
-  .header-inner { width: min(calc(100% - 64px), 1280px); height: 68px; padding-top: 24px; align-items: flex-start; }
-  .header-brand { min-height: 44px; }
+  .header-inner { width: min(calc(100% - 64px), 1280px); height: 68px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); padding-block: 0; align-items: center; }
+  .header-brand { min-height: 44px; justify-self: start; }
   .menu-control { display: none; }
-  .desktop-nav { display: flex; gap: 32px; position: absolute; left: 50%; top: 24px; transform: translateX(-50%); color: var(--color-text-muted); }
+  .desktop-nav { display: flex; gap: 32px; position: static; color: var(--color-text-muted); }
   .desktop-nav a { display: flex; align-items: center; height: 44px; }
   .desktop-nav a:nth-child(1) { width: 96px; }
   .desktop-nav a:nth-child(2) { width: 70px; }
   .desktop-nav a:nth-child(3) { width: 30px; }
-  .header-cta { display: inline-flex; width: 160px; height: 44px; }
+  .header-cta { display: inline-flex; width: 160px; height: 44px; justify-self: end; }
   .hero { min-height: 100svh; overflow: visible; }
   .hero-content { text-align: center; --hero-content-top: clamp(270px, calc(330px + (100svh - 900px) * .454545455), 400px); width: min(1120px, calc(100% - 64px)); margin-inline: auto; min-height: 100svh; padding: var(--hero-content-top) 0 max(64px, calc(100svh - var(--hero-content-top) - 312px)); }
   .hero-heading { max-width: none; }

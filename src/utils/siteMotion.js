@@ -1,73 +1,67 @@
-const easing = 'cubic-bezier(.22, 1, .36, 1)'
-
-// Finite progressive enhancement: no styles hide content before JS/observation.
-export function createEditorialMotion(root) {
-  if (!root || !window.IntersectionObserver) return () => {}
-  const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
-  const targets = [...root.querySelectorAll('[data-reveal]')]
-  const seen = new Set()
-  const animations = new Map()
-  let observer
+// Solution-only reading emphasis. No hidden content or entrance animations.
+export function createSolutionHighlight(section) {
+  if (!section || !window.IntersectionObserver || !window.requestAnimationFrame) return () => {}
+  const features = [...section.querySelectorAll('.solution-feature')]
+  const headings = features.map(feature => feature.querySelector('h3'))
+  let visible = false
   let disposed = false
+  let frame = null
+  let active = null
 
-  function cancelAnimations() {
-    for (const animation of animations.keys()) animation.cancel()
-    animations.clear()
+  function select(next) {
+    if (active === next) return
+    active = next
+    features.forEach(feature => {
+      if (feature === next) feature.dataset.readingActive = 'true'
+      else feature.removeAttribute('data-reading-active')
+    })
   }
 
-  function play(element, frames, delay) {
-    if (!element.animate) return
-    try {
-      const animation = element.animate(frames, { duration: 550, delay, easing, fill: 'none' })
-      animations.set(animation, element)
-      animation.onfinish = () => animations.delete(animation)
-      animation.oncancel = () => animations.delete(animation)
-    } catch {
-      // Enhancement failure leaves the original, fully visible layout intact.
+  function update() {
+    frame = null
+    if (disposed || !visible || document.hidden) return
+    const height = window.innerHeight
+    const readingCenter = height * .45
+    let nearest = null
+    let distance = Infinity
+    headings.forEach((heading, index) => {
+      if (!heading) return
+      const rect = heading.getBoundingClientRect()
+      const center = rect.top + rect.height / 2
+      // Only emphasize a word currently in the main reading band.
+      if (center < height * .2 || center > height * .7) return
+      const delta = Math.abs(center - readingCenter)
+      if (delta < distance) { nearest = features[index]; distance = delta }
+    })
+    select(nearest)
+  }
+
+  function schedule() {
+    if (!disposed && visible && !document.hidden && frame === null) frame = window.requestAnimationFrame(update)
+  }
+
+  const observer = new window.IntersectionObserver(entries => {
+    if (disposed) return
+    visible = entries[0].isIntersecting
+    if (visible) schedule()
+    else {
+      if (frame !== null) window.cancelAnimationFrame(frame)
+      frame = null
+      select(null)
     }
-  }
-
-  function observe() {
-    observer?.disconnect()
-    cancelAnimations()
-    if (disposed || preference.matches || document.hidden) return
-    observer = new window.IntersectionObserver(entries => {
-      if (disposed) return
-      for (const entry of entries) {
-        if (!entry.isIntersecting || seen.has(entry.target)) continue
-        const element = entry.target
-        seen.add(element)
-        observer.unobserve(element)
-        if (preference.matches || document.hidden || element.contains(document.activeElement)) continue
-        const delay = Math.min(210, Math.max(0, Number(element.dataset.revealDelay) || 0))
-        play(element, [{ opacity: .4, translate: '0 16px' }, { opacity: 1, translate: '0 0' }], delay)
-        const accent = element.querySelector('[data-reveal-accent]')
-        if (accent) play(accent, [{ opacity: .3, transform: 'scaleX(.65)' }, { opacity: 1, transform: 'scaleX(1)' }], delay + 80)
-      }
-    }, { threshold: .12, rootMargin: '0px 0px -32px 0px' })
-    for (const target of targets) if (!seen.has(target)) observer.observe(target)
-  }
-
-  function settleFocused(event) {
-    for (const [animation, element] of animations) {
-      if (element.contains(event.target)) {
-        animation.cancel()
-        animations.delete(animation)
-      }
-    }
-  }
-
-  observe()
-  preference.addEventListener('change', observe)
-  document.addEventListener('visibilitychange', observe)
-  root.addEventListener('focusin', settleFocused)
+  })
+  observer.observe(section)
+  window.addEventListener('scroll', schedule, { passive: true })
+  window.addEventListener('resize', schedule)
+  document.addEventListener('visibilitychange', schedule)
   return () => {
     disposed = true
-    observer?.disconnect()
-    cancelAnimations()
-    preference.removeEventListener('change', observe)
-    document.removeEventListener('visibilitychange', observe)
-    root.removeEventListener('focusin', settleFocused)
+    observer.disconnect()
+    if (frame !== null) window.cancelAnimationFrame(frame)
+    window.removeEventListener('scroll', schedule)
+    window.removeEventListener('resize', schedule)
+    document.removeEventListener('visibilitychange', schedule)
+    select(null)
   }
 }
 

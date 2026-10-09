@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
-import { createEditorialMotion, createFixedHeader } from '../utils/siteMotion'
+import { createSolutionHighlight, createFixedHeader } from '../utils/siteMotion'
 
-export function useEditorialMotion() {
+export function useSolutionHighlight() {
   const rootRef = useRef(null)
-  useEffect(() => createEditorialMotion(rootRef.current), [])
+  useEffect(() => createSolutionHighlight(rootRef.current), [])
   return rootRef
 }
 

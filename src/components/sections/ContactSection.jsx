@@ -4,15 +4,15 @@ import arrowDesktop from '../../assets/contact/arrow-right-desktop.svg'
 import arrowMobile from '../../assets/contact/arrow-right-mobile.svg'
 
 export function ContactSection({ details = contact }) {
-  const Cta = details.externalCtaUrl ? 'a' : 'button'
+  const ctaHref = details.externalCtaUrl || details.emailHref
   const ctaProps = details.externalCtaUrl
-    ? { href: details.externalCtaUrl, target: '_blank', rel: 'noopener noreferrer' }
-    : { type: 'button', disabled: true }
+    ? { target: '_blank', rel: 'noopener noreferrer' }
+    : {}
 
   return (
     <section id={sectionIds.contacto} className="contact-section" aria-labelledby="contact-heading">
       <div className="contact-layout">
-        <header className="contact-prompt" data-reveal>
+        <header className="contact-prompt">
           <p className="contact-eyebrow type-label-eyebrow">{details.eyebrow}</p>
           <h2 id="contact-heading" className="contact-heading type-heading-xl">
             {details.heading.map((line, index) => <span key={line}>{index > 0 && ' '}{line}</span>)}
@@ -21,14 +21,14 @@ export function ContactSection({ details = contact }) {
             {details.description.map((line, index) => <span key={line}>{index > 0 && ' '}{line}</span>)}
           </p>
         </header>
-        <div className="contact-action" data-reveal data-reveal-delay="90">
-          <Cta className="contact-cta" {...ctaProps}>
+        <div className="contact-action">
+          <a className="contact-cta" href={ctaHref} {...ctaProps}>
             <span className="contact-cta-label type-display-action">{details.ctaLabel}</span>
             <picture className="contact-arrow" aria-hidden="true">
               <source media="(min-width: 1200px)" srcSet={arrowDesktop} />
               <img src={arrowMobile} width="38" height="28" alt="" />
             </picture>
-          </Cta>
+          </a>
           <span className="contact-rule" aria-hidden="true" />
           <dl className="contact-details">
             <div className="contact-detail">

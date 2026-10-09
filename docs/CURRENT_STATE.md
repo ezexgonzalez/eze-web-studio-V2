@@ -434,7 +434,7 @@ Instagram handle aprobado:
 
 `@ezewebstudio`
 
-Destino externo de HABLEMOS: pendiente.
+Destino externo final de HABLEMOS: pendiente.08P habilita destino provisional aprobado `mailto:hola@ezewebstudio.com`.
 
 URL canónica de Instagram: pendiente.
 
@@ -958,7 +958,9 @@ Archivos: `src/styles/about-faq.css`, `src/styles/contact-footer.css`, este docu
 
 ### BLOCK 08O — Fixed Glass Navbar + Editorial Motion
 
-**STATUS: READY FOR EZE VISUAL QA**
+**STATUS: REJECTED BY EZE / SUPERSEDED BY 08P**
+
+Historial08O; reveals y alineación Desktop reemplazados en08P.
 
 8 de octubre de 2026. Baseline limpio/sincronizado `c89b335ddc6e7a7ea73547aed8ab139f707fae3c`. Dirección autoriza navegación fixed y motion editorial finito, sin rediseño ni cambios de Hero Motion. Esto sustituye reglas anteriores de header absoluto y ausencia de reveal en contenido.
 
@@ -973,6 +975,25 @@ Archivos: Navbar/App y atributos de Problem/Solution/About/Contact; FAQ wrapper/
 QA técnico: npm run check baseline/final y git diff --check PASS;6 pruebas lifecycle Node PASS; React SSR IDs/anchors/copy/FAQ/nulls/static Hero PASS; CSS AST dimensiones/padding/márgenes/columns/type en reposo iguales. Checkpoints1366×768,1440×900,1536×864,1920×945 y390×844 revisados por código. No browser/hover/anchor/FAQ rendering/overflow PASS ni screenshots fabricados. Eze hace QA final;08K y contenido pendiente no se declaran cerrados.
 
 Commit único `feat: add fixed glass navigation and editorial motion`; SHA con `git log -1 --format=%H --grep='^feat: add fixed glass navigation and editorial motion$'`. Próximo paso: Eze revisa fixed/glass/anchors/menu/motion/reduced y Hero runtime protegido. No Production FINAL ni siguiente fase autorizada.
+
+---
+
+### BLOCK 08P — Navbar Alignment + Motion Correction
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+8 de octubre de2026, baseline limpio/sincronizado `01192c6e17832e13d6451279e7093cf2650c918b`. Dirección rechaza08O y autoriza estas correcciones específicas; no rediseño ni nueva dependencia.
+
+- Navbar Desktop68: Grid simétrico1fr/auto/1fr, align-items:center, padding vertical0, brand izquierda/nav centro real/CTA160×44 derecha. Quitados offsets24 y nav absoluto. Glass/fixed/offset medido, skip link y Mobile modal intactos.
+- Retirados todos los data-reveal, hook/observer global de main y WAAPI de entrada. Problema/About/Contacto siempre visibles; hover cards aprobado conservado.
+- Solución: único highlight de lectura, h3 más cercano a45% del viewport dentro de banda20–70%; palabra/acento #8DEEFF500ms, resto blanco. IO gate + scroll pasivo/RAF solo por evento, cleanup y fallback visible. Reduced motion elimina transiciones, no cambios de layout.
+- Contacto: HABLEMOS anchor real usa externalCtaUrl o emailHref aprobado (actual mailto:hola@ezewebstudio.com). Hover/focus Desktop color/arrow6px/regla cyan300ms; reduced sin desplazamiento. URL externa sigue pendiente, data sin cambios.
+
+Archivos: App; Problem/Solution/About/Contact JSX; hooks/useSiteMotion y utils/siteMotion; header-hero/problem-solution/contact-footer CSS; tests/siteMotion.test.mjs; docs/EDITORIAL_MOTION.md y este documento. Hero Motion/escena/assets/settings, Navbar JSX/menu, FAQ, Proyectos, Footer, copy/data/type/section geometry/dependencias protegidos.
+
+QA técnico: npm run check baseline/final lint/build y git diff --check PASS;5 pruebas de controladores PASS; SSR no reveals/anchors/IDs/FAQ/nulls/static Hero/mailto/future URL fixture PASS; diff protegido/prefijos navbar Mobile-Tablet y Hero CSS PASS.1366×768/1440×900/1536×864/1920×945 y390×844 razonados por código. No coordenadas browser, hover/scroll/mail client/overflow ni QA visual PASS fabricados. Eze realiza revisión final;08K sigue pendiente.
+
+Commit único `fix: align navbar and replace generic reveals`; SHA mediante `git log -1 --format=%H --grep='^fix: align navbar and replace generic reveals$'`, exacto en reporte final. Próximo paso: Eze valida08P, no Production FINAL ni nueva fase autorizada.
 
 ---
 
@@ -1362,9 +1383,11 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08N: EJE EDITORIAL DESKTOP COMPARTIDO / READY FOR EZE VISUAL QA.** About/FAQ/Contact comparten Grid600/128/552 y eje derecho808 a1440; padding vertical y tipografía intactos.
 
-**08O: NAVBAR FIXED/GLASS + MOTION EDITORIAL IMPLEMENTADO / READY FOR EZE VISUAL QA.** Ver docs/EDITORIAL_MOTION.md. Geometría/type/copy y Hero Motion protegidos.
+**08O: REJECTED BY EZE / SUPERSEDED BY08P.** Reveal genérico retirado; fixed/glass conservados.
 
-Próximo paso autorizado: Eze revisa 08O en los cuatro Desktop checkpoints y390×844, verifica anchors/menu/reduced-motion/reveal/FAQ y conserva la comprobación del eje08N y Hero runtime08K. No iniciar otras fases sin Dirección.
+**08P: NAVBAR ALIGNMENT + MOTION CORRECTION / READY FOR EZE VISUAL QA.** Ver docs/EDITORIAL_MOTION.md. Navbar centrado, contenido sin reveals, highlight exclusivo Solución y HABLEMOS mailto.
+
+Próximo paso autorizado: Eze revisa08P en los cuatro Desktop checkpoints y390×844, verifica navbar centrado/glass/anchors/menu, highlight Solución, HABLEMOS mailto/hover/focus, reduced-motion/FAQ y conserva la comprobación del eje08N y Hero runtime08K. No iniciar otras fases sin Dirección.
 
 ---
 

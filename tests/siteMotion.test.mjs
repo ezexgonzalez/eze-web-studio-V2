@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { createEditorialMotion, createFixedHeader } from '../src/utils/siteMotion.js'
+import { createSolutionHighlight, createFixedHeader } from '../src/utils/siteMotion.js'
 
 class Events extends EventTarget {
   listeners = new Map()
@@ -52,92 +52,84 @@ function environment(t) {
   return { window, document, preference, properties, observers, resizes }
 }
 
-function element(delay = 0) {
-  return {
-    dataset: { revealDelay: delay }, calls: [],
-    contains(target) { return target === this },
-    querySelector() { return this.accent || null },
-    animate(frames, options) {
-      const animation = { cancelled: false, cancel() { this.cancelled = true; this.oncancel?.() } }
-      this.calls.push({ frames, options, animation })
-      return animation
-    },
-  }
-}
-function root(...elements) {
-  const scope = new Events()
-  scope.querySelectorAll = selector => { assert.equal(selector, '[data-reveal]'); return elements }
-  return scope
+function solutionFixture() {
+  const positions = [200, 450, 700]
+  const features = positions.map((_, index) => ({
+    dataset: {},
+    removeAttribute() { delete this.dataset.readingActive },
+    querySelector() { return { getBoundingClientRect: () => ({ top: positions[index], height: 80 }) } },
+  }))
+  return { positions, features, section: { querySelectorAll: () => features } }
 }
 
-test('reveals once, with finite stagger and accent; cleanup rejects queued callbacks', t => {
-  const { observers, preference, document } = environment(t)
-  const card = element(70), feature = element(999)
-  feature.accent = element()
-  const scope = root(card, feature)
-  const dispose = createEditorialMotion(scope)
-  observers[0].enter(card)
-  observers[0].enter(card)
-  observers[0].enter(feature)
-  assert.equal(card.calls.length, 1)
-  assert.equal(card.calls[0].options.duration, 550)
-  assert.equal(card.calls[0].options.delay, 70)
-  assert.equal(feature.calls[0].options.delay, 210)
-  assert.equal(feature.accent.calls.length, 1)
-  assert.equal(card.calls[0].frames[1].translate, '0 0')
-  dispose()
-  assert.ok(card.calls[0].animation.cancelled)
-  assert.equal(scope.count + preference.count + document.count, 0)
-  observers[0].enter(element())
-  assert.equal(card.calls.length, 1)
-})
+function frames(window) {
+  const pending = new Map()
+  let id = 0
+  window.innerHeight = 900
+  window.requestAnimationFrame = callback => { pending.set(++id, callback); return id }
+  window.cancelAnimationFrame = key => pending.delete(key)
+  return { pending, flush() { const callbacks = [...pending.values()]; pending.clear(); callbacks.forEach(callback => callback()) } }
+}
 
-test('reduced motion cancels current animations and never replays seen content', t => {
-  const { observers, preference } = environment(t)
-  const card = element()
-  preference.matches = true
-  const dispose = createEditorialMotion(root(card))
-  assert.equal(observers.length, 0)
-  preference.matches = false
-  preference.dispatchEvent(new Event('change'))
-  observers[0].enter(card)
-  preference.matches = true
-  preference.dispatchEvent(new Event('change'))
-  assert.ok(card.calls[0].animation.cancelled)
-  preference.matches = false
-  preference.dispatchEvent(new Event('change'))
-  assert.equal(observers.at(-1).targets.size, 0)
-  assert.equal(card.calls.length, 1)
+test('solution selects exactly one nearest reading word and updates during scroll', t => {
+  const { window, observers } = environment(t)
+  const raf = frames(window)
+  const { section, features, positions } = solutionFixture()
+  const dispose = createSolutionHighlight(section)
+  observers[0].enter(section)
+  raf.flush()
+  assert.deepEqual(features.map(f => f.dataset.readingActive), [undefined, 'true', undefined])
+  positions.splice(0, 3, -100, 100, 350)
+  window.dispatchEvent(new Event('scroll'))
+  window.dispatchEvent(new Event('scroll'))
+  assert.equal(raf.pending.size, 1)
+  raf.flush()
+  assert.deepEqual(features.map(f => f.dataset.readingActive), [undefined, undefined, 'true'])
+  positions.splice(0, 3, -500, -300, -100)
+  window.dispatchEvent(new Event('scroll'))
+  raf.flush()
+  assert.ok(features.every(f => !f.dataset.readingActive))
   dispose()
 })
 
-test('hidden documents defer reveals; focus and unmount settle animation', t => {
-  const { observers, document } = environment(t)
+test('solution has no idle loop and cleans up offscreen, resize, hidden and stale callbacks', t => {
+  const { window, document, observers } = environment(t)
+  const raf = frames(window)
+  const { section, features } = solutionFixture()
+  const dispose = createSolutionHighlight(section)
+  window.dispatchEvent(new Event('scroll'))
+  assert.equal(raf.pending.size, 0)
+  observers[0].enter(section)
+  raf.flush()
+  assert.equal(raf.pending.size, 0)
   document.hidden = true
-  const card = element(), scope = root(card)
-  const dispose = createEditorialMotion(scope)
-  assert.equal(observers.length, 0)
+  window.dispatchEvent(new Event('scroll'))
+  assert.equal(raf.pending.size, 0)
   document.hidden = false
   document.dispatchEvent(new Event('visibilitychange'))
-  observers[0].enter(card)
-  card.contains = () => true
-  scope.dispatchEvent(new Event('focusin'))
-  assert.ok(card.calls[0].animation.cancelled)
+  raf.flush()
+  window.innerHeight = 600
+  window.dispatchEvent(new Event('resize'))
+  raf.flush()
+  assert.equal(features[0].dataset.readingActive, 'true')
+  observers[0].callback([{ isIntersecting: false }])
+  assert.ok(features.every(f => !f.dataset.readingActive))
+  observers[0].enter(section)
+  assert.equal(raf.pending.size, 1)
   dispose()
+  assert.equal(raf.pending.size, 0)
+  assert.equal(window.count + document.count, 0)
+  observers[0].enter(section)
+  assert.equal(raf.pending.size, 0)
 })
 
-test('missing observer or failed animation leaves visible fallback without inline hiding', t => {
-  const { window, observers } = environment(t)
-  const card = element()
-  card.animate = () => { throw Error('Animation unavailable') }
-  const dispose = createEditorialMotion(root(card))
-  assert.doesNotThrow(() => observers[0].enter(card))
-  assert.equal(card.style, undefined)
-  dispose()
+test('solution missing observer leaves fully visible unhighlighted fallback', t => {
+  const { window } = environment(t)
   delete window.IntersectionObserver
-  const scope = root(card)
-  createEditorialMotion(scope)()
-  assert.equal(scope.count, 0)
+  const { section, features } = solutionFixture()
+  createSolutionHighlight(section)()
+  assert.ok(features.every(f => !f.dataset.readingActive))
+  assert.equal(window.count, 0)
 })
 
 test('header measures responsive obstruction, changes glass on threshold, restores ownership', t => {
