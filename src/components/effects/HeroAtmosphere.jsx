@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { HeroParticles } from './HeroParticles'
-import { ArcDisplacement } from './ArcDisplacement'
+import { ArcDisplacement } from './ArcDisplacement.jsx'
 
 export default function HeroAtmosphere({ backgroundRef, desktop, tablet, wide, interactive, arcTarget, onParticleStatus, onArcStatus }) {
   const [particleFailed, setParticleFailed] = useState(false)
