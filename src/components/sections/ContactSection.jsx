@@ -12,7 +12,7 @@ export function ContactSection({ details = contact }) {
   return (
     <section id={sectionIds.contacto} className="contact-section" aria-labelledby="contact-heading">
       <div className="contact-layout">
-        <header className="contact-prompt">
+        <header className="contact-prompt" data-reveal>
           <p className="contact-eyebrow type-label-eyebrow">{details.eyebrow}</p>
           <h2 id="contact-heading" className="contact-heading type-heading-xl">
             {details.heading.map((line, index) => <span key={line}>{index > 0 && ' '}{line}</span>)}
@@ -21,7 +21,7 @@ export function ContactSection({ details = contact }) {
             {details.description.map((line, index) => <span key={line}>{index > 0 && ' '}{line}</span>)}
           </p>
         </header>
-        <div className="contact-action">
+        <div className="contact-action" data-reveal data-reveal-delay="90">
           <Cta className="contact-cta" {...ctaProps}>
             <span className="contact-cta-label type-display-action">{details.ctaLabel}</span>
             <picture className="contact-arrow" aria-hidden="true">

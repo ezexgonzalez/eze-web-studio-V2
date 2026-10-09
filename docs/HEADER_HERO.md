@@ -18,7 +18,7 @@ Implementación: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e` en `feature/ews-v2-p
 
 Fuente Desktop: `50:35`; Mobile: `1:54`. Containers y roles de Foundation reutilizados. Nav Desktop desde 1200 px; MENÚ tipográfico debajo de 1200 px, también en Tablet. Links usan `navigation.js` sin anchors nuevos.
 
-Header absoluto dentro del inicio de la página, sin sticky/fixed: se desplaza al hacer scroll. Se midieron 110 px de caja en Desktop y 92 px en Mobile/Tablet. **Offset de obstrucción confirmado: 0 px**; scroll-padding lo aplica una sola vez. El handoff `208:34` exige altura real únicamente si el header es sticky/fixed.
+Historial Block 02 (sustituido por 08O): Header absoluto dentro del inicio de la página, sin sticky/fixed: se desplaza al hacer scroll. Se midieron 110 px de caja en Desktop y 92 px en Mobile/Tablet. **Offset de obstrucción confirmado: 0 px**; scroll-padding lo aplica una sola vez. El handoff `208:34` exige altura real únicamente si el header es sticky/fixed.
 
 ## Mobile navigation
 
@@ -162,3 +162,12 @@ Technical checks and implementation details in `docs/HERO_MOTION.md`; current so
 Partículas React Bits/OGL70/28 ahora usan halo Gaussian/speck difuso, paleta del arco, frecuencias mínimas no cero y drift leve de profundidad/pantalla. Speed1.05/.72, sprite footprint5–14px, DPR1.5/1; no dots opacos, bursts ni engine nuevo. Diez estrellas originales quedan18% solo durante motion como anclas distantes; fallback/reduce recupera el original. Cleanup/preferencias/context fallback intactos; falla de clock devuelve SVG estático exacto. Sin dependencias/assets/data/otras secciones modificados.
 
 QA técnico: lint/build/diff, SSR/controller3/5s/recovery/restoration, clock Motion real (RAF Node simulado), partículas OGL stub5s/time/count/DPR/disposal, CSS protegido intacto. No GPU/browser visual PASS. Detalle actual `docs/HERO_MOTION.md`; snapshot `docs/CURRENT_STATE.md`. Commit: `fix: polish living Hero arc and luminous dust behavior` (SHA real en reporte). No Block09/later-section motion.
+
+
+## Block 08O — Fixed glass navigation (current)
+
+8 de octubre de 2026. Dirección autoriza el header fixed, preservando su composición y dimensiones actuales de 02C. Transparente al inicio; glass full-width al superar8px de scroll, bg #05070882%/blur16/borde sutil/transición300ms, fallback opaco sin backdrop-filter. Native dialog/menu/foco/Escape/scroll lock sin cambios. Header z40, skip link z100; dialog top layer.
+
+Offset actual: ResizeObserver mide la altura real (fallback CSS68 Desktop /92 Mobile-Tablet), aplicada una sola vez con scroll-padding; scroll-margin0. Sin spacer ni desplazamiento del Hero. El scroll no genera estado React por frame; sentinel IntersectionObserver y fallback passive con cleanup. Hero Motion, paths/filtros/configuración y geometría del fondo no se modificaron.
+
+Validación técnica y review manual pendientes detallados en `docs/EDITORIAL_MOTION.md`. **READY FOR EZE VISUAL QA**; no cerrar el gate de Hero08K ni afirmar funcionamiento visual sin revisión de Eze.

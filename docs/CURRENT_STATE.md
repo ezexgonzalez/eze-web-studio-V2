@@ -315,7 +315,7 @@ Mobile menu debe:
 - cerrar si el viewport pasa a Desktop;
 - impedir interacción accidental con contenido detrás.
 
-`--header-offset: 0px` confirmado en Block 02. Header no sticky/fixed: se desplaza con la página. Caja medida: 92 px Mobile/Tablet, 110 px Desktop; no obstruye anchors al navegar. Se conserva solo scroll-padding, sin duplicar scroll-margin. Nav Desktop desde 1200 px; MENÚ también en Tablet. Menú modal nativo con aislamiento, foco inicial en CERRAR y retorno a MENÚ; al entrar en Desktop devuelve foco al wordmark visible.
+Block08O sustituye el header no-fixed histórico: fixed en todas las resoluciones, transparente al inicio y glass full-width después de8px de scroll (bg #05070882%, blur16, transición300ms, fallback opaco). ResizeObserver mide `--header-offset`, fallback68px Desktop /92px Mobile-Tablet. Solo scroll-padding aplica el offset; scroll-margin0. Header z40 bajo skip link100. Nav Desktop desde1200; MENÚ también Tablet. Diálogo modal nativo, Escape, aislamiento, foco inicial/retorno y auto-close Desktop conservados. Hero layout/motion sin cambios. Detalle en docs/EDITORIAL_MOTION.md.
 
 ---
 
@@ -956,6 +956,26 @@ Archivos: `src/styles/about-faq.css`, `src/styles/contact-footer.css`, este docu
 
 ---
 
+### BLOCK 08O — Fixed Glass Navbar + Editorial Motion
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+8 de octubre de 2026. Baseline limpio/sincronizado `c89b335ddc6e7a7ea73547aed8ab139f707fae3c`. Dirección autoriza navegación fixed y motion editorial finito, sin rediseño ni cambios de Hero Motion. Esto sustituye reglas anteriores de header absoluto y ausencia de reveal en contenido.
+
+Navbar fixed, mismo box y origen, sin spacer. Glass300ms full-width tras umbral8px con sentinel IO; fondo82%/blur16/borde sutil y fallback opaco. Offset real vía ResizeObserver, CSS68 Desktop/92 Mobile-Tablet; solo scroll-padding. Skip link z100 sobre header40; modal/foco/Escape/scroll-lock/auto-close originales intactos. Sin actualizaciones React en cada scroll.
+
+Un observer de contenido en main,12 targets explícitos: cards/result de Problema,3 features/acento de Solución,2 columnas About y2 Contacto. Entrada550ms/opacidad.4→1/translate16→0, stagger discreto0–210ms, una vez; contenido visible por defecto, sin hidden classes ni geometría inicial distinta en flujo. Native WAAPI/CSS bastan; Motion14 existente permanece en el Hero protegido, sin nueva dependencia ni import inicial adicional.
+
+Hover cards Desktop fine-pointer: elevación4/borde cyan/sombra tenue, sin cursor pointer. Proyectos sin reveal ni animación de slots vacíos/control disabled; hover brightness solo sobre preview real cuando exista. FAQ conserva botones/estado/aria-expanded/nulls; panel CSS grid0fr/1fr450ms y aria-hidden/inert al cerrar, transición de icono y hover solo enabled. Contacto enlaces reales con feedback, HABLEMOS disabled sin affordance. Footer solo color hover/focus. Reduced motion cancela reveals y transiciones/lift; visibility/focus/unmount cancelan y restauran baseline, cleanup y guard de callbacks tardíos. Sin loops nuevos ni RAF.
+
+Archivos: Navbar/App y atributos de Problem/Solution/About/Contact; FAQ wrapper/semántica closed; hooks/useSiteMotion.js y utils/siteMotion.js; cinco stylesheets de sección con interacción; tests/siteMotion.test.mjs; docs/EDITORIAL_MOTION.md, HEADER_HERO.md y este documento. HeroBackground/HeroSection/effects/hooks/settings/assets, carousel componente/hook/dataset, todo copy/data/assets, tokens/type/primitives/index.css/package/lock protegidos.
+
+QA técnico: npm run check baseline/final y git diff --check PASS;6 pruebas lifecycle Node PASS; React SSR IDs/anchors/copy/FAQ/nulls/static Hero PASS; CSS AST dimensiones/padding/márgenes/columns/type en reposo iguales. Checkpoints1366×768,1440×900,1536×864,1920×945 y390×844 revisados por código. No browser/hover/anchor/FAQ rendering/overflow PASS ni screenshots fabricados. Eze hace QA final;08K y contenido pendiente no se declaran cerrados.
+
+Commit único `feat: add fixed glass navigation and editorial motion`; SHA con `git log -1 --format=%H --grep='^feat: add fixed glass navigation and editorial motion$'`. Próximo paso: Eze revisa fixed/glass/anchors/menu/motion/reduced y Hero runtime protegido. No Production FINAL ni siguiente fase autorizada.
+
+---
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
@@ -1342,7 +1362,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08N: EJE EDITORIAL DESKTOP COMPARTIDO / READY FOR EZE VISUAL QA.** About/FAQ/Contact comparten Grid600/128/552 y eje derecho808 a1440; padding vertical y tipografía intactos.
 
-Próximo paso autorizado: Eze mide el eje de 08N con getBoundingClientRect y revisa lectura/FAQ en1366×768,1440×900,1536×864,1920×945; mantiene pendiente la comprobación runtime del Hero según08K. No iniciar otras fases sin Dirección.
+**08O: NAVBAR FIXED/GLASS + MOTION EDITORIAL IMPLEMENTADO / READY FOR EZE VISUAL QA.** Ver docs/EDITORIAL_MOTION.md. Geometría/type/copy y Hero Motion protegidos.
+
+Próximo paso autorizado: Eze revisa 08O en los cuatro Desktop checkpoints y390×844, verifica anchors/menu/reduced-motion/reveal/FAQ y conserva la comprobación del eje08N y Hero runtime08K. No iniciar otras fases sin Dirección.
 
 ---
 

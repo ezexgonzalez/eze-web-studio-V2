@@ -72,7 +72,7 @@
   .problem-intro h2 span, .problem-description span, .process-copy p span { display: block; }
   .problem-description { width: min(880px, 100%); }
   .problem-process { margin-top: 32px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
-  .process-card { position: relative; flex-direction: column; align-items: center; gap: 0; min-height: 272px; padding: 18px 19px 14px; border: 1px solid var(--color-border); border-radius: var(--radius-12); background: rgb(7 20 27 / 72%); text-align: center; }
+  .process-card { position: relative; flex-direction: column; align-items: center; gap: 0; transition: transform 450ms cubic-bezier(.22, 1, .36, 1), border-color 450ms ease, box-shadow 450ms ease; min-height: 272px; padding: 18px 19px 14px; border: 1px solid var(--color-border); border-radius: var(--radius-12); background: rgb(7 20 27 / 72%); text-align: center; }
   .process-card:not(:last-child)::after { content: ''; position: absolute; left: calc(100% + 1px); top: 47px; height: 2px; width: 32px; background: rgb(33 69 83 / 85%); }
   .process-symbol { flex: none; gap: 12px; }
   .process-icon { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border: 1px solid rgb(36 70 84 / 90%); border-radius: 50%; }
@@ -114,4 +114,13 @@
   .solution-ambience i:nth-child(1) { left: calc(50% - 220px); top: -120px; width: 440px; height: 330px; }
   .solution-ambience i:nth-child(2) { left: calc(50% - 660px); top: 500px; width: 380px; height: 340px; opacity: .5833333; }
   .solution-ambience i:nth-child(3) { left: calc(50% + 200px); top: 570px; width: 460px; height: 390px; opacity: .6666667; }
+}
+
+/* 08O: informative cards, no pointer cursor or interaction on touch devices. */
+@media (min-width: 75rem) and (hover: hover) and (pointer: fine) {
+  .process-card:hover { transform: translateY(-4px); border-color: rgb(89 227 255 / 30%); box-shadow: 0 10px 24px rgb(0 0 0 / 14%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .process-card { transition: none; }
+  .process-card:hover { transform: none; }
 }

@@ -1,3 +1,4 @@
+import { useEditorialMotion } from './hooks/useSiteMotion'
 import { Navbar } from './components/layout/Navbar'
 import { HeroSection } from './components/sections/HeroSection'
 import { ProblemSection } from './components/sections/ProblemSection'
@@ -9,11 +10,12 @@ import { ContactSection } from './components/sections/ContactSection'
 import { Footer } from './components/layout/Footer'
 
 function App() {
+  const motionRef = useEditorialMotion()
   return (
     <div className="site-shell min-h-screen bg-background text-text-primary">
       <a className="skip-link" href="#main-content">Ir al contenido</a>
       <Navbar />
-      <main id="main-content" tabIndex="-1">
+      <main id="main-content" tabIndex="-1" ref={motionRef}>
         <HeroSection />
         <ProblemSection />
         <SolutionSection />

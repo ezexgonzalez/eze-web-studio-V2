@@ -49,8 +49,8 @@ export function FAQSection({ items = faqItems }) {
                   </button>
                 </h3>
                 {available && (
-                  <div id={panelId} className="faq-panel" role="region" aria-labelledby={buttonId} hidden={!open}>
-                    <p className="type-body-md">{answerLines.map((line, index) => <span className="faq-answer-line" key={index}>{index > 0 && ' '}{line}</span>)}</p>
+                  <div id={panelId} className="faq-panel" role="region" aria-labelledby={buttonId} aria-hidden={!open} inert={!open}>
+                    <div className="faq-panel-inner"><p className="type-body-md">{answerLines.map((line, index) => <span className="faq-answer-line" key={index}>{index > 0 && ' '}{line}</span>)}</p></div>
                   </div>
                 )}
                 <span className="faq-divider" aria-hidden="true" />

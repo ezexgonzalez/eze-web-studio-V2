@@ -22,7 +22,7 @@
 .faq-heading { margin-top: 16px; }
 .faq-heading span { display: block; }
 .faq-list { min-width: 0; margin-top: 48px; border-top: 1px solid var(--color-divider-default); }
-.faq-item { padding: 16px 0; }
+.faq-item { padding: 16px 0; transition: padding-bottom 450ms cubic-bezier(.22, 1, .36, 1); }
 .faq-toggle {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 44px;
@@ -36,12 +36,17 @@
   color: var(--color-text-primary);
   text-align: left;
   cursor: pointer;
+  transition: color 450ms ease;
 }
 .faq-toggle:disabled { opacity: 1; cursor: default; }
 .faq-question { min-width: 0; overflow-wrap: anywhere; }
 .faq-icon, .faq-icon img { display: block; width: 44px; height: 44px; }
-.faq-panel { margin-top: 12px; color: var(--color-text-muted); overflow-wrap: anywhere; }
-.faq-panel[hidden] { display: none; }
+.faq-panel { margin-top: 12px; color: var(--color-text-muted); overflow-wrap: anywhere; display: grid; grid-template-rows: 1fr; opacity: 1; visibility: visible; transition: grid-template-rows 450ms cubic-bezier(.22, 1, .36, 1), opacity 400ms ease, margin-top 450ms ease, visibility 0s; }
+.faq-panel-inner { min-height: 0; overflow: hidden; }
+.faq-panel[aria-hidden="true"] { grid-template-rows: 0fr; margin-top: 0; opacity: 0; visibility: hidden; transition-delay: 0s, 0s, 0s, 450ms; }
+.faq-toggle:not(:disabled) .faq-icon { transition: transform 450ms cubic-bezier(.22, 1, .36, 1); }
+.faq-toggle:not(:disabled)[aria-expanded="false"] .faq-icon { transform: rotate(-90deg); }
+.faq-toggle:not(:disabled):focus-visible { color: var(--color-accent-cyan); }
 .faq-divider { display: block; height: 1px; margin-top: 12px; background: var(--color-divider-default); }
 
 @media (min-width: 48rem) and (max-width: 74.999rem) {
@@ -83,4 +88,12 @@
   .faq-panel { margin-top: 6px; }
   .faq-answer-line { display: block; }
   .faq-divider { display: none; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .faq-toggle:not(:disabled):hover { color: var(--color-accent-cyan); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-item, .faq-toggle, .faq-panel, .faq-panel[aria-hidden="true"], .faq-toggle:not(:disabled) .faq-icon { transition: none; }
+  .faq-toggle:not(:disabled)[aria-expanded="false"] .faq-icon { transform: none; }
 }

@@ -12,7 +12,7 @@
 .projects-viewport:focus-visible { outline-offset: -3px; }
 .projects-track { position: relative; display: flex; gap: 16px; width: max-content; padding-right: max(32px, calc(100vw - 48px - min(310px, calc(100vw - 80px)))); }
 .projects-slot { flex: 0 0 auto; width: min(310px, calc(100vw - 80px)); height: 210px; border: 1px solid var(--color-border); border-radius: var(--radius-12); background: var(--color-surface); overflow: hidden; scroll-snap-align: start; }
-.project-preview { width: 100%; height: 100%; object-fit: cover; }
+.project-preview { width: 100%; height: 100%; object-fit: cover; transition: filter 450ms ease; }
 .projects-empty-peek { position: absolute; inset: 0 auto auto 0; display: flex; gap: 16px; left: calc(min(310px, 100vw - 80px) + 16px); }
 .projects-desktop-stage { display: none; }
 .projects-controls { display: flex; justify-content: space-between; align-items: center; height: 44px; margin-top: 16px; }
@@ -91,4 +91,12 @@
   .projects-header { grid-template-columns: minmax(0, 480fr) 1px minmax(0, 440fr); gap: 32px; }
   .projects-header-divider { margin-left: 0; }
   .projects-intro { margin-left: 0; width: auto; }
+}
+
+/* Only an actual preview image gets an enhancement; empty slots stay inert. */
+@media (hover: hover) and (pointer: fine) {
+  .projects-slot:hover > .project-preview { filter: brightness(1.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-preview { transition: none; }
 }

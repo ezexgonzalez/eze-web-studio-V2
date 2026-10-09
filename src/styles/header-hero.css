@@ -1,9 +1,18 @@
-/* Frozen: Desktop 50:35, Mobile 1:54, navigation 154:2.
-   The header scrolls with the Hero; its anchor obstruction is zero. */
-:root { --header-offset: 0px; }
+/* 08O fixed navigation; fallback offsets match current box heights.
+   ResizeObserver measures the obstruction; scroll-padding applies it once. */
+:root { --header-offset: 92px; }
 /* Figma's Inter styles use the default optical master (opsz 14). */
 .site-header, .hero, .mobile-navigation { font-optical-sizing: none; }
-.site-header { position: absolute; inset: 0 0 auto; z-index: 2; }
+.site-header { position: fixed; inset: 0 0 auto; z-index: 40; }
+.header-scroll-sentinel { position: absolute; top: 8px; left: 0; width: 1px; height: 1px; pointer-events: none; }
+.site-header::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--color-background); border-bottom: 1px solid rgb(132 163 174 / 12%); opacity: 0; transition: opacity 300ms ease; }
+.site-header[data-scrolled="true"]::before { opacity: 1; }
+@supports ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
+  .site-header::before { background: rgb(5 7 8 / 82%); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header::before { transition: none; }
+}
 .header-inner { position: relative; height: 92px; display: flex; align-items: flex-start; justify-content: space-between; padding-top: 24px; }
 .header-brand { display: flex; align-items: center; min-height: 44px; white-space: nowrap; }
 .menu-control { width: 72px; height: 44px; border: 0; padding: 0; color: var(--color-text-primary); background: transparent; cursor: pointer; }
@@ -57,6 +66,7 @@
 }
 /* 02C Desktop Fit 266:96 / compact 268:67. Motion scene below is protected. */
 @media (min-width: 75rem) {
+  :root { --header-offset: 68px; }
   .header-inner { width: min(calc(100% - 64px), 1280px); height: 68px; padding-top: 24px; align-items: flex-start; }
   .header-brand { min-height: 44px; }
   .menu-control { display: none; }

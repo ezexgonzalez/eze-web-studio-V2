@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useFixedHeader } from '../../hooks/useSiteMotion'
 import { navigation } from '../../data/navigation'
 import { Container } from '../ui/Container'
 import { Button } from '../ui/Button'
@@ -7,6 +8,7 @@ import { ArrowUpRight } from '../ui/ArrowUpRight'
 const desktopQuery = '(min-width: 75rem)'
 
 export function Navbar() {
+  const { headerRef, sentinelRef } = useFixedHeader()
   const dialogRef = useRef(null)
   const triggerRef = useRef(null)
   const closeRef = useRef(null)
@@ -45,7 +47,8 @@ export function Navbar() {
 
   return (
     <>
-      <header className="site-header">
+      <span className="header-scroll-sentinel" ref={sentinelRef} aria-hidden="true" />
+      <header className="site-header" ref={headerRef}>
         <Container variant="wide" className="header-inner">
           <a href={navigation.home} className="header-brand type-brand-header" ref={homeRef}>EZE WEB STUDIO</a>
           <nav aria-label="Navegación principal" className="desktop-nav type-navigation-header">

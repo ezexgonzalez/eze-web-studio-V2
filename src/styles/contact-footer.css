@@ -35,8 +35,9 @@
 .contact-detail + .contact-detail { margin-top: 28px; }
 .contact-detail-label { color: var(--color-text-muted); }
 .contact-detail-value { min-width: 0; margin-top: 4px; overflow-wrap: anywhere; }
-.contact-detail-value a { display: inline-block; max-width: 100%; }
-.contact-detail-value a:hover, .contact-cta[href]:hover { color: var(--color-accent-cyan); }
+.contact-detail-value a { display: inline-block; max-width: 100%; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: color 450ms ease, text-decoration-color 450ms ease; }
+.contact-cta[href] { transition: color 450ms ease; }
+.contact-detail-value a:focus-visible, .contact-cta[href]:focus-visible { color: var(--color-accent-cyan); text-decoration-color: currentColor; }
 
 .footer-layout { min-height: 470px; padding: 72px 24px 64px; }
 .footer-main { margin-top: 32px; }
@@ -45,7 +46,8 @@
 .footer-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; margin-top: 32px; color: var(--color-text-muted); }
 .footer-copyright { min-width: 0; }
 .footer-back-to-top { display: flex; flex: none; align-items: center; justify-content: flex-end; min-width: 101px; min-height: 44px; white-space: nowrap; }
-.footer-navigation a:hover, .footer-back-to-top:hover { color: var(--color-text-primary); }
+.footer-navigation a, .footer-back-to-top { transition: color 450ms ease; }
+.footer-navigation a:focus-visible, .footer-back-to-top:focus-visible { color: var(--color-text-primary); }
 
 
 @media (max-width: 24.374rem) {
@@ -96,4 +98,12 @@
   .footer-navigation a { align-items: flex-start; padding-top: 2px; }
   .footer-bottom { align-items: flex-start; margin-top: 36px; font-size: var(--type-footer-meta-size); line-height: var(--type-footer-meta-leading); }
   .footer-back-to-top { align-items: flex-start; min-width: 140px; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-detail-value a:hover, .contact-cta[href]:hover { color: var(--color-accent-cyan); text-decoration-color: currentColor; }
+  .footer-navigation a:hover, .footer-back-to-top:hover { color: var(--color-text-primary); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-detail-value a, .contact-cta[href], .footer-navigation a, .footer-back-to-top { transition: none; }
 }

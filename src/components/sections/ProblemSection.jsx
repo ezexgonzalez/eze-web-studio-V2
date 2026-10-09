@@ -24,7 +24,7 @@ export function ProblemSection() {
         </header>
         <ol className="problem-process">
           {problem.steps.map(step => (
-            <li className="process-card" key={step.number}>
+            <li className="process-card" key={step.number} data-reveal data-reveal-delay={(Number(step.number) - 1) * 70}>
               <div className="process-symbol">
                 <picture className="process-icon" aria-hidden="true"><source media="(min-width: 1200px)" srcSet={icons[step.icon][1]} /><img src={icons[step.icon][0]} alt="" /></picture>
                 <span className="process-number">{step.number}</span>
@@ -33,7 +33,7 @@ export function ProblemSection() {
             </li>
           ))}
         </ol>
-        <div className="problem-result">
+        <div className="problem-result" data-reveal>
           <picture aria-hidden="true"><source media="(min-width: 1200px)" srcSet={trendingDesktop} /><img src={trending} alt="" /></picture>
           <span className="result-divider" aria-hidden="true" />
           <p className="result-copy"><strong>Resultado:</strong><span>{problem.result}</span></p>
