@@ -85,7 +85,7 @@ Runtime dependencies actuales: `react`, `react-dom`, `motion@14.0.0`, `@tspartic
 
 **Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
 
-Problema y Solución, Proyectos y About + FAQ están CLOSED / APPROVED FOR CONTINUATION. Contacto + Footer completó implementación y el QA manual global de Eze detectó issues sistémicos que pasan al Block 07. Todas las secciones están montadas; Desktop fue reimplementado desde 02B y las secciones afectadas fueron recompuestas desde 02C Desktop Fit en 08L, con correcciones Desktop de Dirección en 08M (READY FOR EZE VISUAL QA); la implementación web todavía no es Production FINAL / FROZEN.
+Problema y Solución, Proyectos y About + FAQ están CLOSED / APPROVED FOR CONTINUATION. Contacto + Footer completó implementación y el QA manual global de Eze detectó issues sistémicos que pasan al Block 07. Todas las secciones están montadas; Desktop fue reimplementado desde 02B y las secciones afectadas fueron recompuestas desde 02C Desktop Fit en 08L, con correcciones Desktop de Dirección en 08M y eje editorial compartido en 08N (READY FOR EZE VISUAL QA); la implementación web todavía no es Production FINAL / FROZEN.
 
 Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
 
@@ -916,6 +916,46 @@ Commit: `fix: correct Desktop Fit viewport rhythm and footer type`; SHA con `git
 
 ---
 
+### BLOCK 08N — Desktop Editorial Column Alignment
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+8 de octubre de 2026. Baseline limpio/sincronizado `248d0414923b9dd3df066b0054be267d71992dbe`. Dirección reemplaza las tres estructuras horizontales independientes por un contrato Grid Desktop común, sin reinterpretar Figma ni modificar el resto de la página.
+
+`about-faq.css` define conjuntamente `.about-layout, .faq-layout, .contact-layout` dentro de >=1200: contenedor1280 con márgenes actuales, padding horizontal0, tracks600fr/552fr y gap común `min(128px, (100vw - 64px) * .1)`. A1440: izquierda80, gap128, derecha808, fin1360. En anchos menores, tracks y gap se adaptan proporcionalmente; no offsets arbitrarios por sección. About conserva ancho de lectura máximo528 y título máximo560; FAQ header máximo540, acordeón ocupa el track derecho; Contact action máximo440 mantiene CTA/regla. Divisores About/Contact usan medio gap común, eje744 a1440; sus alturas y posiciones verticales originales siguen intactas.
+
+Se conservan exactamente paddings verticales About96/136, FAQ80/86, Contact112/122; márgenes internos, estilos de texto, copy/links, fondos/colores y funcionamiento FAQ intactos. No alturas fijas nuevas: texto/acordeón puede crecer naturalmente si un nuevo ancho necesita más líneas, sin recortes ni compensación vertical. Mobile/Tablet, Hero Motion/Navbar, Problema/Solución, Proyectos y Footer sin cambios.
+
+Coordenadas **calculadas desde CSS, no medidas en browser**:
+
+| Viewport | Encabezados izquierdos X | About / FAQ / Contact derecha X | Divisores About / Contact X |
+| --- | --- | --- | --- |
+|1366×768|43|771 / 771 / 771|707|
+|1440×900|80|808 / 808 / 808|744|
+|1536×864|128|856 / 856 / 856|792|
+|1920×945|320|1048 / 1048 / 1048|984|
+|1200×768|32|678.1 / 678.1 / 678.1|621.3|
+
+Validación técnica: npm run check baseline/final (lint/build) PASS; git diff --check PASS. Comparaciones Mobile/Tablet/Footer/protegidos PASS; ancho revisado también en1280/1365 y borde1200. Sin nueva dependencia ni cambio de componentes. Intento de browser automatizado detenido al faltar el ejecutable Chromium de Playwright; no instalación ni reintentos. **getBoundingClientRect, alturas/text wraps, overflow y FAQ en navegador quedan pendientes de Eze**; no afirmar mediciones reales ni PASS visual.
+
+Comprobación para la consola del navegador después de cargar Inter (repetir en los cuatro viewports):
+
+```js
+await document.fonts.ready
+const columns = ['.about-copy', '.faq-list', '.contact-action']
+const positions = columns.map(selector => ({
+  selector,
+  left: document.querySelector(selector).getBoundingClientRect().left,
+}))
+console.table(positions)
+const xs = positions.map(position => position.left)
+console.assert(Math.max(...xs) - Math.min(...xs) <= 1, 'Editorial axis mismatch', positions)
+```
+
+Archivos: `src/styles/about-faq.css`, `src/styles/contact-footer.css`, este documento. Commit único `fix: share Desktop editorial column alignment`; SHA vía `git log -1 --format=%H --grep='^fix: share Desktop editorial column alignment$'`, exacto en reporte final. Próximo paso: Eze confirma eje horizontal/lectura en browser; no Production FINAL ni nuevas secciones autorizadas. 08K mantiene su estado previo.
+
+---
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
@@ -1300,7 +1340,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08M: CORRECCIONES DESKTOP IMPLEMENTADAS / READY FOR EZE VISUAL QA.** Problema/Solución mínimo100svh con escala Fit, eje About/FAQ compartido, Footer tipografía local menor y estructura intacta. Las excepciones de Dirección prevalecen sobre 02C.
 
-Próximo paso autorizado: Eze revisa 08M en1366×768,1440×900,1536×864,1920×945; mantiene pendiente la comprobación runtime del Hero según08K. No iniciar otras fases sin Dirección.
+**08N: EJE EDITORIAL DESKTOP COMPARTIDO / READY FOR EZE VISUAL QA.** About/FAQ/Contact comparten Grid600/128/552 y eje derecho808 a1440; padding vertical y tipografía intactos.
+
+Próximo paso autorizado: Eze mide el eje de 08N con getBoundingClientRect y revisa lectura/FAQ en1366×768,1440×900,1536×864,1920×945; mantiene pendiente la comprobación runtime del Hero según08K. No iniciar otras fases sin Dirección.
 
 ---
 

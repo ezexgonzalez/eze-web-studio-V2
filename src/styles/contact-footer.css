@@ -63,12 +63,12 @@
 
 /* 02C Desktop Fit 266:234 / 266:254. No Desktop viewport minimum. */
 @media (min-width: 75rem) {
-  .contact-layout { width: min(calc(100% - 64px), 1280px); margin-inline: auto; display: grid; grid-template-columns: minmax(0, 680fr) minmax(0, 440fr); gap: 140px; align-items: start; padding: 112px 20px 122px 0; }
+  .contact-layout { padding-block: 112px 122px; }
   .contact-heading { margin-top: 24px; }
   .contact-description { margin-top: 32px; }
   .contact-description span { display: block; }
-  .contact-action { position: relative; margin-top: 22px; }
-  .contact-action::before { content: ''; position: absolute; left: -76px; top: -36px; width: 1px; height: 352px; background: var(--color-divider-strong); }
+  .contact-action { position: relative; max-width: 440px; margin-top: 22px; }
+  .contact-action::before { content: ''; position: absolute; left: calc(var(--editorial-gap) * -.5); top: -36px; width: 1px; height: 352px; background: var(--color-divider-strong); }
   .contact-cta { gap: 16px; min-height: 62px; }
   .contact-arrow { width: 56px; height: 48px; }
   .contact-arrow img { left: 0; top: 0; width: 56px; height: 48px; }

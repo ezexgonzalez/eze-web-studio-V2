@@ -55,18 +55,25 @@
 
 /* 02C Desktop Fit 266:210 / 266:218. Natural content height and expandable FAQ. */
 @media (min-width: 75rem) {
-  .about-layout, .faq-layout { width: min(calc(100% - 64px), 1280px); margin-inline: auto; display: grid; align-items: start; }
-  .about-layout { grid-template-columns: minmax(0, 560fr) minmax(0, 528fr); column-gap: 168px; padding: 96px 24px 136px 0; }
+  /* Direction 08N: one horizontal contract for these three editorial sections. */
+  .about-layout, .faq-layout, .contact-layout {
+    --editorial-gap: min(128px, calc((100vw - 64px) * .1));
+    --editorial-columns: minmax(0, 600fr) minmax(0, 552fr);
+    width: min(calc(100% - 64px), 1280px); margin-inline: auto; padding-inline: 0;
+    display: grid; grid-template-columns: var(--editorial-columns); column-gap: var(--editorial-gap); align-items: start;
+  }
+  .about-layout { padding-block: 96px 136px; }
+  .about-header { min-width: 0; max-width: 560px; }
   .about-heading { margin-top: 24px; }
   .about-heading span, .about-primary span { display: block; }
-  .about-copy { position: relative; margin-top: 38px; }
-  .about-copy::before { content: ''; position: absolute; left: -64px; top: 0; width: 1px; height: 250px; background: var(--color-divider-strong); }
+  .about-copy { position: relative; max-width: 528px; margin-top: 38px; }
+  .about-copy::before { content: ''; position: absolute; left: calc(var(--editorial-gap) * -.5); top: 0; width: 1px; height: 250px; background: var(--color-divider-strong); }
   .about-pause { margin-top: 32px; }
   .about-pause-divider { display: none; }
   .about-secondary span:first-child { display: inline; }
   .about-secondary span:last-child { display: block; }
-  .faq-layout { grid-template-columns: minmax(0, 540fr) minmax(0, 656fr); column-gap: 84px; padding: 80px 0 86px; }
-  .faq-header { min-width: 0; padding-top: 26px; }
+  .faq-layout { padding-block: 80px 86px; }
+  .faq-header { min-width: 0; max-width: 540px; padding-top: 26px; }
   .faq-heading { margin-top: 24px; }
   .faq-list { margin-top: 0; border-top: 0; border-bottom: 1px solid var(--color-divider-default); }
   .faq-item { border-top: 1px solid var(--color-divider-default); padding: 16px 0; }
