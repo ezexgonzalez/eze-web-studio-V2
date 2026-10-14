@@ -1076,9 +1076,23 @@ Commit único `feat: integrate final FAQ content and contact destinations`; SHA 
 
 ---
 
+### BLOCK 09A — Complete Website Audit / Pre-launch Quality Review
+
+**STATUS: AUDIT COMPLETE / AWAITING DIRECTION APPROVAL**
+
+14 de octubre de 2026. Auditoría read-only de producto explícitamente autorizada por Dirección sobre HEAD/origin limpio `640253909e4bd23b0e5bee4bfeb93d24b861e705` (08T). No modifica Hero Motion ni cierra 08K, ni implementa correcciones.
+
+Informe: `docs/qa/PRELAUNCH_AUDIT_2026-10-14.md`. Resultado: **0 P0 / 5 P1 / 6 P2**. P1: gate de efecto Hero renderizado 08K; ruta de rechazo particles sin catch confirmada por fallo inyectado; favicon/og:image ausentes; URL pública/canonical/og:url sin definir; gate manual responsive/zoom/teclado/runtime. Tres problemas de fallo/configuración confirmados y dos gates de aceptación, no cinco defectos visuales probados. Los gates transitorios CTM/setup no reintentan con resize/mismas dependencias; su ocurrencia en browser no está demostrada ni se declara nueva causa del Hero estático.
+
+Validación: npm run check (lint/build) y git diff --check PASS; **7/7 tests existentes PASS** (5 siteMotion + 1 Embla con fixtures 2/3 TEST ONLY + 1 FAQ/contact). Probes temporales fuera del repo: Navbar ReactDOM/foco/handlers, SSR con 18 anchors/IDs/landmarks, filtros LIVE persistentes tras rerender, preferencias Hero y Motion real held/recovery/plume/cleanup PASS con geometría/APIs simuladas. Los 22 archivos del build retornan HTTP200/byte-exact y 42 SVG son XML válidos; preview favicon/robots/sitemap404 (robots/sitemap ausentes no bloquean rastreo por sí solos); HEAD demo/Instagram/WhatsApp200. Sin browser disponible: ningún Lighthouse/CWV/FPS/overflow/pixel/WCAG/teclado físico/cliente externo PASS declarado. Checklist manual preciso en informe.
+
+P2: carga diferida de preview, payload de fuente 352.24kB, perfil de idle Hero/partícula mínima, decisión de alternativa accesible de preview, comando QA reproducible y claridad/contactos de ejemplo de la demo. No se ejecutan. FAQ con 5 respuestas y destinos Contacto siguen resueltos en 08T; Fitness preview/demo/acento y UI01/01 resueltos en 08R/S. Proyectos 2–3 pendientes de alcance final, sin filler ni falla del estado único autorizado.
+
+Recomendación: **NOT READY FOR LAUNCH** hasta revisar/cerrar los P1 o aceptar explícitamente sus decisiones de release. Próxima acción: Dirección prioriza y autoriza correcciones; Eze ejecuta QA real. Solo cambian este documento y el informe. Commit documental `docs: record pre-launch audit and launch gates`; SHA vía git log por título y reporte final. Sin merge, implementación ni autorización automática.
+
 ### BLOCK 09 — Accessibility + Performance
 
-**STATUS: PENDING**
+**STATUS: AUDIT 09A COMPLETE / CORRECTIONS AND BROWSER ACCEPTANCE PENDING DIRECTION**
 
 - teclado;
 - focus;
@@ -1178,6 +1192,13 @@ Sí deben resolverse antes de cerrar sus bloques funcionales correspondientes.
 ### Contacto — RESUELTO en08T
 
 Email/e-mail href aprobados e integrados: `ezewebstudio.dev@gmail.com` / `mailto:ezewebstudio.dev@gmail.com`. Instagram `@ezewebstudio` / `https://www.instagram.com/ezewebstudio/`. HABLEMOS `https://wa.me/5491161993279`. Sin destinos pendientes ni formulario; links de Header/Hero siguen anchors.
+
+### Pre-launch — auditoría 09A
+
+- 08K/effect rendered y QA responsive/zoom/teclado/runtime siguen gates de aceptación manual; no se consideran aprobados por pruebas de DOM.
+- Ruta de fallo nativo particles: promesa de tsParticles.load rechazada sin manejo en wrapper 4.4.0; reproducida aisladamente, no error observado en sesión normal. Requiere solución focalizada aprobada.
+- Favicon/imagen OG no emitidos; URL pública oficial/canonical/og:url pendientes. No inventar dominio ni assets.
+- Detalle, prioridad y plan en `docs/qa/PRELAUNCH_AUDIT_2026-10-14.md`. No producto modificado por 09A.
 
 ### FAQ — CONTENIDO RESUELTO en08T
 
@@ -1471,7 +1492,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08T: FAQ CONTENT + CONTACT DESTINATIONS / READY FOR EZE VISUAL QA.** Cinco respuestas habilitadas y destinos finales WhatsApp/mailto/Instagram; pendientes de esos contenidos resueltos.
 
-Próximo paso autorizado: Eze revisa08T, respuestas/wrapping/email y enlaces en Desktop/Mobile/teclado real;08K conserva gate visual pendiente. No iniciar otras fases sin Dirección.
+**09A: AUDIT COMPLETE / AWAITING DIRECTION APPROVAL.** Auditoría técnica/estructural del HEAD 08T completada sin cambios de producto. Informe `docs/qa/PRELAUNCH_AUDIT_2026-10-14.md`: 0 P0 / 5 P1 / 6 P2, recomendación NOT READY FOR LAUNCH por los gates y decisiones explicitados.
+
+Próximo paso: Dirección revisa informe/prioriza y autoriza correcciones; Eze realiza checklist browser real. No implementación automática, merge ni Production FINAL. 08K conserva gate visual pendiente; FAQ/contact destinations resueltos. La autorización explícita 09A reemplaza las prohibiciones históricas de comenzar el audit Block 09, sin implicar aprobación del Hero ni de otras fases.
 
 ---
 
