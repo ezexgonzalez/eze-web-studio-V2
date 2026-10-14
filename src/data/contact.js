@@ -1,4 +1,4 @@
-// null means pending Direction approval; never turn it into a guessed URL.
+// Real destinations approved by Direction in Block 08T.
 export const contact = {
   eyebrow: 'CONTACTO',
   heading: ['¿Tenés una idea', 'en mente?'],
@@ -9,9 +9,9 @@ export const contact = {
   ctaLabel: 'HABLEMOS',
   emailLabel: 'Email',
   instagramLabel: 'Instagram',
-  email: 'hola@ezewebstudio.com',
-  emailHref: 'mailto:hola@ezewebstudio.com',
+  email: 'ezewebstudio.dev@gmail.com',
+  emailHref: 'mailto:ezewebstudio.dev@gmail.com',
   instagramHandle: '@ezewebstudio',
-  instagramUrl: null,
-  externalCtaUrl: null,
+  instagramUrl: 'https://www.instagram.com/ezewebstudio/',
+  externalCtaUrl: 'https://wa.me/5491161993279',
 }

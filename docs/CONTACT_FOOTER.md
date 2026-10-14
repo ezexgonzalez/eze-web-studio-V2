@@ -1,3 +1,32 @@
+# Contacto + Footer — current destinations / Block08T
+
+**08T READY FOR EZE VISUAL QA** — 14 October2026.
+
+## Approved destinations — resolved
+
+Baseline `692a06ba95edd39dba41a960dd15f6cc5e3c8265`, branch feature/ews-v2-production. All Contact destinations are now approved and integrated through src/data/contact.js:
+
+| Element | Value / destination | Existing semantics |
+| --- | --- | --- |
+| Email | ezewebstudio.dev@gmail.com / mailto:ezewebstudio.dev@gmail.com | Real mailto anchor, no new-tab target |
+| Instagram | @ezewebstudio / https://www.instagram.com/ezewebstudio/ | Anchor target=_blank, rel=noopener noreferrer |
+| Large HABLEMOS | https://wa.me/5491161993279 | Anchor target=_blank, rel=noopener noreferrer |
+| Navbar/Hero HABLEMOS | #contacto | Internal anchors unchanged |
+
+The original email and08P provisional mailto CTA are superseded in runtime. ContactSection.jsx, navigation.js and all CSS remain byte-identical. No form/service/new tool, no new dependency, no footer/typography/layout/Mobile change. Global contents outside approved data remain unchanged.
+
+The longer email uses the existing min-width0/overflow-wrap:anywhere detail box and inline-block anchor max-width100%; grid columns are minmax(0,…) and Contact has natural height. It can wrap on a narrow viewport rather than overflow; no width/font/padding patch needed. Actual text wrapping/browser overflow still belongs to Eze's final QA.
+
+Technical validation: ReactDOM/SSR exact WhatsApp/mailto/Instagram hrefs, external target/rel, enabled CTA, DOM focus, unique IDs and Header/Hero #contacto PASS. Active App/bundle contain no old contact link. npm run check/git diff --check and existing regressions PASS. No messages sent, external apps launched or real-browser tab opening claimed. Eze checks physical keyboard, new tabs, configured mail client, contact details and actual Desktop/Mobile wrapping.
+
+**Contact content/destination blockers resolved.** Projects2–3/URLs/previews and existing08K Hero runtime gate remain pending. No merge or Production FINAL. Commit subject `feat: integrate final FAQ content and contact destinations`; exact SHA in final report / git log subject.
+
+---
+
+## Historical Block06 record
+
+The record below describes the original handoff. Its pending URLs/email and historic geometry/grid are superseded by subsequent Desktop Fit/motion passes and08T above, and are not current destinations.
+
 # Block 06 — Contacto + Footer
 
 **STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**

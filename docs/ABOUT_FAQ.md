@@ -1,3 +1,29 @@
+# About + FAQ — current content / Block08T
+
+**08T READY FOR EZE VISUAL QA** — 14 October2026.
+
+## Current FAQ contract
+
+Baseline `692a06ba95edd39dba41a960dd15f6cc5e3c8265`, branch feature/ews-v2-production. Eze approved final five questions and exact full answers; src/data/faq.js is the runtime source. First question is now **¿Cuánto cuesta una landing page?**, idprecio. Its old type-of-page question/answer and old forced desktopAnswerLines were removed. IDs antes-de-empezar/tiempos/cambios/publicacion stay unchanged. All five answers are nonempty approved strings; **FAQ content pending items are resolved**.
+
+FAQSection.jsx and all CSS remain unchanged: first item starts open, only one openId, each native button opens/closes its own panel; opening another closes the previous. Five enabled controls, aria-expanded/aria-controls and region labelled by its button. Closed panels aria-hidden/inert with existing CSS grid disclosure animation. Native Enter/Space/Tab semantics and existing focus-visible/reduced-motion styles retained. No fixed answer heights; natural wrapping/section growth.
+
+Technical validation: tests/faqContact.test.mjs exact-content golden test, real ReactDOM StrictMode open/close across all five questions, single-open, panel relationships, inert and native DOM focus PASS. Existing carousel FAQ assertion no longer expects four disabled questions; carousel/site controller regressions PASS. npm run check and git diff --check PASS; full suite7/7, Vite QA HMR/WebSocket disabled to allow parallel tests without port contention. Simulated DOM focus is not a physical keyboard/browser test. FAQ overflow-wrap:anywhere/min-width0/flow inspected; no style changes. Eze validates actual wrapping/height/overflow/accordion animation/keyboard in Desktop/Mobile.
+
+No changes to About, Projects, Hero Motion, Navbar, Desktop Fit grid, typography, Footer, Mobile framing, assets or dependencies. No merge/Production FINAL. Commit subject `feat: integrate final FAQ content and contact destinations`; exact SHA in final report / git log subject.
+
+Reproduce with the existing QA-only jsdom setup outside the repo:
+
+```sh
+EWS_QA_JSDOM=/tmp/ews-08r-tools/node_modules/jsdom/lib/api.js node --test tests/faqContact.test.mjs tests/projectCarousel.test.mjs tests/siteMotion.test.mjs
+```
+
+---
+
+## Historical Block05 record
+
+The record below describes the approved original implementation. Its four pending answers, old typography/geometry/grid and hidden-panel description are historical, superseded by later Production/Fit/motion passes and08T content above. It does not describe current pending data.
+
 # Block 05 — About + FAQ
 
 **STATUS: CLOSED / APPROVED FOR CONTINUATION**

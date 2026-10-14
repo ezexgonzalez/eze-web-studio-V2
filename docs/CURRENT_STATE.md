@@ -398,19 +398,20 @@ Secondary copy:
 
 ### FAQ
 
-Preguntas aprobadas:
+Contenido final aprobado e integrado en08T. Cinco respuestas completas en `src/data/faq.js`, sin nulls de producción; primer item abierto, uno a la vez.
 
-1. ¿Qué tipo de páginas hacés?
-2. ¿Qué necesito tener antes de empezar?
-3. ¿Cuánto tarda una landing page?
-4. ¿Puedo pedir cambios durante el proceso?
-5. ¿La página queda lista para publicar?
+1. **¿Cuánto cuesta una landing page?** (`precio`)
+   El precio depende del contenido, las funcionalidades y el alcance del proyecto. Contame qué necesitás y te preparo una propuesta con el precio y lo que incluye.
+2. **¿Qué necesito tener antes de empezar?** (`antes-de-empezar`)
+   Con contarme sobre tu negocio y qué querés lograr ya podemos empezar. Si tenés textos, fotos o identidad visual, genial. Si no, vemos juntos qué hace falta.
+3. **¿Cuánto tarda una landing page?** (`tiempos`)
+   Depende del alcance y de los materiales disponibles. Antes de comenzar te comparto un plazo estimado para que sepas qué esperar.
+4. **¿Puedo pedir cambios durante el proceso?** (`cambios`)
+   Sí. Antes de empezar acordamos las instancias de revisión y los ajustes incluidos, para que el proceso sea claro desde el principio.
+5. **¿La página queda lista para publicar?** (`publicacion`)
+   Sí, la landing se entrega preparada para salir online. Definimos previamente los detalles de dominio, hosting y publicación según lo que necesites.
 
-Respuesta aprobada únicamente para FAQ 1:
-
-`Diseñamos landing pages para negocios, servicios y proyectos que necesitan comunicar mejor lo que hacen y convertir más.`
-
-FAQ 2–5 siguen pendientes. Nunca copiar la respuesta 1 como fallback.
+08T reemplaza la antigua pregunta/answer de tipo de páginas por precio; IDs2–5 conservados. Copy/desktopAnswerLines antiguos eliminados del runtime. Layout/animación/accesibilidad sin cambios.
 
 ### Contacto
 
@@ -428,15 +429,19 @@ CTA visual:
 
 Email aprobado:
 
-`hola@ezewebstudio.com`
+`ezewebstudio.dev@gmail.com`
 
 Instagram handle aprobado:
 
 `@ezewebstudio`
 
-Destino externo final de HABLEMOS: pendiente.08P habilita destino provisional aprobado `mailto:hola@ezewebstudio.com`.
+Email href: `mailto:ezewebstudio.dev@gmail.com`.
 
-URL canónica de Instagram: pendiente.
+HABLEMOS de Contacto: `https://wa.me/5491161993279`, target=_blank/rel=noopener noreferrer; sustituye mailto provisional08P. HABLEMOS de Navbar/Hero sigue #contacto.
+
+Instagram URL: `https://www.instagram.com/ezewebstudio/`, target=_blank/rel=noopener noreferrer.
+
+Destinos de Contacto **RESUELTOS** en08T.
 
 ### Footer
 
@@ -1051,6 +1056,26 @@ Commit único `feat: refine single-project presentation and CTA accent`; SHA ví
 
 ---
 
+### BLOCK 08T — FAQ Content + Contact Destinations
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+14 de octubre de2026. Baseline limpio/sincronizado `692a06ba95edd39dba41a960dd15f6cc5e3c8265`. Integración exclusiva de contenido/destinos aprobados; sin rediseño, estilos/componentes/hooks/assets nuevos ni merge.
+
+FAQ: cinco respuestas exactas del brief, ninguna null. Primera pregunta cambia de tipo de páginas a precio y usa idprecio; IDs2–5 conservados. Eliminados answer/firstAnswerLines/desktopAnswerLines viejos en data. FAQSection sin diff: cinco botones disponibles, primer item abierto y únicoopenId, click/teclado nativo/ARIA/inert/animación existentes conservados. Panel y sección crecen naturalmente con el copy nuevo.
+
+Contact data: email ezewebstudio.dev@gmail.com/mailto exacto; Instagram @ezewebstudio con https://www.instagram.com/ezewebstudio/; HABLEMOS https://wa.me/5491161993279. ContactSection existente renderiza seguros target=_blank/rel=noopener noreferrer para WhatsApp/Instagram, correo sin target. Navbar/Hero HABLEMOS siguen #contacto. Fallbackmailto viejo no aparece en runtime.
+
+Resueltos los pendientes FAQanswers y destinos de Contacto. Proyectos2–3/URLs/previews, otros assets globales y08K permanecen pendientes; no Production FINAL.
+
+Archivos: src/data/faq.js, src/data/contact.js, tests/projectCarousel.test.mjs (expectativa FAQdisabled actualizada), tests/faqContact.test.mjs (contenido exacto, acordeón/ARIA/focoDOM/links/anchors), docs ABOUT_FAQ/CONTACT_FOOTER y este documento. Todos los componentes/hooks/CSS, Proyectos/Embla/acento/preview, Hero Motion, Navbar, tipografía/Footer/Mobile framing/dependencias byte-identical.
+
+QA técnico: npm run check baseline/final lint/build, git diff --check PASS; nuevo test ReactDOM StrictMode comprueba exactitud5questions/answers, apertura/cierre/exclusividad/controles/paneles/IDs/inert/foco nativo y destinos exactos; SSRApp verifica #contactoHeader/Hero y ausencia copy/enlaces viejos; carrusel y5controller tests regresión PASS. DOM simulado no prueba Enter/Space/Tab físicos ni app externa. Wrapping revisado por CSS: FAQquestion/panel overflow-wrap:anywhere sin max-height; email min-width0/overflow-wrap:anywhere/anchor max-width100%, columnas fluidas y alturas naturales. Sin cambios de estilos ni afirmación de overflow/browser pixels PASS; Eze valida finales Desktop/Mobile.
+
+Commit único `feat: integrate final FAQ content and contact destinations`; SHA vía `git log -1 --format=%H --grep='^feat: integrate final FAQ content and contact destinations$'`, exacto en reporte final. Próximo paso Eze QA08T; sin merge ni siguiente fase autorizada.
+
+---
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
@@ -1150,17 +1175,13 @@ Estos puntos NO bloquean Header + Hero.
 
 Sí deben resolverse antes de cerrar sus bloques funcionales correspondientes.
 
-### Contacto
+### Contacto — RESUELTO en08T
 
-- destino externo final de HABLEMOS: **PENDING**
-- email: aprobado
-- Instagram handle: aprobado
-- Instagram canonical URL: **PENDING**
+Email/e-mail href aprobados e integrados: `ezewebstudio.dev@gmail.com` / `mailto:ezewebstudio.dev@gmail.com`. Instagram `@ezewebstudio` / `https://www.instagram.com/ezewebstudio/`. HABLEMOS `https://wa.me/5491161993279`. Sin destinos pendientes ni formulario; links de Header/Hero siguen anchors.
 
-### FAQ
+### FAQ — CONTENIDO RESUELTO en08T
 
-- respuesta 1: aprobada
-- respuestas 2–5: **PENDING**
+Cinco preguntas/answers finales aprobados e integrados, todos habilitados. No respuestas pendientes ni fallback de copy. QA visual/layout/teclado real permanece a cargo de Eze.
 
 ### Proyectos
 
@@ -1273,7 +1294,7 @@ Cuidar foco, scroll lock, Escape y cambio de breakpoint.
 
 ### FAQ
 
-Respuestas 2–5 todavía no existen. No fijar altura con contenido falso.
+Las cinco respuestas finales existen desde08T. Mantener crecimiento natural, single-open y ARIA; no fijar altura que corte texto.
 
 ### WebGL
 
@@ -1448,7 +1469,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08S: SINGLE-PROJECT PRESENTATION + CTA ACCENT / READY FOR EZE VISUAL QA.** Sin slots/control inútil con1record; mensaje editorial y CTA warm por data, motor/crop intactos.
 
-Próximo paso autorizado: Eze revisa08S Desktop/Mobile, mensaje/contador/crop/hover-focusCTA y modo multi-record con fixture local aislado;08K conserva gate visual pendiente. No iniciar otras fases sin Dirección.
+**08T: FAQ CONTENT + CONTACT DESTINATIONS / READY FOR EZE VISUAL QA.** Cinco respuestas habilitadas y destinos finales WhatsApp/mailto/Instagram; pendientes de esos contenidos resueltos.
+
+Próximo paso autorizado: Eze revisa08T, respuestas/wrapping/email y enlaces en Desktop/Mobile/teclado real;08K conserva gate visual pendiente. No iniciar otras fases sin Dirección.
 
 ---
 

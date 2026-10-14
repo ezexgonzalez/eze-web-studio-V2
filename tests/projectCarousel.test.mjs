@@ -60,7 +60,7 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
   const errors = []
   const oldError = console.error
   console.error = (...args) => errors.push(args.join(' '))
-  const server = await createServer({ server: { middlewareMode: true } })
+  const server = await createServer({ server: { middlewareMode: true, hmr: false, ws: false } })
   let root
   try {
     const { ProjectsSection } = await server.ssrLoadModule('/src/components/sections/ProjectsSection.jsx')
@@ -217,14 +217,14 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
     assert.equal(findAll('.projects-control').length, 0)
     assert.equal(find('.project-preview').getAttribute('src'), singlePreview)
     assert.equal(find('.projects-coming').textContent, 'MÁS PROYECTOS EN CAMINO')
-    // FAQ logic regression with approved dataset (no new answers).
+    // FAQ regression: all five answers are approved in08T.
     const { FAQSection } = await server.ssrLoadModule('/src/components/sections/FAQSection.jsx')
     await act(async () => root.render(React.createElement(FAQSection)))
     await frames()
     const questions = findAll('.faq-toggle')
     assert.equal(questions.length, 5)
     assert.equal(questions[0].getAttribute('aria-expanded'), 'true')
-    assert(questions.slice(1).every(button => button.disabled))
+    assert(questions.every(button => !button.disabled))
     await act(async () => questions[0].click())
     assert.equal(questions[0].getAttribute('aria-expanded'), 'false')
     assert.equal(find('.faq-panel').getAttribute('aria-hidden'), 'true')
@@ -232,6 +232,10 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
     await act(async () => questions[0].click())
     assert.equal(questions[0].getAttribute('aria-expanded'), 'true')
     assert.equal(find('.faq-panel').getAttribute('aria-hidden'), 'false')
+    await act(async () => questions[4].click())
+    assert.equal(questions[0].getAttribute('aria-expanded'), 'false')
+    assert.equal(questions[4].getAttribute('aria-expanded'), 'true')
+    assert.equal(findAll('.faq-toggle[aria-expanded="true"]').length, 1)
     await act(async () => root.unmount()); root = null
     await frames()
     assert(resizes.every(o => o.disconnected))
