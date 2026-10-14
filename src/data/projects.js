@@ -6,6 +6,7 @@ export const projectsSection = {
   heading: ['Diseño que habla', 'por sí solo.'],
   intro: ['Landings pensadas para generar interés,', 'transmitir confianza y convertir visitas', 'en oportunidades.'],
   cta: 'VER PROYECTO',
+  comingSoon: 'MÁS PROYECTOS EN CAMINO',
 }
 
 export const projects = [
@@ -16,5 +17,6 @@ export const projects = [
     description: 'Landing page para un gimnasio boutique.',
     url: 'https://eze-demo-gimnasio.vercel.app/',
     preview: fitnessPreview,
+    accent: '#FF5A45',
   },
 ]

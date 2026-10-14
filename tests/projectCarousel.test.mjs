@@ -10,6 +10,7 @@ const fixture = Array.from({ length: 3 }, (_, index) => ({
   id: `qa-only-${index + 1}`, category: `QA CATEGORY ${index + 1}`,
   title: `TEST ONLY — Project ${index + 1}`, description: `Isolated QA description ${index + 1}.`,
   preview: null, url: index === 1 ? 'https://example.test/qa-only-project-2' : null,
+  accent: index === 0 ? '#708FFF' : index === 1 ? '#4AE1A8' : undefined,
 }))
 
 test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, reduced and cleanup', async () => {
@@ -65,7 +66,8 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
     const { ProjectsSection } = await server.ssrLoadModule('/src/components/sections/ProjectsSection.jsx')
     const { projects } = await server.ssrLoadModule('/src/data/projects.js')
     root = createRoot(win.document.getElementById('root'))
-    async function render(items) { await act(async () => root.render(React.createElement(React.StrictMode, null, React.createElement(ProjectsSection, { items })))) }
+    let currentItems = fixture
+    async function render(items) { currentItems = items; await act(async () => root.render(React.createElement(React.StrictMode, null, React.createElement(ProjectsSection, { items })))) }
     async function frames(count = 180) {
       await act(async () => {
         for (let i = 0; i < count && raf.size; i++) {
@@ -80,15 +82,16 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
     const viewport = () => find('.projects-viewport')
     async function click(button) { await act(async () => button.click()); await frames() }
     function selected(index) {
-      assert.equal(find('#project-title').textContent, fixture[index].title)
-      assert.equal(find('.project-category').textContent, fixture[index].category)
-      assert.equal(find('.project-description').textContent, fixture[index].description)
-      assert.equal(find('.projects-pagination').textContent, `0${index + 1}/03`)
-      assert.match(find('[role="status"]').textContent, new RegExp(`Proyecto ${index + 1} de 3`))
+      assert.equal(find('#project-title').textContent, currentItems[index].title)
+      assert.equal(find('.project-category').textContent, currentItems[index].category)
+      assert.equal(find('.project-description').textContent, currentItems[index].description)
+      assert.equal(find('.projects-pagination').textContent, `0${index + 1}/0${currentItems.length}`)
+      assert.match(find('[role="status"]').textContent, new RegExp(`Proyecto ${index + 1} de ${currentItems.length}`))
       assert.equal(findAll('.projects-slide[data-active="true"]').length, 1)
       assert.equal(findAll('.projects-slide[data-active="true"]')[0], findAll('.projects-slide')[index])
       const cta = find('.projects-cta')
-      if (fixture[index].url) assert.equal(cta.getAttribute('href'), fixture[index].url)
+      assert.equal(cta.style.getPropertyValue('--project-accent'), currentItems[index].accent || 'var(--color-accent-cyan)')
+      if (currentItems[index].url) assert.equal(cta.getAttribute('href'), currentItems[index].url)
       else { assert.equal(cta.tagName, 'BUTTON'); assert(cta.disabled); assert(!cta.hasAttribute('href')) }
     }
     function findAll(selector) { return [...win.document.querySelectorAll(selector)] }
@@ -99,7 +102,7 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
     }
     await render(fixture); await frames(); selected(0)
     assert(previousButton().disabled); assert(!nextButton().disabled)
-    assert.equal(findAll('.projects-decoration').length, 0)
+    assert.equal(findAll('.projects-decoration, .projects-coming').length, 0)
     assert.equal(findAll('article').length, 1)
     const initialTransform = find('.projects-track').style.transform
     await click(nextButton()); selected(1)
@@ -176,7 +179,7 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
     await render(projects); await frames()
     assert.equal(findAll('.projects-slide').length, 1)
     assert.equal(find('.projects-pagination').textContent, '01/01')
-    assert(previousButton().disabled && nextButton().disabled)
+    assert.equal(findAll('.projects-control').length, 0)
     const approvedCta = find('.projects-cta')
     assert.equal(approvedCta.tagName, 'A')
     assert.equal(approvedCta.getAttribute('href'), 'https://eze-demo-gimnasio.vercel.app/')
@@ -188,7 +191,32 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
     assert.equal(findAll('.project-preview').length, 1)
     assert.equal(find('.project-preview').getAttribute('src'), projects[0].preview)
     assert.equal(findAll('.projects-decoration .project-preview').length, 0)
-    assert.equal(findAll('.projects-decoration[aria-hidden="true"]').length, 1)
+    assert.equal(findAll('.projects-decoration').length, 0)
+    assert.equal(find('.projects-coming').textContent, 'MÁS PROYECTOS EN CAMINO')
+    assert.equal(find('.projects-coming').tagName, 'P')
+    assert.equal(findAll('.projects-coming a, .projects-coming button').length, 0)
+    assert.equal(approvedCta.style.getPropertyValue('--project-accent'), '#FF5A45')
+    const singlePreview = find('.project-preview').getAttribute('src')
+    const singleton = findAll('.projects-slide')[0]
+    assert.equal(singleton.getAttribute('data-active'), 'true')
+
+    // Two real test records: restoring controls, synced metadata/accent and boundaries.
+    await render(fixture.slice(0, 2)); await frames(); selected(0)
+    assert.equal(findAll('.projects-coming, .projects-decoration').length, 0)
+    assert.equal(findAll('.projects-control').length, 2)
+    assert(previousButton().disabled && !nextButton().disabled)
+    await click(nextButton()); selected(1)
+    assert(!previousButton().disabled && nextButton().disabled)
+    await key('Home'); selected(0)
+    await key('End'); selected(1)
+    await click(previousButton()); selected(0)
+    await render(fixture); await frames(); selected(0)
+    await click(nextButton()); selected(1)
+    await click(nextButton()); selected(2); assert(nextButton().disabled)
+    await render(projects); await frames()
+    assert.equal(findAll('.projects-control').length, 0)
+    assert.equal(find('.project-preview').getAttribute('src'), singlePreview)
+    assert.equal(find('.projects-coming').textContent, 'MÁS PROYECTOS EN CAMINO')
     // FAQ logic regression with approved dataset (no new answers).
     const { FAQSection } = await server.ssrLoadModule('/src/components/sections/FAQSection.jsx')
     await act(async () => root.render(React.createElement(FAQSection)))
@@ -209,7 +237,7 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
     assert(resizes.every(o => o.disconnected))
     assert.equal(raf.size, 0)
     assert.equal(errors.length, 0, errors.join('\n'))
-    console.log('PASS actual Embla8 engine + React DOM: three test records, control/key/mouse/touch/sync/resize/reduced/one-record/cleanup. Layout and pointer events are simulated; not browser visual QA.')
+    console.log('PASS actual Embla8 engine + React DOM: two/three test records, conditional UI/accent/control/key/mouse/touch/sync/resize/reduced/one-record/cleanup. Layout and pointer events are simulated; not browser visual QA.')
   } finally {
     if (root) await act(async () => root.unmount())
     await server.close()

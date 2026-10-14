@@ -462,10 +462,11 @@ Solo existe un registro aprobado:
 - description: `Landing page para un gimnasio boutique.`
 - URL: `https://eze-demo-gimnasio.vercel.app/` — aprobada e integrada en08R
 - preview: `src/assets/projects/fitness-preview.webp` — WebP suministrado por Eze, integrado en08R
+- accent: `#FF5A45` — aprobado para hover/focus local de VER PROYECTO en08S
 
 No crear proyectos 2–3 ficticios para satisfacer la paginación visual.
 
-Los slots vacíos en Figma son intencionales.
+Los slots vacíos en Figma son intencionales; Dirección08S retira su DOM de producción y usa un mensaje tipográfico cuando existe un único registro.
 
 No usar:
 
@@ -1032,6 +1033,24 @@ Archivos: src/assets/projects/fitness-preview.webp, src/data/projects.js, tests/
 
 ---
 
+### BLOCK 08S — Single-Project Presentation + Dynamic CTA Accent
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+14 de octubre de2026, baseline limpio/sincronizado `e9f7126bcecae4e135554a307b8b2dafcc2dc4ee`. Dirección autoriza solo refinamiento condicional de Proyectos, no motor/librerías ni resto de landing.
+
+- count1: preview central540×299–365 Desktop/310×210 Mobile y crop intactos. Retirados slots vacíos/DOM/CSS y botones anterior/siguiente. Contador01/01 muted12px, mismafila44; mensaje p no interactivo MÁS PROYECTOS EN CAMINO, regla cyan32×1. Desktop al lateral derecho (>=48px de separación a1200); Tablet/Mobile debajo de preview, flujo natural+42px con label de una línea. Sin cards ni falsas affordances.
+- count>1: mensaje ausente; controles nativos restaurados, solo slides de registros reales, depth y Embla intactos. Disabled deriva del índice seleccionado por Embla + límites dataset: evita flags stale tras crecer count sin cambiar índice. Ningún segundo controlador; hook sin modificaciones.
+- Fitness accent:#FF5A45 explícito en data. CTA normaloutlinecyan intacto; hover/focus local fill/border por acento activo, texto oscuro e icono oscuro (filter del SVG existente),225ms y reduced sin transición. Fallbackcyan. Contraste calculado6.54/13.32. Shared Button/assets/URL/preview/copy/globalCTAs intactos.
+
+Archivos: ProjectsSection.jsx, src/data/projects.js, src/styles/projects.css, tests/projectCarousel.test.mjs, docs/PROJECTS.md y este documento. Embla hook, Hero Motion, Navbar, Problema/Solución, About/FAQ/Contacto/Footer, globalDesktopFit, imagen/crop/dependencias protegidos; sin merge ni nueva librería.
+
+QA técnico: npm run check baseline/final lint/build y git diff --check PASS; actualEmbla+ReactDOM StrictMode fixtures2/3 TEST ONLY y modos1→2→3→1 PASS, metadata/count/CTA/accent/fallback/bounds/keys/mouse/touch/resize/reduced/cleanup.5 pruebas sitecontroller PASS; SSR UI y ASTCSS localhover/focus/reduced PASS. Responsive1366/1440/1536/1920/390 y1200 mínimo por cálculo/DOMsimulado; no browser pixel/overflow/hover/crop PASS fabricado. Eze hace QA visual;08K y contenido2–3 pendientes.
+
+Commit único `feat: refine single-project presentation and CTA accent`; SHA vía `git log -1 --format=%H --grep='^feat: refine single-project presentation and CTA accent$'`, exacto en entrega. Próximo paso Eze QA08S, no Production FINAL.
+
+---
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
@@ -1427,7 +1446,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08R: FITNESS PREVIEW + LIVE DEMO INTEGRADOS / READY FOR EZE VISUAL QA.** Proyecto1 tiene WebP local y URL real;01/01 con controles disabled y CTA enabled.
 
-Próximo paso autorizado: Eze revisa08R Desktop/Mobile, crop de la preview y apertura de demo; QA08Q y08K conservan gates visuales pendientes. No iniciar otras fases sin Dirección.
+**08S: SINGLE-PROJECT PRESENTATION + CTA ACCENT / READY FOR EZE VISUAL QA.** Sin slots/control inútil con1record; mensaje editorial y CTA warm por data, motor/crop intactos.
+
+Próximo paso autorizado: Eze revisa08S Desktop/Mobile, mensaje/contador/crop/hover-focusCTA y modo multi-record con fixture local aislado;08K conserva gate visual pendiente. No iniciar otras fases sin Dirección.
 
 ---
 

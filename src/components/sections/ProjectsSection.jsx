@@ -14,7 +14,7 @@ function ProjectPreview({ project }) {
 
 // An injectable dataset permits isolated interaction QA; App always uses approved data.
 export function ProjectsSection({ items = projects }) {
-  const { activeIndex, viewportRef, selectProject, onKeyDown, canPrevious, canNext } = useProjectCarousel(items.length)
+  const { activeIndex, viewportRef, selectProject, onKeyDown } = useProjectCarousel(items.length)
   const activeProject = items[activeIndex]
   if (!activeProject) return null
   const multiple = items.length > 1
@@ -31,34 +31,32 @@ export function ProjectsSection({ items = projects }) {
           <p className="projects-intro type-body-md">{projectsSection.intro.map((line, index) => <span key={line}>{index > 0 && ' '}{line}</span>)}</p>
         </header>
         <div className="projects-carousel" data-single={!multiple} role="group" aria-roledescription="carrusel" aria-labelledby="projects-heading">
-          <div className="projects-stage">
-            {!multiple && <div className="projects-decoration" aria-hidden="true">
-              <div className="projects-slot projects-slot-previous" />
-              <div className="projects-slot projects-slot-next" />
-              <div className="projects-slot projects-slot-queue" />
-            </div>}
-            <div className="projects-viewport" ref={viewportRef} tabIndex={multiple ? 0 : undefined}
-              onKeyDown={onKeyDown} role={multiple ? 'group' : undefined}
-              aria-label={multiple ? 'Vistas previas de proyectos: usá las flechas para navegar' : undefined}
-              aria-describedby={multiple ? 'project-information' : undefined}>
-              <div className="projects-track" aria-hidden="true">
-                {items.map((project, index) => <div className="projects-slide" key={project.id} data-active={index === activeIndex}>
-                  <div className="projects-slot"><ProjectPreview project={project} /></div>
-                </div>)}
+          <div className="projects-presentation">
+            <div className="projects-stage">
+              <div className="projects-viewport" ref={viewportRef} tabIndex={multiple ? 0 : undefined}
+                onKeyDown={onKeyDown} role={multiple ? 'group' : undefined}
+                aria-label={multiple ? 'Vistas previas de proyectos: usá las flechas para navegar' : undefined}
+                aria-describedby={multiple ? 'project-information' : undefined}>
+                <div className="projects-track" aria-hidden="true">
+                  {items.map((project, index) => <div className="projects-slide" key={project.id} data-active={index === activeIndex}>
+                    <div className="projects-slot"><ProjectPreview project={project} /></div>
+                  </div>)}
+                </div>
               </div>
             </div>
+            {!multiple && <p className="projects-coming"><span className="projects-coming-rule" aria-hidden="true" />{projectsSection.comingSoon}</p>}
           </div>
           <div className="projects-controls">
-            <button className="projects-control projects-previous" type="button" aria-label="Proyecto anterior" aria-controls="project-information" disabled={!canPrevious} onClick={() => selectProject(activeIndex - 1)}><picture aria-hidden="true"><source media="(min-width: 1200px)" srcSet={arrowLeftDesktop} /><img src={arrowLeftMobile} alt="" /></picture><span className="type-label-meta">ANTERIOR</span><i aria-hidden="true" /></button>
+            {multiple && <button className="projects-control projects-previous" type="button" aria-label="Proyecto anterior" aria-controls="project-information" disabled={activeIndex === 0} onClick={() => selectProject(activeIndex - 1)}><picture aria-hidden="true"><source media="(min-width: 1200px)" srcSet={arrowLeftDesktop} /><img src={arrowLeftMobile} alt="" /></picture><span className="type-label-meta">ANTERIOR</span><i aria-hidden="true" /></button>}
             <p className="projects-pagination" aria-hidden="true"><span>{String(activeIndex + 1).padStart(2, '0')}</span><span>/</span><span>{String(items.length).padStart(2, '0')}</span></p>
-            <button className="projects-control projects-next" type="button" aria-label="Proyecto siguiente" aria-controls="project-information" disabled={!canNext} onClick={() => selectProject(activeIndex + 1)}><i aria-hidden="true" /><span className="type-label-meta">SIGUIENTE</span><picture aria-hidden="true"><source media="(min-width: 1200px)" srcSet={arrowRightDesktop} /><img src={arrowRightMobile} alt="" /></picture></button>
+            {multiple && <button className="projects-control projects-next" type="button" aria-label="Proyecto siguiente" aria-controls="project-information" disabled={activeIndex === items.length - 1} onClick={() => selectProject(activeIndex + 1)}><i aria-hidden="true" /><span className="type-label-meta">SIGUIENTE</span><picture aria-hidden="true"><source media="(min-width: 1200px)" srcSet={arrowRightDesktop} /><img src={arrowRightMobile} alt="" /></picture></button>}
           </div>
           <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">Proyecto {activeIndex + 1} de {items.length}: {activeProject.title}</p>
           <article id="project-information" className="project-information" aria-labelledby="project-title">
             <p className="project-category type-label-meta">{activeProject.category}</p>
             <h3 id="project-title" className="type-heading-m">{activeProject.title}</h3>
             <p className="project-description type-body-md">{activeProject.description}</p>
-            <Button className="projects-cta" variant="outline" href={activeProject.url ?? undefined} disabled={!activeProject.url} external={Boolean(activeProject.url)}>{projectsSection.cta}<img src={arrowUpRight} alt="" aria-hidden="true" width="14" height="14" /></Button>
+            <Button className="projects-cta" style={{ '--project-accent': activeProject.accent || 'var(--color-accent-cyan)' }} variant="outline" href={activeProject.url ?? undefined} disabled={!activeProject.url} external={Boolean(activeProject.url)}>{projectsSection.cta}<img src={arrowUpRight} alt="" aria-hidden="true" width="14" height="14" /></Button>
           </article>
         </div>
       </div>
