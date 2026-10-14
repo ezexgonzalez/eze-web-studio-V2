@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 8 de octubre de 2026.
+> Última actualización: 13 de octubre de 2026.
 
 ---
 
@@ -77,9 +77,9 @@ La diferencia existente corresponde al bloque Foundation.
 
 ## 3. Estado técnico real actual
 
-Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de carrusel/iconos ni Three.js. Block08H integra Motion + SVG held/plume y una partícula tsParticles nativa en el Hero, con fallback estático; OGL/WebGL anteriores retirados.
+Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de iconos ni Three.js.08Q incorpora Embla Carousel React8.6.0 para Proyectos. Block08H integra Motion + SVG held/plume y una partícula tsParticles nativa en el Hero, con fallback estático; OGL/WebGL anteriores retirados.
 
-Runtime dependencies actuales: `react`, `react-dom`, `motion@14.0.0`, `@tsparticles/{engine,react,slim}@4.4.0`. Sin nueva dependencia en08H.
+Runtime dependencies actuales: `react`, `react-dom`, `motion@14.0.0`, `@tsparticles/{engine,react,slim}@4.4.0`, `embla-carousel-react@8.6.0` (core/reactive-utils8.6.0 transitivos, MIT). Sin nueva dependencia en08H.
 
 `App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection` → `ProblemSection` → `SolutionSection` → `ProjectsSection` → `AboutSection` → `FAQSection` → `ContactSection`; `Footer` es sibling de main para conservar el landmark de pie de página.
 
@@ -106,7 +106,7 @@ Páginas:
 - `01 — Visual System` → FINAL;
 - `02 — Desktop` → HISTORICAL CREATIVE REFERENCE ONLY;
 - `02C — Desktop Fit` (`266:94`) → CURRENT GEOMETRY SOURCE for 08L modified Desktop sections; master `266:95`1440×5256, compact `268:66`1366×5124; dirección aprobada, implementación pendiente de QA visual Eze;
-- `02B — Desktop Production` (`239:10`, master `239:11`) → historical geometry for modified sections; Projects remains FROZEN in its existing implementation;
+- `02B — Desktop Production` (`239:10`, master `239:11`) → historical geometry for modified sections; Projects conserva dirección visual;08Q sustituye estructura de runtime por Embla;
 - `03 — Mobile` → FINAL / FROZEN;
 - `04 — Final Handoff` → READY FOR PRODUCTION.
 
@@ -997,6 +997,27 @@ Commit único `fix: align navbar and replace generic reveals`; SHA mediante `git
 
 ---
 
+### BLOCK 08Q — Editorial Coherence + Real Project Carousel
+
+**STATUS: IMPLEMENTED / READY FOR EZE VISUAL QA**
+
+13 de octubre de2026. Baseline limpio/sincronizado `ae594892187387516f16bfc39fb80db84f3f9023`. Brief explícito de Eze sustituye la estructura estática/native de Proyectos y corrige FAQ/Footer; no rediseño general ni Hero Motion.
+
+- FAQ Desktop usa Heading XL56/64/600, mismos spans/copy, padding-top26 del header retirado; header/list empiezan juntos. Padding inferior86→134 (+48), Contacto sin cambios. Shared Grid08N y ejes editoriales intactos; altura natural/answers/nulls/funcionalidad preservados. Mobile FAQ sin cambios.
+- Footer Desktop reduce contraste: wordmarkTextMuted, nav#9AA6AE, metadata#85939E; hover/focus primary. Divider soloFooter1px/16%full-width, Contact Divider Strong intacto. Tamaños18/15/14, geometría/targets/altura natural y Mobile preservados.
+- Proyectos: único viewport/track Embla para Desktop/Mobile. SelectedScrollSnap es fuente única, useSyncExternalStore proyecta select/reInit; buttons/keys/drag/swipe/snap/info/CTA/count usan mismo motor. Aligncenter/containScrollfalse/loopfalse, sin autoplay. Reduced duration0/jump y release instantáneo; cleanup oficial + subscriptions limpias. Desktop540activo con depth/overlap de superficies vecinas, Mobile310×210/gap16centrado.
+- Dataset sigue1fitness/nullURL/nullpreview;01/01, controles y CTA disabled. Tres slots vacíos Desktop/peek Mobile son decoración aria-hidden fuera del track cuando count1; cero fake slides/articles/URLs. Fixture de3TEST ONLY únicamente en tests, no App/data/bundle.
+
+Dependencia directa única nueva: embla-carousel-react8.6.0 exacta, MIT; dos transitivas necesarias embla-carousel/reactive-utils8.6.0. No otra librería del producto. JSDOM26 es herramienta QA temporal fuera del repo, no dependencia publicada.
+
+Archivos: FAQSection/ProjectsSection, useProjectCarousel, styles about-faq/contact-footer/projects, package/lock, tests/projectCarousel.test.mjs, docs PROJECTS/DESKTOP_FIT_IMPLEMENTATION y este documento. Heroeffects/settings/assets/hooks/CSS, Navbar, Problem, Solution, About, Contact, Footer JSX, sharedgrid, copy/data/assets/type/globalstyles y Mobile externo alcarousel protegidos.
+
+QA técnico: baseline/final npm run check lint/build y git diff --check PASS; Embla8+React DOM StrictMode real con fixture aislado3records PASS para controls/bounds/keys/dragmouse/swipetouch/transform/sync/ResizeObserverDesktop↔Mobile/centering/reduced/cleanup; FAQ open-close/aria/inert/pending regresión PASS;5 pruebas navbar/Solution PASS. Eventos/offsets/media de DOM simulados, no browser QA. SSR/previewHTTP suplementan, no prueban pixels. Text contrastFooter9.16/8.11/6.41>=4.5. Viewports1366×768/1440×900/1536×864/1920×945/390×844 revisados técnicamente; Eze valida visual/overflow/gesture feel. No screenshots ni browser PASS fabricados.08K/contenido pendiente siguen abiertos.
+
+Detalle reproducible: docs/PROJECTS.md y docs/DESKTOP_FIT_IMPLEMENTATION.md. Commit único `feat: refine editorial hierarchy and add Embla projects carousel`; SHA vía `git log -1 --format=%H --grep='^feat: refine editorial hierarchy and add Embla projects carousel$'`, exacto en reporte final. Próximo paso: Eze QA08Q, no Production FINAL.
+
+---
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
@@ -1387,7 +1408,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08P: NAVBAR ALIGNMENT + MOTION CORRECTION / READY FOR EZE VISUAL QA.** Ver docs/EDITORIAL_MOTION.md. Navbar centrado, contenido sin reveals, highlight exclusivo Solución y HABLEMOS mailto.
 
-Próximo paso autorizado: Eze revisa08P en los cuatro Desktop checkpoints y390×844, verifica navbar centrado/glass/anchors/menu, highlight Solución, HABLEMOS mailto/hover/focus, reduced-motion/FAQ y conserva la comprobación del eje08N y Hero runtime08K. No iniciar otras fases sin Dirección.
+**08Q: EDITORIAL COHERENCE + EMBLA CAROUSEL / IMPLEMENTED / READY FOR EZE VISUAL QA.** FAQ XL y aire inferior, Footer discreto, motor único real para Proyectos; dataset1 intacto.
+
+Próximo paso autorizado: Eze revisa08Q en los cuatro Desktop checkpoints y390×844, verifica FAQ/transición/Footer y carrusel actual/multi-registro con fixture local aislado, reduced-motion y protección de Navbar/Solución/Hero.08K conserva gate pendiente. No iniciar otras fases sin Dirección.
 
 ---
 

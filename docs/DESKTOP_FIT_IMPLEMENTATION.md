@@ -1,8 +1,8 @@
 # Desktop Fit implementation — Blocks 08L / 08M
 
-**08M TARGETED CORRECTIONS IMPLEMENTED / READY FOR EZE VISUAL QA**
+**08Q TARGETED REFINEMENT IMPLEMENTED / READY FOR EZE VISUAL QA**
 
-The 08L record below is historical where superseded by the explicit Direction corrections in 08M. Those corrections take precedence over Figma 02C; they do not change Hero, Projects, Contact, Mobile or Tablet.
+The 08L record below is historical where superseded by the explicit Direction corrections in 08M/08N/08P/08Q. Those corrections take precedence over Figma 02C; they do not change Hero, Projects, Contact, Mobile or Tablet.
 
 8 October 2026. Branch `feature/ews-v2-production`; clean synchronized baseline `4585816` (`fix: use explicit JSX import for Hero arc controller`). No new dependencies, copy, assets, components or behavior.
 
@@ -108,3 +108,20 @@ Only existing Desktop rules in `problem-solution.css`, `about-faq.css`, `contact
 `npm run check` baseline/final (lint/build) and `git diff --check`: PASS. Source comparisons and width/height arithmetic: PASS at all four requested checkpoints and the 1200px Desktop boundary. No browser visual, overflow or interaction PASS asserted. Eze should verify viewport distribution, About/FAQ alignment, Footer type/height and protected sections in the real browser. Existing content/runtime verification pending items remain; no Production FINAL declaration.
 
 Commit subject: `fix: correct Desktop Fit viewport rhythm and footer type`. Resolve its SHA via `git log -1 --format=%H --grep='^fix: correct Desktop Fit viewport rhythm and footer type$'`; exact SHA in final delivery report.
+
+
+## Block 08Q — Editorial coherence + real project carousel
+
+13 October2026, baseline `ae594892187387516f16bfc39fb80db84f3f9023`. Eze's explicit brief supersedes only these earlier Desktop rules; no new Figma interpretation.
+
+- FAQ heading switches to existing Desktop Heading XL56/64,600,-.01em, matching About/Contact. Mobile type-heading-l unchanged. Approved line spans remain and may wrap naturally. Removed Desktop header padding-top26: eyebrow/header and list now start on the same top axis80. Shared08N grid/left/right axes remain byte-identical.
+- FAQ bottom padding86→134 (+48), with top80 unchanged. Contact padding/layout are untouched. Natural height can grow with wrapping and open answers; no fixed section/row heights or added separator.
+- Footer Desktop wordmark uses Text Muted#A7B0B6; navigation#9AA6AE; copyright/back-to-top#85939E. Calculated text contrast against#050708 is9.16/8.11/6.41 respectively. Existing hover/focus return to primary. Local18/15/14px typography, targets44, layout and natural224 reference height unchanged.
+- Footer root pseudo-rule alone becomes1px at16% opacity, full viewport width. Contact Divider Strong and global token are untouched. Mobile/Tablet Footer stays unchanged.
+- Projects is now explicitly authorized to replace its frozen runtime structure with one Embla8 carousel; section header/controls/info/CTA geometry remain, selected preview stays centered/dominant. Desktop unselected real slides use inner-surface depth/overlap. Current one-record state keeps decorative flanking slots outside the engine. Mobile selected slide centers; same310×210/16px spacing. See docs/PROJECTS.md for ownership/data/QA.
+
+Hero Motion, Navbar glass/alignment, Problem, Solution highlight, About, Contact layout/CTA, shared column grid, assets/content/global typography and Mobile outside the carousel are unchanged. No reveals. Only direct dependency embla-carousel-react8.6.0; core/reactive-utils required transitives8.6.0, MIT.
+
+Technical validation: npm run check/git diff --check, real Embla+React DOM isolated three-record fixture (mouse/touch/keys/sync/bounds/resize/reduced/cleanup), FAQ regression and existing five controller tests PASS. DOM coordinates/events are simulated, not browser measurements. Desktop checkpoints1366×768/1440×900/1536×864/1920×945 and Mobile390×844 checked structurally; final visual/overflow/text wraps/gesture feel await Eze. No Production FINAL.
+
+Commit subject: `feat: refine editorial hierarchy and add Embla projects carousel`; exact SHA in final report, resolvable via git log subject.

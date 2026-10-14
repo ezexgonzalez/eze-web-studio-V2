@@ -1,83 +1,66 @@
-# Block 04 — Proyectos
+# Proyectos — current runtime / Block 08Q
 
-Estado: **CLOSED / APPROVED FOR CONTINUATION**.
+**IMPLEMENTED / READY FOR EZE VISUAL QA** — 13 October 2026.
 
-Base sincronizada: `74c85a17836fb28561f5ea01087c20f839c18f16`, branch `feature/ews-v2-production`. Commit de implementación: `b0fc13568dbc7176b982dab68b7b7697780941ea`; el commit posterior de continuidad registra este SHA en CURRENT_STATE. No se autoriza Block 05.
+Branch `feature/ews-v2-production`, clean synchronized baseline `ae594892187387516f16bfc39fb80db84f3f9023`. Eze explicitly authorizes replacing the static Desktop stage/native Mobile controller with Embla v8. This supersedes the earlier frozen interaction structure, without changing approved project content or the page's visual direction.
 
-## Fuentes Figma
+## Sources and visual contract
 
-Archivo `aw1k9uSQJhmNGeODZY7BC3`, Eze Web Studio — New Landing 2026. Masters FINAL / FROZEN: Desktop `73:42` (1536×941), Mobile `183:6` (390×884). Metadata, design context real, screenshots y propiedades internas inspeccionados antes de implementar. Figma no se modificó.
+Historical masters: Figma `aw1k9uSQJhmNGeODZY7BC3`, Desktop73:42 / Mobile183:6; Desktop Production242:196 and Fit266:178. Prior blocks inspected these masters;08Q follows Eze's explicit refinement brief, with no new Figma edits or redesign. Original Block04 implementation `b0fc13568dbc7176b982dab68b7b7697780941ea` was approved for continuation; old QA infrastructure history remains in `docs/qa/block-04/README.md` and git history.
 
-Se inspeccionaron tipografía, copy, fills/strokes, posiciones, grid, glows, slots, controles y CTA. Tokens y Button existentes se reutilizan. Las cajas de texto usan su leading real; no se fuerzan los límites adicionales de frames de texto de Figma. La comparación de render final sigue pendiente.
+Keep editorial heading, original container/padding/section height strategy, static ambience, local SVGs, controls without dots, information and214×60 CTA beneath the preview. Desktop active preview remains540wide with the approved height-aware299–365px band, centered over the information axis. Mobile retains310×210 slides at390,16px spacing and44px controls; selected slide is now centered. Tablet interpolates560–621wide and300–420high using existing rules.
 
-## Implementación
+One viewport/track now spans all breakpoints. Desktop real slides overlap horizontally by220px, with their unselected inner surfaces at scale.6/translateY32/opacity.65. Selected surface has native scale/position/opacity1 and higher stacking order. Embla moves the track; CSS only provides depth, so this is not a static four-slot data swap. Wrapper measurement is unaffected by inner-surface transforms. No new reveal, tilt, autoplay or infinite loop.
 
-`ProjectsSection` se monta explícitamente después de `SolutionSection` en App. Contenido en `src/data/projects.js`, presentación en `src/styles/projects.css`, comportamiento en `useProjectCarousel`. No registry ni nuevas dependencias. Header, Hero, Problema, Solución, Foundation y sus assets permanecen sin modificaciones.
+## Dependency and architecture
 
-Desktop conserva header editorial horizontal, divider, cuatro slots asimétricos y activos dominantes. Posiciones relativas al master: previous 184/294/253×358, active 435/239/621×420, next 1056/270/219×396, queue 1274/306/173×345. Controles editoriales sin dots, información centrada, CTA 214×60 con el desplazamiento local +16 px presente en Figma. Grid DOM y glow SVG estáticos.
+Only direct new runtime dependency: **embla-carousel-react8.6.0**, pinned exact, MIT. Its required transitive packages are embla-carousel8.6.0 and embla-carousel-reactive-utils8.6.0 (MIT). Official v8 React flow: <https://www.embla-carousel.com/docs/v8/get-started/react>; options: <https://www.embla-carousel.com/docs/v8/api/options>.
 
-Mobile usa gutter 24, header apilado, viewport 342×210 a 390, slot 310×210 y gap 16. Controles 44×44, información centrada y CTA 214×60. Los dos slots vacíos definidos por el master permanecen decorativos y recortados, fuera del contenido navegable.
+`useProjectCarousel` uses official useEmblaCarousel: align:center, containScroll:false (first/last center), loop:false, skipSnaps:false, watchDrag only when multiple records, duration25 normally. Embla's selectedScrollSnap is the single source of active state. useSyncExternalStore subscribes to select/reInit and projects the selected index; there is no React-set active index, Desktop controller, scrollLeft calculation, scroll-snap listener or debounce engine.
 
-## Carrusel y datos reales
+Buttons call Embla scrollTo. Keyboard on the viewport uses ArrowLeft/ArrowRight/Home/End and ignores modified or nested target events. Disabled flags derive from canScrollPrev/canScrollNext. Category/title/description/CTA/status/pagination and selected surface all use the same Embla index. ResizeObserver/slides observation and reInit are owned by Embla; official React wrapper destroys the instance on unmount. Application subscriptions are removed on cleanup.
 
-Hay un único `activeIndex`. Controles, información, paginación, previews Desktop y scroll Mobile derivan de ese estado. La selección se limita al dataset real; no se rellena el array.
+Reduced motion uses reactive matchMedia, duration0 and immediate scrollTo. Direct drag tracking remains essential; a pointerUp handler jumps to the selected snap instead of animating the release. No autoplay or idle carousel loop. CSS depth/preview transitions are removed under reduced motion. Touch-action:pan-y pinch-zoom retains vertical page scrolling and zoom. No new touch-action rules outside the carousel.
 
-Mobile/Transition admite scroll-snap nativo con múltiples registros. Botones y ArrowLeft/ArrowRight/Home/End seleccionan un registro; scrollend actualiza el índice desde el slide más próximo, con debounce de scroll como fallback. ResizeObserver y cambio de breakpoint realinean el slide seleccionado. Reduced motion usa scroll inmediato. Listeners, observer y timeout se eliminan al desmontar/cambiar efecto. Sin autoplay, renderer, rAF ni motion ornamental. Interacción y cleanup en browser todavía pendientes de validación.
+## Real data versus decoration
 
-La producción actual conserva exactamente el proyecto `fitness`: FITNESS / Fuerza con método. / Landing page para un gimnasio boutique. / `url: null` / `preview: null`.
+Production dataset is unchanged: **one fitness record**, FITNESS / Fuerza con método. / Landing page para un gimnasio boutique.; preview:null and url:null. Runtime01/01, previous/next genuinely disabled, CTA button disabled without href, single slide centered and no drag affordance/tab stop.
 
-Los cuatro slots Desktop y tres posiciones visuales Mobile **no representan cuatro/tres proyectos reales**. Los slots vacíos son `aria-hidden`, sin artículos, títulos, CTA ni imágenes inventadas. Los previews reales solo se renderizan cuando existe `preview`.
+The approved three empty Desktop flanking slots remain only in a separate aria-hidden/pointer-events:none decoration layer when there is one record; Mobile shows only the empty next peek. They are not track children, Embla slides, articles, CTA destinations or navigable records. With multiple real records the decoration is removed and real neighboring slides provide depth/peek. No cloned fitness records, previews, URLs or pending copy added.
 
-Desviación funcional intencional: paginación **01 / 01**, frente a 01 / 03 del master, porque existe un solo registro. No se añadió modo master con conteo ficticio. Ambos controles están genuinamente disabled y el viewport no permite navegar a slots decorativos.
+Seven local SVGs are retained. Real previews render only when a record supplies one. Background/empty slots do not gain fake interactivity. Existing future real-preview brightness hover remains.
 
-VER PROYECTO usa Button como botón genuinamente disabled mientras URL sea null. No href `#`, URL falsa ni navegación. Se conserva la apariencia aprobada mediante override local de opacity. Con URL real, la primitive renderiza enlace externo seguro.
+## Accessibility
 
-## Assets
+Section/group associated with h2; native44px controls and descriptive labels; multi-record viewport is keyboard-focusable with a navigation instruction. Global focus-visible styles retained. Only the selected project's information is an article with its h3 and polite atomic status. Redundant visual previews/track and decoration are aria-hidden, with no interactive descendants or repeated project announcements. Pending CTA/null data remain explicit. No meaning depends exclusively on depth/color.
 
-Siete SVG exactos, locales en `src/assets/projects/`: glows Desktop/Mobile, flechas left/right Desktop/Mobile y arrow-up-right del CTA. Exportados desde los nodos Figma internos; preservan dimensiones/viewBox, colores, blur y opacidades. Sin URLs temporales, librería de iconos ni previews ficticias. No se reemplazan assets del Hero.
+## Technical QA
 
-## Responsive y accesibilidad
+- npm run check baseline/final lint/build and git diff --check PASS.
+- `tests/projectCarousel.test.mjs` executes **the installed Embla8 engine and official React hook**, React DOM in StrictMode, with three clearly marked TEST ONLY records. These are isolated test inputs, never imported by App/data or included in the production bundle.
+- PASS: initial/last disabled boundaries, next/previous, Arrow keys/Home/End, real engine transform changes during dispatched mouse drag, touch swipe, selected index/preview state/status/category/title/description/CTA synchronization, first/last snaps, ResizeObserver-driven Desktop↔Mobile reInit, selected center math at1366×768/1440×900/1536×864/1920×945, reduced-motion immediate snap and touch release, single approved record/null states, unmount/observer/RAF cleanup, no React console errors in harness.
+- FAQ regression in the same DOM harness: approved first question open/close, aria-expanded/aria-hidden/inert, four pending questions disabled; no new answers.
+- Existing five navbar/Solution controller tests PASS. Protected diff confirms Hero Motion, Navbar, Problem/Solution/About, data/assets/global typography, shared editorial grid and Mobile outside carousel unchanged.
+- Production SSR and preview HTTP checks supplement the interaction harness; no browser rendering or pixel comparison inferred from them.
 
-Mobile <768; transición 768–1199 con header progresivo apilado y un slot activo amplio/peek; Desktop ≥1200 con los cuatro slots. La transición no intenta encajar cuatro slots a 768. El padding final del track permite al último registro real alinearse también al cambiar el ancho del viewport. Tipografía de Foundation, sin alterar tokens globales. Optical sizing fijado localmente, coherente con la integración de los masters anteriores.
+Reproduce with a QA-only jsdom installation **outside this repository** (not a production/dev dependency):
 
-Section asociada a h2, único article real con h3, controles con labels accesibles y disabled nativo, status polite con posición real y título. Decoración y previews redundantes no se anuncian. Viewport multi-registro enfocable y operable por teclado; focus-visible global conservado. No información dependiente únicamente del cyan.
+```sh
+npm install --prefix /tmp/ews-08q-tools --no-save jsdom@26
+EWS_QA_JSDOM=/tmp/ews-08q-tools/node_modules/jsdom/lib/api.js node --test tests/projectCarousel.test.mjs
+node --test tests/siteMotion.test.mjs
+```
 
-Pendiente comprobar en browser: 390 / 430 / 768 / 1024 / 1280 / 1536 y límites 767/768, 1199/1200, overflow, zoom, focus, swipe/keyboard multi-registro y continuidad Solución → Proyectos.
+DOM offsets, media/observers and pointer events in the harness are simulated; the Embla engine/React code are real. **This is technical interaction QA, not browser visual/touch hardware PASS.** No fabricated screenshots. Known Chromium absence remains; Eze validates actual drag/swipe/hover/snap perception and responsive pixels in browser.
 
-## Validación y bloqueo de QA
+## Bundle impact
 
-Baseline limpio: npm run check PASS antes de editar. Después de implementar: npm run check y git diff --check PASS. Render estático React/SSR comprobó dataset aprobado intacto, un article, tres botones disabled (dos controles + CTA), ningún anchor falso, status 1 de 1, paginación 01/01 y decoración oculta a AT. Fixture estructural aislado de tres copias del registro aprobado verificó la rama multi-registro sin modificar datos de producción. No se afirma que ese test compruebe scroll o interacción.
+Initial JS240.61→259.73kB (+19.12; gzip73.12→80.89, +7.77). CSS70.37→70.66kB (+.29; gzip14.02→14.09). Hero lazy chunk remains135.80kB with unchanged source. These are build sizes, not hardware/runtime FPS measurements. No autoplay/plugins/renderers; Embla is the only added runtime responsibility.
 
-Preview de build iniciado en 127.0.0.1:5175. Chrome local no puede iniciarse: el entorno deniega socket de ProcessSingleton (`Operation not permitted`). La solicitud de ejecución ampliada fue rechazada por la política de aprobación (`sandbox_approval: false`). El navegador cloud no puede abrir el preview local (`ERR_BLOCKED_BY_CLIENT`). No se evadieron estas restricciones ni se publicó un preview externo.
+## Content / remaining review
 
-Por lo tanto: **no hay comparación final browser ↔ Figma, capturas browser, consola verificada, QA responsive ni continuidad visual aprobada**. Las dos PNG obligatorias no se fabricaron. Evidencia de verificaciones y matriz pendiente: `docs/qa/block-04/README.md`. El bloque queda abierto hasta completar el gate real.
+Projects2–3, approved URLs and previews remain pending. Eze reviews empty current state and, with isolated local fixture only, real multi-slide behavior at the five requested viewports. Actual text wraps/overflow/gesture feel/snap/depth and screen-reader UX remain browser acceptance tasks. Existing08K Hero runtime gate unchanged. No Production FINAL declaration.
 
-## Performance y contenido pendiente
+## Commit
 
-Sin dependencia nueva ni renderer. Bundle baseline: JS 218.09 kB / gzip 66.44; CSS 49.59 / gzip 10.29. Build tras implementación: JS 227.53 / gzip 68.35; CSS 57.03 / gzip 11.65. Delta: JS +9.44 / gzip +1.91; CSS +7.44 / gzip +1.36 kB. Inter 352.24 kB sin cambios. Runtime/GPU no medidos debido al bloqueo de browser.
-
-Pendientes de contenido conocidos: proyectos 2–3, todas las URLs y previews aprobadas. No impiden cerrar geometría después de QA, pero sí declarar el proyecto completo FINAL. Bloque nuevo de esta ejecución: acceso a browser para QA. About + FAQ no se inicia.
-
-## QA Completion Pass — 1 de octubre de 2026
-
-Base sincronizada: `5dfccb20507b640d5055b0994c0f05f33de06b56`, working tree limpio antes de la pasada. Contexto obligatorio y código/assets actuales revisados. npm run check PASS; preview del build levantado en 127.0.0.1:5175 y comprobado HTTP 200 desde su entorno de ejecución. git diff --check PASS. Sin cambios de código, dataset, dependencias ni archivos protegidos. Sin fixture temporal publicado.
-
-**REAL ISSUE — bloqueo de infraestructura del QA**, no defecto visual confirmado:
-
-- LOCATION: entorno local de ejecución de Chrome / acceso cloud al preview.
-- OBSERVED ISSUE: creación de socket Unix devuelve `Operation not permitted`; no hay Chrome instalado utilizable en este entorno. El navegador Chrome cloud devuelve `net::ERR_BLOCKED_BY_CLIENT` al abrir el build local.
-- EXPECTED FROM FIGMA: comparar un render de producción real con 73:42 (1536×941) y 183:6 (390×884), conservando 01/01 como excepción funcional intencional.
-- CURRENT BROWSER RESULT: navegación rechazada antes de renderizar la landing; sin DOM de producción ni resultado visual que pueda evaluarse.
-- FIX ATTEMPTED: revalidación del entorno local, build/preview real y un intento de navegación mediante el browser cloud disponible. No se modificaron restricciones ni se volvió a solicitar la ejecución ampliada previamente rechazada.
-- REMAINING BLOCKER: acceso permitido a un navegador que pueda abrir este build. Se requiere URL de preview accesible al browser cloud o entorno que permita Chrome local. No se publicó un deploy ni se sustituyó QA por SSR.
-
-Todos los gates de browser siguen pendientes: masters, seis viewports y bordes, overflow, controls, Tab/Shift+Tab, fixture multi-record (Arrow/Home/End, swipe, snap, resize, sync), consola, fuentes/assets decodificados y continuidad. No hay evidencia PNG nueva ni afirmación de browser/interaction PASS. Dataset inspeccionado sin cambios: fitness único, URL/preview null; producción mantiene paginación 01/01 y disabled existentes. La comprobación de runtime aún no ocurrió.
-
-Estado conservado: **IMPLEMENTED / BROWSER QA BLOCKED — NOT CLOSED**. No se inicia Block 05.
-
-
-## Dirección — cierre de Block 04
-
-El 1 de octubre de 2026 Dirección definió una regla operativa permanente: el QA visual/browser final lo realiza Eze manualmente. Los agentes deben hacer QA técnico, estructural, accesibilidad por código y validaciones disponibles, pero la imposibilidad de abrir Chrome en su sandbox NO debe bloquear el cierre técnico de futuros bloques.
-
-Block 04 queda **CLOSED / APPROVED FOR CONTINUATION** por Dirección. La ausencia de capturas browser generadas por el agente no invalida el cierre. Los pendientes de contenido (proyectos 2–3, URLs y previews) permanecen abiertos y siguen bloqueando el estado FINAL global, no la continuidad de implementación.
+Single commit `feat: refine editorial hierarchy and add Embla projects carousel`; exact SHA in final report, resolve with `git log -1 --format=%H --grep='^feat: refine editorial hierarchy and add Embla projects carousel$'`.

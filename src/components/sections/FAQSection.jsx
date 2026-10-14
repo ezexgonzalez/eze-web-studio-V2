@@ -24,7 +24,7 @@ export function FAQSection({ items = faqItems }) {
       <div className="faq-layout">
         <header className="faq-header">
           <p className="type-label-eyebrow">{faqSection.eyebrow}</p>
-          <h2 id={headingId} className="faq-heading type-heading-l desktop:type-heading-editorial">
+          <h2 id={headingId} className="faq-heading type-heading-l desktop:type-heading-xl">
             {faqSection.heading.map((line, index) => <span key={line}>{index > 0 && ' '}{line}</span>)}
           </h2>
         </header>

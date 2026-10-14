@@ -1,20 +1,21 @@
-/* Frozen masters 73:42 / 183:6. Empty geometry never creates project data. */
+/* 08Q: one Embla track across breakpoints; decoration never creates slides. */
 .projects-section { position: relative; isolation: isolate; overflow: clip; background: var(--color-background); font-optical-sizing: none; }
 .projects-content { position: relative; padding: 64px 24px 80px; }
 .projects-heading-group > p { color: var(--color-accent-cyan); }
 .projects-heading-group h2 { margin-top: 16px; }
 .projects-intro { margin-top: 16px; color: var(--color-text-body); }
 .projects-header-divider { display: none; }
-.projects-mobile-stage { position: relative; margin-top: 48px; height: 210px; overflow: hidden; }
-.projects-viewport { position: relative; z-index: 1; height: 100%; overflow: hidden; scrollbar-width: none; }
-.projects-viewport-scrollable { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; }
-.projects-viewport::-webkit-scrollbar { display: none; }
+.projects-stage { position: relative; margin-top: 48px; height: 210px; overflow: hidden; }
+.projects-viewport { position: relative; z-index: 1; height: 100%; overflow: hidden; touch-action: pan-y pinch-zoom; }
 .projects-viewport:focus-visible { outline-offset: -3px; }
-.projects-track { position: relative; display: flex; gap: 16px; width: max-content; padding-right: max(32px, calc(100vw - 48px - min(310px, calc(100vw - 80px)))); }
-.projects-slot { flex: 0 0 auto; width: min(310px, calc(100vw - 80px)); height: 210px; border: 1px solid var(--color-border); border-radius: var(--radius-12); background: var(--color-surface); overflow: hidden; scroll-snap-align: start; }
-.project-preview { width: 100%; height: 100%; object-fit: cover; transition: filter 450ms ease; }
-.projects-empty-peek { position: absolute; inset: 0 auto auto 0; display: flex; gap: 16px; left: calc(min(310px, 100vw - 80px) + 16px); }
-.projects-desktop-stage { display: none; }
+.projects-track { display: flex; gap: 16px; height: 100%; }
+.projects-slide { position: relative; flex: 0 0 min(310px, calc(100vw - 80px)); min-width: 0; height: 100%; }
+.projects-carousel[data-single="true"] .projects-track { justify-content: center; }
+.projects-slot { width: 100%; height: 100%; border: 1px solid var(--color-border); border-radius: var(--radius-12); background: var(--color-surface); overflow: hidden; }
+.project-preview { width: 100%; height: 100%; object-fit: cover; transition: filter 450ms ease; user-select: none; }
+.projects-decoration { position: absolute; inset: 0; pointer-events: none; }
+.projects-decoration .projects-slot { position: absolute; left: calc(50% + min(155px, (100vw - 80px) / 2) + 16px); width: min(310px, calc(100vw - 80px)); }
+.projects-decoration .projects-slot:not(.projects-slot-next) { display: none; }
 .projects-controls { display: flex; justify-content: space-between; align-items: center; height: 44px; margin-top: 16px; }
 .projects-control { position: relative; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; }
 .projects-control:disabled { cursor: default; }
@@ -38,10 +39,9 @@
   .projects-content { padding: 80px var(--page-gutter); }
   .projects-header { max-width: 848px; }
   .projects-intro { max-width: 650px; }
-  .projects-mobile-stage { height: clamp(300px, calc(300px + (100vw - 768px) * .2777778), 420px); }
-  .projects-slot { width: clamp(560px, calc(560px + (100vw - 768px) * .1412037), 621px); height: clamp(300px, calc(300px + (100vw - 768px) * .2777778), 420px); }
-  .projects-empty-peek { left: calc(clamp(560px, calc(560px + (100vw - 768px) * .1412037), 621px) + 16px); }
-  .projects-track { padding-right: max(32px, calc(100vw - var(--page-gutter) * 2 - clamp(560px, calc(560px + (100vw - 768px) * .1412037), 621px))); }
+  .projects-stage { height: clamp(300px, calc(300px + (100vw - 768px) * .2777778), 420px); }
+  .projects-slide, .projects-decoration .projects-slot { flex-basis: clamp(560px, calc(560px + (100vw - 768px) * .1412037), 621px); width: clamp(560px, calc(560px + (100vw - 768px) * .1412037), 621px); }
+  .projects-decoration .projects-slot { left: calc(50% + clamp(280px, calc(280px + (100vw - 768px) * .07060185), 310.5px) + 16px); }
   .project-information { max-width: 621px; margin-inline: auto; }
 }
 
@@ -54,13 +54,18 @@
   .projects-heading-group h2 span, .projects-intro span { display: block; }
   .projects-header-divider { display: block; height: 64px; margin-top: 44px; margin-left: 40px; background: var(--color-divider-strong); }
   .projects-intro { margin: 44px 0 0 71px; width: 440px; }
-  .projects-mobile-stage { display: none; }
-  .projects-desktop-stage { display: block; position: relative; height: clamp(300px, calc(366px + (100svh - 900px) * .5), 366px); margin-top: clamp(8px, calc(20px + (100svh - 900px) * .090909091), 32px); }
-  .projects-desktop-stage .projects-slot { position: absolute; box-shadow: 0 18px 36px rgb(0 0 0 / 38%); }
-  .projects-slot-previous { left: calc(50% - 490px); top: clamp(40px, calc(48px + (100svh - 900px) * .060606061), 48px); width: 220px; height: clamp(254px, calc(310px + (100svh - 900px) * .424242424), 310px); }
-  .projects-slot-active { left: calc(50% - 270px); top: 0; width: 540px; height: clamp(299px, calc(365px + (100svh - 900px) * .5), 365px); z-index: 2; }
-  .projects-slot-next { left: calc(50% + 270px); top: clamp(20px, calc(24px + (100svh - 900px) * .03030303), 24px); width: 190px; height: clamp(280px, calc(342px + (100svh - 900px) * .46969697), 342px); z-index: 1; }
-  .projects-slot-queue { left: calc(50% + 460px); top: clamp(48px, calc(56px + (100svh - 900px) * .060606061), 56px); width: 150px; height: clamp(248px, calc(302px + (100svh - 900px) * .409090909), 302px); }
+  .projects-stage { height: clamp(300px, calc(366px + (100svh - 900px) * .5), 366px); margin-top: clamp(8px, calc(20px + (100svh - 900px) * .090909091), 32px); }
+  .projects-track { gap: 0; }
+  .projects-slide { flex-basis: 540px; margin-right: -220px; z-index: 0; }
+  .projects-slide:last-child { margin-right: 0; }
+  .projects-slide .projects-slot { height: clamp(299px, calc(365px + (100svh - 900px) * .5), 365px); transform: translateY(32px) scale(.6); opacity: .65; box-shadow: 0 18px 36px rgb(0 0 0 / 38%); transition: transform 450ms ease, opacity 450ms ease; }
+  .projects-slide[data-active="true"] { z-index: 2; }
+  .projects-slide[data-active="true"] .projects-slot { transform: none; opacity: 1; }
+  .projects-decoration .projects-slot:not(.projects-slot-next) { display: block; }
+  .projects-decoration .projects-slot { display: block; box-shadow: 0 18px 36px rgb(0 0 0 / 38%); }
+  .projects-decoration .projects-slot-previous { left: calc(50% - 490px); top: clamp(40px, calc(48px + (100svh - 900px) * .060606061), 48px); width: 220px; height: clamp(254px, calc(310px + (100svh - 900px) * .424242424), 310px); }
+  .projects-decoration .projects-slot-next { left: calc(50% + 270px); top: clamp(20px, calc(24px + (100svh - 900px) * .03030303), 24px); width: 190px; height: clamp(280px, calc(342px + (100svh - 900px) * .46969697), 342px); }
+  .projects-decoration .projects-slot-queue { left: calc(50% + 460px); top: clamp(48px, calc(56px + (100svh - 900px) * .060606061), 56px); width: 150px; height: clamp(248px, calc(302px + (100svh - 900px) * .409090909), 302px); }
   .projects-controls { position: relative; width: 760px; margin: clamp(12px, calc(22px + (100svh - 900px) * .075757576), 22px) auto 0; }
   .projects-control { width: 198px; }
   .projects-control picture, .projects-control img { width: 24px; height: 24px; }
@@ -87,7 +92,6 @@
 }
 /* Narrow Desktop fits the existing composition by cropping decorative flanking slots. */
 @media (min-width: 75rem) and (max-width: 85.374rem) {
-  .projects-desktop-stage { overflow: clip; }
   .projects-header { grid-template-columns: minmax(0, 480fr) 1px minmax(0, 440fr); gap: 32px; }
   .projects-header-divider { margin-left: 0; }
   .projects-intro { margin-left: 0; width: auto; }
@@ -98,5 +102,5 @@
   .projects-slot:hover > .project-preview { filter: brightness(1.06); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .project-preview { transition: none; }
+  .project-preview, .projects-slide .projects-slot { transition: none; }
 }

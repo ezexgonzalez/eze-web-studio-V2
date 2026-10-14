@@ -1,61 +1,44 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useSyncExternalStore } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
+
+const reducedQuery = '(prefers-reduced-motion: reduce)'
+function subscribeReducedMotion(listener) {
+  const query = window.matchMedia(reducedQuery)
+  query.addEventListener('change', listener)
+  return () => query.removeEventListener('change', listener)
+}
+function getReducedMotion() { return window.matchMedia(reducedQuery).matches }
+function getServerMotion() { return false }
+function getServerIndex() { return 0 }
 
 export function useProjectCarousel(count) {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const viewportRef = useRef(null)
-
-  function selectProject(index) {
-    setActiveIndex(Math.max(0, Math.min(index, count - 1)))
-  }
+  const reducedMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotion, getServerMotion)
+  const [viewportRef, api] = useEmblaCarousel({
+    align: 'center', containScroll: false, loop: false, skipSnaps: false,
+    duration: reducedMotion ? 0 : 25, watchDrag: count > 1,
+  })
+  const subscribe = useCallback(listener => {
+    if (!api) return () => {}
+    api.on('select', listener).on('reInit', listener)
+    return () => { api.off('select', listener).off('reInit', listener) }
+  }, [api])
+  const getIndex = useCallback(() => api?.selectedScrollSnap() ?? 0, [api])
+  // React only projects Embla's selection; it never chooses a second index.
+  const activeIndex = useSyncExternalStore(subscribe, getIndex, getServerIndex)
 
   useEffect(() => {
-    const viewport = viewportRef.current
-    if (!viewport || count < 2) return
-    const mobileLayout = window.matchMedia('(max-width: 1199px)')
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    let scrollTimer
-
-    function align(behavior = 'auto') {
-      if (!mobileLayout.matches) return
-      const slide = viewport.querySelectorAll('[data-project-slide]')[activeIndex]
-      if (slide) viewport.scrollTo({ left: slide.offsetLeft, behavior })
+    if (!api) return
+    // Finger/mouse tracking is essential; reduce only the release/snap animation.
+    const settleReduced = () => {
+      if (getReducedMotion()) api.scrollTo(api.selectedScrollSnap(), true)
     }
+    api.on('pointerUp', settleReduced)
+    return () => { api.off('pointerUp', settleReduced) }
+  }, [api])
 
-    function settle() {
-      if (!mobileLayout.matches) return
-      const slides = [...viewport.querySelectorAll('[data-project-slide]')]
-      let closest = 0
-      slides.forEach((slide, index) => {
-        if (Math.abs(slide.offsetLeft - viewport.scrollLeft) < Math.abs(slides[closest].offsetLeft - viewport.scrollLeft)) closest = index
-      })
-      setActiveIndex(closest)
-    }
-
-    function onScroll() {
-      clearTimeout(scrollTimer)
-      scrollTimer = setTimeout(settle, 150)
-    }
-
-    function onLayoutChange() { align() }
-    const scrollEvent = 'onscrollend' in viewport ? 'scrollend' : 'scroll'
-    const onScrollEvent = scrollEvent === 'scrollend' ? settle : onScroll
-    viewport.addEventListener(scrollEvent, onScrollEvent, { passive: true })
-    mobileLayout.addEventListener('change', onLayoutChange)
-    reducedMotion.addEventListener('change', onLayoutChange)
-    const resizeObserver = new ResizeObserver(onLayoutChange)
-    resizeObserver.observe(viewport)
-    align(reducedMotion.matches ? 'auto' : 'smooth')
-
-    return () => {
-      clearTimeout(scrollTimer)
-      resizeObserver.disconnect()
-      viewport.removeEventListener(scrollEvent, onScrollEvent)
-      mobileLayout.removeEventListener('change', onLayoutChange)
-      reducedMotion.removeEventListener('change', onLayoutChange)
-    }
-  }, [activeIndex, count])
-
+  function selectProject(index) { api?.scrollTo(index, reducedMotion) }
   function onKeyDown(event) {
+    if (event.target !== event.currentTarget || event.altKey || event.ctrlKey || event.metaKey) return
     const destinations = { ArrowLeft: activeIndex - 1, ArrowRight: activeIndex + 1, Home: 0, End: count - 1 }
     if (Object.hasOwn(destinations, event.key)) {
       event.preventDefault()
@@ -63,5 +46,8 @@ export function useProjectCarousel(count) {
     }
   }
 
-  return { activeIndex, viewportRef, selectProject, onKeyDown }
+  return {
+    activeIndex, viewportRef, selectProject, onKeyDown,
+    canPrevious: Boolean(api?.canScrollPrev()), canNext: Boolean(api?.canScrollNext()),
+  }
 }
