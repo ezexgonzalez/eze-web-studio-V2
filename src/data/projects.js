@@ -1,3 +1,5 @@
+import fitnessPreview from '../assets/projects/fitness-preview.webp'
+
 // Only the first record is approved. Do not pad this array to match Figma's 03.
 export const projectsSection = {
   eyebrow: 'PROYECTOS',
@@ -12,7 +14,7 @@ export const projects = [
     category: 'FITNESS',
     title: 'Fuerza con método.',
     description: 'Landing page para un gimnasio boutique.',
-    url: null,
-    preview: null,
+    url: 'https://eze-demo-gimnasio.vercel.app/',
+    preview: fitnessPreview,
   },
 ]

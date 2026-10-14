@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 13 de octubre de 2026.
+> Última actualización: 14 de octubre de 2026.
 
 ---
 
@@ -460,8 +460,8 @@ Solo existe un registro aprobado:
 - category: `FITNESS`
 - title: `Fuerza con método.`
 - description: `Landing page para un gimnasio boutique.`
-- URL: pendiente
-- preview: pendiente
+- URL: `https://eze-demo-gimnasio.vercel.app/` — aprobada e integrada en08R
+- preview: `src/assets/projects/fitness-preview.webp` — WebP suministrado por Eze, integrado en08R
 
 No crear proyectos 2–3 ficticios para satisfacer la paginación visual.
 
@@ -1018,6 +1018,20 @@ Detalle reproducible: docs/PROJECTS.md y docs/DESKTOP_FIT_IMPLEMENTATION.md. Com
 
 ---
 
+### BLOCK 08R — Real FITNESS Preview + Live Demo
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+14 de octubre de2026, baseline limpio/sincronizado `8f7cb4c375338d0f103a00c0581a338c84bd0b39`. Asset WebP aprobado por Eze copiado byte-identical a `src/assets/projects/fitness-preview.webp`1448×1086/128630bytes. Import local en projects.js; solamente fitness.preview y fitness.url actualizados. Demo aprobada `https://eze-demo-gimnasio.vercel.app/`.
+
+ProjectPreview y Button existentes integran automáticamente la imagen y CTA habilitado como anchor target=_blank/rel=noopener noreferrer. Contador01/01; dos controles direccionales disabled; un slide/article/preview. Slots decorativos sin imagen ni datos. Embla, ProjectsSection, CSS/object-fitcover/object-positioncentrado, diseño/Mobile/Hero Motion/otras secciones y dependencias intactos. No recompresión ni nueva librería.
+
+Validación: npm run check baseline/final lint/build, git diff --check PASS; asset fuente/local/build decodificado y hashes iguales; asset servido por previewHTTP200; CTA atributos SSR/DOM correctos y demoHEAD200; prueba existente Embla+ReactDOM actualizada solo para estado real preview/URL y fixture multi-registro regresión PASS;5 pruebas site-controller PASS. Crop calculado en1366×768/1440×900/1536×864/1920×945 y390×844: cover sin distorsión, texto/subject/CTA del mockup dentro del área visible. Mayor recorte de marco exterior en Desktop corto. Browser/crop/tab-opening visual no comprobados; Eze hace gate final. Sin screenshots fabricados.
+
+Archivos: src/assets/projects/fitness-preview.webp, src/data/projects.js, tests/projectCarousel.test.mjs, docs/PROJECTS.md y este documento. Commit único `feat: integrate approved FITNESS preview and live demo`; SHA vía `git log -1 --format=%H --grep='^feat: integrate approved FITNESS preview and live demo$'`, exacto en entrega final. Próximo paso: Eze QA preview/CTA Desktop-Mobile; proyectos2–3/URLs/previews y08K siguen pendientes. No merge ni Production FINAL.
+
+---
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: PENDING**
@@ -1131,11 +1145,12 @@ Sí deben resolverse antes de cerrar sus bloques funcionales correspondientes.
 
 ### Proyectos
 
-- proyecto 1: aprobado parcialmente
-- URL proyecto 1: **PENDING**
+- proyecto 1 FITNESS: copy/preview/URL aprobados e integrados en08R
+- URL proyecto 1: `https://eze-demo-gimnasio.vercel.app/` — integrada
+- preview proyecto 1: WebP local aprobado — integrado
 - proyectos 2–3: **PENDING**
 - URLs 2–3: **PENDING**
-- previews reales: **PENDING**
+- previews reales de proyectos2–3: **PENDING**
 
 No resolver pendientes inventando contenido.
 
@@ -1149,7 +1164,7 @@ Estado actual:
 - Inter: local en repo;
 - iconografía aprobada: existe en Figma, exportar exacta cuando cada bloque la necesite;
 - Hero: SVG exactos de Figma locales en `src/assets/hero/`, incluyendo horizontes Desktop/Mobile y arrow; sin URLs temporales;
-- Proyectos: siete SVG exactos locales en `src/assets/projects/`, glows/flechas; previews de proyectos no existen en repo;
+- Proyectos: siete SVG exactos locales en `src/assets/projects/`, glows/flechas;08R agrega `fitness-preview.webp`1448×1086/128630bytes suministrado por Eze. Previews2–3 pendientes;
 - FAQ: cuatro SVG exactos PLUS/MINUS Desktop/Mobile locales en `src/assets/faq/`; About no agrega assets;
 - Contacto: dos SVG exactos Arrow Right Desktop/Mobile locales en `src/assets/contact/`, incluyendo stroke bounds Mobile; Footer no agrega assets;
 - favicon / OG visual: pendientes de asset aprobado.
@@ -1410,7 +1425,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **08Q: EDITORIAL COHERENCE + EMBLA CAROUSEL / IMPLEMENTED / READY FOR EZE VISUAL QA.** FAQ XL y aire inferior, Footer discreto, motor único real para Proyectos; dataset1 intacto.
 
-Próximo paso autorizado: Eze revisa08Q en los cuatro Desktop checkpoints y390×844, verifica FAQ/transición/Footer y carrusel actual/multi-registro con fixture local aislado, reduced-motion y protección de Navbar/Solución/Hero.08K conserva gate pendiente. No iniciar otras fases sin Dirección.
+**08R: FITNESS PREVIEW + LIVE DEMO INTEGRADOS / READY FOR EZE VISUAL QA.** Proyecto1 tiene WebP local y URL real;01/01 con controles disabled y CTA enabled.
+
+Próximo paso autorizado: Eze revisa08R Desktop/Mobile, crop de la preview y apertura de demo; QA08Q y08K conservan gates visuales pendientes. No iniciar otras fases sin Dirección.
 
 ---
 

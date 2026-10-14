@@ -1,8 +1,8 @@
-# Proyectos — current runtime / Block 08Q
+# Proyectos — current runtime / Blocks 08Q + 08R
 
-**IMPLEMENTED / READY FOR EZE VISUAL QA** — 13 October 2026.
+**READY FOR EZE VISUAL QA** — 14 October 2026.
 
-Branch `feature/ews-v2-production`, clean synchronized baseline `ae594892187387516f16bfc39fb80db84f3f9023`. Eze explicitly authorizes replacing the static Desktop stage/native Mobile controller with Embla v8. This supersedes the earlier frozen interaction structure, without changing approved project content or the page's visual direction.
+08Q architecture record (unchanged in08R): branch `feature/ews-v2-production`, clean synchronized baseline `ae594892187387516f16bfc39fb80db84f3f9023`. Eze explicitly authorizes replacing the static Desktop stage/native Mobile controller with Embla v8. This supersedes the earlier frozen interaction structure, without changing approved project content or the page's visual direction.
 
 ## Sources and visual contract
 
@@ -24,15 +24,15 @@ Reduced motion uses reactive matchMedia, duration0 and immediate scrollTo. Direc
 
 ## Real data versus decoration
 
-Production dataset is unchanged: **one fitness record**, FITNESS / Fuerza con método. / Landing page para un gimnasio boutique.; preview:null and url:null. Runtime01/01, previous/next genuinely disabled, CTA button disabled without href, single slide centered and no drag affordance/tab stop.
+Production dataset contains **one fitness record**, FITNESS / Fuerza con método. / Landing page para un gimnasio boutique.08R supplies local `fitness-preview.webp` and approved `https://eze-demo-gimnasio.vercel.app/`. Runtime01/01, previous/next genuinely disabled, VER PROYECTO is now an enabled anchor with target=_blank/rel=noopener noreferrer. Single slide remains centered with no drag affordance/tab stop.
 
-The approved three empty Desktop flanking slots remain only in a separate aria-hidden/pointer-events:none decoration layer when there is one record; Mobile shows only the empty next peek. They are not track children, Embla slides, articles, CTA destinations or navigable records. With multiple real records the decoration is removed and real neighboring slides provide depth/peek. No cloned fitness records, previews, URLs or pending copy added.
+The approved three empty Desktop flanking slots remain only in a separate aria-hidden/pointer-events:none decoration layer when there is one record; Mobile shows only the empty next peek. They are not track children, Embla slides, articles, CTA destinations or navigable records. With multiple real records the decoration is removed and real neighboring slides provide depth/peek. No cloned fitness records or filler previews/URLs/copy added.
 
-Seven local SVGs are retained. Real previews render only when a record supplies one. Background/empty slots do not gain fake interactivity. Existing future real-preview brightness hover remains.
+Seven local SVGs are retained;08R adds the supplied WebP, displayed once in the real slide. Real previews render only when a record supplies one. Background/empty slots do not gain fake interactivity. Existing future real-preview brightness hover remains.
 
 ## Accessibility
 
-Section/group associated with h2; native44px controls and descriptive labels; multi-record viewport is keyboard-focusable with a navigation instruction. Global focus-visible styles retained. Only the selected project's information is an article with its h3 and polite atomic status. Redundant visual previews/track and decoration are aria-hidden, with no interactive descendants or repeated project announcements. Pending CTA/null data remain explicit. No meaning depends exclusively on depth/color.
+Section/group associated with h2; native44px controls and descriptive labels; multi-record viewport is keyboard-focusable with a navigation instruction. Global focus-visible styles retained. Only the selected project's information is an article with its h3 and polite atomic status. Redundant visual previews/track and decoration are aria-hidden, with no interactive descendants or repeated project announcements. Projects without approved URLs still get disabled CTA buttons; FITNESS now uses its approved real destination. No meaning depends exclusively on depth/color.
 
 ## Technical QA
 
@@ -59,8 +59,24 @@ Initial JS240.61→259.73kB (+19.12; gzip73.12→80.89, +7.77). CSS70.37→70.66
 
 ## Content / remaining review
 
-Projects2–3, approved URLs and previews remain pending. Eze reviews empty current state and, with isolated local fixture only, real multi-slide behavior at the five requested viewports. Actual text wraps/overflow/gesture feel/snap/depth and screen-reader UX remain browser acceptance tasks. Existing08K Hero runtime gate unchanged. No Production FINAL declaration.
+Projects2–3 and their approved URLs/previews remain pending; project1 preview/URL are resolved in08R. Eze reviews the current single real preview state and, with isolated local fixture only, real multi-slide behavior at the five requested viewports. Actual text wraps/overflow/gesture feel/snap/depth and screen-reader UX remain browser acceptance tasks. Existing08K Hero runtime gate unchanged. No Production FINAL declaration.
 
 ## Commit
 
 Single commit `feat: refine editorial hierarchy and add Embla projects carousel`; exact SHA in final report, resolve with `git log -1 --format=%H --grep='^feat: refine editorial hierarchy and add Embla projects carousel$'`.
+
+
+## Block 08R — Real FITNESS preview + demo
+
+14 October2026. Clean synchronized baseline `8f7cb4c375338d0f103a00c0581a338c84bd0b39`. Targeted approved content integration only; no merge.
+
+- Eze's attached `ews-fitness-preview(1).webp` copied byte-identical to `src/assets/projects/fitness-preview.webp`:1448×1086 RGB WebP,128630bytes (~125.6KiB). Already optimized; no lossy recompression, AI alteration or temporary asset URL. SHA256 `ea3961e246c62b5aad367c629be195f27ae5c17554a1603058d3450e0b71c283`.
+- `src/data/projects.js` imports the local asset and changes only fitness.preview and fitness.url to `https://eze-demo-gimnasio.vercel.app/`. ID/category/title/description, count and section copy unchanged.
+- Existing ProjectPreview/Button render the image and external anchor automatically. ProjectsSection, Embla hook, all CSS, dimensions, depth, controls/decoration, Mobile, other sections and Hero Motion are byte-identical. No new dependency.
+- object-fit:cover and default centered object-position remain. Source ratio4:3 versus slots540×299–365 /310×210 produces vertical cover cropping without distortion. The main headline, subject and in-screen CTA remain within calculated crop bounds at the four Desktop heights and Mobile390×844. At shorter Desktop heights more of the outer laptop framing is trimmed. No CSS crop correction was justified by source inspection; Eze verifies final perceptual crop in browser.
+- CTA semantic attributes verified in React SSR/DOM: approved exact href, target=_blank, rel=noopener noreferrer, no disabled attribute. Demo HEAD returns HTTP200 at the approved URL. This checks endpoint/anchor semantics, not an actual browser tab-opening test.
+- Runtime still01/01, one slide/article/image and two disabled directional controls; decorative slots contain no previews. Test's single-record assertions updated to approved preview/enabled CTA; multi-record fixture and pending/null CTA tests retained.
+
+Validation: baseline/final npm run check lint/build and git diff --check PASS; actual Embla+React DOM isolated regression PASS, including current approved content and unchanged multi-record interactions; five site controller tests PASS. WebP decode/source-byte equality, emitted build asset and preview-server asset response/decode/hash verified. No browser visual/overflow/crop/tab-opening PASS or screenshots fabricated; final QA remains Eze's gate.
+
+Files: local WebP, projects data, current-state/this document and existing carousel test expectation. Single commit `feat: integrate approved FITNESS preview and live demo`; exact SHA in final report, resolve with `git log -1 --format=%H --grep='^feat: integrate approved FITNESS preview and live demo$'`. Status READY FOR EZE VISUAL QA; no Production FINAL. Projects2–3 and08K runtime proof remain pending.

@@ -172,14 +172,22 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
     await act(async () => resizes.filter(o => !o.disconnected).forEach(o => o.callback([{ target: find('.projects-track') }])))
     await frames(); selected(1)
 
-    // Approved single record and null states remain genuine.
+    // Approved single record now has a real preview/demo; fixture null states above remain genuine.
     await render(projects); await frames()
     assert.equal(findAll('.projects-slide').length, 1)
     assert.equal(find('.projects-pagination').textContent, '01/01')
-    assert(previousButton().disabled && nextButton().disabled && find('.projects-cta').disabled)
+    assert(previousButton().disabled && nextButton().disabled)
+    const approvedCta = find('.projects-cta')
+    assert.equal(approvedCta.tagName, 'A')
+    assert.equal(approvedCta.getAttribute('href'), 'https://eze-demo-gimnasio.vercel.app/')
+    assert.equal(approvedCta.getAttribute('target'), '_blank')
+    assert.equal(approvedCta.getAttribute('rel'), 'noopener noreferrer')
+    assert(!approvedCta.hasAttribute('disabled'))
     assert.equal(findAll('article').length, 1)
     assert.equal(viewport().getAttribute('tabindex'), null)
-    assert.equal(findAll('.project-preview').length, 0)
+    assert.equal(findAll('.project-preview').length, 1)
+    assert.equal(find('.project-preview').getAttribute('src'), projects[0].preview)
+    assert.equal(findAll('.projects-decoration .project-preview').length, 0)
     assert.equal(findAll('.projects-decoration[aria-hidden="true"]').length, 1)
     // FAQ logic regression with approved dataset (no new answers).
     const { FAQSection } = await server.ssrLoadModule('/src/components/sections/FAQSection.jsx')
