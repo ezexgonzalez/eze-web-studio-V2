@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 15 de octubre de 2026 UTC (14/10 Argentina);09F, OG y metadata social integrados.
+> Última actualización: 15 de octubre de 2026 (Argentina);09G, contenido de Privacidad actualizado.
 
 ---
 
@@ -31,13 +31,13 @@ No reemplaza a Figma ni a los documentos especializados. Resume el contrato vige
 
 **Objetivo de Dirección:** publicar Eze Web Studio durante octubre de 2026 y comenzar a recibir consultas reales. El estudio todavía no tiene clientes comerciales. Priorizamos un lanzamiento responsable y profesional sin ampliar alcance por perfeccionismo.
 
-**Repositorio:** `ezexgonzalez/eze-web-studio-V2`, branch `feature/ews-v2-production`. Referencia verificada antes de esta actualización documental: commit `d9fceba5782017985505770b350e998f4424dd2d` (`fix: apply approved demo description and service metadata title`). El SHA cambia con el commit de este documento; consultar el HEAD real antes de cualquier tarea. **Sin merge a `main`, sin deploy, sin DNS conectado.**
+**Repositorio vigente:** `ezexgonzalez/eze-web-studio-V2`, branch `main`, HEAD inicial09G `28d43b3eb274e78451db479b9a1ba134d5bc275b` verificado limpio. Según Dirección, el sitio ya está desplegado en Cloudflare Pages, plan Free, conectado a main. El commit09G está autorizado y puede activar automáticamente un nuevo despliegue; este bloque no certifica su resultado ni realiza cambios DNS/configuración. Las referencias anteriores a feature/sin deploy se conservan como historial.
 
 **Entregables recientes:**
 - **09B / 09B.1:** continuidad Solución, halo Mobile y símbolo E en Navbar; tamaño reducido a 27 px Desktop / 25 px Mobile. Implementados, sujetos al QA visual específico de Eze donde corresponda.
 - **09C:** Footer Mobile más discreto y línea full-width; favicon/iconos oficiales; canonical/`og:url` preparados para `https://ezewebstudio.com.ar/`; manejo de fallas tsParticles corregido técnicamente. QA visual global pendiente.
-- **09D:** `/privacidad` en HTML estático y enlazada desde el Footer; es **borrador en revisión**, con `noindex` y datos operativos por confirmar. `404.html` personalizada, estática y sin efectos; servidor `npm run preview` responde 404 a rutas inexistentes. **Eze abrió una ruta inexistente en `npm run preview`, vio la página personalizada y APROBÓ su aspecto/comportamiento local.** No confundir este QA local con verificación del hosting público. En `npm run dev` (Vite 5173) las URLs inexistentes siguen mostrando el error genérico por la arquitectura `appType: 'mpa'`; es deliberado, no un defecto nuevo. Referencia: `docs/PRIVACY_AND_404.md`.
-- **Copy Audit 01:** entregada y revisada por Dirección. Solo **C01 y C02 aprobados e implementados en09E**: Fitness se identifica como demo y title/og:title/twitter:title describen el servicio. **C03 y C05 diferidos; C04 rechazado en favor del copy existente.** Ningún otro cambio de copy autorizado. OG integrada en09F; Privacidad definitiva y QA de lanzamiento siguen pendientes.
+- **09D:** `/privacidad` en HTML estático y enlazada desde el Footer; su borrador inicial fue actualizado editorialmente en09G con los datos confirmados por Dirección; conserva `noindex`. `404.html` personalizada, estática y sin efectos; servidor `npm run preview` responde 404 a rutas inexistentes. **Eze abrió una ruta inexistente en `npm run preview`, vio la página personalizada y APROBÓ su aspecto/comportamiento local.** No confundir este QA local con verificación del hosting público. En `npm run dev` (Vite 5173) las URLs inexistentes siguen mostrando el error genérico por la arquitectura `appType: 'mpa'`; es deliberado, no un defecto nuevo. Referencia: `docs/PRIVACY_AND_404.md`.
+- **Copy Audit 01:** entregada y revisada por Dirección. Solo **C01 y C02 aprobados e implementados en09E**: Fitness se identifica como demo y title/og:title/twitter:title describen el servicio. **C03 y C05 diferidos; C04 rechazado en favor del copy existente.** Ningún otro cambio de copy autorizado. OG integrada en09F; contenido de Privacidad actualizado en09G y QA final de navegador pendiente.
 - **09F — OG IMAGE OFICIAL INTEGRADA / FINAL-FROZEN:** PNG adjunto aprobado copiado sin modificar a `public/og-image.png` (1200×630, PNG,18384bytes). SHA256 `1ae6765dffab9027cb2ad3161db6a8d900e20d4f13fac4bd9ae26072d2a1c152`, idéntico al adjunto. `og:image`/`twitter:image` apuntan a `https://ezewebstudio.com.ar/og-image.png`, dimensiones/tipo/alt completos y Twitter summary_large_image. Build y HTTP local verificados; dominio público y crawler social pendientes del deploy autorizado. Sin regeneración ni cambio de píxeles; SVG editable no requerido en runtime.
 - **Dominio:** `ezewebstudio.com.ar` comprado y registrado en NIC Argentina; queda reservado para publicación posterior. La URL canónica en HTML no significa que el sitio ya esté publicado.
 
@@ -45,9 +45,9 @@ No reemplaza a Figma ni a los documentos especializados. Resume el contrato vige
 
 **Pendientes de mayor prioridad, en este orden:**
 1. **Integración OG09F completada.** Asset y metadata listos, con tests/build/HTTP local PASS. Validación de la imagen en dominio público y crawlers sociales pendiente exclusivamente del release autorizado; no repetir diseño ni ampliar alcance.
-2. Cerrar política de privacidad antes de publicarla como definitiva: identidad legal y domicilio del responsable; proveedor/plan de hosting y tratamiento de logs; criterios reales de conservación/eliminación; accesos y medidas de seguridad efectivas. No inventar datos.
+2. **09G editorial completado:** responsable Ezequiel Gonzalez, Cloudflare Pages Free, conservación y seguridad confirmadas integrados; sin aviso provisional y con noindex. Domicilio particular no publicado por decisión de Dirección; no se declara cumplimiento legal certificado. Cloudflare Web Analytics en panel no verificado: el texto no niega toda medición.
 3. QA final de Eze en navegador: responsive (incluidos Footer Mobile y Navbar), Solución/Hero interactivo, teclado, zoom, links, consola y rutas; distinguir aprobaciones locales de lo todavía pendiente. **La 404 en preview ya está visualmente aprobada; no requiere rediseño.**
-4. Decidir hosting que permita uso comercial, completar despliegue, DNS NIC Argentina, HTTPS, redirects y comprobar en dominio real `/` 200, `/privacidad` 200, rutas inexistentes 404 con página correcta, además de la OG pública/preview social real. No asumir estos estados antes del despliegue.
+4. Cloudflare Pages Free y despliegue desde main confirmados por Dirección. Validar el resultado del despliegue09G y las rutas/metadata en el host real cuando corresponda; este bloque no reconfigura hosting/DNS ni afirma verificación independiente del dominio o de crawlers.
 5. Antes de cobrar el primer proyecto: formalización fiscal, comprobantes y condiciones claras de propuesta/contratación según normativa aplicable.
 
 **Estado general:** `PRE-LAUNCH / NOT YET PRODUCTION FINAL`. Sin nuevos bloques decorativos ni expansión del alcance; prioridad lanzamiento. Las verificaciones técnicas de 09D y la aprobación visual local de la 404 no certifican el sitio entero.
@@ -1211,6 +1211,20 @@ Archivos: public/og-image.png, index.html, tests/staticPages.test.mjs (ampliaci�
 
 Pendientes: finalizar datos/aprobar Privacidad; QA final de Eze; release y validación social contra dominio público después de deploy autorizado. Sin merge/deploy/DNS ni Production FINAL. Commit único `feat: integrate approved OG image and social metadata`; SHA exacto en entrega y por git log del título.
 
+### BLOCK 09G — Privacy Editorial Update
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE REVIEW**
+
+15/10/2026 Argentina. Trabajo autorizado directamente sobre main; HEAD inicial limpio `28d43b3eb274e78451db479b9a1ba134d5bc275b`. Según Dirección, sitio ya desplegado en Cloudflare Pages Free y conectado a main, por lo que este commit puede activar un nuevo deploy automático.
+
+privacidad.html conserva estructura/secciones, estilos y enlaces. Responsable Ezequiel Gonzalez (sin tilde), persona humana independiente bajo marca Eze Web Studio, email aprobado intacto. Hosting Cloudflare Pages Free; no backend/formularios/cuentas/cobro automático. Consultas cerradas sin proyecto se eliminan cuando ya no son necesarias; datos de clientes solo mientras sean necesarios para servicio/obligaciones, sin garantizar borrado de logs/backups de terceros. Verificación en dos pasos confirmada por Dirección en Google/GitHub/Cloudflare y cuentas administradas por responsable. Sin plazos inventados ni otras garantías.
+
+Aviso Documento en revisión y frases provisionales retirados; fecha15/10/2026. Analítica descrita solo a nivel de código propio; configuración Cloudflare Web Analytics no verificada, sin negar toda medición del proveedor. Domicilio particular no publicado por decisión expresa de Dirección; no dato ficticio ni certificación legal. noindex conservado. Tests actualizados únicamente donde esperaban el borrador/fecha anterior.
+
+Archivos: privacidad.html, tests/staticPages.test.mjs y este documento. npm run check lint/build, git diff --check y16/16tests PASS. HTML/IDs/headings/enlaces/noindex y respuesta local200 comprobados por suite existente; sin browser visual PASS ni verificación del nuevo despliegue público. Landing, estilos, Navbar/Footer, Hero/Projects/FAQ/Contacto, OG y404 byte-identical. No dependencias ni configuración nuevas.
+
+Commit único `fix: update privacy policy with confirmed operating details`; SHA exacto en entrega y resoluble por git log del título. Cierre editorial09G, no declaración de cumplimiento legal certificado ni Production FINAL; la ejecución/resultados del despliegue automático corresponden a Cloudflare.
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: AUDIT 09A COMPLETE / CORRECTIONS AND BROWSER ACCEPTANCE PENDING DIRECTION**
@@ -1627,7 +1641,7 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **09F: IMPLEMENTATION COMPLETE / READY FOR EZE FINAL QA.** OG aprobada y FINAL/FROZEN integrada exactamente, metadata social completa y previewHTTP local PASS. Despliegue y preview social público pendientes.
 
-**Próximo paso (Dirección,14/10 ART):** cerrar datos reales de Privacidad y QA final de Eze en navegador; confirmar hosting comercial y autorizar separadamente release/DNS/HTTPS/redirects. Luego verificar `/`200, `/privacidad`200, unknown404 y `/og-image.png`200/image/png en dominio público y preview de crawlers. 404 local ya aprobada por Eze. Sin merge/deploy ni Production FINAL.
+**Próximo paso (09G,15/10 ART):** Eze revisa el texto de Privacidad actualizado y el resultado del despliegue automático conectado a main. Hosting Cloudflare Pages Free confirmado por Dirección; configuración de Web Analytics no comprobada en este bloque. Mantener QA final de navegador/rutas/preview social donde siga pendiente, sin declarar Production FINAL ni cumplimiento legal certificado.
 
 ---
 
