@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 15 de octubre de 2026 UTC (14/10 Argentina); Dirección, OG visual aprobada y pre-integración.
+> Última actualización: 15 de octubre de 2026 UTC (14/10 Argentina);09F, OG y metadata social integrados.
 
 ---
 
@@ -37,14 +37,14 @@ No reemplaza a Figma ni a los documentos especializados. Resume el contrato vige
 - **09B / 09B.1:** continuidad Solución, halo Mobile y símbolo E en Navbar; tamaño reducido a 27 px Desktop / 25 px Mobile. Implementados, sujetos al QA visual específico de Eze donde corresponda.
 - **09C:** Footer Mobile más discreto y línea full-width; favicon/iconos oficiales; canonical/`og:url` preparados para `https://ezewebstudio.com.ar/`; manejo de fallas tsParticles corregido técnicamente. QA visual global pendiente.
 - **09D:** `/privacidad` en HTML estático y enlazada desde el Footer; es **borrador en revisión**, con `noindex` y datos operativos por confirmar. `404.html` personalizada, estática y sin efectos; servidor `npm run preview` responde 404 a rutas inexistentes. **Eze abrió una ruta inexistente en `npm run preview`, vio la página personalizada y APROBÓ su aspecto/comportamiento local.** No confundir este QA local con verificación del hosting público. En `npm run dev` (Vite 5173) las URLs inexistentes siguen mostrando el error genérico por la arquitectura `appType: 'mpa'`; es deliberado, no un defecto nuevo. Referencia: `docs/PRIVACY_AND_404.md`.
-- **Copy Audit 01:** entregada y revisada por Dirección. Solo **C01 y C02 aprobados e implementados en09E**: Fitness se identifica como demo y title/og:title/twitter:title describen el servicio. **C03 y C05 diferidos; C04 rechazado en favor del copy existente.** Ningún otro cambio de copy autorizado. OG, Privacidad definitiva y QA de lanzamiento siguen pendientes.
-- **OG IMAGE OFICIAL (DISEÑO APROBADO / ASSET PENDIENTE DE INTEGRACIÓN):** Eze aprobó visualmente el PNG final 1200 × 630 y recibió SVG editable. Composición negra `#050708`, símbolo original de tres barras, título «EZE WEB STUDIO» y descriptor «Diseño y desarrollo de landing pages» con espaciado corregido. El SVG entregado incorpora el SVG original del repositorio (blob `7e6776aa4198dc30c9405849294e4614a06cebbe`); el PNG fue inspeccionado como 1200×630 RGB. **Archivos adjuntos en la conversación de Dirección, NO incorporados al repositorio:** `eze-web-studio-og-1200x630-final(1).png` y `eze-web-studio-og-editable-final(1).svg`. Web Production debe recibir el PNG por adjunto explícito, sin recrearlo, ni asumir acceso entre chats. Pendiente `public/og-image.png`, `og:image`/`twitter:image`, dimens./alt, build y prueba final sobre URL pública. Visual **FINAL/FROZEN**, integración NO realizada.
+- **Copy Audit 01:** entregada y revisada por Dirección. Solo **C01 y C02 aprobados e implementados en09E**: Fitness se identifica como demo y title/og:title/twitter:title describen el servicio. **C03 y C05 diferidos; C04 rechazado en favor del copy existente.** Ningún otro cambio de copy autorizado. OG integrada en09F; Privacidad definitiva y QA de lanzamiento siguen pendientes.
+- **09F — OG IMAGE OFICIAL INTEGRADA / FINAL-FROZEN:** PNG adjunto aprobado copiado sin modificar a `public/og-image.png` (1200×630, PNG,18384bytes). SHA256 `1ae6765dffab9027cb2ad3161db6a8d900e20d4f13fac4bd9ae26072d2a1c152`, idéntico al adjunto. `og:image`/`twitter:image` apuntan a `https://ezewebstudio.com.ar/og-image.png`, dimensiones/tipo/alt completos y Twitter summary_large_image. Build y HTTP local verificados; dominio público y crawler social pendientes del deploy autorizado. Sin regeneración ni cambio de píxeles; SVG editable no requerido en runtime.
 - **Dominio:** `ezewebstudio.com.ar` comprado y registrado en NIC Argentina; queda reservado para publicación posterior. La URL canónica en HTML no significa que el sitio ya esté publicado.
 
 **Política de lanzamiento y legal mínimo viable:** documento canónico de [CEO / Dirección](https://docs.google.com/document/d/15k6hw8Aj_0B_fO-Wz0J7oOx5j0YTMmdq6ULpzp66Qf4/edit) y [Sistema de trabajo con clientes V2](https://docs.google.com/document/d/1V1AfGKOMBj8OqjigQsWzKv5sWcGyrMlQ2b7fuCpH9DY/edit). Flujo: landing → WhatsApp → conversación → propuesta → acuerdo/pago → producción. Sin checkout, usuarios, formulario ni pagos automáticos. Resolver obligaciones reales de privacidad, identidad, licencias, contratación/fiscalidad cuando correspondan, HTTPS y hosting apto para uso comercial; no instalar banners de cookies, sistemas legales o infraestructura que no sean necesarios.
 
 **Pendientes de mayor prioridad, en este orden:**
-1. **Próximo bloque autorizado por Dirección: integración OG exclusivamente.** Recibir el PNG exacto aprobado 1200×630, almacenarlo como asset público optimizado sin cambios visuales; enlazar metadatos sociales relativos al dominio canónico, incluyendo `og:image`, `twitter:image`, `twitter:card=summary_large_image`, dimensiones/tipo/alt pertinentes. Comprobar build y rutas locales. No generar ni rediseñar imágenes.
+1. **Integración OG09F completada.** Asset y metadata listos, con tests/build/HTTP local PASS. Validación de la imagen en dominio público y crawlers sociales pendiente exclusivamente del release autorizado; no repetir diseño ni ampliar alcance.
 2. Cerrar política de privacidad antes de publicarla como definitiva: identidad legal y domicilio del responsable; proveedor/plan de hosting y tratamiento de logs; criterios reales de conservación/eliminación; accesos y medidas de seguridad efectivas. No inventar datos.
 3. QA final de Eze en navegador: responsive (incluidos Footer Mobile y Navbar), Solución/Hero interactivo, teclado, zoom, links, consola y rutas; distinguir aprobaciones locales de lo todavía pendiente. **La 404 en preview ya está visualmente aprobada; no requiere rediseño.**
 4. Decidir hosting que permita uso comercial, completar despliegue, DNS NIC Argentina, HTTPS, redirects y comprobar en dominio real `/` 200, `/privacidad` 200, rutas inexistentes 404 con página correcta, además de la OG pública/preview social real. No asumir estos estados antes del despliegue.
@@ -1199,6 +1199,18 @@ Tests existentes ajustados solo a los textos aprobados: staticPages verifica los
 
 OG image, finalización de Privacidad y QA real de lanzamiento permanecen pendientes. Commit único `fix: apply approved demo description and service metadata title`; SHA exacto en entrega y mediante git log del título. Sin merge/deploy ni aprobación Production FINAL.
 
+### BLOCK 09F — Official OG Asset / Final Social Metadata
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE FINAL QA**
+
+HEAD/origin limpio verificado: `209c01d691cc924abd8090c122aafe18bf88c1bb`. Fuente: PNG explícitamente adjunto `eze-web-studio-og-1200x630-final(2).png`, verificado e inspeccionado. `public/og-image.png`: copia byte-exact, PNG1200×630/18384bytes, SHA256 `1ae6765dffab9027cb2ad3161db6a8d900e20d4f13fac4bd9ae26072d2a1c152`. Asset visual FINAL/FROZEN: sin recreación, recorte, resize, recolor ni optimización que altere bytes/píxeles.
+
+index.html: og:image y twitter:image absolutos `https://ezewebstudio.com.ar/og-image.png`; OGwidth1200/height630/typeimage/png; ambos alt `Eze Web Studio — Diseño y desarrollo de landing pages`; twitter:card summary_large_image. Title/og:title/twitter:title aprobados09E, descriptions, canonical/og:url e iconos intactos. Sin tags duplicadas ni refs rotas. No otros cambios de producto/estilos/routing/dependencias.
+
+Archivos: public/og-image.png, index.html, tests/staticPages.test.mjs (ampliación del control social/HTTP existente) y este documento. npm run check lint/build, git diff --check y16/16tests PASS. JSDOM26 de QA restaurado fuera del proyecto en `/tmp/ews-09f-tools`, sin cambiar package/lock. Preview de producción local medido: `/og-image.png`200, MIMEimage/png, firma/IHDR1200×630 y bytes idénticos a public/dist/adjunto; HTML generado expone exactamente una instancia por tag social. Favicon/rutas previas preservados. No browser ni publicación/crawler social PASS afirmado.
+
+Pendientes: finalizar datos/aprobar Privacidad; QA final de Eze; release y validación social contra dominio público después de deploy autorizado. Sin merge/deploy/DNS ni Production FINAL. Commit único `feat: integrate approved OG image and social metadata`; SHA exacto en entrega y por git log del título.
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: AUDIT 09A COMPLETE / CORRECTIONS AND BROWSER ACCEPTANCE PENDING DIRECTION**
@@ -1306,7 +1318,7 @@ Email/e-mail href aprobados e integrados: `ezewebstudio.dev@gmail.com` / `mailto
 
 - 08K/effect rendered y QA responsive/zoom/teclado/runtime siguen gates de aceptación manual; no se consideran aprobados por pruebas de DOM.
 - P1-02 RESUELTO TÉCNICAMENTE en09C: carga nativa con catch/timeout/cleanup local, provider/engine oficiales únicos y valores intactos. Rechazo/late loads/StrictMode probados; no certifica el efecto visual08K.
-- P1-03 parcial: faviconSVG/ICO y Apple180 emitidos en09C desde símbolo oficial; imagenOG aún pendiente de aprobación. P1-04 metadata preparada con dominio aprobado https://ezewebstudio.com.ar/; DNS/deploy/redirects y validación pública deliberadamente diferidos, sin afirmar sitio live.
+- P1-03 assets integrados: faviconSVG/ICO y Apple180 en09C; imagenOG FINAL/FROZEN y metadata social completa en09F. Validación en dominio público/crawlers aún pendiente, sin claim de lanzamiento. P1-04 metadata preparada con dominio aprobado https://ezewebstudio.com.ar/; DNS/deploy/redirects y validación pública deliberadamente diferidos, sin afirmar sitio live.
 - Detalle, prioridad y plan en `docs/qa/PRELAUNCH_AUDIT_2026-10-14.md`. No producto modificado por 09A.
 
 ### FAQ — CONTENIDO RESUELTO en08T
@@ -1337,7 +1349,7 @@ Estado actual:
 - Proyectos: siete SVG exactos locales en `src/assets/projects/`, glows/flechas;08R agrega `fitness-preview.webp`1448×1086/128630bytes suministrado por Eze. Previews2–3 pendientes;
 - FAQ: cuatro SVG exactos PLUS/MINUS Desktop/Mobile locales en `src/assets/faq/`; About no agrega assets;
 - Contacto: dos SVG exactos Arrow Right Desktop/Mobile locales en `src/assets/contact/`, incluyendo stroke bounds Mobile; Footer no agrega assets;
-- favicon: public/favicon.svg + favicon.ico16/32/48 y apple-touch-icon.png180, derivados del símbolo local aprobado en09C; OG visual sigue pendiente de aprobación.
+- favicon: public/favicon.svg + favicon.ico16/32/48 y apple-touch-icon.png180, derivados del símbolo local aprobado en09C; OG aprobada e integrada en09F como public/og-image.png, PNG1200×630 sin modificaciones.
 
 Al exportar desde Figma:
 
@@ -1613,9 +1625,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **09E: IMPLEMENTATION COMPLETE / COPY AUDIT 01 CLOSED FOR LAUNCH.** C01 demo Fitness y C02 `<title>`/`og:title`/`twitter:title` con servicio exacto implementados en commit `d9fceba5782017985505770b350e998f4424dd2d`. C03 y C05 diferidos; C04 rechazado. No reescritura restante de copy aprobada.
 
-**OG IMAGE: APPROVED VISUALLY / AWAITING INTEGRATION.** PNG final 1200×630, SVG fuente editable y composición definitiva aprobados por Eze. Asset aún no existe en `public/` y falta enlazar Open Graph/Twitter. La pieza visual permanece FINAL/FROZEN y debe pasarse explícitamente al agente productor como archivo adjunto, sin rehacerla.
+**09F: IMPLEMENTATION COMPLETE / READY FOR EZE FINAL QA.** OG aprobada y FINAL/FROZEN integrada exactamente, metadata social completa y previewHTTP local PASS. Despliegue y preview social público pendientes.
 
-**Próximo paso (Dirección, 14/10 ART):** integrar la imagen OG exacta aprobada con metadata/tarjeta social completa en un único bloque acotado; no añadir retoques visuales sin bug demostrado. Luego cerrar datos reales de Privacidad, realizar QA de navegador (Hero interactivo, Footer Mobile360/390/430, transición768, logo, continuidad Solución, navegación, zoom/teclado/console), confirmar hosting comercial y publicar `ezewebstudio.com.ar` con DNS/HTTPS/redirects y HTTP público. 404 custom local en Vite preview APROBADA por Eze. Sin merge ni Production FINAL hasta gates.
+**Próximo paso (Dirección,14/10 ART):** cerrar datos reales de Privacidad y QA final de Eze en navegador; confirmar hosting comercial y autorizar separadamente release/DNS/HTTPS/redirects. Luego verificar `/`200, `/privacidad`200, unknown404 y `/og-image.png`200/image/png en dominio público y preview de crawlers. 404 local ya aprobada por Eze. Sin merge/deploy ni Production FINAL.
 
 ---
 

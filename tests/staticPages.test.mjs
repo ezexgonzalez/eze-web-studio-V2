@@ -26,6 +26,28 @@ test('static privacy/404 pages, actual preview statuses, assets and Footer home/
     assert.equal(home.querySelector('meta[property="og:title"]').content, approvedTitle)
     assert.equal(home.querySelector('meta[name="twitter:title"]').content, approvedTitle)
     assert.equal(home.querySelector('link[rel="canonical"]').href, 'https://ezewebstudio.com.ar/')
+    const social = {
+      'og:image': 'https://ezewebstudio.com.ar/og-image.png',
+      'og:image:width': '1200', 'og:image:height': '630', 'og:image:type': 'image/png',
+      'og:image:alt': 'Eze Web Studio — Diseño y desarrollo de landing pages',
+      'twitter:card': 'summary_large_image',
+      'twitter:image': 'https://ezewebstudio.com.ar/og-image.png',
+      'twitter:image:alt': 'Eze Web Studio — Diseño y desarrollo de landing pages',
+    }
+    for (const [key, value] of Object.entries(social)) {
+      const tags = home.querySelectorAll(`meta[${key.startsWith('og:') ? 'property' : 'name'}="${key}"]`)
+      assert.equal(tags.length, 1, key)
+      assert.equal(tags[0].content, value, key)
+    }
+    const image = await fetch(base + '/og-image.png')
+    assert.equal(image.status, 200)
+    assert.match(image.headers.get('content-type'), /^image\/png/)
+    const imageBytes = Buffer.from(await image.arrayBuffer())
+    assert.deepEqual(imageBytes, await readFile('public/og-image.png'))
+    assert.deepEqual(imageBytes, await readFile('dist/og-image.png'))
+    assert.equal(imageBytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a')
+    assert.equal(imageBytes.readUInt32BE(16), 1200)
+    assert.equal(imageBytes.readUInt32BE(20), 630)
     const privacy = await load('/privacidad', 200)
     assert.equal(privacy.querySelector('h1').textContent, 'Política de privacidad')
     assert.equal(privacy.documentElement.lang, 'es')
