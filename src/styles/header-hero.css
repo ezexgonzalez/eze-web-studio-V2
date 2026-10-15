@@ -14,8 +14,8 @@
   .site-header::before { transition: none; }
 }
 .header-inner { position: relative; height: 92px; display: flex; align-items: flex-start; justify-content: space-between; padding-top: 24px; }
-.header-brand { display: flex; align-items: center; min-width: 44px; min-height: 44px; }
-.header-brand img { display: block; width: 38px; height: auto; }
+.header-brand { --header-symbol-width: 25px; display: flex; align-items: center; min-width: 44px; min-height: 44px; }
+.header-brand img { display: block; width: var(--header-symbol-width); height: auto; }
 .menu-control { width: 72px; height: 44px; border: 0; padding: 0; color: var(--color-text-primary); background: transparent; cursor: pointer; }
 .desktop-nav, .header-cta { display: none; }
 .mobile-navigation { position: fixed; inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; background: var(--color-background); color: var(--color-text-primary); overflow-y: auto; }
@@ -68,7 +68,7 @@
 @media (min-width: 75rem) {
   :root { --header-offset: 68px; }
   .header-inner { width: min(calc(100% - 64px), 1280px); height: 68px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); padding-block: 0; align-items: center; }
-  .header-brand { min-height: 44px; justify-self: start; }
+  .header-brand { --header-symbol-width: 27px; min-height: 44px; justify-self: start; }
   .menu-control { display: none; }
   .desktop-nav { display: flex; gap: 32px; position: static; color: var(--color-text-muted); }
   .desktop-nav a { display: flex; align-items: center; height: 44px; }

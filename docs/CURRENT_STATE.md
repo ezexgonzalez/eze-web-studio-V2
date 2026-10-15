@@ -1111,6 +1111,18 @@ Protegidos: controllers/settings/plume/particles/paths/assets Hero originales, l
 
 Commit único `fix: polish Solution continuity and Mobile halo with navbar symbol`; SHA por git log de ese título y entrega final. Sin merge, nuevas secciones ni Production FINAL.
 
+### BLOCK 09B.1 — Navbar Symbol Size Correction
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+14 de octubre de 2026 (Buenos Aires). HEAD/origin inicial limpio verificado: `296cb51fdf96a162228b08919abace0f1056658e`. Dirección corrige exclusivamente el tamaño del símbolo de09B.
+
+Solo `src/styles/header-hero.css`: variable local `.header-brand`25px por defecto (Mobile/Tablet y menú abierto),27px desde1200px (Desktop). Imagen usa esa variable y height:auto, ratio483:456 original. Enlace conserva min44×44 y align-items:center; alturas de Header68/92 y todos los offsets/layouts intactos. SVG y Navbar.jsx byte-identical: tres barras, href#inicio, aria-label y handlers sin cambios. No dominio/DNS/deploy ni otras superficies.
+
+Validación: npm run check lint/build, git diff --check y7/7 tests existentes PASS; probe Navbar ReactDOM StrictMode open/close/cancel/resize/foco/ARIA PASS con APIs simuladas. Comparación deCSS: únicamente tres declaraciones de sizing cambian. Tamaños derivados deCSS verificados360/390/430/768/1024/1200/1366/1440/1536/1920; no medición browser/pixels ni aceptación visual afirmada. Eze confirma proporción y alineación final en Desktop/Mobile/menú. Los demás gates09A/08K siguen abiertos.
+
+Archivos: header-hero.css y este registro canónico. Commit único `fix: reduce navbar symbol size on Desktop and Mobile`; SHA en entrega y por git log del título. Sin merge.
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: AUDIT 09A COMPLETE / CORRECTIONS AND BROWSER ACCEPTANCE PENDING DIRECTION**
@@ -1517,7 +1529,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **09B: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA.** Las cuatro correcciones locales autorizadas están implementadas; detalle en bloque09B.
 
-Próximo paso: Eze valida seams/highlight/halo Mobile/logo y controles protegidos; Dirección conserva la priorización de pendientes09A y autoriza nuevas correcciones cuando corresponda. No implementación automática, merge ni Production FINAL. 08K conserva gate visual pendiente; FAQ/contact destinations resueltos. La autorización explícita 09A reemplaza las prohibiciones históricas de comenzar el audit Block 09, sin implicar aprobación del Hero ni de otras fases.
+**09B.1: READY FOR EZE VISUAL QA.** Símbolo reducido a27px Desktop/25px Mobile y menú; geometría delSVG/target44 preservados.
+
+Próximo paso: Eze valida el tamaño/alineación del logo y las superficies09B aún pendientes; Dirección conserva la priorización09A. No dominio/DNS/deploy ni nuevas correcciones autorizadas por este bloque. No implementación automática, merge ni Production FINAL. 08K conserva gate visual pendiente; FAQ/contact destinations resueltos. La autorización explícita 09A reemplaza las prohibiciones históricas de comenzar el audit Block 09, sin implicar aprobación del Hero ni de otras fases.
 
 ---
 
