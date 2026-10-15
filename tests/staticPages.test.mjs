@@ -21,7 +21,10 @@ test('static privacy/404 pages, actual preview statuses, assets and Footer home/
   let vite
   try {
     const home = await load('/', 200)
-    assert.equal(home.title, 'Eze Web Studio')
+    const approvedTitle = 'Diseño y desarrollo de landing pages | Eze Web Studio'
+    assert.equal(home.title, approvedTitle)
+    assert.equal(home.querySelector('meta[property="og:title"]').content, approvedTitle)
+    assert.equal(home.querySelector('meta[name="twitter:title"]').content, approvedTitle)
     assert.equal(home.querySelector('link[rel="canonical"]').href, 'https://ezewebstudio.com.ar/')
     const privacy = await load('/privacidad', 200)
     assert.equal(privacy.querySelector('h1').textContent, 'Política de privacidad')

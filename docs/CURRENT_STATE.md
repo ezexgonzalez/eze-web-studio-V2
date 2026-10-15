@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 15 de octubre de 2026 UTC (14/10 Argentina); Dirección, continuidad tras QA de 404.
+> Última actualización: 15 de octubre de 2026 UTC (14/10 Argentina);09E, copy C01/C02 aprobado.
 
 ---
 
@@ -37,7 +37,7 @@ No reemplaza a Figma ni a los documentos especializados. Resume el contrato vige
 - **09B / 09B.1:** continuidad Solución, halo Mobile y símbolo E en Navbar; tamaño reducido a 27 px Desktop / 25 px Mobile. Implementados, sujetos al QA visual específico de Eze donde corresponda.
 - **09C:** Footer Mobile más discreto y línea full-width; favicon/iconos oficiales; canonical/`og:url` preparados para `https://ezewebstudio.com.ar/`; manejo de fallas tsParticles corregido técnicamente. QA visual global pendiente.
 - **09D:** `/privacidad` en HTML estático y enlazada desde el Footer; es **borrador en revisión**, con `noindex` y datos operativos por confirmar. `404.html` personalizada, estática y sin efectos; servidor `npm run preview` responde 404 a rutas inexistentes. **Eze abrió una ruta inexistente en `npm run preview`, vio la página personalizada y APROBÓ su aspecto/comportamiento local.** No confundir este QA local con verificación del hosting público. En `npm run dev` (Vite 5173) las URLs inexistentes siguen mostrando el error genérico por la arquitectura `appType: 'mpa'`; es deliberado, no un defecto nuevo. Referencia: `docs/PRIVACY_AND_404.md`.
-- **Copywriting Director:** agente nuevo con auditoría integral de copy **EN CURSO / PENDIENTE DE ENTREGA**. Debe leer los documentos de Drive y revisar Hero, Problema, Solución, Proyectos, Estudio, FAQ, Contacto, navbar/footer y metadatos; entregar diagnóstico y propuestas priorizadas. **No hay cambios de copy aprobados ni autorización para reescribir la landing hasta revisión de Dirección.**
+- **Copy Audit 01:** entregada y revisada por Dirección. Solo **C01 y C02 aprobados e implementados en09E**: Fitness se identifica como demo y title/og:title/twitter:title describen el servicio. **C03 y C05 diferidos; C04 rechazado en favor del copy existente.** Ningún otro cambio de copy autorizado. OG, Privacidad definitiva y QA de lanzamiento siguen pendientes.
 - **Dominio:** `ezewebstudio.com.ar` comprado y registrado en NIC Argentina; queda reservado para publicación posterior. La URL canónica en HTML no significa que el sitio ya esté publicado.
 
 **Política de lanzamiento y legal mínimo viable:** documento canónico de [CEO / Dirección](https://docs.google.com/document/d/15k6hw8Aj_0B_fO-Wz0J7oOx5j0YTMmdq6ULpzp66Qf4/edit) y [Sistema de trabajo con clientes V2](https://docs.google.com/document/d/1V1AfGKOMBj8OqjigQsWzKv5sWcGyrMlQ2b7fuCpH9DY/edit). Flujo: landing → WhatsApp → conversación → propuesta → acuerdo/pago → producción. Sin checkout, usuarios, formulario ni pagos automáticos. Resolver obligaciones reales de privacidad, identidad, licencias, contratación/fiscalidad cuando correspondan, HTTPS y hosting apto para uso comercial; no instalar banners de cookies, sistemas legales o infraestructura que no sean necesarios.
@@ -490,7 +490,7 @@ Solo existe un registro aprobado:
 - id: `fitness`
 - category: `FITNESS`
 - title: `Fuerza con método.`
-- description: `Landing page para un gimnasio boutique.`
+- description: `Demo de landing page para un gimnasio boutique.` — C01 aprobado en09E
 - URL: `https://eze-demo-gimnasio.vercel.app/` — aprobada e integrada en08R
 - preview: `src/assets/projects/fitness-preview.webp` — WebP suministrado por Eze, integrado en08R
 - accent: `#FF5A45` — aprobado para hover/focus local de VER PROYECTO en08S
@@ -1186,6 +1186,18 @@ Archivos: Footer.jsx (enlace), contact-footer.css (target/feedback local), vite.
 Validación: npm run check lint/build PASS, git diff --check PASS y **16/16 tests PASS**. Suite HTTP real del preview: home200/privacy200, tres rutas inexistentes404 con copy custom, HEAD404 sin body, assets/CSS/font200, símbolo exacto, páginas sin scripts/forms/canvas y Footer link/tabIndex/navegación conservados. CSS responsive natural con gutters24, maxlectura760, wrapping de email y targets44; sin navegador: no visual/zoom/AT/WCAG/overflow PASS declarado. Eze valida360/390/430/768 y Desktop.
 
 Antes del release: Eze confirma y aprueba los campos de privacidad mencionados y el texto final; comprobar proveedor comercial/HTTPS y privacidad/logs efectivamente configurados. Hosting debe servir las páginas estáticas y 404.html con404 en rutas inexistentes, nunca SPA200; ver comandos y resultados esperados en docs/PRIVACY_AND_404.md. Permanecen OG, gates08K/QA real y acciones fiscales/comerciales separadas. DNS/deploy/redirects no ejecutados. Commit único `feat: add privacy draft and static custom 404`; SHA exacto en entrega y por git log del título. No merge, deploy ni FINAL/FROZEN.
+
+### BLOCK 09E — Approved Copy C01 + C02
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+HEAD/origin inicial sincronizado y limpio: `f5c84f20f794a77b8c3c97b9482aac60ab0ae338`. Copy Audit01 revisada por Dirección: únicamente C01 y C02 aprobados/implementados; C03 y C05 diferidos, C04 rechazado en favor del texto existente. No otras mejoras de copy autorizadas.
+
+C01: src/data/projects.js, descripciónFitness exacta `Demo de landing page para un gimnasio boutique.`. Title/category/preview/URL/accent y dataset único intactos. C02: index.html title/og:title/twitter:title exactos `Diseño y desarrollo de landing pages | Eze Web Studio`. Descripciones, canonical/og:url, favicons y demás metadata intactos; OG pendiente no modificado. No componentes, estilos, routing, privacidad/404 ni efectos modificados.
+
+Tests existentes ajustados solo a los textos aprobados: staticPages verifica los tres títulos en HTML generado/HTTP; projectCarousel verifica la descripción real además de interacción existente. npm run check lint/build, git diff --check y16/16tests PASS. Descripción en flujo natural, sin line-clamp/altura fija en information/description; wrapping y crecimiento permitidos según CSS. No browser/pixels/overflow PASS: Eze confirma wraps Mobile/Desktop.
+
+OG image, finalización de Privacidad y QA real de lanzamiento permanecen pendientes. Commit único `fix: apply approved demo description and service metadata title`; SHA exacto en entrega y mediante git log del título. Sin merge/deploy ni aprobación Production FINAL.
 
 ### BLOCK 09 — Accessibility + Performance
 

@@ -176,6 +176,7 @@ test('real Embla React: controls, keyboard, mouse/touch drag, sync, resize, redu
     await frames(); selected(1)
 
     // Approved single record now has a real preview/demo; fixture null states above remain genuine.
+    assert.equal(projects[0].description, 'Demo de landing page para un gimnasio boutique.')
     await render(projects); await frames()
     assert.equal(findAll('.projects-slide').length, 1)
     assert.equal(find('.projects-pagination').textContent, '01/01')

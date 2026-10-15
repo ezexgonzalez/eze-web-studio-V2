@@ -14,7 +14,7 @@ export const projects = [
     id: 'fitness',
     category: 'FITNESS',
     title: 'Fuerza con método.',
-    description: 'Landing page para un gimnasio boutique.',
+    description: 'Demo de landing page para un gimnasio boutique.',
     url: 'https://eze-demo-gimnasio.vercel.app/',
     preview: fitnessPreview,
     accent: '#FF5A45',
