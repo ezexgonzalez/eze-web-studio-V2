@@ -5,7 +5,11 @@ import { ArcDisplacement } from './ArcDisplacement.jsx'
 export default function HeroAtmosphere({ backgroundRef, desktop, tablet, wide, interactive, arcTarget, onParticleStatus, onArcStatus }) {
   const [particleFailed, setParticleFailed] = useState(false)
   const [arcFailed, setArcFailed] = useState(false)
-  const failParticles = useCallback(() => { setParticleFailed(true); onParticleStatus(false) }, [onParticleStatus])
+  const failParticles = useCallback(error => {
+    if (import.meta.env.DEV) console.warn('[HeroMotion] particles failed — static fallback', error)
+    setParticleFailed(true)
+    onParticleStatus(false)
+  }, [onParticleStatus])
   const failArc = useCallback(() => setArcFailed(true), [])
   const variant = tablet ? (desktop ? (wide ? 'wide' : 'production') : 'tablet') : 'mobile'
   return <>

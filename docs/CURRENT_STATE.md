@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 14 de octubre de 2026.
+> Última actualización: 15 de octubre de 2026 (UTC; entrega09C).
 
 ---
 
@@ -1123,6 +1123,23 @@ Validación: npm run check lint/build, git diff --check y7/7 tests existentes PA
 
 Archivos: header-hero.css y este registro canónico. Commit único `fix: reduce navbar symbol size on Desktop and Mobile`; SHA en entrega y por git log del título. Sin merge.
 
+### BLOCK 09C — Mobile Footer / Brand Icons / Pre-launch Corrections
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+Baseline HEAD/origin limpio `f3f4e878298e945259adeee44a01f3285f6dfce6`. Dirección autoriza únicamente Footer Mobile, iconos oficiales/metadata del dominio y P1-02. Referencia Footer suministrada `image(20261015-004550).png` inspeccionada; no es evidencia browser del nuevo código.
+
+- Footer <768: mínimo470 retirado; padding36/24/28, margin-nav16/bottom20, wordmark17/26 tracking.16 y muted, navegación15/24, meta13/22. Targets44 intactos, links/wordmark/copyright/backtop conservados. Una regla pseudo full-viewport1px/16%, rule interior oculta solo Mobile. Tablet conserva su mínimo470 y reglas previas; Desktop byte-identical.
+- Marca: SVGfavicon cuadrado con símbolo original proporcional, ancho75% y fondo #050708 para legibilidad de barras blancas; ICO fallback16/32/48 y Apple180 derivados directamente de paths originales, sin redibujar ni cambiar src/assets/brand/ews-symbol.svg. Archivos locales public/, referencias head y build válidos.
+- Metadata: canonical +og:url https://ezewebstudio.com.ar/, og:site_name y Twitter title/description con title/copy aprobados existentes. Sin og:image rota. **OG PENDING DIRECTION APPROVAL**: propuesta mínima1200×630, fondo #050708, símbolo y nombre del estudio; no generada ni integrada sin aprobación. No DNS, deployment, redirects, publicación ni nueva infraestructura SEO.
+- P1-02: @tsparticles/react4.4.0 no ofrece error prop y su componente omite catch de engine.load. Adapter local reemplaza solo lifecycle load/destroy; mantiene ParticlesProvider/loadSlim/engine únicos y renderer nativo. Captura rechazo nativo/síncrono y ready callback, timeout8s, destruye loads tardíos/reemplazados y cancela callbacks al desmontar. Error real DEV en HeroAtmosphere; fallback particles independiente del arco. Sin global suppression, monkeypatch de producción, nuevo motor ni tuning.
+
+Archivos: src/styles/contact-footer.css (scope Mobile y preservación Tablet), index.html, public/{favicon.svg,favicon.ico,apple-touch-icon.png}, effects/{ParticleField.jsx,loadParticleContainer.js,HeroAtmosphere.jsx}; tests/{particleLifecycle,particleField}.test.mjs; docs/CURRENT_STATE.md, docs/HERO_MOTION.md y docs/CONTACT_FOOTER.md. package/lock, Navbar sizing09B.1, Footer JSX, Hero arc/filter/plume/settings/layout y demás secciones byte-identical.
+
+Validación: npm run check baseline/final PASS; git diff --check PASS; **15/15 tests PASS** (7 existentes +7 lifecycle +1 React/provider integration). Fallos inyectados, timeout, late resolve/reject, StrictMode, cleanup, options replacement y readiness callback probados sin rechazo no manejado. Iconos decodificados/inspeccionados y output HTTP local verificado. Scope CSS Mobile360/390/430 y transición768 revisado estructuralmente; gutters24/targets44 sin widths nuevas. Sin browser ejecutable: no screenshots, overflow/pixels/teclado/Lighthouse ni browser PASS.
+
+Restantes P1:08K Hero rendered acceptance; responsive/zoom/teclado/consola real; imagenOG; validación metadata/assets en host tras release autorizado. Proyectos2–3 siguen contenido futuro pendiente, sin filler. Aprobación visual09B/09B.1/09C corresponde a Eze. Commit único `fix: refine Mobile footer and prepare brand release assets`; SHA exacto en entrega y mediante git log de ese título. No merge ni deploy, no FINAL/FROZEN.
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: AUDIT 09A COMPLETE / CORRECTIONS AND BROWSER ACCEPTANCE PENDING DIRECTION**
@@ -1229,8 +1246,8 @@ Email/e-mail href aprobados e integrados: `ezewebstudio.dev@gmail.com` / `mailto
 ### Pre-launch — auditoría 09A
 
 - 08K/effect rendered y QA responsive/zoom/teclado/runtime siguen gates de aceptación manual; no se consideran aprobados por pruebas de DOM.
-- Ruta de fallo nativo particles: promesa de tsParticles.load rechazada sin manejo en wrapper 4.4.0; reproducida aisladamente, no error observado en sesión normal. Requiere solución focalizada aprobada.
-- Favicon/imagen OG no emitidos; URL pública oficial/canonical/og:url pendientes. No inventar dominio ni assets.
+- P1-02 RESUELTO TÉCNICAMENTE en09C: carga nativa con catch/timeout/cleanup local, provider/engine oficiales únicos y valores intactos. Rechazo/late loads/StrictMode probados; no certifica el efecto visual08K.
+- P1-03 parcial: faviconSVG/ICO y Apple180 emitidos en09C desde símbolo oficial; imagenOG aún pendiente de aprobación. P1-04 metadata preparada con dominio aprobado https://ezewebstudio.com.ar/; DNS/deploy/redirects y validación pública deliberadamente diferidos, sin afirmar sitio live.
 - Detalle, prioridad y plan en `docs/qa/PRELAUNCH_AUDIT_2026-10-14.md`. No producto modificado por 09A.
 
 ### FAQ — CONTENIDO RESUELTO en08T
@@ -1261,7 +1278,7 @@ Estado actual:
 - Proyectos: siete SVG exactos locales en `src/assets/projects/`, glows/flechas;08R agrega `fitness-preview.webp`1448×1086/128630bytes suministrado por Eze. Previews2–3 pendientes;
 - FAQ: cuatro SVG exactos PLUS/MINUS Desktop/Mobile locales en `src/assets/faq/`; About no agrega assets;
 - Contacto: dos SVG exactos Arrow Right Desktop/Mobile locales en `src/assets/contact/`, incluyendo stroke bounds Mobile; Footer no agrega assets;
-- favicon / OG visual: pendientes de asset aprobado.
+- favicon: public/favicon.svg + favicon.ico16/32/48 y apple-touch-icon.png180, derivados del símbolo local aprobado en09C; OG visual sigue pendiente de aprobación.
 
 Al exportar desde Figma:
 
@@ -1531,7 +1548,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **09B.1: READY FOR EZE VISUAL QA.** Símbolo reducido a27px Desktop/25px Mobile y menú; geometría delSVG/target44 preservados.
 
-Próximo paso: Eze valida el tamaño/alineación del logo y las superficies09B aún pendientes; Dirección conserva la priorización09A. No dominio/DNS/deploy ni nuevas correcciones autorizadas por este bloque. No implementación automática, merge ni Production FINAL. 08K conserva gate visual pendiente; FAQ/contact destinations resueltos. La autorización explícita 09A reemplaza las prohibiciones históricas de comenzar el audit Block 09, sin implicar aprobación del Hero ni de otras fases.
+**09C: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA.** Footer Mobile compacto, iconos locales oficiales, dominio metadata preparado y P1-02 resuelto técnicamente; OG y gates visuales/de release pendientes.
+
+Próximo paso: Eze valida Footer Mobile360/390/430, transición768, logo09B.1, superficies09B y gates08K/09A de interacción/responsive/zoom/teclado reales. Dirección aprueba la imagenOG. Metadata del dominio está preparada únicamente; DNS/deploy/redirects y comprobación pública requieren otra autorización. No merge ni Production FINAL. FAQ/contact destinations resueltos; P1-02 corregido sin retuning del Hero.
 
 ---
 

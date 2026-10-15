@@ -1,12 +1,17 @@
-import { useCallback, useEffect, useId, useRef } from 'react'
-import Particles, { ParticlesProvider } from '@tsparticles/react'
+import { useEffect, useId } from 'react'
+import { ParticlesProvider, useParticlesProvider } from '@tsparticles/react'
+import { tsParticles } from '@tsparticles/engine'
 import { loadSlim } from '@tsparticles/slim'
+import { loadParticleContainer } from './loadParticleContainer'
 
 let initialization
 let initializationError
 const failures = new Set()
 function initialize(engine) {
-  initialization ??= loadSlim(engine).catch(error => {
+  initialization ??= new Promise((resolve, reject) => {
+    const timeout = window.setTimeout(() => reject(new Error('Particle engine did not initialize within 8 seconds')), 8000)
+    Promise.resolve().then(() => loadSlim(engine)).then(resolve, reject).finally(() => window.clearTimeout(timeout))
+  }).catch(error => {
     initializationError = error
     failures.forEach(report => report(error))
     throw error
@@ -14,29 +19,26 @@ function initialize(engine) {
   return initialization
 }
 
-// Official component owns loading/destroy/StrictMode. No manual engine.load or custom hosts.
-export function ParticleField({ options, onLoaded, onFailure }) {
-  const id = useId().replaceAll(':', '')
-  const ready = useRef(false)
-  const loaded = useCallback(async container => {
-    if (!container || container.destroyed || !container.canvas.domElement?.width || !container.canvas.domElement?.height || !container.particles.count) {
-      onFailure(new Error('Particle component received no live canvas/count'))
-      return
-    }
-    ready.current = true
-    await onLoaded(container)
-  }, [onLoaded, onFailure])
+function ParticleCanvas({ options, onLoaded, onFailure }) {
+  const id = `hero-particles-${useId().replaceAll(':', '')}`
+  const { loaded } = useParticlesProvider()
   useEffect(() => {
-    ready.current = false
+    if (!loaded) return
+    return loadParticleContainer({ load: () => tsParticles.load({ id, options }), onLoaded, onFailure })
+  }, [id, loaded, options, onLoaded, onFailure])
+  return <div id={id} className="hero-particles"
+    style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }} />
+}
+
+// Official provider initializes the same engine once. Replace only its uncaught
+// load/destroy lifecycle with a local adapter, not the native particle renderer.
+export function ParticleField({ options, onLoaded, onFailure }) {
+  useEffect(() => {
     failures.add(onFailure)
     if (initializationError) onFailure(initializationError)
-    const timeout = window.setTimeout(() => {
-      if (!ready.current) onFailure(new Error('Particle component did not load within 8 seconds'))
-    }, 8000)
-    return () => { failures.delete(onFailure); window.clearTimeout(timeout) }
+    return () => { failures.delete(onFailure) }
   }, [onFailure])
   return <ParticlesProvider init={initialize}>
-    <Particles id={`hero-particles-${id}`} className="hero-particles" options={options} particlesLoaded={loaded}
-      style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }} />
+    <ParticleCanvas options={options} onLoaded={onLoaded} onFailure={onFailure} />
   </ParticlesProvider>
 }

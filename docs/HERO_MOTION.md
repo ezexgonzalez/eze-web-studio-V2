@@ -409,3 +409,11 @@ Direction for 08J: one owner per visible filter state. Prefer explicit static/li
 8 October 2026: Eze still sees no live effect in the normal Hero after 08J. Commit 82707143716f6686dbaa8f2940c4f1294aa956c2 has not passed manual browser QA.
 
 Do not claim root cause without runtime proof. Idle displacement values are zero for mist/halo/core and particles count1/speed0.1, so at-rest output is intentionally near-static. ArcDisplacement has readiness gates that can return without retry. Prove actual served branch, visible variant, LIVE filter URLs, pointer mapping, positive local scale, plume spawn, and finally visual pixels. Fix the first failed link in that chain. If attributes animate yet pixels remain static, investigate SVG compositing/masks/clipping rather than retuning values.
+
+## 09C — Particle native-load failure handling
+
+Baseline f3f4e878; P1-02 corregido sin modificar opciones, arc/plume/filters ni el gate visual08K. El componente @tsparticles/react4.4.0 no ofrece onError y hace engine.load().then sin catch. ParticleField conserva el provider oficial y loadSlim una sola vez; un host local usa la misma API nativa, con lifecycle en loadParticleContainer.js. No patch de engine.load ni listener global de rejection en producción.
+
+Carga/ready rechazada o canvas/count inválidos → error real y fallback particle-only; HeroAtmosphere registra causa en DEV, nunca apaga el arco por ese fallo. Inicialización y carga tienen watchdog8s. Unmount/timeout/options replacement cancelan callbacks y destruyen el container propio; load que resuelve tarde se destruye en vez de quedar huérfano. Provider mantiene init estable/único y cleanup compatible StrictMode. Layout, opciones aprobadas y reduced-motion/preferences superiores intactos; Lab inactivo no se cambia.
+
+7 pruebas lifecycle cubren rechazo, timeout/late resolve, unmount/late reject, éxito/cleanup idempotente, setup-cleanup-setup y error síncrono/canvas/callback. Una prueba ReactDOM+provider real con engine.load inyectado confirma el canal de error y cleanup al reemplazar/desmontar. No canvas render/pointer visual aceptado por estas pruebas. Check/diff y15tests PASS;08K sigue pendiente de Eze.

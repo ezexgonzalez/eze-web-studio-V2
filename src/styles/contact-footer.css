@@ -38,7 +38,7 @@
 .contact-cta[href] { transition: color 300ms ease; }
 .contact-detail-value a:focus-visible, .contact-cta[href]:focus-visible { color: var(--color-accent-cyan); text-decoration-color: currentColor; }
 
-.footer-layout { min-height: 470px; padding: 72px 24px 64px; }
+.footer-layout { min-height: 0; padding: 72px 24px 64px; }
 .footer-main { margin-top: 32px; }
 .footer-navigation { display: grid; margin-top: 24px; color: var(--color-text-body); }
 .footer-navigation a { display: flex; align-items: center; min-height: 44px; }
@@ -47,6 +47,18 @@
 .footer-back-to-top { display: flex; flex: none; align-items: center; justify-content: flex-end; min-width: 101px; min-height: 44px; white-space: nowrap; }
 .footer-navigation a, .footer-back-to-top { transition: color 450ms ease; }
 .footer-navigation a:focus-visible, .footer-back-to-top:focus-visible { color: var(--color-text-primary); }
+
+/* 09C: compact Mobile footer; Tablet and approved Desktop stay unchanged. */
+@media (max-width: 47.999rem) {
+  .site-footer::before { content: ''; position: absolute; inset: 0 0 auto; height: 1px; background: rgb(115 131 140 / 16%); }
+  .footer-rule { display: none; }
+  .footer-layout { padding: 36px 24px 28px; }
+  .footer-main { margin-top: 0; }
+  .footer-wordmark { font-size: 17px; line-height: 26px; letter-spacing: .16em; color: var(--color-text-muted); }
+  .footer-navigation { margin-top: 16px; color: #9AA6AE; }
+  .footer-navigation a { font-size: 15px; line-height: 24px; }
+  .footer-bottom { margin-top: 20px; font-size: 13px; line-height: 22px; color: #85939E; }
+}
 
 
 @media (max-width: 24.374rem) {
@@ -58,7 +70,7 @@
   .contact-layout { min-height: 0; padding-block: clamp(88px, calc(88px + (100vw - 768px) * .1666667), 160px); }
   .contact-prompt, .contact-action { max-width: 848px; }
   .contact-cta, .contact-rule { max-width: clamp(440px, calc(720px - (100vw - 768px) * .648148148), 720px); }
-  .footer-layout { padding-top: clamp(72px, calc(72px + (100vw - 768px) * .2037037), 160px); padding-bottom: clamp(64px, calc(64px + (100vw - 768px) * .222222222), 160px); }
+  .footer-layout { min-height: 470px; padding-top: clamp(72px, calc(72px + (100vw - 768px) * .2037037), 160px); padding-bottom: clamp(64px, calc(64px + (100vw - 768px) * .222222222), 160px); }
   .footer-rule, .footer-main, .footer-bottom { max-width: 848px; }
 }
 
