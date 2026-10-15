@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 15 de octubre de 2026 (UTC; entrega09C).
+> Última actualización: 15 de octubre de 2026 (UTC; entrega09D).
 
 ---
 
@@ -1144,6 +1144,23 @@ Restantes P1:08K Hero rendered acceptance; responsive/zoom/teclado/consola real;
 
 Eze pidió retirar el ruido de consola después de09C. Eliminados todos los logs informativos del Hero: activation state, arc mounted/plume ready, particles ready y modos de filtro. Eligibility normal y espera de target no generan warnings. Se conservan los avisos DEV de fallos reales y la aserción fallida de ownership; sin supresión global de consola/errores. No cambia motion/settings/filters/lifecycle ni layout. Archivos: useHeroMotionPreferences.js, ArcDisplacement.jsx, HeroBackground.jsx y este documento. Check/diff y15tests PASS; sin browser QA afirmado. Commit único `chore: remove routine Hero console diagnostics`. No merge/deploy.
 
+### BLOCK 09D — Privacy Minimum / Static Custom 404
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+HEAD/origin inicial limpio `c21a177b8b5e3e66f8e943b1135a75afb1c4d254`. Fuentes Drive verificadas: CEO / Dirección — Reglas permanentes (actualización14/10) y Sistema de trabajo con clientes v2 · Lanzamiento2026. Se implementa la base mínima solicitada; no es certificación legal ni política lista para publicar sin completar datos.
+
+- Privacidad: `/privacidad`, HTML estático con contacto aprobado, consultas voluntarias/finalidades comerciales reales, ausencia actual de formularios/registro/checkout/analytics/píxeles/cookies propias de seguimiento, canales externos y workflow Drive/Docs. Derechos Ley25.326/AAIP; actualización14/10/2026 Buenos Aires. Identidad legal/domicilio del responsable, proveedor/plan/logs/transferencias y prácticas de conservación/acceso/seguridad no están confirmados: texto visible **Documento en revisión**, puntos pendientes y noindex hasta validación. No datos ficticios ni garantías de cifrado/plazos.
+- Footer: único enlace Privacidad bajo copyright, mismo estilo muted y target44, feedback hover/focus/reduced. Navegación4links/backtop/divider y geometría principal intactos; solo crece la altura natural necesaria para el enlace.
+- 404: estática, sobria y centrada con símbolo oficial, copy aprobado, CTA home real y copyright; sin JS/Hero/glow/motion. HTTP404 medido para rutas desconocidas en preview; página Privacidad200. Asset `/404.html` directo es un archivo real200, distinto del fallback404.
+- Arquitectura: Vite MPA, inputs index.html/privacidad.html/404.html; no router ni dependencia nueva. CSS exclusivo reutiliza tokens/Inter sin importarse en landing. Build emite HTML completo y assets locales; no falla si JS está desactivado. appType mpa evita SPA200 para rutas inexistentes; handler solo de preview sirve dist/404.html con status404. vercel.json cleanUrls habilita `/privacidad`; no catch-all rewrite a index. Vercel soporta404.html estático, pero no se verificó ningún deployment ni override del dashboard.
+
+Archivos: Footer.jsx (enlace), contact-footer.css (target/feedback local), vite.config.js, vercel.json, nuevos privacidad.html/404.html e information-pages.css, tests/staticPages.test.mjs, docs/PRIVACY_AND_404.md y este documento. App/main, index.html metadata09C, iconos/brand, Navbar, Hero/controllers/settings, secciones y datos de producción protegidos sin cambios.
+
+Validación: npm run check lint/build PASS, git diff --check PASS y **16/16 tests PASS**. Suite HTTP real del preview: home200/privacy200, tres rutas inexistentes404 con copy custom, HEAD404 sin body, assets/CSS/font200, símbolo exacto, páginas sin scripts/forms/canvas y Footer link/tabIndex/navegación conservados. CSS responsive natural con gutters24, maxlectura760, wrapping de email y targets44; sin navegador: no visual/zoom/AT/WCAG/overflow PASS declarado. Eze valida360/390/430/768 y Desktop.
+
+Antes del release: Eze confirma y aprueba los campos de privacidad mencionados y el texto final; comprobar proveedor comercial/HTTPS y privacidad/logs efectivamente configurados. Hosting debe servir las páginas estáticas y 404.html con404 en rutas inexistentes, nunca SPA200; ver comandos y resultados esperados en docs/PRIVACY_AND_404.md. Permanecen OG, gates08K/QA real y acciones fiscales/comerciales separadas. DNS/deploy/redirects no ejecutados. Commit único `feat: add privacy draft and static custom 404`; SHA exacto en entrega y por git log del título. No merge, deploy ni FINAL/FROZEN.
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: AUDIT 09A COMPLETE / CORRECTIONS AND BROWSER ACCEPTANCE PENDING DIRECTION**
@@ -1554,7 +1571,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **09C: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA.** Footer Mobile compacto, iconos locales oficiales, dominio metadata preparado y P1-02 resuelto técnicamente; OG y gates visuales/de release pendientes.
 
-Próximo paso: Eze valida Footer Mobile360/390/430, transición768, logo09B.1, superficies09B y gates08K/09A de interacción/responsive/zoom/teclado reales. Dirección aprueba la imagenOG. Metadata del dominio está preparada únicamente; DNS/deploy/redirects y comprobación pública requieren otra autorización. No merge ni Production FINAL. FAQ/contact destinations resueltos; P1-02 corregido sin retuning del Hero.
+**09D: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA.** Privacidad en revisión con datos pendientes, enlace Footer y404estático implementados. Preview HTTP privacy200/unknown404 medidos; host público sin verificar.
+
+Próximo paso: Eze revisa Privacidad/404, confirma identidad legal/domicilio y prácticas/proveedores pendientes antes de release; valida Footer Mobile360/390/430, transición768, logo09B.1, superficies09B y gates08K/09A de interacción/responsive/zoom/teclado reales. Dirección aprueba la imagenOG. Metadata del dominio está preparada únicamente; DNS/deploy/redirects y comprobación pública requieren otra autorización. No merge ni Production FINAL. FAQ/contact destinations resueltos; P1-02 corregido sin retuning del Hero.
 
 ---
 

@@ -18,6 +18,7 @@ export function Footer() {
           <p className="footer-copyright">{siteConfig.footerNote}</p>
           <a className="footer-back-to-top" href={anchors.inicio}>{siteConfig.backToTopLabel}</a>
         </div>
+        <a className="footer-privacy type-body-sm desktop:type-footer-meta" href="/privacidad">Privacidad</a>
       </div>
     </footer>
   )
