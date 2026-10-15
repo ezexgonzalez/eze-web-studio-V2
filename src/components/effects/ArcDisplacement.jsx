@@ -7,9 +7,9 @@ export function ArcDisplacement({ target, variant, backgroundRef, interactive, o
     const blocked = reason => {
       if (import.meta.env.DEV) console.warn(`[HeroMotion] arc blocked — ${reason}`, { variant })
     }
-    if (!interactive) { blocked('pointer eligibility'); return }
+    if (!interactive) return
     // Ref delivery can precede the eligible scene; wait for target without latching failure.
-    if (!target) { blocked('SVG target not ready'); return }
+    if (!target) return
     let stop
     const failed = (system, error) => {
       if (import.meta.env.DEV) console.warn(`[HeroMotion] ${system} initialization/runtime failed`, error)
@@ -29,10 +29,6 @@ export function ArcDisplacement({ target, variant, backgroundRef, interactive, o
       stop = createArcDisplacement(svg, { background: backgroundRef.current, interactive,
         settings: arcSettings, quality: haloQuality, plumeSettings, onError: failed })
       onStatus?.(variant, true)
-      if (import.meta.env.DEV) {
-        console.info('[HeroMotion] arc mounted', { variant })
-        if (plumeSettings.enabled) console.info('[HeroMotion] plume ready')
-      }
     } catch (error) { failed('arc', error) }
     return () => {
       stop?.()

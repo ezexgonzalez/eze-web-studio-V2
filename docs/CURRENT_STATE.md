@@ -1140,6 +1140,10 @@ Validación: npm run check baseline/final PASS; git diff --check PASS; **15/15 t
 
 Restantes P1:08K Hero rendered acceptance; responsive/zoom/teclado/consola real; imagenOG; validación metadata/assets en host tras release autorizado. Proyectos2–3 siguen contenido futuro pendiente, sin filler. Aprobación visual09B/09B.1/09C corresponde a Eze. Commit único `fix: refine Mobile footer and prepare brand release assets`; SHA exacto en entrega y mediante git log de ese título. No merge ni deploy, no FINAL/FROZEN.
 
+### 09C follow-up — Console cleanup
+
+Eze pidió retirar el ruido de consola después de09C. Eliminados todos los logs informativos del Hero: activation state, arc mounted/plume ready, particles ready y modos de filtro. Eligibility normal y espera de target no generan warnings. Se conservan los avisos DEV de fallos reales y la aserción fallida de ownership; sin supresión global de consola/errores. No cambia motion/settings/filters/lifecycle ni layout. Archivos: useHeroMotionPreferences.js, ArcDisplacement.jsx, HeroBackground.jsx y este documento. Check/diff y15tests PASS; sin browser QA afirmado. Commit único `chore: remove routine Hero console diagnostics`. No merge/deploy.
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: AUDIT 09A COMPLETE / CORRECTIONS AND BROWSER ACCEPTANCE PENDING DIRECTION**

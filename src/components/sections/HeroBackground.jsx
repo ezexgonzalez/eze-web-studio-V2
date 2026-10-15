@@ -25,14 +25,12 @@ export function HeroBackground() {
     setReadyArc(current => ready ? variant : current === variant ? null : current)
   }, [])
   const particleStatus = useCallback(ready => {
-    if (import.meta.env.DEV && ready) console.info('[HeroMotion] particles ready')
     setParticlesReady(ready)
   }, [])
   const variant = preferences.wide ? 'wide' : 'production'
   const liveArc = preferences.active && preferences.interactive && !failed && readyArc === variant ? variant : null
   useEffect(() => {
     if (!import.meta.env.DEV) return
-    console.info(`[HeroMotion] arc filter mode: ${liveArc ? 'LIVE' : 'STATIC'}`)
     if (!particlesReady || !liveArc) return
     const svg = desktopTarget?.querySelector(`[data-arc-variant="${liveArc}"]`)
     const connected = ['mist', 'halo', 'core'].every(name => {
@@ -40,7 +38,6 @@ export function HeroBackground() {
       return !!filter && svg.querySelector(`[data-arc-layer="${name}"]`)?.getAttribute('filter') === `url(#${filter.id})`
     })
     console.assert(connected, '[HeroMotion] FAIL: post-particle render detached LIVE filters')
-    if (connected) console.info('[HeroMotion] post-particle render filter mode: LIVE')
   }, [liveArc, particlesReady, desktopTarget])
   const fail = useCallback(() => setFailed(true), [])
   useEffect(() => {
