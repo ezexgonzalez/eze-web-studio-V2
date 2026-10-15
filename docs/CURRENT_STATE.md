@@ -4,7 +4,7 @@
 >
 > **Leer este archivo antes de iniciar cualquier bloque de producción.**
 >
-> Última actualización: 15 de octubre de 2026 (UTC; entrega09D).
+> Última actualización: 15 de octubre de 2026 UTC (14/10 Argentina); Dirección, continuidad tras QA de 404.
 
 ---
 
@@ -26,6 +26,31 @@ Debe reflejar siempre:
 Cuando un bloque se cierre, actualizar este documento antes de empezar el siguiente.
 
 No reemplaza a Figma ni a los documentos especializados. Resume el contrato vigente y apunta a las fuentes correctas.
+
+### Estado ejecutivo vigente — cierre de pre-lanzamiento (14/10/2026, Argentina)
+
+**Objetivo de Dirección:** publicar Eze Web Studio durante octubre de 2026 y comenzar a recibir consultas reales. El estudio todavía no tiene clientes comerciales. Priorizamos un lanzamiento responsable y profesional sin ampliar alcance por perfeccionismo.
+
+**Repositorio:** `ezexgonzalez/eze-web-studio-V2`, branch `feature/ews-v2-production`. Referencia verificada antes de esta actualización documental: commit `1cefb1fca256fe13a266ec85a9012231861716cb` (`feat: add privacy draft and static custom 404`). El SHA cambia con el commit de este documento; consultar el HEAD real antes de cualquier tarea. **Sin merge a `main`, sin deploy, sin DNS conectado.**
+
+**Entregables recientes:**
+- **09B / 09B.1:** continuidad Solución, halo Mobile y símbolo E en Navbar; tamaño reducido a 27 px Desktop / 25 px Mobile. Implementados, sujetos al QA visual específico de Eze donde corresponda.
+- **09C:** Footer Mobile más discreto y línea full-width; favicon/iconos oficiales; canonical/`og:url` preparados para `https://ezewebstudio.com.ar/`; manejo de fallas tsParticles corregido técnicamente. QA visual global pendiente.
+- **09D:** `/privacidad` en HTML estático y enlazada desde el Footer; es **borrador en revisión**, con `noindex` y datos operativos por confirmar. `404.html` personalizada, estática y sin efectos; servidor `npm run preview` responde 404 a rutas inexistentes. **Eze abrió una ruta inexistente en `npm run preview`, vio la página personalizada y APROBÓ su aspecto/comportamiento local.** No confundir este QA local con verificación del hosting público. En `npm run dev` (Vite 5173) las URLs inexistentes siguen mostrando el error genérico por la arquitectura `appType: 'mpa'`; es deliberado, no un defecto nuevo. Referencia: `docs/PRIVACY_AND_404.md`.
+- **Copywriting Director:** agente nuevo con auditoría integral de copy **EN CURSO / PENDIENTE DE ENTREGA**. Debe leer los documentos de Drive y revisar Hero, Problema, Solución, Proyectos, Estudio, FAQ, Contacto, navbar/footer y metadatos; entregar diagnóstico y propuestas priorizadas. **No hay cambios de copy aprobados ni autorización para reescribir la landing hasta revisión de Dirección.**
+- **Dominio:** `ezewebstudio.com.ar` comprado y registrado en NIC Argentina; queda reservado para publicación posterior. La URL canónica en HTML no significa que el sitio ya esté publicado.
+
+**Política de lanzamiento y legal mínimo viable:** documento canónico de [CEO / Dirección](https://docs.google.com/document/d/15k6hw8Aj_0B_fO-Wz0J7oOx5j0YTMmdq6ULpzp66Qf4/edit) y [Sistema de trabajo con clientes V2](https://docs.google.com/document/d/1V1AfGKOMBj8OqjigQsWzKv5sWcGyrMlQ2b7fuCpH9DY/edit). Flujo: landing → WhatsApp → conversación → propuesta → acuerdo/pago → producción. Sin checkout, usuarios, formulario ni pagos automáticos. Resolver obligaciones reales de privacidad, identidad, licencias, contratación/fiscalidad cuando correspondan, HTTPS y hosting apto para uso comercial; no instalar banners de cookies, sistemas legales o infraestructura que no sean necesarios.
+
+**Pendientes de mayor prioridad, en este orden:**
+1. Recibir y evaluar auditoría de copy. Aprobar solo correcciones con mejora comercial clara, sin reabrir textos que ya funcionan.
+2. Cerrar política de privacidad antes de publicarla como definitiva: identidad legal y domicilio del responsable; proveedor/plan de hosting y tratamiento de logs; criterios reales de conservación/eliminación; accesos y medidas de seguridad efectivas. No inventar datos.
+3. Crear/aprobar imagen Open Graph oficial (sugerencia 1200 × 630, símbolo E real, diseño minimalista) y conectar `og:image` sin URL rota; favicon ya está resuelto.
+4. QA final de Eze en navegador: responsive (incluidos Footer Mobile y Navbar), Solución/Hero interactivo, teclado, zoom, links, consola y rutas; distinguir aprobaciones locales de lo todavía pendiente. **La 404 en preview no requiere otro bloque de rediseño.**
+5. Decidir hosting que permita uso comercial, completar despliegue, DNS NIC Argentina, HTTPS, redirects y comprobar en dominio real `/` 200, `/privacidad` 200, rutas inexistentes 404 con página correcta. No asumir estos estados antes del despliegue.
+6. Antes de cobrar el primer proyecto: formalización fiscal, comprobantes y condiciones claras de propuesta/contratación según normativa aplicable.
+
+**Estado general:** `PRE-LAUNCH / NOT YET PRODUCTION FINAL`. Sin nuevos bloques decorativos ni expansión del alcance; prioridad lanzamiento. Las verificaciones técnicas de 09D y la aprobación visual local de la 404 no certifican el sitio entero.
 
 ---
 
@@ -452,6 +477,7 @@ Destinos de Contacto **RESUELTOS** en08T.
 - Contacto
 - © 2026 Eze Web Studio
 - Volver arriba ↑
+- Privacidad → `/privacidad` (agregado en 09D; sin alterar navegación principal).
 
 No slogans, CTA adicional, newsletter ni repetición de contacto.
 
@@ -1571,9 +1597,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **09C: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA.** Footer Mobile compacto, iconos locales oficiales, dominio metadata preparado y P1-02 resuelto técnicamente; OG y gates visuales/de release pendientes.
 
-**09D: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA.** Privacidad en revisión con datos pendientes, enlace Footer y404estático implementados. Preview HTTP privacy200/unknown404 medidos; host público sin verificar.
+**09D: IMPLEMENTATION COMPLETE / 404 LOCAL VISUALLY APPROVED BY EZE.** Privacidad en revisión con datos legales/operativos pendientes y `noindex`, enlace Footer y 404 estático implementados. Preview HTTP: privacidad 200, rutas inexistentes 404. Eze probó una URL inexistente mediante `npm run preview` y confirmó que aparece la 404 personalizada; `npm run dev` muestra la 404 genérica de Vite intencionalmente. Host público sin verificar; privacidad no aprobada como definitiva. Ver `docs/PRIVACY_AND_404.md`.
 
-Próximo paso: Eze revisa Privacidad/404, confirma identidad legal/domicilio y prácticas/proveedores pendientes antes de release; valida Footer Mobile360/390/430, transición768, logo09B.1, superficies09B y gates08K/09A de interacción/responsive/zoom/teclado reales. Dirección aprueba la imagenOG. Metadata del dominio está preparada únicamente; DNS/deploy/redirects y comprobación pública requieren otra autorización. No merge ni Production FINAL. FAQ/contact destinations resueltos; P1-02 corregido sin retuning del Hero.
+Próximo paso (Dirección, 14/10 ART): esperar auditoría del Copywriting Director (análisis solamente, sin cambios autorizados); cerrar datos faltantes de Privacidad; aprobar/generar imagen OG; realizar QA final específico de Footer Mobile360/390/430, transición768, logo09B.1, superficies09B y gates08K/09A de Hero/interacción/responsive/zoom/teclado. 404 custom local en Vite preview APROBADA por Eze: no pedir rediseño por la 404 genérica de `npm run dev`. Dominio `ezewebstudio.com.ar` registrado en NIC, DNS/deploy/redirects y HTTP público pendientes; confirmar hosting de uso comercial antes de publicar. No merge ni Production FINAL. FAQ/contact destinations resueltos; P1-02 corregido sin retuning del Hero.
 
 ---
 
