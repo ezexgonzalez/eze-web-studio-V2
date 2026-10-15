@@ -1090,6 +1090,27 @@ P2: carga diferida de preview, payload de fuente 352.24kB, perfil de idle Hero/p
 
 Recomendación: **NOT READY FOR LAUNCH** hasta revisar/cerrar los P1 o aceptar explícitamente sus decisiones de release. Próxima acción: Dirección prioriza y autoriza correcciones; Eze ejecuta QA real. Solo cambian este documento y el informe. Commit documental `docs: record pre-launch audit and launch gates`; SHA vía git log por título y reporte final. Sin merge, implementación ni autorización automática.
 
+### BLOCK 09B — Targeted Production Corrections / Visual Polish / Navbar Logo
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+14 de octubre de 2026 (Buenos Aires). HEAD inicial/origin verificados limpios: `f358eba39a97dbac9e339e3a5d5f61cafb60caee`. Dirección autoriza solo las cuatro superficies siguientes; no se ejecutan las recomendaciones técnicas/SEO de 09A.
+
+- Solución: el glow se cortaba en los límites de `.section-ambience`, con blobs que cruzaban top/bottom. Máscara alpha vertical exclusiva de `.solution-ambience` Desktop: transparente en ambos bordes y opaca a 160px del límite. Conserva blobs/blur/color/posición, clip y layout; desvanece la decoración antes del recorte sin pintar sobre secciones vecinas.
+- Highlight: palabra/acento activos usan Accent Cyan `#59E3FF`, más distinguible que `#8DEEFF`; acento 12px/50% frente a 10px/40%. Lógica exclusiva de lectura, duración500ms, fallback blanco, reduced y geometría intactos. Sin text-shadow ni animación nueva.
+- Halo Mobile: el gradiente compartido generaba concentración central/colas débiles. Solo `variant=mobile` usa gradiente de 0 a390 SVG units y tres stops cyan/icy/cyan con opacidades .86/.68/.86. Se reduce el pico central y se refuerzan extremos. Paths, viewBox, crop, stroke widths, blur, layer opacity, filtros y settings08G no cambian; Desktop/Tablet permanecen exactamente iguales.
+- Navbar/dialog: symbol local `src/assets/brand/ews-symbol.svg`, vectorizado del PNG suministrado por Eze, sin fondo/efectos. Tres barras: exteriores483 de ancho; central402. Color blanco/cyan tomado del source, posiciones y proporciones conservadas. Imagen38px de ancho con ratio natural, home target mínimo44×44, `aria-label="Eze Web Studio — Inicio"`, href#inicio. Misma imagen en ambos headers; Footer wordmark permanece. Header68/92, Grid/glass/offset, menu lifecycle y otros CTAs intactos.
+
+Archivos de producto: Navbar.jsx (asset/nombre accesible), HeroLightArc.jsx (gradiente Mobile exclusivo), header-hero.css (sizing local logo/elimina font-size obsoleto), problem-solution.css (mask + highlight), nuevo ews-symbol.svg. Docs: este documento, HERO_MOTION.md y EDITORIAL_MOTION.md.
+
+Validación: npm run check baseline/final lint/build PASS; 7/7 tests existentes PASS y git diff --check PASS. Se restauró JSDOM26 como herramienta QA externa temporal `/tmp/ews-09b-tools`, sin modificar package/lock. Probe SSR: Desktop/Tablet STATIC+LIVE byte-identical al baseline; Mobile solo cambia energy gradient, paths/filtros/bandas idénticos. Probe ReactDOM StrictMode de Navbar: home/nombre/img compartidos, open/close/selection/cancel/resize, ARIA/foco/bodylock/cleanup PASS con dialog/media simulados. Fuente CSS comprueba layout Solución idéntico y mask alpha0 en límites. SVG local válido, tres barras con longitudes exigidas. No comparación de pixels ni browser/teclado físico PASS: Eze confirma seams/highlight/halo/logo, viewports y Hero held/plume reales.
+
+Revisión visual pendiente: 1366×768, 1440×900, 1536×864, 1920×945; Mobile360×800/390×844/430×932. Verificar Problem→Solution→Projects sin cortes de glow, highlight perceptible, halo Mobile equilibrado y logo nítido/foco, sin dar por probado el efecto renderizado del Hero. Preview de build HTML/JS/CSS HTTP200; símbolo SVG inline byte-exact.
+
+Protegidos: controllers/settings/plume/particles/paths/assets Hero originales, lectura Solution JS, Projects/Embla/Fitness, FAQ/content, destinos Contacto, Footer, composición App, tipografía/tokens y dependencias sin cambios. Los P1 de 09A y el gate08K no se declaran resueltos por este polish.
+
+Commit único `fix: polish Solution continuity and Mobile halo with navbar symbol`; SHA por git log de ese título y entrega final. Sin merge, nuevas secciones ni Production FINAL.
+
 ### BLOCK 09 — Accessibility + Performance
 
 **STATUS: AUDIT 09A COMPLETE / CORRECTIONS AND BROWSER ACCEPTANCE PENDING DIRECTION**
@@ -1494,7 +1515,9 @@ Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL Q
 
 **09A: AUDIT COMPLETE / AWAITING DIRECTION APPROVAL.** Auditoría técnica/estructural del HEAD 08T completada sin cambios de producto. Informe `docs/qa/PRELAUNCH_AUDIT_2026-10-14.md`: 0 P0 / 5 P1 / 6 P2, recomendación NOT READY FOR LAUNCH por los gates y decisiones explicitados.
 
-Próximo paso: Dirección revisa informe/prioriza y autoriza correcciones; Eze realiza checklist browser real. No implementación automática, merge ni Production FINAL. 08K conserva gate visual pendiente; FAQ/contact destinations resueltos. La autorización explícita 09A reemplaza las prohibiciones históricas de comenzar el audit Block 09, sin implicar aprobación del Hero ni de otras fases.
+**09B: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA.** Las cuatro correcciones locales autorizadas están implementadas; detalle en bloque09B.
+
+Próximo paso: Eze valida seams/highlight/halo Mobile/logo y controles protegidos; Dirección conserva la priorización de pendientes09A y autoriza nuevas correcciones cuando corresponda. No implementación automática, merge ni Production FINAL. 08K conserva gate visual pendiente; FAQ/contact destinations resueltos. La autorización explícita 09A reemplaza las prohibiciones históricas de comenzar el audit Block 09, sin implicar aprobación del Hero ni de otras fases.
 
 ---
 

@@ -4,6 +4,14 @@
 
 Baseline: `01192c6e17832e13d6451279e7093cf2650c918b`, branch `feature/ews-v2-production`. Eze rejected08O's generic entrance effect and Desktop header alignment. This document supersedes that motion contract; no design/typography/copy/section geometry changes are authorized.
 
+## Block 09B — Local continuity, highlight and logo correction
+
+14 October2026. Baseline `f358eba39a97dbac9e339e3a5d5f61cafb60caee`. Current Solution active keyword/accent color supersedes the historical08P value below: Accent Cyan#59E3FF; accent shadow12px/50%, no text-shadow.500ms transition, exclusive reading logic, layouts and reduced behavior unchanged. Desktop glow gets its own vertical alpha mask fading over160px at both boundaries; blob geometry/blur remains. The clipping layer no longer ends with nonzero decoration alpha. This is source-level verification, not rendered seam acceptance.
+
+Both navbar and modal home-links now display the same local E symbol traced from Eze's supplied PNG, with equal outer bars and shorter cyan middle. Transparent SVG,38px wide inside a44px minimum home target, accessible name Eze Web Studio — Inicio. Existing Grid68px, Mobile92px, glass/scroll offset/navigation/dialog behavior unchanged. Footer untouched. Actual ReactDOM focus/lifecycle and existing7tests pass; native browser focus/pixels await Eze. No general reveal or new motion system.
+
+Commit title `fix: polish Solution continuity and Mobile halo with navbar symbol`; SHA via current-state resolver/delivery.
+
 ## Navbar
 
 Desktop >=1200: existing68px header uses a symmetric Grid `minmax(0,1fr) auto minmax(0,1fr)`, vertical padding0 and align-items:center. Brand starts the left track; nav is in normal flow in the middle;160×44 CTA ends the right track. Removed absolute nav top24 and header padding-top24. All44px controls resolve to y12–56, center34, with nav center at viewport width/2. These coordinates are CSS calculations, not browser measurements.

@@ -14,7 +14,8 @@
   .site-header::before { transition: none; }
 }
 .header-inner { position: relative; height: 92px; display: flex; align-items: flex-start; justify-content: space-between; padding-top: 24px; }
-.header-brand { display: flex; align-items: center; min-height: 44px; white-space: nowrap; }
+.header-brand { display: flex; align-items: center; min-width: 44px; min-height: 44px; }
+.header-brand img { display: block; width: 38px; height: auto; }
 .menu-control { width: 72px; height: 44px; border: 0; padding: 0; color: var(--color-text-primary); background: transparent; cursor: pointer; }
 .desktop-nav, .header-cta { display: none; }
 .mobile-navigation { position: fixed; inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; background: var(--color-background); color: var(--color-text-primary); overflow-y: auto; }
@@ -49,7 +50,6 @@
   .hero-actions { margin-top: clamp(32px, calc(81px + (var(--mobile-scene-height) - 844px) * .5), 81px); }
 }
 @media (max-width: 389px) {
-  .header-brand { font-size: 15px; }
   .hero-heading { font-size: clamp(38px, 12.3vw, 48px); line-height: 1.125; }
 }
 @media (min-width: 48rem) and (max-width: 74.999rem) {

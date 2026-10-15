@@ -4,6 +4,12 @@
 
 6 de octubre de2026. 08I retiró el Lab, pero fue rechazado por falta de interacción visible. 08J elimina el conflicto de ownership de los filtros: React conecta el gráfico estático/live y Motion controla sus valores internos. Export08G sin cambios. Esta sección gobierna el runtime; los accesos Lab históricos siguen desactivados.
 
+## Block 09B — Mobile light distribution only
+
+14 October2026, baseline `f358eba39a97dbac9e339e3a5d5f61cafb60caee`. Eze's screenshot shows a bulbous center and weak tips. Mobile alone now uses energy gradient x0–390 with cyan/icy/cyan stops at0/.5/1 and alpha.86/.68/.86; it balances luminance rather than widening the guide or retuning motion. The approved band widths/blur/layer opacity, static/live graphs, path/crop/viewBox and08G settings/controllers remain unchanged. Tablet/Production/Wide rendered SVG strings compare byte-identical in STATIC and LIVE. Reduced-motion/static fallback uses the same improved Mobile gradient, with no new loop or touch interaction.
+
+Technical checks pass; visual uniformity remains Eze's gate. This is not an08K rendered-interaction fix or approval. No particles/failure-controller/performance work from09A. Commit title `fix: polish Solution continuity and Mobile halo with navbar symbol`; SHA in delivery/current-state resolver.
+
 ## Valores aprobados / fuente única
 
 `src/components/effects/heroMotionSettings.js` contiene exactamente el export de Dirección:

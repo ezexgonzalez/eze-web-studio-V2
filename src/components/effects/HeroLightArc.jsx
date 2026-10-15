@@ -17,8 +17,9 @@ export function HeroLightArc({ variant, live = false }) {
   const bounds = { filterUnits: 'userSpaceOnUse', x: -256, y: -256, width: width + 512, height: height + 512, colorInterpolationFilters: 'sRGB' }
   return <svg className="hero-light-arc" data-arc-variant={variant} data-arc-mode={live ? 'live' : 'static'} viewBox={viewBox} fill="none" aria-hidden="true">
     <defs>
-      <linearGradient id={`${id}-energy`} gradientUnits="userSpaceOnUse" x1={-width * .5} x2={width * 1.5} y1="0" y2="0">
-        {[.12, .7, .24, 1, .3, .78, .12].map((opacity, i) => <stop key={i} offset={i / 6} stopColor={i === 3 ? '#A0F8FF' : '#26DDF4'} stopOpacity={opacity} />)}
+      <linearGradient id={`${id}-energy`} gradientUnits="userSpaceOnUse" x1={mobile ? 0 : -width * .5} x2={mobile ? width : width * 1.5} y1="0" y2="0">
+        {/* Mobile balances the visible band rather than inheriting Desktop's density peaks. */}
+        {(mobile ? [.86, .68, .86] : [.12, .7, .24, 1, .3, .78, .12]).map((opacity, i) => <stop key={i} offset={i / (mobile ? 2 : 6)} stopColor={i === (mobile ? 1 : 3) ? '#A0F8FF' : '#26DDF4'} stopOpacity={opacity} />)}
       </linearGradient>
       {layers.map(layer => <filter key={layer.name} id={`${id}-${layer.name}`} {...bounds}><feGaussianBlur stdDeviation={layer.blur} /></filter>)}
       {layers.map(layer => <filter key={layer.name} id={`${id}-${layer.name}-live`} data-arc-filter={layer.name} {...bounds}>

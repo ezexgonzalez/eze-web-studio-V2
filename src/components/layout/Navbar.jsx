@@ -4,6 +4,7 @@ import { navigation } from '../../data/navigation'
 import { Container } from '../ui/Container'
 import { Button } from '../ui/Button'
 import { ArrowUpRight } from '../ui/ArrowUpRight'
+import brandSymbol from '../../assets/brand/ews-symbol.svg'
 
 const desktopQuery = '(min-width: 75rem)'
 
@@ -50,7 +51,7 @@ export function Navbar() {
       <span className="header-scroll-sentinel" ref={sentinelRef} aria-hidden="true" />
       <header className="site-header" ref={headerRef}>
         <Container variant="wide" className="header-inner">
-          <a href={navigation.home} className="header-brand type-brand-header" ref={homeRef}>EZE WEB STUDIO</a>
+          <a href={navigation.home} className="header-brand" ref={homeRef} aria-label="Eze Web Studio — Inicio"><img src={brandSymbol} width="38" height="36" alt="" aria-hidden="true" /></a>
           <nav aria-label="Navegación principal" className="desktop-nav type-navigation-header">
             {navigation.links.map(link => <a href={link.href} key={link.href}>{link.label}</a>)}
           </nav>
@@ -62,7 +63,7 @@ export function Navbar() {
       <dialog id="mobile-navigation" className="mobile-navigation" aria-label="Navegación principal"
         ref={dialogRef} onClose={restoreFocus} onCancel={closeMenu}>
         <Container variant="wide" className="mobile-navigation-header">
-          <a href={navigation.home} className="header-brand type-brand-header" onClick={closeMenu}>EZE WEB STUDIO</a>
+          <a href={navigation.home} className="header-brand" onClick={closeMenu} aria-label="Eze Web Studio — Inicio"><img src={brandSymbol} width="38" height="36" alt="" aria-hidden="true" /></a>
           <button type="button" className="menu-control type-label-cta" onClick={closeMenu} ref={closeRef}>CERRAR</button>
         </Container>
         <nav aria-label="Navegación móvil" className="mobile-navigation-links">
