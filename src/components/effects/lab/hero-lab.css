@@ -1,0 +1,12 @@
+.hero-lab-panel { position: fixed; top: 90px; right: 12px; width: min(350px, calc(100vw - 24px)); max-height: calc(100dvh - 110px); overflow: auto; z-index: 2147483647; padding: 14px; color: #fff; background: #050708; border: 1px solid #75f6ff; font: 12px/1.5 monospace; pointer-events: auto; }
+.hero-lab-panel h2 { font: bold 14px/1.4 monospace; margin: 0 0 8px; }
+.hero-lab-panel p { margin: 8px 0; }
+.hero-lab-panel dl { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.hero-lab-panel dd { margin: 0; color: #75f6ff; }
+.hero-lab-panel fieldset { margin: 12px 0; padding: 8px; border: 1px solid #777; }
+.hero-lab-panel label { display: block; margin: 6px 0; }
+.hero-lab-panel input[type=range], .hero-lab-panel textarea { display: block; width: 100%; }
+.hero-lab-panel button { margin: 4px 4px 4px 0; padding: 6px; border: 1px solid #777; cursor: pointer; }
+.hero-lab-panel pre { white-space: pre-wrap; overflow-wrap: anywhere; color: #ffb6b6; }
+.hero-lab-panel a { display: block; margin-top: 8px; text-decoration: underline; }
+.hero-lab-panel :focus-visible { outline: 2px solid #75f6ff; outline-offset: 2px; }

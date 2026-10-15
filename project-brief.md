@@ -133,11 +133,11 @@ Antes de adoptar una librería:
 
 ## Secciones y orden aprobados
 
-Estado actual:
+Desktop (1536 px) y Mobile (390 px) están FINAL / FROZEN. `01 — Visual System` define tokens; `04 — Final Handoff` define comportamiento.
 
-1. Hero — aprobado visualmente, pendiente ajuste rápido de navegación y motion real del background.
-2. El problema — diseño ya definido.
-3. Resto de secciones — continuar según dirección creativa aprobada y Figma.
+Orden aprobado: Hero → Problema → Solución → Proyectos → Sobre Eze Web Studio → FAQ → Contacto → Footer.
+
+Foundation prepara tokens, Inter, containers, primitivas y contratos de datos. Las secciones no están montadas todavía. Header + Hero requieren aprobación del siguiente bloque.
 
 No inventar secciones únicamente porque “toda landing las tiene”.
 

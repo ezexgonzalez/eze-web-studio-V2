@@ -8,6 +8,19 @@ Este repositorio ya no debe tratarse como una plantilla neutral durante la imple
 
 La base reutilizable que originó el proyecto sigue aportando patrones técnicos, ejemplos y estructura, pero no tiene prioridad sobre el brief actual, Figma aprobado ni las decisiones vigentes del proyecto.
 
+## Estado canónico antes de trabajar
+
+Antes de iniciar cualquier tarea de producción, leer `docs/CURRENT_STATE.md`. Ese archivo concentra el estado vigente, bloques cerrados/pendientes, decisiones de Figma, blockers y el próximo bloque autorizado. Si una tarea cambia el estado del proyecto, actualizar `docs/CURRENT_STATE.md` al cerrar el bloque.
+
+## QA visual y browser
+
+- El QA visual/browser final de Eze Web Studio V2 lo realiza Eze manualmente.
+- Los agentes deben hacer QA técnico y estructural con las herramientas disponibles: `npm run check`, build, `git diff --check`, semántica, accesibilidad por código, responsive reasoning y cualquier prueba automatizable.
+- Si el entorno del agente no puede abrir Chrome/localhost, eso NO bloquea por sí solo el cierre técnico del bloque.
+- No inventar screenshots ni declarar comparación visual browser ↔ Figma si no ocurrió.
+- El agente debe dejar el bloque como `IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA` cuando corresponda. Dirección/Eze puede aprobarlo y autorizar continuidad después de su revisión manual.
+- No reintentar indefinidamente workarounds de browser sandbox ya conocidos como bloqueados.
+
 ## Principios de trabajo
 
 - Mantener los componentes claros, mantenibles y razonablemente reutilizables cuando exista reutilización real.
@@ -68,13 +81,13 @@ La landing debe construir una secuencia clara: presentar, generar interés, demo
 - Centralizar los datos editables de cada sección fuera de sus componentes, en el módulo de configuración o contenido que corresponda.
 - Extender la configuración siguiendo patrones simples y explícitos cuando una sección necesite datos editables.
 - Mantener separados el contenido, la presentación y el comportamiento.
-- Usar contenido de ejemplo neutral en la plantilla madre.
-- No introducir información real o ficticia que vincule el starter con un cliente particular.
+- Usar únicamente contenido aprobado de Eze Web Studio V2 en el bundle activo.
+- Los ejemplos neutrales permanecen opt-in; no inventar contenido para completar pendientes.
 
 ## Validación antes de finalizar
 
-- Confirmar que el cambio sigue siendo reutilizable para distintos negocios.
-- Confirmar que no se hardcodearon datos de cliente.
+- Confirmar que el cambio respeta Figma FINAL / FROZEN y el alcance del bloque autorizado.
+- Confirmar que el contenido publicado está aprobado y los pendientes siguen explícitos.
 - Confirmar que las nuevas secciones tienen una función narrativa y una intención visual definidas.
 - Revisar la experiencia en mobile y desktop.
 - Ejecutar las verificaciones disponibles en el proyecto.

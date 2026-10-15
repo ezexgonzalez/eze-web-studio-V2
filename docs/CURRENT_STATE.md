@@ -1,0 +1,1653 @@
+# Eze Web Studio V2 — Current Production State
+
+> Documento canónico de continuidad para todos los agentes que trabajen sobre Eze Web Studio V2.
+>
+> **Leer este archivo antes de iniciar cualquier bloque de producción.**
+>
+> Última actualización: 15 de octubre de 2026 UTC (14/10 Argentina);09F, OG y metadata social integrados.
+
+---
+
+## 0. Propósito de este documento
+
+Este archivo concentra el hilo operativo del proyecto para evitar que cada agente reconstruya el contexto desde cero o tome decisiones contradictorias.
+
+Debe reflejar siempre:
+
+- estado real del repositorio;
+- estado aprobado de Figma;
+- bloques de producción cerrados / activos / pendientes;
+- decisiones técnicas vigentes;
+- pendientes de contenido;
+- riesgos conocidos;
+- reglas de validación;
+- próximo bloque autorizado.
+
+Cuando un bloque se cierre, actualizar este documento antes de empezar el siguiente.
+
+No reemplaza a Figma ni a los documentos especializados. Resume el contrato vigente y apunta a las fuentes correctas.
+
+### Estado ejecutivo vigente — cierre de pre-lanzamiento (14/10/2026, Argentina)
+
+**Objetivo de Dirección:** publicar Eze Web Studio durante octubre de 2026 y comenzar a recibir consultas reales. El estudio todavía no tiene clientes comerciales. Priorizamos un lanzamiento responsable y profesional sin ampliar alcance por perfeccionismo.
+
+**Repositorio:** `ezexgonzalez/eze-web-studio-V2`, branch `feature/ews-v2-production`. Referencia verificada antes de esta actualización documental: commit `d9fceba5782017985505770b350e998f4424dd2d` (`fix: apply approved demo description and service metadata title`). El SHA cambia con el commit de este documento; consultar el HEAD real antes de cualquier tarea. **Sin merge a `main`, sin deploy, sin DNS conectado.**
+
+**Entregables recientes:**
+- **09B / 09B.1:** continuidad Solución, halo Mobile y símbolo E en Navbar; tamaño reducido a 27 px Desktop / 25 px Mobile. Implementados, sujetos al QA visual específico de Eze donde corresponda.
+- **09C:** Footer Mobile más discreto y línea full-width; favicon/iconos oficiales; canonical/`og:url` preparados para `https://ezewebstudio.com.ar/`; manejo de fallas tsParticles corregido técnicamente. QA visual global pendiente.
+- **09D:** `/privacidad` en HTML estático y enlazada desde el Footer; es **borrador en revisión**, con `noindex` y datos operativos por confirmar. `404.html` personalizada, estática y sin efectos; servidor `npm run preview` responde 404 a rutas inexistentes. **Eze abrió una ruta inexistente en `npm run preview`, vio la página personalizada y APROBÓ su aspecto/comportamiento local.** No confundir este QA local con verificación del hosting público. En `npm run dev` (Vite 5173) las URLs inexistentes siguen mostrando el error genérico por la arquitectura `appType: 'mpa'`; es deliberado, no un defecto nuevo. Referencia: `docs/PRIVACY_AND_404.md`.
+- **Copy Audit 01:** entregada y revisada por Dirección. Solo **C01 y C02 aprobados e implementados en09E**: Fitness se identifica como demo y title/og:title/twitter:title describen el servicio. **C03 y C05 diferidos; C04 rechazado en favor del copy existente.** Ningún otro cambio de copy autorizado. OG integrada en09F; Privacidad definitiva y QA de lanzamiento siguen pendientes.
+- **09F — OG IMAGE OFICIAL INTEGRADA / FINAL-FROZEN:** PNG adjunto aprobado copiado sin modificar a `public/og-image.png` (1200×630, PNG,18384bytes). SHA256 `1ae6765dffab9027cb2ad3161db6a8d900e20d4f13fac4bd9ae26072d2a1c152`, idéntico al adjunto. `og:image`/`twitter:image` apuntan a `https://ezewebstudio.com.ar/og-image.png`, dimensiones/tipo/alt completos y Twitter summary_large_image. Build y HTTP local verificados; dominio público y crawler social pendientes del deploy autorizado. Sin regeneración ni cambio de píxeles; SVG editable no requerido en runtime.
+- **Dominio:** `ezewebstudio.com.ar` comprado y registrado en NIC Argentina; queda reservado para publicación posterior. La URL canónica en HTML no significa que el sitio ya esté publicado.
+
+**Política de lanzamiento y legal mínimo viable:** documento canónico de [CEO / Dirección](https://docs.google.com/document/d/15k6hw8Aj_0B_fO-Wz0J7oOx5j0YTMmdq6ULpzp66Qf4/edit) y [Sistema de trabajo con clientes V2](https://docs.google.com/document/d/1V1AfGKOMBj8OqjigQsWzKv5sWcGyrMlQ2b7fuCpH9DY/edit). Flujo: landing → WhatsApp → conversación → propuesta → acuerdo/pago → producción. Sin checkout, usuarios, formulario ni pagos automáticos. Resolver obligaciones reales de privacidad, identidad, licencias, contratación/fiscalidad cuando correspondan, HTTPS y hosting apto para uso comercial; no instalar banners de cookies, sistemas legales o infraestructura que no sean necesarios.
+
+**Pendientes de mayor prioridad, en este orden:**
+1. **Integración OG09F completada.** Asset y metadata listos, con tests/build/HTTP local PASS. Validación de la imagen en dominio público y crawlers sociales pendiente exclusivamente del release autorizado; no repetir diseño ni ampliar alcance.
+2. Cerrar política de privacidad antes de publicarla como definitiva: identidad legal y domicilio del responsable; proveedor/plan de hosting y tratamiento de logs; criterios reales de conservación/eliminación; accesos y medidas de seguridad efectivas. No inventar datos.
+3. QA final de Eze en navegador: responsive (incluidos Footer Mobile y Navbar), Solución/Hero interactivo, teclado, zoom, links, consola y rutas; distinguir aprobaciones locales de lo todavía pendiente. **La 404 en preview ya está visualmente aprobada; no requiere rediseño.**
+4. Decidir hosting que permita uso comercial, completar despliegue, DNS NIC Argentina, HTTPS, redirects y comprobar en dominio real `/` 200, `/privacidad` 200, rutas inexistentes 404 con página correcta, además de la OG pública/preview social real. No asumir estos estados antes del despliegue.
+5. Antes de cobrar el primer proyecto: formalización fiscal, comprobantes y condiciones claras de propuesta/contratación según normativa aplicable.
+
+**Estado general:** `PRE-LAUNCH / NOT YET PRODUCTION FINAL`. Sin nuevos bloques decorativos ni expansión del alcance; prioridad lanzamiento. Las verificaciones técnicas de 09D y la aprobación visual local de la 404 no certifican el sitio entero.
+
+---
+
+## 1. Source of truth / prioridad de decisiones
+
+Usar este orden cuando exista una aparente contradicción:
+
+1. decisión explícita más reciente de Eze / Dirección;
+2. estado aprobado actual del proyecto;
+3. este `docs/CURRENT_STATE.md`;
+4. `04 — Final Handoff` de Figma;
+5. `02 — Desktop` y `03 — Mobile` FINAL / FROZEN;
+6. `01 — Visual System`;
+7. `docs/FOUNDATION.md` y documentación técnica vigente;
+8. documentación antigua / starter;
+9. convenciones generales o best practices.
+
+Nunca rediseñar una decisión Figma FINAL / FROZEN para acomodarla a una librería o a una implementación más cómoda.
+
+---
+
+## 2. Repositorio y branch activa
+
+Repository:
+
+`ezexgonzalez/eze-web-studio-V2`
+
+Base branch:
+
+`main`
+
+Production branch:
+
+`feature/ews-v2-production`
+
+Main auditado y sincronizado en Foundation:
+
+`baee1dcae74beb9ce2cefa001d86fd0684cb38f6`
+
+Antes de crear este documento, la branch de producción estaba:
+
+- 1 commit ahead de `main`;
+- 0 commits behind;
+- sin cambios posteriores en `main` respecto del SHA auditado.
+
+La diferencia existente corresponde al bloque Foundation.
+
+---
+
+## 3. Estado técnico real actual
+
+Stack: React 19 / ReactDOM 19 / Vite 8 / Tailwind 4 / ESLint / JavaScript JSX. Sin router, CMS, page builder, registry, librería de iconos ni Three.js.08Q incorpora Embla Carousel React8.6.0 para Proyectos. Block08H integra Motion + SVG held/plume y una partícula tsParticles nativa en el Hero, con fallback estático; OGL/WebGL anteriores retirados.
+
+Runtime dependencies actuales: `react`, `react-dom`, `motion@14.0.0`, `@tsparticles/{engine,react,slim}@4.4.0`, `embla-carousel-react@8.6.0` (core/reactive-utils8.6.0 transitivos, MIT). Sin nueva dependencia en08H.
+
+`App.jsx` compone explícitamente shell, skip link, `Navbar`, `main#main-content` y `HeroSection` → `ProblemSection` → `SolutionSection` → `ProjectsSection` → `AboutSection` → `FAQSection` → `ContactSection`; `Footer` es sibling de main para conservar el landmark de pie de página.
+
+**Header Desktop/Mobile, Mobile Navigation Open y Hero Desktop/Mobile están implementados y validados.**
+
+Problema y Solución, Proyectos y About + FAQ están CLOSED / APPROVED FOR CONTINUATION. Contacto + Footer completó implementación y el QA manual global de Eze detectó issues sistémicos que pasan al Block 07. Todas las secciones están montadas; Desktop fue reimplementado desde 02B y las secciones afectadas fueron recompuestas desde 02C Desktop Fit en 08L, con correcciones Desktop de Dirección en 08M y eje editorial compartido en 08N (READY FOR EZE VISUAL QA); la implementación web todavía no es Production FINAL / FROZEN.
+
+Block 02: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`. CLOSED / APPROVED FOR CONTINUATION; baseline protegido. Detalle: `docs/HEADER_HERO.md`.
+
+---
+
+## 4. Estado de diseño Figma
+
+Archivo:
+
+**Eze Web Studio — New Landing 2026**
+
+File key:
+
+`aw1k9uSQJhmNGeODZY7BC3`
+
+Páginas:
+
+- `01 — Visual System` → FINAL;
+- `02 — Desktop` → HISTORICAL CREATIVE REFERENCE ONLY;
+- `02C — Desktop Fit` (`266:94`) → CURRENT GEOMETRY SOURCE for 08L modified Desktop sections; master `266:95`1440×5256, compact `268:66`1366×5124; dirección aprobada, implementación pendiente de QA visual Eze;
+- `02B — Desktop Production` (`239:10`, master `239:11`) → historical geometry for modified sections; Projects conserva dirección visual;08Q sustituye estructura de runtime por Embla;
+- `03 — Mobile` → FINAL / FROZEN;
+- `04 — Final Handoff` → READY FOR PRODUCTION.
+
+Viewports maestros:
+
+- Desktop Fit 02C: Hero900, Problem768, Solution768, Projects900, About512, FAQ624, Contact560, Footer224; master **1440×5256**. Referencias de composición, no alturas runtime fijas;
+- Excepciones Desktop de Dirección en 08M: Problema y Solución recuperan mínimo 100svh con escala compacta; About alinea su título con FAQ; Footer reduce solo tipografía local y conserva altura/divisor. Estas decisiones prevalecen sobre 02C.
+- Desktop02B historical:1440×6684;
+- Mobile: **390 px**.
+
+Orden final aprobado:
+
+1. Hero
+2. Problema
+3. Solución
+4. Proyectos
+5. Sobre Eze Web Studio
+6. FAQ
+7. Contacto
+8. Footer
+
+Mobile Navigation es un estado adicional.
+
+Figma está cerrado como frente creativo principal. Si browser y Figma difieren, asumir primero un problema de implementación. Solo escalar a Dirección si el diseño realmente no resuelve una situación.
+
+---
+
+## 5. Dirección visual aprobada
+
+Identidad:
+
+- minimal tech premium;
+- dark;
+- CLEAN + CRAFT;
+- alto control de spacing;
+- blanco / grises fríos;
+- cyan eléctrico como acento;
+- dividers y rails finos; sin grid decorativo;
+- composiciones editoriales;
+- Hero con mayor intensidad;
+- resto de la landing más calmo.
+
+Evitar:
+
+- estética SaaS / IA genérica;
+- dashboards ficticios;
+- bento grids por moda;
+- pills innecesarias;
+- glassmorphism excesivo;
+- glow agresivo;
+- 3D gratuito;
+- estética gamer;
+- motion rápido;
+- componentes decorativos agregados por llenar espacio.
+
+La creatividad debe venir principalmente de composición, jerarquía, tipografía, ritmo y uso controlado de luz.
+
+---
+
+## 6. Visual System implementado en Foundation
+
+Fuente técnica detallada:
+
+`docs/FOUNDATION.md`
+
+### Colores semánticos
+
+- Background: `#050708`
+- Background Alternate: `#0A1119`
+- Surface: `#0B0F12`
+- Glass Fill: `#0D1418`
+- Text Primary: `#F5F7F7`
+- Text Body: `#C5CDD3`
+- Text Muted: `#A7B0B6`
+- Text Inverse: `#050708`
+- Accent Cyan: `#59E3FF`
+- Border: `#222A30`
+- Grid Default: `rgb(36 65 74 / 25%)`
+- Grid Subtle: `rgb(36 65 74 / 17%)`
+- Divider Default: `rgb(115 131 140 / 28%)`
+- Divider Strong: `rgb(115 131 140 / 62%)`
+
+### Spacing
+
+`8 / 12 / 16 / 24 / 32 / 48 / 64 / 96 / 128 / 160`
+
+### Radius
+
+`12 / 18 / 28`
+
+### Containers
+
+- Wide: `1344px`
+- Content: `1280px`
+
+A 1536 px:
+
+- Wide → 96 px de margen;
+- Content → 128 px de margen.
+
+Los containers son primitivas, no una orden de realinear excepciones locales aprobadas.
+
+### Typography
+
+Inter 4.1 variable autoalojada.
+
+Pesos usados:
+
+- 400;
+- 500;
+- 600.
+
+Licencia SIL OFL 1.1 incluida en repo.
+
+Las utilities tipográficas Desktop / Mobile ya están implementadas. No recrearlas por sección si existe el rol correcto.
+
+Excepción aprobada:
+
+- `CONFIANZA` Mobile usa **56/60**, no el 60/64 global de Display/Feature.
+
+Esta excepción pertenece a Solución y no debe convertirse en token global.
+
+---
+
+## 7. Responsive contract
+
+Rangos conceptuales:
+
+### Mobile
+
+`< 768px`
+
+- composición Mobile;
+- gutter base 24 px;
+- referencia 390 px;
+- navegación Mobile.
+
+### Transition / Tablet
+
+`768–1199px`
+
+- containers fluidos;
+- gutters progresivos;
+- tipografía interpola;
+- splits se apilan cuando pierden aire;
+- no existe un tercer diseño completo.
+
+### Desktop
+
+`>= 1200px`
+
+- composición Desktop;
+- navegación Desktop;
+- Wide / Content;
+- offsets específicos respetados desde Figma.
+
+Anchos obligatorios de validación:
+
+- 390;
+- 430;
+- 768;
+- 1024;
+- 1280;
+- 1536.
+
+Revisar además especialmente los bordes 767/768 y 1199/1200.
+
+---
+
+## 8. Navigation contract
+
+IDs compartidos:
+
+- `#inicio`
+- `#proyectos`
+- `#estudio`
+- `#faq`
+- `#contacto`
+
+Desktop nav:
+
+- PROYECTOS → `#proyectos`
+- ESTUDIO → `#estudio`
+- FAQ → `#faq`
+- HABLEMOS → `#contacto`
+- wordmark → `#inicio`
+
+Mobile:
+
+- wordmark;
+- MENÚ;
+- overlay / open state;
+- PROYECTOS;
+- ESTUDIO;
+- FAQ;
+- HABLEMOS;
+- CERRAR.
+
+Mobile menu debe:
+
+- cerrar con CERRAR;
+- cerrar con Escape;
+- cerrar al seleccionar destino;
+- devolver foco;
+- bloquear scroll de fondo;
+- cerrar si el viewport pasa a Desktop;
+- impedir interacción accidental con contenido detrás.
+
+Block08O sustituye el header no-fixed histórico: fixed en todas las resoluciones, transparente al inicio y glass full-width después de8px de scroll (bg #05070882%, blur16, transición300ms, fallback opaco). ResizeObserver mide `--header-offset`, fallback68px Desktop /92px Mobile-Tablet. Solo scroll-padding aplica el offset; scroll-margin0. Header z40 bajo skip link100. Nav Desktop desde1200; MENÚ también Tablet. Diálogo modal nativo, Escape, aislamiento, foco inicial/retorno y auto-close Desktop conservados. Hero layout/motion sin cambios. Detalle en docs/EDITORIAL_MOTION.md.
+
+---
+
+## 9. Copy / contenido aprobado relevante
+
+### Hero
+
+Headline:
+
+`Webs que se entienden.`
+`Diseño que se recuerda.`
+
+Descripción:
+
+`Landing pages claras, visualmente cuidadas y pensadas para convertir una buena primera impresión en una conversación real.`
+
+CTAs:
+
+- VER PROYECTOS → `#proyectos`
+- HABLEMOS → `#contacto`
+
+### Problema
+
+Eyebrow:
+
+`EL PROBLEMA`
+
+Headline:
+
+`Sin una estructura clara, el interés se pierde en el camino`
+
+Descripción:
+
+`Una landing page guía, responde y genera confianza. Sin ella, tus visitantes se pierden y las oportunidades se escapan.`
+
+Secuencia:
+
+1. Llega
+2. Busca claridad
+3. Duda
+4. Se va
+
+Resultado:
+
+`más dudas, menos confianza, menos oportunidades.`
+
+### Solución
+
+Eyebrow:
+
+`LA SOLUCIÓN`
+
+Intro:
+
+`Una landing page convierte un mensaje disperso en claridad, confianza y acción.`
+
+Features:
+
+1. CLARIDAD
+2. CONFIANZA
+3. ACCIÓN
+
+### About
+
+Eyebrow:
+
+`SOBRE EZE WEB STUDIO`
+
+Headline:
+
+`Un estudio chico, pensado para trabajar de cerca.`
+
+Primary copy:
+
+`Eze Web Studio crea landing pages para negocios y servicios que necesitan comunicar mejor lo que hacen. Diseño, claridad y desarrollo se trabajan como una sola pieza, con un proceso directo y cuidado en cada detalle.`
+
+Secondary copy:
+
+`Menos estructura de agencia. Más atención en cada proyecto.`
+
+### FAQ
+
+Contenido final aprobado e integrado en08T. Cinco respuestas completas en `src/data/faq.js`, sin nulls de producción; primer item abierto, uno a la vez.
+
+1. **¿Cuánto cuesta una landing page?** (`precio`)
+   El precio depende del contenido, las funcionalidades y el alcance del proyecto. Contame qué necesitás y te preparo una propuesta con el precio y lo que incluye.
+2. **¿Qué necesito tener antes de empezar?** (`antes-de-empezar`)
+   Con contarme sobre tu negocio y qué querés lograr ya podemos empezar. Si tenés textos, fotos o identidad visual, genial. Si no, vemos juntos qué hace falta.
+3. **¿Cuánto tarda una landing page?** (`tiempos`)
+   Depende del alcance y de los materiales disponibles. Antes de comenzar te comparto un plazo estimado para que sepas qué esperar.
+4. **¿Puedo pedir cambios durante el proceso?** (`cambios`)
+   Sí. Antes de empezar acordamos las instancias de revisión y los ajustes incluidos, para que el proceso sea claro desde el principio.
+5. **¿La página queda lista para publicar?** (`publicacion`)
+   Sí, la landing se entrega preparada para salir online. Definimos previamente los detalles de dominio, hosting y publicación según lo que necesites.
+
+08T reemplaza la antigua pregunta/answer de tipo de páginas por precio; IDs2–5 conservados. Copy/desktopAnswerLines antiguos eliminados del runtime. Layout/animación/accesibilidad sin cambios.
+
+### Contacto
+
+Headline:
+
+`¿Tenés una idea en mente?`
+
+Descripción:
+
+`Contame qué necesitás y vemos si una landing page es la solución adecuada para tu negocio.`
+
+CTA visual:
+
+`HABLEMOS →`
+
+Email aprobado:
+
+`ezewebstudio.dev@gmail.com`
+
+Instagram handle aprobado:
+
+`@ezewebstudio`
+
+Email href: `mailto:ezewebstudio.dev@gmail.com`.
+
+HABLEMOS de Contacto: `https://wa.me/5491161993279`, target=_blank/rel=noopener noreferrer; sustituye mailto provisional08P. HABLEMOS de Navbar/Hero sigue #contacto.
+
+Instagram URL: `https://www.instagram.com/ezewebstudio/`, target=_blank/rel=noopener noreferrer.
+
+Destinos de Contacto **RESUELTOS** en08T.
+
+### Footer
+
+- EZE WEB STUDIO
+- Proyectos
+- Estudio
+- FAQ
+- Contacto
+- © 2026 Eze Web Studio
+- Volver arriba ↑
+- Privacidad → `/privacidad` (agregado en 09D; sin alterar navegación principal).
+
+No slogans, CTA adicional, newsletter ni repetición de contacto.
+
+---
+
+## 10. Project data actual
+
+Solo existe un registro aprobado:
+
+- id: `fitness`
+- category: `FITNESS`
+- title: `Fuerza con método.`
+- description: `Demo de landing page para un gimnasio boutique.` — C01 aprobado en09E
+- URL: `https://eze-demo-gimnasio.vercel.app/` — aprobada e integrada en08R
+- preview: `src/assets/projects/fitness-preview.webp` — WebP suministrado por Eze, integrado en08R
+- accent: `#FF5A45` — aprobado para hover/focus local de VER PROYECTO en08S
+
+No crear proyectos 2–3 ficticios para satisfacer la paginación visual.
+
+Los slots vacíos en Figma son intencionales; Dirección08S retira su DOM de producción y usa un mensaje tipográfico cuando existe un único registro.
+
+No usar:
+
+- stock;
+- mockups inventados;
+- imágenes generadas como filler;
+- links falsos.
+
+---
+
+## 11. Estado de bloques de producción
+
+### BLOCK 00 — Production Audit / Plan
+
+**STATUS: CLOSED**
+
+Se inspeccionó:
+
+- repo;
+- stack;
+- Figma final;
+- assets;
+- riesgos;
+- responsive;
+- Hero effect options;
+- blockers;
+- estrategia de implementación.
+
+Conclusiones principales:
+
+- mantener React / Vite / Tailwind;
+- no migrar infraestructura;
+- reconstruir la landing V2 sobre Foundation;
+- validar browser ↔ Figma por bloque;
+- motion completo después de geometría;
+- investigar riesgo técnico del Hero temprano.
+
+### BLOCK 01 — Foundation
+
+**STATUS: CLOSED / APPROVED**
+
+Implementado:
+
+- branch `feature/ews-v2-production`;
+- baseline `npm ci` + `npm run check`;
+- Inter local;
+- tokens semánticos;
+- typography;
+- containers;
+- primitives;
+- navegación / anchors;
+- estructuras de datos;
+- metadata base;
+- accesibilidad base;
+- responsive foundation.
+
+Validación reportada:
+
+- lint/build correctos;
+- Inter realmente renderizada 400/500/600;
+- seis viewports;
+- cero overflow;
+- focus;
+- skip link;
+- reduced motion;
+- preview de build;
+- consola sin errores/warnings de aplicación.
+
+Documento:
+
+`docs/FOUNDATION.md`
+
+No reabrir Foundation salvo regresión verificable.
+
+### BLOCK 02 — Header + Hero
+
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
+
+Dirección aprobó continuar con las secciones el 30 de septiembre de 2026. El bloque queda cerrado para producción corriente. No reabrir ahora el Hero para pulido adicional de efectos; cualquier mejora no esencial de motion/atmósfera queda diferida a Block 08 — Motion o al QA final, salvo regresión verificable.
+
+Commit: `bf6db14b11614a8f75d661190b29b5d86c9e2c5e`.
+
+Implementado y validado:
+
+- Header Desktop/Mobile y menú modal nativo sin librería;
+- Hero Desktop/Mobile y grid DOM independiente;
+- SVG estáticos exactos de Figma para horizonte, surface/body, rim, glow, estrellas e icono;
+- static visual gate 1536/390: posiciones, wraps, CTAs, horizonte, grid y whitespace comparados contra Figma;
+- glow ambiental nativo: Web Animations API, 16 s, opacity Desktop 1/0.88/1 y Mobile 1/0.94/1; rim/body inmóviles;
+- reduced motion real: JS cancela animación, base estática completa con glow a opacity 1;
+- suspensión fuera de pantalla / visibility, cleanup StrictMode y fallback sin Animation API/WebGL;
+- responsive 390/430/768/1024/1280/1536, más 767/1199/1200; sin overflow;
+- skip link, teclado, foco, Escape, cierre por destino, scroll lock y cierre Desktop;
+- Chrome preview de build, fuentes/assets cargados, cero errores JS de aplicación, `npm run check` y `git diff --check` PASS.
+
+MagicRings fue realmente probado en aislamiento y rechazado por corte angular/fade que apaga el horizonte y coste. ShaderGradient/Vanta no ejecutados, no declarados rechazados. Ganó solución SVG nativa permitida por el brief.
+
+Dependencias nuevas: ninguna. Licencia nueva en producción: ninguna; SVG del diseño propio. Licencia MagicRings verificada: MIT + Commons Clause; candidato eliminado del producto.
+
+Bundle before/after: JS 190.66 → 206.64 kB, gzip 60.09 → 63.96; CSS 36.77 → 38.79, gzip 7.79 → 8.40. Inter 352.24 kB sin cambios. Sin renderer/GPU loop propio ni rAF decorativo.
+
+Archivos principales: `src/components/layout/Navbar.jsx`, `src/components/sections/{HeroSection,HeroBackground}.jsx`, `src/hooks/useHorizonGlow.js`, `src/styles/header-hero.css`, `src/data/hero.js`, `src/components/ui/ArrowUpRight.jsx`, `src/assets/hero/`, `src/App.jsx`, `src/index.css`.
+
+Ajustes técnicos intencionales: Inter optical master fijo local al bloque para fidelidad; cajas de texto Desktop ajustadas a leading real de 168/68 px dentro de cajas Figma 170/70 sin alterar posiciones; crop horizontal del horizonte en Tablet; padding interpola para evitar salto 1199/1200. Header no sticky/fixed, offset 0 confirmado.
+
+Documentación/evidencia: `docs/HEADER_HERO.md`, `docs/qa/block-02/`.
+
+Blockers nuevos: ninguno. Mobile validado en Chrome con viewports y DPR 3; no se midió hardware físico. Favicon/OG siguen pendientes de asset aprobado.
+
+Block 03 fue autorizado y está implementado; no reabrir Header/Hero salvo regresión verificable.
+
+### BLOCK 03 — Problema + Solución
+
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
+
+Commit de implementación: `88196db865fc4ec14ec213873f4e6475a787e1f9`.
+
+App explícito: Hero → ProblemSection → SolutionSection. Componentes en `src/components/sections/`, contenido en `src/data/{problem,solution}.js`, estilos locales en `src/styles/problem-solution.css`, diez SVG exactos en `src/assets/problem/`. Sin dependencia ni motion nuevo. Figma intacto.
+
+Fuentes: Problema `44:40` / `169:6`; Solución `61:42` / `169:102`. Desktop mantiene cards/connectors/banner y composición editorial escalonada. Mobile mantiene secuencia vertical, gutters 24 y offsets 0/8/16; CONFIANZA 56/60 local. Glows CSS estáticos únicamente donde existen en los masters Desktop.
+
+QA: Chrome preview, Inter local real y SVG decodificados, comparison Figma/browser en 1536/390, alturas maestras 1086/1188 y 941/858. 390/430/768/1024/1280/1536 más 767/1199/1200 sin overflow ni collisions. Semántica, skip link y text resizing comprobados. Hero coincide píxel por píxel con Block 02 en ambos masters; archivos protegidos sin cambios. npm run check y git diff --check PASS; sin errores JS nuevos.
+
+Responsive: Mobile <768; proceso en dos columnas y Solución progresivamente abierta en 768–1199; cuatro cards y Desktop editorial ≥1200. Saltos de copy maestro se liberan entre 1200–1439; altura flexible para conservar contenido. Ajuste local de keywords <390 para lectura en 320. Cajas de texto usan leading real sin alterar las posiciones de Figma. Inter optical sizing fijo solo en estas secciones. No hay desviaciones creativas.
+
+Bundle real before/after: JS 206.64 → 218.09 kB (gzip 63.96 → 66.44); CSS 40.44 → 49.59 (gzip 8.63 → 10.29). Inter 352.24 kB sin cambios. Sin renderer, rAF ni licencia/dependencia nueva.
+
+Documentación: `docs/PROBLEM_SOLUTION.md`. Evidencia: cuatro renders maestros y dos capturas continuas en `docs/qa/block-03/`.
+
+Blockers nuevos: ninguno. Favicon 404 preexistente, asset favicon/OG pendiente. Mobile validado por viewport Chrome, no dispositivo físico. Pendientes de contenido de bloques posteriores permanecen intactos.
+
+Dirección aprobó continuar el 30 de septiembre de 2026. No reabrir Problema + Solución salvo regresión verificable.
+
+Block 04 — Proyectos está CLOSED / APPROVED FOR CONTINUATION por Dirección.
+
+### BLOCK 04 — Proyectos
+
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
+
+QA técnico de agente: npm run check y git diff --check PASS; build preview HTTP 200. El entorno de agentes no puede ejecutar browser QA de forma confiable. Dirección confirmó que el QA visual/browser de este proyecto lo realiza Eze manualmente y aprobó continuar. Esta limitación deja de ser blocker de cierre para agentes. Detalle técnico del intento queda en docs/PROJECTS.md y docs/qa/block-04/README.md.
+
+Base: `74c85a17836fb28561f5ea01087c20f839c18f16`. SHA de implementación: `b0fc13568dbc7176b982dab68b7b7697780941ea`.
+
+Implementado: ProjectsSection explícito después de Solución, src/styles/projects.css, src/hooks/useProjectCarousel.js, copy aprobado en src/data/projects.js y siete SVG exactos locales en src/assets/projects/. Figma 73:42 / 183:6 inspeccionado con metadata, design context, screenshot y propiedades internas; no modificado.
+
+Desktop mantiene cuatro slots visuales asimétricos; Mobile viewport/peek y controles 44. Dataset real = **1** (fitness); proyectos 2–3, URLs y previews PENDING. Slots vacíos decorativos, aria-hidden, sin falsos articles/imágenes/copy. Pagination real **01 / 01** (desviación intencional de 01 / 03 del master). Anterior/siguiente y VER PROYECTO disabled nativos mientras no existan destinos reales.
+
+Un activeIndex compartido; arquitectura nativa preparada para más registros, scroll-snap Mobile/Transition, scrollend con fallback, botones/teclado, ResizeObserver, reduced-motion y cleanup. Sin autoplay ni dependencia/motion ornamental nuevo. Mobile <768, transición 768–1199, Desktop ≥1200. No se cambiaron componentes/estilos/assets protegidos.
+
+PASS: npm run check, git diff --check y verificación SSR de datos/semántica/disabled/no fake links, más rama multi-registro mediante fixture estructural aislado no publicado. Bundle JS 218.09 → 227.53 kB (gzip 66.44 → 68.35), CSS 49.59 → 57.03 (gzip 10.29 → 11.65), Inter 352.24 sin cambios.
+
+**QA browser del agente no realizado** en Block 04; los intentos históricos y verificaciones están en docs/PROJECTS.md y docs/qa/block-04/README.md. Dirección trasladó el QA visual/browser a Eze y aprobó continuar. La limitación del entorno no es un blocker actual de cierre técnico. No se fabricaron PNG de evidencia.
+
+### BLOCK 05 — About + FAQ
+
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
+
+Base: `e5b7cf05d471b96396db4ecd65cad545fae88cae`. Commit de implementación: `3ebf81a51327063fd6055951adf1ba33aabf2a4e`.
+
+Componentes: `src/components/sections/{AboutSection,FAQSection}.jsx`. Data: `src/data/about.js` y `src/data/faq.js`. Estilos locales: `src/styles/about-faq.css`. Assets: cuatro SVG exactos PLUS/MINUS Desktop/Mobile en `src/assets/faq/`. App explícito después de Projects; import en index.css. Foundation y componentes/hooks/estilos/assets de Blocks 01–04 intactos. Sin dependencia ni motion nuevo; Contacto/Footer corresponden exclusivamente a Block 06.
+
+Figma inspeccionado sin modificar: About `81:45` / `183:44`; FAQ `89:45` / `191:9`, metadata, design context, renders, propiedades internas, styles y geometría. About split editorial Desktop con divider Strong y grid propio; stack Mobile con pausa/divisor 32 × 1. FAQ header izquierdo/lista derecha Desktop, stack Mobile. Tokens tipográficos y colores existentes. Mobile <768, Transition 768–1199 en stack, Desktop ≥1200 en split; contenido en flujo/alturas mínimas, sin recorte de texto.
+
+Copy intencional: About secondary usa **“en cada proyecto”** del brief vigente/CURRENT_STATE, por prioridad de Dirección, aunque Figma aún dice **“sobre cada proyecto”**. Resto del copy aprobado exacto.
+
+Un único openId; FAQ 01 abierto inicialmente y funcional. FAQ 02–05 CLOSED y disabled nativos mientras answer sea null; sin panel vacío ni falsa respuesta. Se habilitan automáticamente al cargar una respuesta aprobada no vacía. h2/h3/button, aria-expanded/controls, paneles asociados y hidden, IDs useId, focus-visible heredado, touch target ≥44. Sin motion nuevo.
+
+QA técnico PASS: baseline y final npm run check (lint/build), git diff --check, interacción real React DOM en JSDOM (abrir/cerrar/null/disabled/single-open/hidden/foco DOM/IDs/unmount, sin React warnings), fixture aislado multi-answer fuera del producto y composición App/semántica/copy. Respuestas 02–05 conservan null. Revisión responsive por código en 390/430/768/1024/1280/1536 más 767/1199/1200; geometría calculada, no medida en navegador. Cuatro SVG válidos y resueltos por build.
+
+Bundle JS 227.53 → 232.93 kB (gzip 68.35 → 69.56); CSS 57.03 → 62.58 (gzip 11.65 → 12.59); Inter 352.24 sin cambios. package.json/lockfile intactos.
+
+Documentación: `docs/ABOUT_FAQ.md`. La revisión visual manual de Eze y aprobación de Dirección quedaron registradas en la actualización previa de continuidad; no se declaró comparación browser ↔ Figma ni se fabricaron screenshots. Respuestas FAQ 02–05 siguen pendientes de aprobación. Dirección cerró/aprobó Block 05 y autorizó Block 06. About + FAQ permanecen protegidos.
+
+### BLOCK 06 — Contact + Footer
+
+**STATUS: CLOSED / APPROVED FOR CONTINUATION**
+
+Base limpia: `5d888e2c448e87613c7a1cd98c0149fadae79b71`. Commit de implementación: `e2d09e1510299568396369c00092d8dc21a240db`.
+
+Componentes: nuevo `src/components/sections/ContactSection.jsx`, Footer existente adaptado en `src/components/layout/Footer.jsx`. Contacto dentro de main después de FAQ, Footer fuera de main; App explícito, estilos locales `src/styles/contact-footer.css` importados desde index.css. Dos SVG exactos Desktop/Mobile en `src/assets/contact/`. Copy/labels y destinos en `src/data/contact.js`; footerNavigation reutiliza anchors de navigation.js; wordmark/copyright/label de volver arriba en siteConfig. Exports y valores previos compartidos intactos.
+
+Figma inspeccionado sin modificar: Contacto `95:66` / `191:46`; Footer `99:66` / `191:71`. Metadata, design context, renders y propiedades internas/styles/geometry. Contacto split editorial con divider Strong, CTA tipográfica y grid Default propio Desktop; stack con grid Subtle Mobile. Footer conserva aire 864 Desktop, regla, wordmark/nav horizontal y bottom en extremos; Mobile 470 con nav vertical/targets 44 y back-to-top 101 × 44. Se reutilizan tokens y typography de Foundation; sin motion, formulario, cards, efectos ni dependencia nuevos.
+
+Destinos: email real `mailto:hola@ezewebstudio.com`; HABLEMOS disabled nativo sin href mientras externalCtaUrl siga null; Instagram texto no clickable mientras instagramUrl siga null. Cuando se aprueben URLs en data, se renderizan anchors externos seguros. Sin destinos inventados ni cambios a Header/Hero. Todos los anchors #inicio/#proyectos/#estudio/#faq/#contacto existen y son únicos. Smooth scroll/offset/reduced-motion de Foundation intactos.
+
+Responsive por código en 390/430/768/1024/1280/1536, bordes 767/768 y 1199/1200, más mínimo 320. Mobile/Transition stack hasta 1200; gutters/fluid type existentes y ancho CTA progresivo en Transition. CTA Desktop estrecho interpola localmente 56 → 64 a 1536 para evitar colisión con arrow; sin cambiar token. Contenido en flujo, min-height y wrapping. Presupuesto de widths/colisiones calculado, no medido en browser.
+
+QA técnico PASS: baseline/final npm run check (lint/build), git diff --check, React DOM/JSDOM/SSR (mailto/foco DOM, disabled/sin href, Instagram texto, fixture seguro de URLs futuras solo en memoria, App/footer/anchors/IDs/pending data/unmount), sin React warnings detectados. XML/root geometry de SVG válidos; imports build correctos. Componentes/hooks/CSS/assets/data de secciones Blocks 01–05 intactos; package.json/lockfile intactos.
+
+Bundle JS 232.93 → 238.12 kB (gzip 69.56 → 70.46), CSS 62.58 → 70.76 (gzip 12.59 → 13.76), Inter 352.24 sin cambios.
+
+Documentación: `docs/CONTACT_FOOTER.md`. QA visual/browser final, consola real, teclado físico, overflow y continuidad FAQ → Contacto → Footer pendientes de Eze; no comparación browser ↔ Figma ni screenshots fabricados. Instagram/HABLEMOS siguen null y pendientes anteriores permanecen. Dirección aprobó continuidad de Blocks 01–06 en la autorización vigente de Block 07; esta pasada sistémica actualiza sus contratos Desktop y fondos. El detalle anterior queda como baseline histórico.
+
+### BLOCK 07 — Desktop Production Reimplementation
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+Source of truth inspeccionado: 02B page `239:10`, master `239:11`, sección Hero `242:66`, Problem `242:118`, Solution `242:172`, Projects `242:196`, About `242:238`, FAQ `242:252`, Contact `242:287`, Footer `242:309`. Metadata + design context + renders revisados; auxiliaries Hero1366/1920 y Solution1366 revisados. 02 Desktop histórico no gobierna geometría. 03 Mobile FINAL/FROZEN intacto. El coherence pass `1f8ef0ab69823d2f3564bf2cbe4b2af2724b2698` permanece VISUALLY REJECTED / SUPERSEDED.
+
+Implementación: eliminado `desktop-coherence.css` y su import; reemplazados los bloques Desktop históricos en estilos de sección. Typography fija Production64/72,88/94,54/62,56/64,48/56,44/54,20/30,24/32. Container1280; siete escenas min-height100svh con contenido en flujo; Footer natural384 en referencia. Grids siguen eliminados; Background #050708 salvo About #0A1119. Proyectos activo540×365 y preview/info/CTA sobre x720; runtime01/01, disabled/nulls conservados.
+
+Archivos: styles header-hero/problem-solution/projects/about-faq/contact-footer/typography/primitives, index.css, HeroBackground, ProjectsSection; seis SVG locales Production horizon/exportados read-only porque el crop histórico no reproducía02B. Mobile/Transition assets originales intactos; glows Problem/Solution/Projects reencuadrados según propiedades02B. No paths/estilos/nodos Figma editados, renderer nuevo ni motion.
+
+Responsive:1366×768 container1270/m48,1440×900 container1280/m80 canónico,1536×864 m128 sin ampliar tipo,1920×1080 m320 con crop Hero auxiliar. Spacing/local preview heights reducen aire en pantallas cortas; no zoom/global scale/page snap. Mobile reglas intactas; Tablet stacking intacto y tipografía converge a Production. About runtime “en cada proyecto” conservado frente a “sobre” en Figma.
+
+QA técnico PASS: npm run check (baseline/final lint/build), git diff --check, preview/entry HTTP200, React SSR estructura/IDs/grids/10stars/4steps/3features/real-project-disabled/FAQ-null/mailto. SVGs válidos, CSS Mobile/Transition comparado, widths calculados1200/1280 y cuatro checkpoints. App/data/hooks/Navbar/FAQ/Contact/package/lockfile intactos. No browser visual PASS, consola real ni screenshots fabricados; Eze valida geometría final/overflow/zoom/interacción.
+
+Bundle JS235.66 →241.88kB (gzip70.22 →70.99), CSS70.65 →67.57 (gzip14.08 →13.43); fuente intacta. Sin dependencias nuevas. Pendientes de contenido existentes conservados.
+
+Documentación: `docs/DESKTOP_PRODUCTION_IMPLEMENTATION.md`. Un único commit de implementación identificado por título `feat: implement 02B Desktop Production`, sobre base `61b4a84d13dc655b9e0a3657aa1775aff6e858f4`; resolver SHA con `git log -1 --format=%H --grep='^feat: implement 02B Desktop Production$'` (SHA real en reporte final, sin commit documental extra/autoreferencia).
+
+Dirección autorizó Block08 sobre esta geometría protegida. La web global no se declara FINAL/FROZEN; revisión visual y cierre definitivo siguen a cargo de Eze.
+
+### BLOCK 08C — Hero Motion Polish / Living Arc Behavior
+
+**STATUS: REJECTED BY EZE — VISUAL LIFE STILL INSUFFICIENT**
+
+Baseline `924e1ba2225abb255e2d63674ecce27b5490e9fe` (08B). Eze confirmed the diffuse arc direction is much closer; motion/interaction/particles still NOT APPROVED.08C retains that look and polishes behavior, not concept/layout.
+
+Exact path guides, band widths/blurs/base alpha, surface fills/assets, crop/filter160px padding, layout/copy/type/Header/CTA/heights/Mobile framing unchanged. One Motion clock now drives independent density shimmer, narrower live gradient spacing, mist+halo drift and calm breathing. Continuous accumulated time avoids clock lap resets. Desktop local pointer radius180, soft drift up to9units, alpha.68 and380ms recovery; Mobile no pointer.
+
+React Bits/OGL particle field retains70/28 and DPR1.5/1. Replaced solid dot profile with diffuse elongated light specks in arc cyan/soft cyan-white; minimum nonzero independent drift plus tiny depth-aware/screen motion. Speed1.05/.72, sprite input160/120 but footprint capped5–14 CSS px including halo; layer opacity.55/.4. Ten fixed fallback stars intentionally faint18% only while atmosphere runs, normal in reduce/inactive/failure. No new dependency/engine/filter system.
+
+Reduced/hidden/offscreen/failed state restores static diffuse composition and cancels live controllers/resources. Clock-init failure restores all SVG attributes. Existing OGL failure latch and resource cleanup preserved. Assets/data/other sections/package/lockfile unchanged.
+
+Files: effects HeroLightArc/HeroParticles/livingArcMotion/new arcMotionState, HeroBackground, header-hero.css, vendor particles, docs HERO_MOTION/HEADER_HERO/CURRENT_STATE. Commit identified by `fix: polish living Hero arc and luminous dust behavior`; resolver `git log -1 --format=%H --grep='^fix: polish living Hero arc and luminous dust behavior$'`; actual SHA delivered in report.
+
+QA technical PASS: npm run check/git diff --check; SSR/controller assertions for static fallback/IDs/stars/exact guides,3/5s field changes, pointer recovery/cleanup and clock failure; actual Motion callbacks/stop in timer-backed Node RAF; OGL-stub5s time advance/counts/DPR/single RAF/disposal; protected layout checks. No real browser visual/GPU PASS. Eze checks Desktop1366×768/1440×900/1536×864/1920×1080 and Mobile360×800/390×844/393×873/430×932. Success criteria remain pending visual review. Details `docs/HERO_MOTION.md`.
+
+Next: Eze visual QA / Direction decision. No later-section motion or Block09.
+
+### BLOCK 08D — Hero Motion Architecture Correction
+
+**STATUS: REJECTED BY EZE — EFFECTS STILL APPEAR STATIC IN REAL BROWSER**
+
+08C permanece **REJECTED BY EZE** (`219c7846384e2bd7e3a7411b12775232b7a36e7e`). El LOOK difuso fue aprobado; su arquitectura de motion fue rechazada. Baseline limpio/sincronizado `c1b864ad68fe7e715eea77b7e5d47c4c060c5d18`; npm run check inicial PASS.
+
+Reemplazados el shader/adapter React Bits/OGL y Motion-clock/traslaciones/copiapath por dos propietarios claros: tsParticles React/engine/slim4.4.0 (MIT, peer React19 compatible) para dust nativo y Motion + SVG turbulence/displacement para el arco. Eliminados OGL, vendor React Bits, LivingArcMotion, livingArcMotion y arcMotionState. HeroLightArc conserva paths, bandas difusas, gradient/base alpha y fallback blur-only; no hard rim.
+
+Dust: tres sprites locales cyan suaves,60 Desktop /24 Mobile–Transition, movimiento nativo independiente .45–.9/.25–.5, opacity/size animados, hover repulse110px moderado Desktop fine-pointer. DPR nativo hasta1.5 Desktop (altoDPR usa1), Mobile1; FPS60/30. Provider estable y cargas serializadas con host/id por montaje impiden que un load tardío destruya al sucesor. Un canvas2D, sin WebGL.
+
+Arco: ruido fractal una octava por banda; Motion anima frecuencia/flujo y displacement mist80–132, halo38–68, core12–24; Mobile34–58/18–32/6–12. Pointer local con máscara radial440 y mapa neutro fuera del radio220; springs de Motion deforman el campo, no trasladan una copia. Recuperación aproximada1s. Padding256 y región live visible+padding evitan corte interno y coste de toda la elipse fuera de pantalla. Sin cambios de crop/layout ni touch handlers Mobile.
+
+Reduced/hidden/offscreen desmontan ambos efectos y restauran filtros estáticos; fallos de partículas/arco independientes. Estrellas originales completas hasta particle-ready y ante fallo; nunca dependen de efectos el contenido/CTA. Hook de preferencias intacto. Seis animaciones idle comparten scheduler Motion, separado del único scheduler nativo de partículas; cero RAFs propios.
+
+Archivos: effects HeroAtmosphere/HeroParticles/HeroLightArc/ArcDisplacement/arcDisplacement/heroParticleOptions, HeroBackground, tres sprites light-dust, package/lockfile, notices, docs HERO_MOTION/CURRENT_STATE; eliminaciones anteriores. **Todas las hojas CSS, body assets, App, data, hooks, otros componentes y geometría Desktop02B/Mobile03 permanecen intactos.**
+
+Validación técnica: npm run check y git diff --check PASS; SSR/static/IDs/path guides; plugins/opciones nativas4.4 (incluye corrección de nombres preload únicos); Motion spring/cleanup real en harness Node, no render visual. Browser/percepción/console/FPS pendientes de Eze: observar3–5s idle y pointer/recovery en1366×768/1440×900/1536×864/1920×1080, Mobile360×800/390×844/393×873/430×932. Los tests técnicos no prueban aprobación visual.
+
+Bundle inicial236.02→237.49kB (gzip71.43→72.04); Hero lazy completo109.34→214.29kB (gzip36.28→70.40), CSS67.22/gzip13.44 intacto. tsParticles aislado211.48/gzip64.89 con React external; no sumarlo al build. Detalle en `docs/HERO_MOTION.md`. No avance a Block09. Pendientes reales de contenido anteriores intactos. Commit único identificado por `fix: replace Hero motion with native dust and SVG displacement`; resolver SHA con `git log -1 --format=%H --grep='^fix: replace Hero motion with native dust and SVG displacement$'` (SHA completo en reporte final, sin segundo commit documental/autorreferencia).
+
+---
+
+
+### BLOCK 08E — Hero Motion Lab / Runtime Proof
+
+**STATUS: HERO MOTION LAB — READY FOR EZE INTERACTIVE TUNING**
+
+08D is rejected after real-browser QA. The approved diffuse LOOK remains. The problem is now treated as a runtime/proof problem, not another tuning problem.
+
+Concrete findings from repo review:
+- screenshot still shows approximately the original fixed-star count, not a clearly visible 60-particle field;
+- current tsParticles integration does not follow the official React wrapper pattern and manually calls `tsParticles.load({ id, element, options })`; official v4 guidance uses a real target id or the official `Particles` component/provider lifecycle;
+- current code silently falls back on particle or arc failures, making a broken live effect look identical to the static approved Hero;
+- arc runtime also silently exits/falls back if its feature gate or filter setup fails;
+- therefore technical tests can pass while the browser shows no motion.
+
+New rule: no more 20–30 minute production passes without visible runtime proof.
+
+08E entrega un Lab temporal exclusivamente con `npm run dev` + `?heroLab=1`; preview/deploy no lo activan. Panel fuera del aria-hidden/clipping del fondo: PARTICLES/ARC LOADING–RUNNING–FAILED, POINTER ACTIVE–INACTIVE, reduced motion ON–OFF, viewport, PAUSED explícito por visibilidad/reduce y errores completos. Canvas/count/DPR/travel y filtros reales visibles; timeout8s y stall3s reportados. RUNNING no equivale a aprobación visual.
+
+Flujo Lab único oficial4.4: ParticlesProvider + Particles, init estable, sin engine.load/hosts manuales. Preset60, speed2.5–4, opacity.35–.8, size3–7, repulse200/strength4; círculos cyan nativos deliberadamente claros para aislar rendering/movimiento. Arco conserva geometría/colores/bandas: displacement200–260/100–160/40–70, noise5×, radius350, local500, spring~.8s. Componentes/config/controller Lab separados; normal08D no monta en paralelo ni cambia fuera del switch.
+
+Sliders completos, checkboxes de confirmación visual, reset/retry y export JSON seleccionable. Sin guardar valores finales/localStorage ni integrar ajustes. Reduced motion bloquea efectos y lo explica; errores de provider/React/async/filtros/runtime visibles, nunca fallback silencioso. Mobile producción y demás secciones protegidos.
+
+Baseline sincronizado `e443dc009c2ba7d946d23dfb7ff7fea73739a126`; npm run check baseline/final y git diff --check PASS; dev HTTP/module transforms y parsing nativo4.4 PASS; bundle producción sin Lab UI/imports/CSS. No browser/perceptual PASS: Eze realiza prueba real. Archivos: HeroBackground + effects/lab (cuatro componentes, labSettings/createLabArc/CSS), docs HERO_MOTION/CURRENT_STATE. CSS, controladores/config producción, body/assets, datos, hooks, App, package/lockfile intactos. Sin dependencias nuevas.
+
+Commit único `dev: add Hero motion runtime proof lab`; resolver SHA con `git log -1 --format=%H --grep='^dev: add Hero motion runtime proof lab$'`, SHA completo en reporte. Detalle/uso en `docs/HERO_MOTION.md`.
+
+Gate:
+1. Eze confirms particles visibly move.
+2. Eze confirms pointer visibly affects particles.
+3. Eze confirms arc visibly moves while idle.
+4. Eze confirms pointer visibly disturbs the arc.
+5. Only then tune intensity downward toward premium final values and integrate into production.
+
+No Block09 until this proof is achieved.
+
+---
+
+### BLOCK 08G — Volumetric Wake Lab
+
+**STATUS: BASELINE APPROVED BY EZE / INTEGRATED IN 08H**
+
+08F wake visualmente rechazado por Eze. `velocityWake.js` retirado: duplicaba fragmentos de mist/halo y producía una línea rota. Baseline halo aprobado en Lab: core11/5.5/0.625; halo20/8.5/0.475; mist50/20.5/0.24. Held radius110 / strength620 / recovery1s e idle0/0/0 preservados. Particles1/speed0.1 intactos; drift sigue NO confirmado.
+
+`volumetricWake.js`: pool fijo3,8 wisps por slot (controles6–10), sin path duplicado. Volúmenes elípticos con gradientes cyan, blur y turbulencia local. Anchor deriva del punto del arco y su normal; origen alrededor de la envolvente del mist. Velocidad CSS px/ms y dirección SVG reales, threshold1.1, cooldown100; solo pointer rápido/cercano. Corte original alargado/orientado, tamaño fijo: mist0.7, halo0.12, core0; recuperación del corte350ms. Plume lifetime900ms, travel110 con respuesta de velocidad limitada1–1.5, radios26±12, expansión1.7, spread±24°, drag0.82, opacity0.65, turbulence8. Impacto inicial150ms seguido de divergencia/expansión/fade. Sin loop propio/renderer/dependencia.
+
+Lab `npm run dev` → `?heroLab=1`, export `plume` + `haloQuality` + `arc`/`particles`. Reduced motion/hidden/outside/unmount cancela animaciones, restaura máscaras y elimina pool; halo estático conserva calidad aprobada. Mobile/falta fine-hover no monta plume/held. Cambiar blobCount reconstruye pool con cleanup. Producción, layout, copy, framing y otras secciones protegidos.
+
+QA técnico: npm run check PASS; git diff --check PASS; Vite DEV transforms PASS. Motion real con DOM simulado: baselines, gating/XY/cooldown/pool3, wisps6–10, cero paths copiados, drag/divergencia/expansión/fade, corte fijo/core intacto y cleanup PASS. Build producción idéntico08F. No se declara apariencia, consola o performance de browser PASS; validación visual del plume pendiente de Eze.
+
+Archivos: Lab HeroMotionLab/LabArc/createLabArc/labSettings; nuevos pointerVelocity.js/volumetricWake.js; eliminado velocityWake.js; docs CURRENT_STATE/HERO_MOTION. Commit único `dev: replace copied arc wake with volumetric plume lab`; SHA mediante `git log -1 --format=%H --grep='^dev: replace copied arc wake with volumetric plume lab$'`.
+
+Eze aprobó el resultado y exportó valores para08H. Los números anteriores describen el preset08G inicial; el export integrado vigente está en08H.
+
+---
+
+### BLOCK 08H — Hero Motion Production Integration
+
+**STATUS: REJECTED BY EZE — PRODUCTION EFFECT NOT VISIBLE / LAB STILL MOUNTABLE**
+
+08G aprobado e integrado en Hero normal. Fuente única `heroMotionSettings.js`: particles1/0.1/0.575/1.5/200/2.4; arc mist0/halo0/core0/noise1/radius110/strength620/recovery1; quality core11/5.5/0.625, halo20/8.5/0.475, mist50/20.5/0.24; plume enabled, threshold1/lifetime1600/travel110/count8/radius30/spread24/drag1/opacity0.075/mistCut0.7/haloCut0.12/turbulence8/cooldown100. Mapping/rangos de partículas iguales al Lab.
+
+Un solo arc controller y plume/tracker compartidos; retirado controlador08D, gate del constructor y montaje manual/custom hosts tsParticles. ParticlesProvider + Particles oficial/init única también compartido. Lab solo DEV, instrumentación/panel/polling fuera de producción. Cero path clones de wake. Core no se atenúa por plume. Static SVG aplica calidad aprobada en cuatro crops; reduced/hidden/offscreen cancela efectos/restaura filtros/pool y conserva fondo completo. Mobile framing y touch intactos.
+
+Guía residual: identificado borde binario del relleno body bajo el arco, no rim/stroke extra. Feather3px solo del cuerpo, sin tocar paths/geometry/assets ni calidad core/halo/mist. Test geométrico de alpha confirma transición suavizada; desaparición perceptual pendiente de Eze. No parche de coreOpacity ni overlay.
+
+Validación: npm run check baseline/final y git diff --check PASS; Motion real/DOM simulado held/recovery/idle0/plume/cleanup PASS; SSR fallback completo calidad/IDs PASS; particle options iguales08G; DEV transforms/build sin Lab UI/query/telemetry PASS; estilos de layout/framing protegidos por comparación exacta. No browser/console/FPS PASS fabricados. Initial JS238.02kB gzip72.29; Hero lazy135.81 gzip43.31; CSS67.26 gzip13.45. Sin nuevas dependencias ni cambios de datos/copy/type/Navbar/otras secciones.
+
+Archivos principales: effects HeroLightArc/ArcDisplacement/arcDisplacement/HeroAtmosphere/HeroParticles/heroParticleOptions; shared heroMotionSettings/ParticleField/particleOptions/volumetricWake/pointerVelocity; Lab consume shared logic (viejos archivos duplicados removidos); header-hero.css; docs CURRENT_STATE/HERO_MOTION. HeroBackground y su switch DEV no precisaron cambios.
+
+Commit único `feat: integrate approved Hero light motion into production`; SHA vía `git log -1 --format=%H --grep='^feat: integrate approved Hero light motion into production$'`. Próximo paso: Eze QA del Hero normal. No iniciar Block09 ni declarar FINAL/FROZEN.
+
+---
+
+### BLOCK 08I — Production Activation Fix
+
+**STATUS: HERO MOTION PRODUCTION ACTIVATION — READY FOR EZE VISUAL QA**
+
+Real-browser QA after 08H:
+- Eze does not see the approved held/plume interaction in the normal Hero;
+- Hero Lab is still mountable/active through `?heroLab=1`.
+
+Repo diagnosis:
+- `HeroBackground.jsx` still has a module-level `labMode` query switch;
+- while `labMode` is true, production `HeroAtmosphere` is explicitly NOT imported/mounted;
+- normal production arc is additionally gated by `interactive`, which requires Desktop >=1200 + `(hover:hover) and (pointer:fine)`;
+- production arc failure/unsupported gates remain silent, so normal Hero can fall back without visible diagnostics;
+- idle arc displacement is intentionally zero and particles are count1/speed0.1, so production looks static until interaction is actually active.
+
+08I implementado (6 de octubre):
+- retirados query heroLab, import Lab, estado/error/portal/render desde HeroBackground; el Lab permanece como código histórico sin acceso desde el sitio, incluso en DEV;
+- HeroAtmosphere es el único efecto importado/montado con preferences.active, con fallback si falla el import;
+- eligibility exacta Desktop75rem + matchMedia('(hover: hover) and (pointer: fine)'), sin nuevos requisitos; reduced/hidden/offscreen conservados y Mobile sin interacción mouse;
+- DEV console muestra active/interactive y motivo, arc mounted/plume ready y cada fallo de SVG/CTM/ancho/DOMPoint/feDisplacementMap/import/setup con error real; sin panel ni polling;
+- export08G, held110/620/1, idle0, haloQuality, plume y partículas intactos. Controller/volumetricWake/settings/CSS/assets/data/dependencias sin cambios.
+
+Archivos: HeroBackground.jsx, ArcDisplacement.jsx, useHeroMotionPreferences.js, docs/HERO_MOTION.md y CURRENT_STATE. npm run check baseline/final y git diff --check PASS; harness efecto/hook con DOM/media simulados PASS, gates/cleanup/config identity; Motion real held/recovery/plume/cleanup PASS. No browser visual PASS declarado. La exclusión por query está comprobada; sin query la causa específica en el browser de Eze requiere los nuevos diagnósticos.
+
+Commit `fix: activate production Hero without Lab switch`; SHA mediante `git log -1 --format=%H --grep='^fix: activate production Hero without Lab switch$'`.
+
+No Block09 until Eze confirms the normal Hero interaction is visible.
+
+---
+
+### BLOCK 08J — Live Filter Ownership Fix
+
+**STATUS: NOT VISUALLY APPROVED — NO EFFECT OBSERVED BY EZE**
+
+Real-browser QA after 08I: HeroLab is gone, but the normal Hero still has no visible held deformation/plume.
+
+Root cause found in repo:
+- `HeroLightArc.jsx` renders each visible path with a React-owned static `filter="url(#...)"` prop.
+- `createArcDisplacement()` imperatively swaps that same DOM attribute to the live filter.
+- `HeroParticles` later calls `onStatus(true)`, which updates `particlesReady` in `HeroBackground`.
+- that parent state update re-renders `HeroLightArc`;
+- React reconciles the path `filter` prop back to the static filter URL;
+- `ArcDisplacement` does not re-run because its effect dependencies did not change;
+- result: controller/listeners remain mounted, but the visible arc is again painted through the static filters, so pointer/plume changes happen on filters no longer attached to the visible paths.
+
+This explains why the Lab worked but normal production looked static.
+
+08J implementado:
+- HeroLightArc recibe live; React es el único dueño de path.filter para mist/halo/core. Un solo conjunto de paths por variante, sin halo duplicado;
+- createArcDisplacement deja de escribir/restaurar path.filter. Motion conserva exclusivamente valores del gráfico vivo y plume;
+- callback estable ArcDisplacement → HeroAtmosphere → HeroBackground anuncia variante lista tras setup, y revoca en fallo/cleanup;
+- active+interactive y variante lista seleccionan LIVE. Unsupported/fallo/reduced/hidden/offscreen/no pointer fino seleccionan STATIC; Mobile/framing intactos;
+- particlesReady se conserva para estrellas, no decide liveArc ni reinicia controlador;
+- DEV console informa modo LIVE/STATIC y comprueba en DOM los tres URLs live después de particle readiness mediante console.assert. Sin debug panel ni hacks imperativos.
+
+QA técnico: npm run check y git diff --check PASS. JSX real del padre con estado simulado + React SSR conserva los filtros tras particlesReady, renders adicionales, cambio de variante y fallback; no se presenta como QA browser. Harness gates y Motion real held/recovery/plume/cleanup con DOM simulado PASS. Runtime assertion DEV permite verificar conexión en el browser de Eze.
+
+Sin cambios de settings08G (110/620/1, quality, plume, particles), estilos/layout/assets/data/dependencias. Archivos: HeroBackground, HeroLightArc, HeroAtmosphere, ArcDisplacement, arcDisplacement.js y docs CURRENT_STATE/HERO_MOTION. Commit `fix: give React sole ownership of Hero arc filters`; SHA vía `git log -1 --format=%H --grep='^fix: give React sole ownership of Hero arc filters$'`.
+
+No Block09 until Eze confirms normal Hero held deformation + plume are visible.
+
+---
+
+### BLOCK 08K — Runtime Verification / Rendered Effect
+
+**STATUS: AUTHORIZED — DIAGNOSE FIRST, NO BLIND REWORK**
+
+Eze rechecked normal Hero after 08J and still sees no live interaction. Do not assert another single cause without the real browser chain.
+
+Confirmed code facts (HEAD 82707143716f6686dbaa8f2940c4f1294aa956c2):
+- Idle mist/halo/core displacement are zero; particles count1/speed0.1. At rest the Hero is nearly static by configuration.
+- HeroBackground now owns declarative STATIC/LIVE filter selection, but DOM mode alone does not prove rendered pixels change.
+- ArcDisplacement returns without retry on several transient gates (SVG target, CTM, bounding size, background readiness). It can therefore miss a later-ready target.
+- Arc controller requires Desktop>=1200 and fine hover; reduced motion/offscreen disable activation.
+
+Proof order BEFORE changes to effects:
+1. confirm branch and asset served;
+2. inspect visible SVG variant and data-arc-mode;
+3. verify path filters point to live definitions;
+4. test synthetic/real pointer on visible curve and log screen-to-SVG distance;
+5. observe local filter displacement scale become >0;
+6. observe plume slots spawn on a fast pointer crossing;
+7. confirm visible pixel change; if values move but pixels do not, diagnose SVG filter/mask/painting;
+8. fix only proven failed gate and make transient readiness recoverable.
+
+No new visual tuning, packages, layout changes, or full Lab. A single DEV-only diagnostic is acceptable. Eze owns final visual QA. Do not begin Block 09.
+
+---
+### BLOCK 08L — Desktop Fit Production Implementation
+
+**STATUS: DESKTOP FIT IMPLEMENTED / READY FOR EZE VISUAL QA**
+
+8 de octubre de2026. Figma02C (`266:94`), master1440 `266:95`5256high y compact1366 `268:66`5124high inspeccionados mediante metadata/design context/renders. Secciones Hero266:96, Problem266:124, Solution266:147, About266:210, FAQ266:218, Contact266:234, Footer266:254. 02C reemplaza geometría02B únicamente aquí. Projects266:178 FROZEN; Mobile03 FINAL/FROZEN.
+
+Cambios: header CTA160×44; Hero CTA210/196×52, grupo430/gap24 y separación32. Problem intro64/cards320,296×272/banner624×80. Solution feature80/86 local, escalonado174/356/538/rows158. About header96/copy134; FAQ header106/list80/open148/closed76 conservando targets44; Contact left112/right134/divider352. Footer natural224 con divisor2px viewport-wide y contenido64/144.
+
+Alturas derivadas de flujo/padding con contenido actual: Problem768/Solution768/About512/FAQ624/Contact560/Footer224. Sin min100svh Desktop para estos bloques, fixed section heights, escala global o nueva capa de overrides. Contenido/zoom/FAQ puede crecer. Hero/Projects conservan viewport escénico. Contenedores modificados1280, márgenes43/80/128/320 a1366/1440/1536/1920; Projects conserva su gutter original.
+
+Archivos: src/styles/header-hero.css, problem-solution.css, about-faq.css, contact-footer.css; docs/DESKTOP_FIT_IMPLEMENTATION.md y CURRENT_STATE. Reemplazadas reglas Desktop02B y eliminadas excepciones obsoletas, sin duplicación de sistemas. Componentes/hooks/data/assets/dependencias/primitivas/type global sin diff. Mobile/Tablet prefijos idénticos; Hero Motion y todas las reglas de escena/efectos protegidas. Copy About “en cada proyecto”, FAQnull y Projects01/01 preservados.
+
+Validación: baseline limpio4585816; npm run check baseline/final y git diff --check PASS; comparaciones de archivos protegidos/prefijos Mobile-Tablet PASS; SVGs locales no vacíos/XML válidos; React SSR semántica/IDs/content PASS; razonamiento de anchuras en1366×768,1440×900,1536×864,1920×945,1920×1080 y1200 sin colisiones obvias. No browser/overflow/pointer visual PASS declarado. 08K continúa con su estado previo:08L protege el efecto sin reabrirlo ni certificar interacción. Eze hace QA visual final.
+
+Commit único `feat: implement 02C Desktop Fit geometry`; SHA con `git log -1 --format=%H --grep='^feat: implement 02C Desktop Fit geometry$'`. Próximo paso: Eze QA de02C, no Production FINAL ni Block09 autorizado.
+
+---
+
+### BLOCK 08M — Desktop Fit Visual QA Corrections
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+8 de octubre de 2026. Correcciones explícitas de Eze sobre baseline limpio/sincronizado `0c11e18b9d8916bb80ea8e780bbc28c7b19cc582`; prevalecen sobre Figma 02C donde difieren.
+
+- Problema y Solución: `min-height: 100svh` Desktop en wrappers de contenido, flujo flex vertical y crecimiento natural. Problema distribuye aire entre intro/cards/resultado; la lista de Solución crece y distribuye sus tres features. Cards mínimo272, keywords80/86, banner80, rails/iconos/offsets conservados; sin escala artificial.
+- About: padding izquierdo32→0 y gap136→168. Título/eyebrow comparten eje con FAQ; copy/divisor y altura natural512 de referencia conservados.
+- Footer: variables tipográficas solo locales Desktop, wordmark18/28/tracking.18em, nav15/24, metadata14/22. Targets44, estructura/altura natural224 y divisor full-width intactos.
+
+Archivos: `src/styles/problem-solution.css`, `about-faq.css`, `contact-footer.css`; `docs/DESKTOP_FIT_IMPLEMENTATION.md` y este documento. Sin overrides adicionales, librerías, cambio de copy/assets/components ni comportamiento. Hero/Navbar/Motion, Proyectos, Contacto, FAQ, Mobile/Tablet y tipografía global protegidos.
+
+Validación técnica: npm run check baseline/final (lint/build) PASS; git diff --check PASS; comparación de prefijos Mobile/Tablet y reglas protegidas PASS; matemática de composición/anchura en1366×768,1440×900,1536×864,1920×945 y borde1200. Mínimos de escena respetan viewport y permiten crecimiento de texto. Browser/overflow/alineación visual pendiente de Eze, sin PASS visual fabricado. 08K conserva su estado previo.
+
+Commit: `fix: correct Desktop Fit viewport rhythm and footer type`; SHA con `git log -1 --format=%H --grep='^fix: correct Desktop Fit viewport rhythm and footer type$'`. Próximo paso: Eze revisa estas cuatro correcciones; no Production FINAL ni siguiente fase autorizada.
+
+---
+
+### BLOCK 08N — Desktop Editorial Column Alignment
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+8 de octubre de 2026. Baseline limpio/sincronizado `248d0414923b9dd3df066b0054be267d71992dbe`. Dirección reemplaza las tres estructuras horizontales independientes por un contrato Grid Desktop común, sin reinterpretar Figma ni modificar el resto de la página.
+
+`about-faq.css` define conjuntamente `.about-layout, .faq-layout, .contact-layout` dentro de >=1200: contenedor1280 con márgenes actuales, padding horizontal0, tracks600fr/552fr y gap común `min(128px, (100vw - 64px) * .1)`. A1440: izquierda80, gap128, derecha808, fin1360. En anchos menores, tracks y gap se adaptan proporcionalmente; no offsets arbitrarios por sección. About conserva ancho de lectura máximo528 y título máximo560; FAQ header máximo540, acordeón ocupa el track derecho; Contact action máximo440 mantiene CTA/regla. Divisores About/Contact usan medio gap común, eje744 a1440; sus alturas y posiciones verticales originales siguen intactas.
+
+Se conservan exactamente paddings verticales About96/136, FAQ80/86, Contact112/122; márgenes internos, estilos de texto, copy/links, fondos/colores y funcionamiento FAQ intactos. No alturas fijas nuevas: texto/acordeón puede crecer naturalmente si un nuevo ancho necesita más líneas, sin recortes ni compensación vertical. Mobile/Tablet, Hero Motion/Navbar, Problema/Solución, Proyectos y Footer sin cambios.
+
+Coordenadas **calculadas desde CSS, no medidas en browser**:
+
+| Viewport | Encabezados izquierdos X | About / FAQ / Contact derecha X | Divisores About / Contact X |
+| --- | --- | --- | --- |
+|1366×768|43|771 / 771 / 771|707|
+|1440×900|80|808 / 808 / 808|744|
+|1536×864|128|856 / 856 / 856|792|
+|1920×945|320|1048 / 1048 / 1048|984|
+|1200×768|32|678.1 / 678.1 / 678.1|621.3|
+
+Validación técnica: npm run check baseline/final (lint/build) PASS; git diff --check PASS. Comparaciones Mobile/Tablet/Footer/protegidos PASS; ancho revisado también en1280/1365 y borde1200. Sin nueva dependencia ni cambio de componentes. Intento de browser automatizado detenido al faltar el ejecutable Chromium de Playwright; no instalación ni reintentos. **getBoundingClientRect, alturas/text wraps, overflow y FAQ en navegador quedan pendientes de Eze**; no afirmar mediciones reales ni PASS visual.
+
+Comprobación para la consola del navegador después de cargar Inter (repetir en los cuatro viewports):
+
+```js
+await document.fonts.ready
+const columns = ['.about-copy', '.faq-list', '.contact-action']
+const positions = columns.map(selector => ({
+  selector,
+  left: document.querySelector(selector).getBoundingClientRect().left,
+}))
+console.table(positions)
+const xs = positions.map(position => position.left)
+console.assert(Math.max(...xs) - Math.min(...xs) <= 1, 'Editorial axis mismatch', positions)
+```
+
+Archivos: `src/styles/about-faq.css`, `src/styles/contact-footer.css`, este documento. Commit único `fix: share Desktop editorial column alignment`; SHA vía `git log -1 --format=%H --grep='^fix: share Desktop editorial column alignment$'`, exacto en reporte final. Próximo paso: Eze confirma eje horizontal/lectura en browser; no Production FINAL ni nuevas secciones autorizadas. 08K mantiene su estado previo.
+
+---
+
+### BLOCK 08O — Fixed Glass Navbar + Editorial Motion
+
+**STATUS: REJECTED BY EZE / SUPERSEDED BY 08P**
+
+Historial08O; reveals y alineación Desktop reemplazados en08P.
+
+8 de octubre de 2026. Baseline limpio/sincronizado `c89b335ddc6e7a7ea73547aed8ab139f707fae3c`. Dirección autoriza navegación fixed y motion editorial finito, sin rediseño ni cambios de Hero Motion. Esto sustituye reglas anteriores de header absoluto y ausencia de reveal en contenido.
+
+Navbar fixed, mismo box y origen, sin spacer. Glass300ms full-width tras umbral8px con sentinel IO; fondo82%/blur16/borde sutil y fallback opaco. Offset real vía ResizeObserver, CSS68 Desktop/92 Mobile-Tablet; solo scroll-padding. Skip link z100 sobre header40; modal/foco/Escape/scroll-lock/auto-close originales intactos. Sin actualizaciones React en cada scroll.
+
+Un observer de contenido en main,12 targets explícitos: cards/result de Problema,3 features/acento de Solución,2 columnas About y2 Contacto. Entrada550ms/opacidad.4→1/translate16→0, stagger discreto0–210ms, una vez; contenido visible por defecto, sin hidden classes ni geometría inicial distinta en flujo. Native WAAPI/CSS bastan; Motion14 existente permanece en el Hero protegido, sin nueva dependencia ni import inicial adicional.
+
+Hover cards Desktop fine-pointer: elevación4/borde cyan/sombra tenue, sin cursor pointer. Proyectos sin reveal ni animación de slots vacíos/control disabled; hover brightness solo sobre preview real cuando exista. FAQ conserva botones/estado/aria-expanded/nulls; panel CSS grid0fr/1fr450ms y aria-hidden/inert al cerrar, transición de icono y hover solo enabled. Contacto enlaces reales con feedback, HABLEMOS disabled sin affordance. Footer solo color hover/focus. Reduced motion cancela reveals y transiciones/lift; visibility/focus/unmount cancelan y restauran baseline, cleanup y guard de callbacks tardíos. Sin loops nuevos ni RAF.
+
+Archivos: Navbar/App y atributos de Problem/Solution/About/Contact; FAQ wrapper/semántica closed; hooks/useSiteMotion.js y utils/siteMotion.js; cinco stylesheets de sección con interacción; tests/siteMotion.test.mjs; docs/EDITORIAL_MOTION.md, HEADER_HERO.md y este documento. HeroBackground/HeroSection/effects/hooks/settings/assets, carousel componente/hook/dataset, todo copy/data/assets, tokens/type/primitives/index.css/package/lock protegidos.
+
+QA técnico: npm run check baseline/final y git diff --check PASS;6 pruebas lifecycle Node PASS; React SSR IDs/anchors/copy/FAQ/nulls/static Hero PASS; CSS AST dimensiones/padding/márgenes/columns/type en reposo iguales. Checkpoints1366×768,1440×900,1536×864,1920×945 y390×844 revisados por código. No browser/hover/anchor/FAQ rendering/overflow PASS ni screenshots fabricados. Eze hace QA final;08K y contenido pendiente no se declaran cerrados.
+
+Commit único `feat: add fixed glass navigation and editorial motion`; SHA con `git log -1 --format=%H --grep='^feat: add fixed glass navigation and editorial motion$'`. Próximo paso: Eze revisa fixed/glass/anchors/menu/motion/reduced y Hero runtime protegido. No Production FINAL ni siguiente fase autorizada.
+
+---
+
+### BLOCK 08P — Navbar Alignment + Motion Correction
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+8 de octubre de2026, baseline limpio/sincronizado `01192c6e17832e13d6451279e7093cf2650c918b`. Dirección rechaza08O y autoriza estas correcciones específicas; no rediseño ni nueva dependencia.
+
+- Navbar Desktop68: Grid simétrico1fr/auto/1fr, align-items:center, padding vertical0, brand izquierda/nav centro real/CTA160×44 derecha. Quitados offsets24 y nav absoluto. Glass/fixed/offset medido, skip link y Mobile modal intactos.
+- Retirados todos los data-reveal, hook/observer global de main y WAAPI de entrada. Problema/About/Contacto siempre visibles; hover cards aprobado conservado.
+- Solución: único highlight de lectura, h3 más cercano a45% del viewport dentro de banda20–70%; palabra/acento #8DEEFF500ms, resto blanco. IO gate + scroll pasivo/RAF solo por evento, cleanup y fallback visible. Reduced motion elimina transiciones, no cambios de layout.
+- Contacto: HABLEMOS anchor real usa externalCtaUrl o emailHref aprobado (actual mailto:hola@ezewebstudio.com). Hover/focus Desktop color/arrow6px/regla cyan300ms; reduced sin desplazamiento. URL externa sigue pendiente, data sin cambios.
+
+Archivos: App; Problem/Solution/About/Contact JSX; hooks/useSiteMotion y utils/siteMotion; header-hero/problem-solution/contact-footer CSS; tests/siteMotion.test.mjs; docs/EDITORIAL_MOTION.md y este documento. Hero Motion/escena/assets/settings, Navbar JSX/menu, FAQ, Proyectos, Footer, copy/data/type/section geometry/dependencias protegidos.
+
+QA técnico: npm run check baseline/final lint/build y git diff --check PASS;5 pruebas de controladores PASS; SSR no reveals/anchors/IDs/FAQ/nulls/static Hero/mailto/future URL fixture PASS; diff protegido/prefijos navbar Mobile-Tablet y Hero CSS PASS.1366×768/1440×900/1536×864/1920×945 y390×844 razonados por código. No coordenadas browser, hover/scroll/mail client/overflow ni QA visual PASS fabricados. Eze realiza revisión final;08K sigue pendiente.
+
+Commit único `fix: align navbar and replace generic reveals`; SHA mediante `git log -1 --format=%H --grep='^fix: align navbar and replace generic reveals$'`, exacto en reporte final. Próximo paso: Eze valida08P, no Production FINAL ni nueva fase autorizada.
+
+---
+
+### BLOCK 08Q — Editorial Coherence + Real Project Carousel
+
+**STATUS: IMPLEMENTED / READY FOR EZE VISUAL QA**
+
+13 de octubre de2026. Baseline limpio/sincronizado `ae594892187387516f16bfc39fb80db84f3f9023`. Brief explícito de Eze sustituye la estructura estática/native de Proyectos y corrige FAQ/Footer; no rediseño general ni Hero Motion.
+
+- FAQ Desktop usa Heading XL56/64/600, mismos spans/copy, padding-top26 del header retirado; header/list empiezan juntos. Padding inferior86→134 (+48), Contacto sin cambios. Shared Grid08N y ejes editoriales intactos; altura natural/answers/nulls/funcionalidad preservados. Mobile FAQ sin cambios.
+- Footer Desktop reduce contraste: wordmarkTextMuted, nav#9AA6AE, metadata#85939E; hover/focus primary. Divider soloFooter1px/16%full-width, Contact Divider Strong intacto. Tamaños18/15/14, geometría/targets/altura natural y Mobile preservados.
+- Proyectos: único viewport/track Embla para Desktop/Mobile. SelectedScrollSnap es fuente única, useSyncExternalStore proyecta select/reInit; buttons/keys/drag/swipe/snap/info/CTA/count usan mismo motor. Aligncenter/containScrollfalse/loopfalse, sin autoplay. Reduced duration0/jump y release instantáneo; cleanup oficial + subscriptions limpias. Desktop540activo con depth/overlap de superficies vecinas, Mobile310×210/gap16centrado.
+- Dataset sigue1fitness/nullURL/nullpreview;01/01, controles y CTA disabled. Tres slots vacíos Desktop/peek Mobile son decoración aria-hidden fuera del track cuando count1; cero fake slides/articles/URLs. Fixture de3TEST ONLY únicamente en tests, no App/data/bundle.
+
+Dependencia directa única nueva: embla-carousel-react8.6.0 exacta, MIT; dos transitivas necesarias embla-carousel/reactive-utils8.6.0. No otra librería del producto. JSDOM26 es herramienta QA temporal fuera del repo, no dependencia publicada.
+
+Archivos: FAQSection/ProjectsSection, useProjectCarousel, styles about-faq/contact-footer/projects, package/lock, tests/projectCarousel.test.mjs, docs PROJECTS/DESKTOP_FIT_IMPLEMENTATION y este documento. Heroeffects/settings/assets/hooks/CSS, Navbar, Problem, Solution, About, Contact, Footer JSX, sharedgrid, copy/data/assets/type/globalstyles y Mobile externo alcarousel protegidos.
+
+QA técnico: baseline/final npm run check lint/build y git diff --check PASS; Embla8+React DOM StrictMode real con fixture aislado3records PASS para controls/bounds/keys/dragmouse/swipetouch/transform/sync/ResizeObserverDesktop↔Mobile/centering/reduced/cleanup; FAQ open-close/aria/inert/pending regresión PASS;5 pruebas navbar/Solution PASS. Eventos/offsets/media de DOM simulados, no browser QA. SSR/previewHTTP suplementan, no prueban pixels. Text contrastFooter9.16/8.11/6.41>=4.5. Viewports1366×768/1440×900/1536×864/1920×945/390×844 revisados técnicamente; Eze valida visual/overflow/gesture feel. No screenshots ni browser PASS fabricados.08K/contenido pendiente siguen abiertos.
+
+Detalle reproducible: docs/PROJECTS.md y docs/DESKTOP_FIT_IMPLEMENTATION.md. Commit único `feat: refine editorial hierarchy and add Embla projects carousel`; SHA vía `git log -1 --format=%H --grep='^feat: refine editorial hierarchy and add Embla projects carousel$'`, exacto en reporte final. Próximo paso: Eze QA08Q, no Production FINAL.
+
+---
+
+### BLOCK 08R — Real FITNESS Preview + Live Demo
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+14 de octubre de2026, baseline limpio/sincronizado `8f7cb4c375338d0f103a00c0581a338c84bd0b39`. Asset WebP aprobado por Eze copiado byte-identical a `src/assets/projects/fitness-preview.webp`1448×1086/128630bytes. Import local en projects.js; solamente fitness.preview y fitness.url actualizados. Demo aprobada `https://eze-demo-gimnasio.vercel.app/`.
+
+ProjectPreview y Button existentes integran automáticamente la imagen y CTA habilitado como anchor target=_blank/rel=noopener noreferrer. Contador01/01; dos controles direccionales disabled; un slide/article/preview. Slots decorativos sin imagen ni datos. Embla, ProjectsSection, CSS/object-fitcover/object-positioncentrado, diseño/Mobile/Hero Motion/otras secciones y dependencias intactos. No recompresión ni nueva librería.
+
+Validación: npm run check baseline/final lint/build, git diff --check PASS; asset fuente/local/build decodificado y hashes iguales; asset servido por previewHTTP200; CTA atributos SSR/DOM correctos y demoHEAD200; prueba existente Embla+ReactDOM actualizada solo para estado real preview/URL y fixture multi-registro regresión PASS;5 pruebas site-controller PASS. Crop calculado en1366×768/1440×900/1536×864/1920×945 y390×844: cover sin distorsión, texto/subject/CTA del mockup dentro del área visible. Mayor recorte de marco exterior en Desktop corto. Browser/crop/tab-opening visual no comprobados; Eze hace gate final. Sin screenshots fabricados.
+
+Archivos: src/assets/projects/fitness-preview.webp, src/data/projects.js, tests/projectCarousel.test.mjs, docs/PROJECTS.md y este documento. Commit único `feat: integrate approved FITNESS preview and live demo`; SHA vía `git log -1 --format=%H --grep='^feat: integrate approved FITNESS preview and live demo$'`, exacto en entrega final. Próximo paso: Eze QA preview/CTA Desktop-Mobile; proyectos2–3/URLs/previews y08K siguen pendientes. No merge ni Production FINAL.
+
+---
+
+### BLOCK 08S — Single-Project Presentation + Dynamic CTA Accent
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+14 de octubre de2026, baseline limpio/sincronizado `e9f7126bcecae4e135554a307b8b2dafcc2dc4ee`. Dirección autoriza solo refinamiento condicional de Proyectos, no motor/librerías ni resto de landing.
+
+- count1: preview central540×299–365 Desktop/310×210 Mobile y crop intactos. Retirados slots vacíos/DOM/CSS y botones anterior/siguiente. Contador01/01 muted12px, mismafila44; mensaje p no interactivo MÁS PROYECTOS EN CAMINO, regla cyan32×1. Desktop al lateral derecho (>=48px de separación a1200); Tablet/Mobile debajo de preview, flujo natural+42px con label de una línea. Sin cards ni falsas affordances.
+- count>1: mensaje ausente; controles nativos restaurados, solo slides de registros reales, depth y Embla intactos. Disabled deriva del índice seleccionado por Embla + límites dataset: evita flags stale tras crecer count sin cambiar índice. Ningún segundo controlador; hook sin modificaciones.
+- Fitness accent:#FF5A45 explícito en data. CTA normaloutlinecyan intacto; hover/focus local fill/border por acento activo, texto oscuro e icono oscuro (filter del SVG existente),225ms y reduced sin transición. Fallbackcyan. Contraste calculado6.54/13.32. Shared Button/assets/URL/preview/copy/globalCTAs intactos.
+
+Archivos: ProjectsSection.jsx, src/data/projects.js, src/styles/projects.css, tests/projectCarousel.test.mjs, docs/PROJECTS.md y este documento. Embla hook, Hero Motion, Navbar, Problema/Solución, About/FAQ/Contacto/Footer, globalDesktopFit, imagen/crop/dependencias protegidos; sin merge ni nueva librería.
+
+QA técnico: npm run check baseline/final lint/build y git diff --check PASS; actualEmbla+ReactDOM StrictMode fixtures2/3 TEST ONLY y modos1→2→3→1 PASS, metadata/count/CTA/accent/fallback/bounds/keys/mouse/touch/resize/reduced/cleanup.5 pruebas sitecontroller PASS; SSR UI y ASTCSS localhover/focus/reduced PASS. Responsive1366/1440/1536/1920/390 y1200 mínimo por cálculo/DOMsimulado; no browser pixel/overflow/hover/crop PASS fabricado. Eze hace QA visual;08K y contenido2–3 pendientes.
+
+Commit único `feat: refine single-project presentation and CTA accent`; SHA vía `git log -1 --format=%H --grep='^feat: refine single-project presentation and CTA accent$'`, exacto en entrega. Próximo paso Eze QA08S, no Production FINAL.
+
+---
+
+### BLOCK 08T — FAQ Content + Contact Destinations
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+14 de octubre de2026. Baseline limpio/sincronizado `692a06ba95edd39dba41a960dd15f6cc5e3c8265`. Integración exclusiva de contenido/destinos aprobados; sin rediseño, estilos/componentes/hooks/assets nuevos ni merge.
+
+FAQ: cinco respuestas exactas del brief, ninguna null. Primera pregunta cambia de tipo de páginas a precio y usa idprecio; IDs2–5 conservados. Eliminados answer/firstAnswerLines/desktopAnswerLines viejos en data. FAQSection sin diff: cinco botones disponibles, primer item abierto y únicoopenId, click/teclado nativo/ARIA/inert/animación existentes conservados. Panel y sección crecen naturalmente con el copy nuevo.
+
+Contact data: email ezewebstudio.dev@gmail.com/mailto exacto; Instagram @ezewebstudio con https://www.instagram.com/ezewebstudio/; HABLEMOS https://wa.me/5491161993279. ContactSection existente renderiza seguros target=_blank/rel=noopener noreferrer para WhatsApp/Instagram, correo sin target. Navbar/Hero HABLEMOS siguen #contacto. Fallbackmailto viejo no aparece en runtime.
+
+Resueltos los pendientes FAQanswers y destinos de Contacto. Proyectos2–3/URLs/previews, otros assets globales y08K permanecen pendientes; no Production FINAL.
+
+Archivos: src/data/faq.js, src/data/contact.js, tests/projectCarousel.test.mjs (expectativa FAQdisabled actualizada), tests/faqContact.test.mjs (contenido exacto, acordeón/ARIA/focoDOM/links/anchors), docs ABOUT_FAQ/CONTACT_FOOTER y este documento. Todos los componentes/hooks/CSS, Proyectos/Embla/acento/preview, Hero Motion, Navbar, tipografía/Footer/Mobile framing/dependencias byte-identical.
+
+QA técnico: npm run check baseline/final lint/build, git diff --check PASS; nuevo test ReactDOM StrictMode comprueba exactitud5questions/answers, apertura/cierre/exclusividad/controles/paneles/IDs/inert/foco nativo y destinos exactos; SSRApp verifica #contactoHeader/Hero y ausencia copy/enlaces viejos; carrusel y5controller tests regresión PASS. DOM simulado no prueba Enter/Space/Tab físicos ni app externa. Wrapping revisado por CSS: FAQquestion/panel overflow-wrap:anywhere sin max-height; email min-width0/overflow-wrap:anywhere/anchor max-width100%, columnas fluidas y alturas naturales. Sin cambios de estilos ni afirmación de overflow/browser pixels PASS; Eze valida finales Desktop/Mobile.
+
+Commit único `feat: integrate final FAQ content and contact destinations`; SHA vía `git log -1 --format=%H --grep='^feat: integrate final FAQ content and contact destinations$'`, exacto en reporte final. Próximo paso Eze QA08T; sin merge ni siguiente fase autorizada.
+
+---
+
+### BLOCK 09A — Complete Website Audit / Pre-launch Quality Review
+
+**STATUS: AUDIT COMPLETE / AWAITING DIRECTION APPROVAL**
+
+14 de octubre de 2026. Auditoría read-only de producto explícitamente autorizada por Dirección sobre HEAD/origin limpio `640253909e4bd23b0e5bee4bfeb93d24b861e705` (08T). No modifica Hero Motion ni cierra 08K, ni implementa correcciones.
+
+Informe: `docs/qa/PRELAUNCH_AUDIT_2026-10-14.md`. Resultado: **0 P0 / 5 P1 / 6 P2**. P1: gate de efecto Hero renderizado 08K; ruta de rechazo particles sin catch confirmada por fallo inyectado; favicon/og:image ausentes; URL pública/canonical/og:url sin definir; gate manual responsive/zoom/teclado/runtime. Tres problemas de fallo/configuración confirmados y dos gates de aceptación, no cinco defectos visuales probados. Los gates transitorios CTM/setup no reintentan con resize/mismas dependencias; su ocurrencia en browser no está demostrada ni se declara nueva causa del Hero estático.
+
+Validación: npm run check (lint/build) y git diff --check PASS; **7/7 tests existentes PASS** (5 siteMotion + 1 Embla con fixtures 2/3 TEST ONLY + 1 FAQ/contact). Probes temporales fuera del repo: Navbar ReactDOM/foco/handlers, SSR con 18 anchors/IDs/landmarks, filtros LIVE persistentes tras rerender, preferencias Hero y Motion real held/recovery/plume/cleanup PASS con geometría/APIs simuladas. Los 22 archivos del build retornan HTTP200/byte-exact y 42 SVG son XML válidos; preview favicon/robots/sitemap404 (robots/sitemap ausentes no bloquean rastreo por sí solos); HEAD demo/Instagram/WhatsApp200. Sin browser disponible: ningún Lighthouse/CWV/FPS/overflow/pixel/WCAG/teclado físico/cliente externo PASS declarado. Checklist manual preciso en informe.
+
+P2: carga diferida de preview, payload de fuente 352.24kB, perfil de idle Hero/partícula mínima, decisión de alternativa accesible de preview, comando QA reproducible y claridad/contactos de ejemplo de la demo. No se ejecutan. FAQ con 5 respuestas y destinos Contacto siguen resueltos en 08T; Fitness preview/demo/acento y UI01/01 resueltos en 08R/S. Proyectos 2–3 pendientes de alcance final, sin filler ni falla del estado único autorizado.
+
+Recomendación: **NOT READY FOR LAUNCH** hasta revisar/cerrar los P1 o aceptar explícitamente sus decisiones de release. Próxima acción: Dirección prioriza y autoriza correcciones; Eze ejecuta QA real. Solo cambian este documento y el informe. Commit documental `docs: record pre-launch audit and launch gates`; SHA vía git log por título y reporte final. Sin merge, implementación ni autorización automática.
+
+### BLOCK 09B — Targeted Production Corrections / Visual Polish / Navbar Logo
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+14 de octubre de 2026 (Buenos Aires). HEAD inicial/origin verificados limpios: `f358eba39a97dbac9e339e3a5d5f61cafb60caee`. Dirección autoriza solo las cuatro superficies siguientes; no se ejecutan las recomendaciones técnicas/SEO de 09A.
+
+- Solución: el glow se cortaba en los límites de `.section-ambience`, con blobs que cruzaban top/bottom. Máscara alpha vertical exclusiva de `.solution-ambience` Desktop: transparente en ambos bordes y opaca a 160px del límite. Conserva blobs/blur/color/posición, clip y layout; desvanece la decoración antes del recorte sin pintar sobre secciones vecinas.
+- Highlight: palabra/acento activos usan Accent Cyan `#59E3FF`, más distinguible que `#8DEEFF`; acento 12px/50% frente a 10px/40%. Lógica exclusiva de lectura, duración500ms, fallback blanco, reduced y geometría intactos. Sin text-shadow ni animación nueva.
+- Halo Mobile: el gradiente compartido generaba concentración central/colas débiles. Solo `variant=mobile` usa gradiente de 0 a390 SVG units y tres stops cyan/icy/cyan con opacidades .86/.68/.86. Se reduce el pico central y se refuerzan extremos. Paths, viewBox, crop, stroke widths, blur, layer opacity, filtros y settings08G no cambian; Desktop/Tablet permanecen exactamente iguales.
+- Navbar/dialog: symbol local `src/assets/brand/ews-symbol.svg`, vectorizado del PNG suministrado por Eze, sin fondo/efectos. Tres barras: exteriores483 de ancho; central402. Color blanco/cyan tomado del source, posiciones y proporciones conservadas. Imagen38px de ancho con ratio natural, home target mínimo44×44, `aria-label="Eze Web Studio — Inicio"`, href#inicio. Misma imagen en ambos headers; Footer wordmark permanece. Header68/92, Grid/glass/offset, menu lifecycle y otros CTAs intactos.
+
+Archivos de producto: Navbar.jsx (asset/nombre accesible), HeroLightArc.jsx (gradiente Mobile exclusivo), header-hero.css (sizing local logo/elimina font-size obsoleto), problem-solution.css (mask + highlight), nuevo ews-symbol.svg. Docs: este documento, HERO_MOTION.md y EDITORIAL_MOTION.md.
+
+Validación: npm run check baseline/final lint/build PASS; 7/7 tests existentes PASS y git diff --check PASS. Se restauró JSDOM26 como herramienta QA externa temporal `/tmp/ews-09b-tools`, sin modificar package/lock. Probe SSR: Desktop/Tablet STATIC+LIVE byte-identical al baseline; Mobile solo cambia energy gradient, paths/filtros/bandas idénticos. Probe ReactDOM StrictMode de Navbar: home/nombre/img compartidos, open/close/selection/cancel/resize, ARIA/foco/bodylock/cleanup PASS con dialog/media simulados. Fuente CSS comprueba layout Solución idéntico y mask alpha0 en límites. SVG local válido, tres barras con longitudes exigidas. No comparación de pixels ni browser/teclado físico PASS: Eze confirma seams/highlight/halo/logo, viewports y Hero held/plume reales.
+
+Revisión visual pendiente: 1366×768, 1440×900, 1536×864, 1920×945; Mobile360×800/390×844/430×932. Verificar Problem→Solution→Projects sin cortes de glow, highlight perceptible, halo Mobile equilibrado y logo nítido/foco, sin dar por probado el efecto renderizado del Hero. Preview de build HTML/JS/CSS HTTP200; símbolo SVG inline byte-exact.
+
+Protegidos: controllers/settings/plume/particles/paths/assets Hero originales, lectura Solution JS, Projects/Embla/Fitness, FAQ/content, destinos Contacto, Footer, composición App, tipografía/tokens y dependencias sin cambios. Los P1 de 09A y el gate08K no se declaran resueltos por este polish.
+
+Commit único `fix: polish Solution continuity and Mobile halo with navbar symbol`; SHA por git log de ese título y entrega final. Sin merge, nuevas secciones ni Production FINAL.
+
+### BLOCK 09B.1 — Navbar Symbol Size Correction
+
+**STATUS: READY FOR EZE VISUAL QA**
+
+14 de octubre de 2026 (Buenos Aires). HEAD/origin inicial limpio verificado: `296cb51fdf96a162228b08919abace0f1056658e`. Dirección corrige exclusivamente el tamaño del símbolo de09B.
+
+Solo `src/styles/header-hero.css`: variable local `.header-brand`25px por defecto (Mobile/Tablet y menú abierto),27px desde1200px (Desktop). Imagen usa esa variable y height:auto, ratio483:456 original. Enlace conserva min44×44 y align-items:center; alturas de Header68/92 y todos los offsets/layouts intactos. SVG y Navbar.jsx byte-identical: tres barras, href#inicio, aria-label y handlers sin cambios. No dominio/DNS/deploy ni otras superficies.
+
+Validación: npm run check lint/build, git diff --check y7/7 tests existentes PASS; probe Navbar ReactDOM StrictMode open/close/cancel/resize/foco/ARIA PASS con APIs simuladas. Comparación deCSS: únicamente tres declaraciones de sizing cambian. Tamaños derivados deCSS verificados360/390/430/768/1024/1200/1366/1440/1536/1920; no medición browser/pixels ni aceptación visual afirmada. Eze confirma proporción y alineación final en Desktop/Mobile/menú. Los demás gates09A/08K siguen abiertos.
+
+Archivos: header-hero.css y este registro canónico. Commit único `fix: reduce navbar symbol size on Desktop and Mobile`; SHA en entrega y por git log del título. Sin merge.
+
+### BLOCK 09C — Mobile Footer / Brand Icons / Pre-launch Corrections
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+Baseline HEAD/origin limpio `f3f4e878298e945259adeee44a01f3285f6dfce6`. Dirección autoriza únicamente Footer Mobile, iconos oficiales/metadata del dominio y P1-02. Referencia Footer suministrada `image(20261015-004550).png` inspeccionada; no es evidencia browser del nuevo código.
+
+- Footer <768: mínimo470 retirado; padding36/24/28, margin-nav16/bottom20, wordmark17/26 tracking.16 y muted, navegación15/24, meta13/22. Targets44 intactos, links/wordmark/copyright/backtop conservados. Una regla pseudo full-viewport1px/16%, rule interior oculta solo Mobile. Tablet conserva su mínimo470 y reglas previas; Desktop byte-identical.
+- Marca: SVGfavicon cuadrado con símbolo original proporcional, ancho75% y fondo #050708 para legibilidad de barras blancas; ICO fallback16/32/48 y Apple180 derivados directamente de paths originales, sin redibujar ni cambiar src/assets/brand/ews-symbol.svg. Archivos locales public/, referencias head y build válidos.
+- Metadata: canonical +og:url https://ezewebstudio.com.ar/, og:site_name y Twitter title/description con title/copy aprobados existentes. Sin og:image rota. **OG PENDING DIRECTION APPROVAL**: propuesta mínima1200×630, fondo #050708, símbolo y nombre del estudio; no generada ni integrada sin aprobación. No DNS, deployment, redirects, publicación ni nueva infraestructura SEO.
+- P1-02: @tsparticles/react4.4.0 no ofrece error prop y su componente omite catch de engine.load. Adapter local reemplaza solo lifecycle load/destroy; mantiene ParticlesProvider/loadSlim/engine únicos y renderer nativo. Captura rechazo nativo/síncrono y ready callback, timeout8s, destruye loads tardíos/reemplazados y cancela callbacks al desmontar. Error real DEV en HeroAtmosphere; fallback particles independiente del arco. Sin global suppression, monkeypatch de producción, nuevo motor ni tuning.
+
+Archivos: src/styles/contact-footer.css (scope Mobile y preservación Tablet), index.html, public/{favicon.svg,favicon.ico,apple-touch-icon.png}, effects/{ParticleField.jsx,loadParticleContainer.js,HeroAtmosphere.jsx}; tests/{particleLifecycle,particleField}.test.mjs; docs/CURRENT_STATE.md, docs/HERO_MOTION.md y docs/CONTACT_FOOTER.md. package/lock, Navbar sizing09B.1, Footer JSX, Hero arc/filter/plume/settings/layout y demás secciones byte-identical.
+
+Validación: npm run check baseline/final PASS; git diff --check PASS; **15/15 tests PASS** (7 existentes +7 lifecycle +1 React/provider integration). Fallos inyectados, timeout, late resolve/reject, StrictMode, cleanup, options replacement y readiness callback probados sin rechazo no manejado. Iconos decodificados/inspeccionados y output HTTP local verificado. Scope CSS Mobile360/390/430 y transición768 revisado estructuralmente; gutters24/targets44 sin widths nuevas. Sin browser ejecutable: no screenshots, overflow/pixels/teclado/Lighthouse ni browser PASS.
+
+Restantes P1:08K Hero rendered acceptance; responsive/zoom/teclado/consola real; imagenOG; validación metadata/assets en host tras release autorizado. Proyectos2–3 siguen contenido futuro pendiente, sin filler. Aprobación visual09B/09B.1/09C corresponde a Eze. Commit único `fix: refine Mobile footer and prepare brand release assets`; SHA exacto en entrega y mediante git log de ese título. No merge ni deploy, no FINAL/FROZEN.
+
+### 09C follow-up — Console cleanup
+
+Eze pidió retirar el ruido de consola después de09C. Eliminados todos los logs informativos del Hero: activation state, arc mounted/plume ready, particles ready y modos de filtro. Eligibility normal y espera de target no generan warnings. Se conservan los avisos DEV de fallos reales y la aserción fallida de ownership; sin supresión global de consola/errores. No cambia motion/settings/filters/lifecycle ni layout. Archivos: useHeroMotionPreferences.js, ArcDisplacement.jsx, HeroBackground.jsx y este documento. Check/diff y15tests PASS; sin browser QA afirmado. Commit único `chore: remove routine Hero console diagnostics`. No merge/deploy.
+
+### BLOCK 09D — Privacy Minimum / Static Custom 404
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+HEAD/origin inicial limpio `c21a177b8b5e3e66f8e943b1135a75afb1c4d254`. Fuentes Drive verificadas: CEO / Dirección — Reglas permanentes (actualización14/10) y Sistema de trabajo con clientes v2 · Lanzamiento2026. Se implementa la base mínima solicitada; no es certificación legal ni política lista para publicar sin completar datos.
+
+- Privacidad: `/privacidad`, HTML estático con contacto aprobado, consultas voluntarias/finalidades comerciales reales, ausencia actual de formularios/registro/checkout/analytics/píxeles/cookies propias de seguimiento, canales externos y workflow Drive/Docs. Derechos Ley25.326/AAIP; actualización14/10/2026 Buenos Aires. Identidad legal/domicilio del responsable, proveedor/plan/logs/transferencias y prácticas de conservación/acceso/seguridad no están confirmados: texto visible **Documento en revisión**, puntos pendientes y noindex hasta validación. No datos ficticios ni garantías de cifrado/plazos.
+- Footer: único enlace Privacidad bajo copyright, mismo estilo muted y target44, feedback hover/focus/reduced. Navegación4links/backtop/divider y geometría principal intactos; solo crece la altura natural necesaria para el enlace.
+- 404: estática, sobria y centrada con símbolo oficial, copy aprobado, CTA home real y copyright; sin JS/Hero/glow/motion. HTTP404 medido para rutas desconocidas en preview; página Privacidad200. Asset `/404.html` directo es un archivo real200, distinto del fallback404.
+- Arquitectura: Vite MPA, inputs index.html/privacidad.html/404.html; no router ni dependencia nueva. CSS exclusivo reutiliza tokens/Inter sin importarse en landing. Build emite HTML completo y assets locales; no falla si JS está desactivado. appType mpa evita SPA200 para rutas inexistentes; handler solo de preview sirve dist/404.html con status404. vercel.json cleanUrls habilita `/privacidad`; no catch-all rewrite a index. Vercel soporta404.html estático, pero no se verificó ningún deployment ni override del dashboard.
+
+Archivos: Footer.jsx (enlace), contact-footer.css (target/feedback local), vite.config.js, vercel.json, nuevos privacidad.html/404.html e information-pages.css, tests/staticPages.test.mjs, docs/PRIVACY_AND_404.md y este documento. App/main, index.html metadata09C, iconos/brand, Navbar, Hero/controllers/settings, secciones y datos de producción protegidos sin cambios.
+
+Validación: npm run check lint/build PASS, git diff --check PASS y **16/16 tests PASS**. Suite HTTP real del preview: home200/privacy200, tres rutas inexistentes404 con copy custom, HEAD404 sin body, assets/CSS/font200, símbolo exacto, páginas sin scripts/forms/canvas y Footer link/tabIndex/navegación conservados. CSS responsive natural con gutters24, maxlectura760, wrapping de email y targets44; sin navegador: no visual/zoom/AT/WCAG/overflow PASS declarado. Eze valida360/390/430/768 y Desktop.
+
+Antes del release: Eze confirma y aprueba los campos de privacidad mencionados y el texto final; comprobar proveedor comercial/HTTPS y privacidad/logs efectivamente configurados. Hosting debe servir las páginas estáticas y 404.html con404 en rutas inexistentes, nunca SPA200; ver comandos y resultados esperados en docs/PRIVACY_AND_404.md. Permanecen OG, gates08K/QA real y acciones fiscales/comerciales separadas. DNS/deploy/redirects no ejecutados. Commit único `feat: add privacy draft and static custom 404`; SHA exacto en entrega y por git log del título. No merge, deploy ni FINAL/FROZEN.
+
+### BLOCK 09E — Approved Copy C01 + C02
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+HEAD/origin inicial sincronizado y limpio: `f5c84f20f794a77b8c3c97b9482aac60ab0ae338`. Copy Audit01 revisada por Dirección: únicamente C01 y C02 aprobados/implementados; C03 y C05 diferidos, C04 rechazado en favor del texto existente. No otras mejoras de copy autorizadas.
+
+C01: src/data/projects.js, descripciónFitness exacta `Demo de landing page para un gimnasio boutique.`. Title/category/preview/URL/accent y dataset único intactos. C02: index.html title/og:title/twitter:title exactos `Diseño y desarrollo de landing pages | Eze Web Studio`. Descripciones, canonical/og:url, favicons y demás metadata intactos; OG pendiente no modificado. No componentes, estilos, routing, privacidad/404 ni efectos modificados.
+
+Tests existentes ajustados solo a los textos aprobados: staticPages verifica los tres títulos en HTML generado/HTTP; projectCarousel verifica la descripción real además de interacción existente. npm run check lint/build, git diff --check y16/16tests PASS. Descripción en flujo natural, sin line-clamp/altura fija en information/description; wrapping y crecimiento permitidos según CSS. No browser/pixels/overflow PASS: Eze confirma wraps Mobile/Desktop.
+
+OG image, finalización de Privacidad y QA real de lanzamiento permanecen pendientes. Commit único `fix: apply approved demo description and service metadata title`; SHA exacto en entrega y mediante git log del título. Sin merge/deploy ni aprobación Production FINAL.
+
+### BLOCK 09F — Official OG Asset / Final Social Metadata
+
+**STATUS: IMPLEMENTATION COMPLETE / READY FOR EZE FINAL QA**
+
+HEAD/origin limpio verificado: `209c01d691cc924abd8090c122aafe18bf88c1bb`. Fuente: PNG explícitamente adjunto `eze-web-studio-og-1200x630-final(2).png`, verificado e inspeccionado. `public/og-image.png`: copia byte-exact, PNG1200×630/18384bytes, SHA256 `1ae6765dffab9027cb2ad3161db6a8d900e20d4f13fac4bd9ae26072d2a1c152`. Asset visual FINAL/FROZEN: sin recreación, recorte, resize, recolor ni optimización que altere bytes/píxeles.
+
+index.html: og:image y twitter:image absolutos `https://ezewebstudio.com.ar/og-image.png`; OGwidth1200/height630/typeimage/png; ambos alt `Eze Web Studio — Diseño y desarrollo de landing pages`; twitter:card summary_large_image. Title/og:title/twitter:title aprobados09E, descriptions, canonical/og:url e iconos intactos. Sin tags duplicadas ni refs rotas. No otros cambios de producto/estilos/routing/dependencias.
+
+Archivos: public/og-image.png, index.html, tests/staticPages.test.mjs (ampliación del control social/HTTP existente) y este documento. npm run check lint/build, git diff --check y16/16tests PASS. JSDOM26 de QA restaurado fuera del proyecto en `/tmp/ews-09f-tools`, sin cambiar package/lock. Preview de producción local medido: `/og-image.png`200, MIMEimage/png, firma/IHDR1200×630 y bytes idénticos a public/dist/adjunto; HTML generado expone exactamente una instancia por tag social. Favicon/rutas previas preservados. No browser ni publicación/crawler social PASS afirmado.
+
+Pendientes: finalizar datos/aprobar Privacidad; QA final de Eze; release y validación social contra dominio público después de deploy autorizado. Sin merge/deploy/DNS ni Production FINAL. Commit único `feat: integrate approved OG image and social metadata`; SHA exacto en entrega y por git log del título.
+
+### BLOCK 09 — Accessibility + Performance
+
+**STATUS: AUDIT 09A COMPLETE / CORRECTIONS AND BROWSER ACCEPTANCE PENDING DIRECTION**
+
+- teclado;
+- focus;
+- semántica;
+- targets;
+- contraste;
+- fuentes/assets;
+- CLS;
+- bundle;
+- GPU / DPR del Hero si aplica;
+- reduced-motion real;
+- cleanup.
+
+### BLOCK 10 — Final Visual QA
+
+**STATUS: PENDING**
+
+Comparación completa browser ↔ Figma.
+
+Validar:
+
+- Desktop;
+- Mobile;
+- interacciones;
+- reload;
+- assets;
+- preview build;
+- consola;
+- `npm run check`;
+- regresiones.
+
+Solo después puede declararse Production FINAL / FROZEN.
+
+---
+
+## 12. Hero effect research / decisión técnica vigente
+
+Estado vigente:08G aprobado por Eze y export integrado en08H. Motion + SVG held/plume, halo estático de calidad aprobada y particles count1 en flujo oficial React/slim4.4.0. OGL/old controller/hybrid hosts/duplicated path wake retirados. 08I retira el acceso Lab desde el sitio, incluso DEV; diagnósticos solo consola DEV, sin UI/debug en Hero normal. Guía residual body featherizada; QA visual del resultado de producción pendiente de Eze. 08J conecta filtros live/estáticos declarativamente desde React; Motion solo controla valores internos. Detalle actual en docs/HERO_MOTION.md, sección08J.
+
+MagicRings permanece **REJECTED** por su corte/fade histórico y coste; no se volvió a probar en Block08. ShaderGradient/Vanta no ejecutados ni declarados rechazados. No renderer genérico sustituye el horizonte aprobado; no Pro.
+
+---
+
+## 13. Reglas de Hero motion
+
+Desktop:
+
+- respiración lenta del glow;
+- variación mínima de luminosidad;
+- niebla/halo muy sutil;
+- sin grid decorativo;
+- partículas solo si demuestran valor.
+
+Mobile:
+
+- menor carga;
+- sin cursor interaction;
+- glow/horizonte más simple;
+- partículas reducidas o eliminadas.
+
+`prefers-reduced-motion: reduce`:
+
+- no loops decorativos activos;
+- fondo estático completo;
+- glow base preservado;
+- ninguna información depende de motion.
+
+Hero no debe tener:
+
+- parallax gratuito;
+- headline flotando;
+- CTAs animándose constantemente;
+- mouse-follow evidente;
+- estética gamer;
+- shader default reconocible.
+
+---
+
+## 14. Gate obligatorio de cada bloque
+
+La validación completa sigue **IMPLEMENT → RENDER → COMPARE → CORRECT → RESPONSIVE CHECK → CLOSE**.
+
+Por decisión vigente de Dirección, el agente realiza implementación fiel desde Figma y QA técnico/estructural disponible: npm run check, git diff --check, semántica, datos reales, interacción automatizable y responsive por código. Entrega **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA** cuando esos controles pasan. La imposibilidad conocida de abrir Chrome/localhost no bloquea esa entrega técnica ni exige nuevos intentos de sandbox.
+
+Eze realiza el QA visual/browser final: fonts/assets cargados, estado maestro de componentes, motion detenido durante QA geométrico, comparación con Figma, corrección de discrepancias materiales, viewports/bordes, teclado/foco, consola y continuidad de página. Dirección aprueba/cierra el bloque y autoriza el siguiente. No inventar screenshots ni declarar comparaciones no realizadas.
+
+Diferencias de antialiasing no justifican cambiar geometría. El cierre técnico no equivale a Production FINAL / FROZEN.
+
+---
+
+## 15. Pendientes reales / blockers
+
+Estos puntos NO bloquean Header + Hero.
+
+Sí deben resolverse antes de cerrar sus bloques funcionales correspondientes.
+
+### Contacto — RESUELTO en08T
+
+Email/e-mail href aprobados e integrados: `ezewebstudio.dev@gmail.com` / `mailto:ezewebstudio.dev@gmail.com`. Instagram `@ezewebstudio` / `https://www.instagram.com/ezewebstudio/`. HABLEMOS `https://wa.me/5491161993279`. Sin destinos pendientes ni formulario; links de Header/Hero siguen anchors.
+
+### Pre-launch — auditoría 09A
+
+- 08K/effect rendered y QA responsive/zoom/teclado/runtime siguen gates de aceptación manual; no se consideran aprobados por pruebas de DOM.
+- P1-02 RESUELTO TÉCNICAMENTE en09C: carga nativa con catch/timeout/cleanup local, provider/engine oficiales únicos y valores intactos. Rechazo/late loads/StrictMode probados; no certifica el efecto visual08K.
+- P1-03 assets integrados: faviconSVG/ICO y Apple180 en09C; imagenOG FINAL/FROZEN y metadata social completa en09F. Validación en dominio público/crawlers aún pendiente, sin claim de lanzamiento. P1-04 metadata preparada con dominio aprobado https://ezewebstudio.com.ar/; DNS/deploy/redirects y validación pública deliberadamente diferidos, sin afirmar sitio live.
+- Detalle, prioridad y plan en `docs/qa/PRELAUNCH_AUDIT_2026-10-14.md`. No producto modificado por 09A.
+
+### FAQ — CONTENIDO RESUELTO en08T
+
+Cinco preguntas/answers finales aprobados e integrados, todos habilitados. No respuestas pendientes ni fallback de copy. QA visual/layout/teclado real permanece a cargo de Eze.
+
+### Proyectos
+
+- proyecto 1 FITNESS: copy/preview/URL aprobados e integrados en08R
+- URL proyecto 1: `https://eze-demo-gimnasio.vercel.app/` — integrada
+- preview proyecto 1: WebP local aprobado — integrado
+- proyectos 2–3: **PENDING**
+- URLs 2–3: **PENDING**
+- previews reales de proyectos2–3: **PENDING**
+
+No resolver pendientes inventando contenido.
+
+---
+
+## 16. Assets
+
+Estado actual:
+
+- wordmark: tipográfico;
+- Inter: local en repo;
+- iconografía aprobada: existe en Figma, exportar exacta cuando cada bloque la necesite;
+- Hero: SVG exactos de Figma locales en `src/assets/hero/`, incluyendo horizontes Desktop/Mobile y arrow; sin URLs temporales;
+- Proyectos: siete SVG exactos locales en `src/assets/projects/`, glows/flechas;08R agrega `fitness-preview.webp`1448×1086/128630bytes suministrado por Eze. Previews2–3 pendientes;
+- FAQ: cuatro SVG exactos PLUS/MINUS Desktop/Mobile locales en `src/assets/faq/`; About no agrega assets;
+- Contacto: dos SVG exactos Arrow Right Desktop/Mobile locales en `src/assets/contact/`, incluyendo stroke bounds Mobile; Footer no agrega assets;
+- favicon: public/favicon.svg + favicon.ico16/32/48 y apple-touch-icon.png180, derivados del símbolo local aprobado en09C; OG aprobada e integrada en09F como public/og-image.png, PNG1200×630 sin modificaciones.
+
+Al exportar desde Figma:
+
+- guardar assets locales;
+- no conservar URLs temporales;
+- no sustituir iconos por alternativas “parecidas” si existe vector aprobado.
+
+---
+
+## 17. Reglas de arquitectura
+
+Mantener:
+
+- `App.jsx` explícito;
+- componentes por responsabilidad;
+- data modules simples;
+- tokens compartidos;
+- CSS/Tailwind v4 coherente;
+- HTML semántico.
+
+No crear:
+
+- page builder;
+- section registry;
+- router innecesario;
+- CMS;
+- mega config;
+- componentes genéricos que obliguen a deformar Figma;
+- abstracciones sin reutilización real.
+
+`src/examples` es opt-in y no es la landing V2.
+
+No importar `exampleContent` al producto.
+
+---
+
+## 18. Reglas para dependencias
+
+No instalar una dependencia por anticipación.
+
+Antes de adoptar una nueva:
+
+1. problema concreto;
+2. spike real;
+3. fidelidad superior;
+4. licencia compatible;
+5. coste razonable;
+6. mobile aceptable;
+7. reduced-motion;
+8. cleanup correcto;
+9. queda realmente usada.
+
+Una librería descartada no permanece en `package.json`.
+
+---
+
+## 19. Riesgos ya identificados
+
+### Hero
+
+El mayor riesgo técnico/visual.
+
+No aceptar un orb, aurora o anillo genérico que cambie la silueta aprobada.
+
+### Tipografía
+
+Inter define wraps y geometría. Ya está instalada. Evitar fallback o sustituciones.
+
+### Solución
+
+Escalas grandes y offsets requieren control. No normalizar CONFIANZA Mobile.
+
+### Containers
+
+Wide/Content no deben borrar excepciones locales.
+
+### Carousel
+
+Slots visuales no equivalen automáticamente a número de proyectos.
+
+### Mobile menu
+
+Cuidar foco, scroll lock, Escape y cambio de breakpoint.
+
+### FAQ
+
+Las cinco respuestas finales existen desde08T. Mantener crecimiento natural, single-open y ARIA; no fijar altura que corte texto.
+
+### WebGL
+
+Si se adopta:
+
+- CSS reduced-motion no basta;
+- controlar requestAnimationFrame;
+- DPR;
+- resize;
+- visibility;
+- context lost;
+- cleanup;
+- StrictMode.
+
+---
+
+## 20. Qué NO tocar sin motivo
+
+No reabrir:
+
+- Desktop;
+- Mobile;
+- Visual System;
+- Foundation.
+
+No cambiar:
+
+- copy aprobado;
+- orden de secciones;
+- colores;
+- tipografía;
+- composición;
+- iconografía;
+- grid;
+- excepciones intencionales.
+
+No agregar:
+
+- nuevas secciones;
+- nuevos slogans;
+- effects “porque quedan bien”;
+- placeholders ficticios;
+- proyectos inventados;
+- contenido SEO visible no aprobado.
+
+Si aparece un problema real no resuelto por Figma:
+
+reportar:
+
+- LOCATION;
+- OBSERVED PROBLEM;
+- WHY CURRENT SOURCES DO NOT RESOLVE IT;
+- MINIMUM TECHNICAL OPTIONS;
+- RECOMMENDATION.
+
+Dirección decide.
+
+---
+
+## 21. Definition of done global
+
+Eze Web Studio V2 solo puede considerarse Production FINAL / FROZEN cuando:
+
+- los bloques 01–10 estén cerrados;
+- Desktop y Mobile reproduzcan Figma con fidelidad;
+- responsive intermedio sea robusto;
+- Header/menu funcionen;
+- Hero motion tenga fallback y reduced-motion;
+- carousel funcione;
+- FAQ funcione;
+- destinos reales estén definidos;
+- assets reales estén integrados;
+- accesibilidad básica pase;
+- performance sea razonable;
+- consola esté limpia;
+- `npm run check` pase;
+- build preview haya sido revisado;
+- no existan blockers de contenido publicados como filler.
+
+---
+
+## Manual QA consolidado — 2 de octubre de 2026
+
+Eze completó esta pasada de QA visual/browser y consolidó los hallazgos prioritarios en:
+
+`docs/qa/MANUAL_QA_2026-10-02.md`
+
+Los hallazgos del QA manual llevaron a una recomposición específica en Figma. `02B — Desktop Production` resuelve ahora la escala, densidad, backgrounds, grid, Footer y alineación de Proyectos y reemplaza la interpretación libre del coherence pass. Dirección autorizó posteriormente Block08 sobre la geometría Production y el framing Mobile; no reabrir layout en el motion pass.
+
+---
+
+## Mobile viewport framing — QA follow-up
+
+Durante el QA manual posterior a la reimplementación Desktop desde 02B, Eze detectó un issue sistémico Mobile: en dispositivos más altos que el master 390×844 algunas secciones cortas pueden terminar antes del viewport y dejar visible la sección siguiente.
+
+Decisión vigente:
+- Hero, Problema, Solución, Proyectos, About, FAQ y Contacto deben ocupar **como mínimo un viewport Mobile completo**;
+- usar min-height/min-block-size viewport-aware y permitir crecimiento natural;
+- no fijar height exacto, no cortar contenido y no introducir scroll-snap;
+- Footer conserva altura natural;
+- Mobile debe validarse también por altura real de dispositivo, no solo por ancho.
+
+Hallazgo detallado en `docs/qa/MANUAL_QA_2026-10-02.md` — Hallazgo 07.
+
+**MOBILE VIEWPORT FRAMING — IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**
+
+Implementado sobre baseline limpio/sincronizado `8f0184826ba11259d936d18692421f8e169e67a2`. Contrato común en primitives.css limitado a <768: min-block-size100svh,100dvh si soportado, en los siete section roots. Eliminados mínimos Mobile844/753/936/754; wrappers crecen naturalmente. Hero conserva390×844 y reduce solo aire en alturas menores; horizonte bottom:0 y assets intactos. Footer excluido, reglas existentes intactas. No cambios Tablet/Desktop02B, contenido, componentes/hooks, assets, typography, navegación, motion o dependencias. 03 Mobile permanece FINAL/FROZEN; no Mobile redesign.
+
+Archivos: `src/styles/{primitives,header-hero,about-faq,contact-footer}.css`, este documento y `docs/MOBILE_VIEWPORT_FRAMING.md`. QA técnico: npm run check baseline/final PASS, git diff --check PASS; AST CSS comprueba siete raíces, scope Mobile, media blocks Tablet/Desktop idénticos, reglas Footer/horizonte idénticas. Cálculos preparados para360×800/390×844/393×873/430×932; browser/zoom/chrome/section-start QA pendiente de Eze, sin screenshots ni browser PASS fabricados.
+
+Commit único identificado por `fix: frame mobile sections to the visible viewport`; resolver SHA con `git log -1 --format=%H --grep='^fix: frame mobile sections to the visible viewport$'` (SHA real en reporte final, sin segundo commit documental). Próxima acción: revisión visual Eze; no iniciar Motion ni pulido Desktop. Pendientes de contenido anteriores conservados.
+
+---
+
+## 22. Próximo trabajo autorizado
+
+Blocks 01–06: **CLOSED / APPROVED FOR CONTINUATION**.
+
+### PRODUCTION BLOCK 07 — DESKTOP PRODUCTION REIMPLEMENTATION (historial)
+
+02C Desktop Fit sustituye la geometría 02B de las secciones modificadas en 08L. Las referencias y reglas siguientes describen la entrega histórica de Block 07; el contrato vigente está en Block 08L y `docs/DESKTOP_FIT_IMPLEMENTATION.md`. Proyectos permanece protegido.
+
+Status: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
+
+SOURCE OF TRUTH:
+- Desktop: Figma `02B — Desktop Production` page `239:10`.
+- Canonical master: `Desktop Production Master — 1440`, node `239:11`, 1440×6684.
+- Section masters: siete escenas de 1440×900 + Footer 1440×384.
+- Mobile: `03 — Mobile` permanece FINAL / FROZEN.
+- `02 — Desktop` histórico NO manda en producción.
+
+El coherence pass anterior quedó eliminado del CSS activo. Implementación desde02B completada; detalle en `docs/DESKTOP_PRODUCTION_IMPLEMENTATION.md`. Dirección autorizó Block08 sobre este baseline protegido. La siguiente acción de aquella entrega fue revisar Hero Motion; la acción vigente es el QA visual de 08L, con Hero Motion y Mobile protegidos.
+
+Reglas obligatorias:
+- implementar escala Production exacta y relaciones del master;
+- no usar zoom ni transform scale global;
+- no restaurar grid decorativo;
+- Background #050708 salvo About #0A1119;
+- Footer natural de referencia 384px a 1440×900;
+- Proyectos alineado sobre eje central aprobado;
+- runtime Projects = 01/01 con dataset actual aunque Figma muestre 01/03 como estado final futuro;
+- responsive checkpoints: 1366×768, 1440×900, 1536×864, 1920×1080;
+- Mobile no se rediseña;
+- QA visual/browser final lo realiza Eze.
+
+Estado de entrega del agente: **IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA**.
+08C y08D rechazados visualmente.08E obtuvo baseline real-browser aprobado por Eze: render/repulse/arc runtime/held deformation YES; particle drift NO, viewport1920×945.
+
+**08F: WAKE VISUALLY REJECTED; HALO QUALITY ACCEPTED AS LAB BASELINE.** Commit08F `fa96f2455106ed5fd115144cc1df1b8eb7fbfbbc`. Su wake de fragmentos copiados fue reemplazado, no retocado.
+
+**08G: BASELINE APPROVED BY EZE; INTEGRATED IN 08H.** Export seleccionado supera presets históricos.
+
+**08H: REJECTED BY EZE — PRODUCTION EFFECT NOT VISIBLE.** Calidad aprobada, held110/620/1, idle0, plume1600ms/0.075/threshold1 y partícula mínima integrados. Controladores/particle wrapper compartidos con LabDEV, sin UI/instrumentación en producción. Borde duro del cuerpo featherizado sin cambiar layout/geometry. Detalle de valores/QA/files/commit en Block08H y docs/HERO_MOTION.md.
+
+**08I: REJECTED BY EZE — LIVE FILTER OWNERSHIP BUG.** Switch Lab retirado de todo runtime normal; HeroAtmosphere es único dueño, Desktop/fine-hover exactos, gates y errores explicados solo en consola DEV. Sin cambios de valores aprobados. Validación técnica PASS.
+
+**08J: NOT APPROVED BY EZE — no visible production interaction.** React selecciona STATIC/LIVE; Motion no escribe path.filter. particlesReady conserva estrellas sin desconectar filtros. Aserción DEV de los tres paths; valores aprobados intactos, validación técnica PASS.
+
+**08L: DESKTOP FIT IMPLEMENTED / READY FOR EZE VISUAL QA.** Nueva autoridad02C para geometría de las secciones modificadas; naturales About/FAQ/Contact/Footer, Solution80/86 y cards272. Hero Motion/Projects/Mobile protegidos. Ver docs/DESKTOP_FIT_IMPLEMENTATION.md.
+
+**08M: CORRECCIONES DESKTOP IMPLEMENTADAS / READY FOR EZE VISUAL QA.** Problema/Solución mínimo100svh con escala Fit, eje About/FAQ compartido, Footer tipografía local menor y estructura intacta. Las excepciones de Dirección prevalecen sobre 02C.
+
+**08N: EJE EDITORIAL DESKTOP COMPARTIDO / READY FOR EZE VISUAL QA.** About/FAQ/Contact comparten Grid600/128/552 y eje derecho808 a1440; padding vertical y tipografía intactos.
+
+**08O: REJECTED BY EZE / SUPERSEDED BY08P.** Reveal genérico retirado; fixed/glass conservados.
+
+**08P: NAVBAR ALIGNMENT + MOTION CORRECTION / READY FOR EZE VISUAL QA.** Ver docs/EDITORIAL_MOTION.md. Navbar centrado, contenido sin reveals, highlight exclusivo Solución y HABLEMOS mailto.
+
+**08Q: EDITORIAL COHERENCE + EMBLA CAROUSEL / IMPLEMENTED / READY FOR EZE VISUAL QA.** FAQ XL y aire inferior, Footer discreto, motor único real para Proyectos; dataset1 intacto.
+
+**08R: FITNESS PREVIEW + LIVE DEMO INTEGRADOS / READY FOR EZE VISUAL QA.** Proyecto1 tiene WebP local y URL real;01/01 con controles disabled y CTA enabled.
+
+**08S: SINGLE-PROJECT PRESENTATION + CTA ACCENT / READY FOR EZE VISUAL QA.** Sin slots/control inútil con1record; mensaje editorial y CTA warm por data, motor/crop intactos.
+
+**08T: FAQ CONTENT + CONTACT DESTINATIONS / READY FOR EZE VISUAL QA.** Cinco respuestas habilitadas y destinos finales WhatsApp/mailto/Instagram; pendientes de esos contenidos resueltos.
+
+**09A: AUDIT COMPLETE / AWAITING DIRECTION APPROVAL.** Auditoría técnica/estructural del HEAD 08T completada sin cambios de producto. Informe `docs/qa/PRELAUNCH_AUDIT_2026-10-14.md`: 0 P0 / 5 P1 / 6 P2, recomendación NOT READY FOR LAUNCH por los gates y decisiones explicitados.
+
+**09B: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA.** Las cuatro correcciones locales autorizadas están implementadas; detalle en bloque09B.
+
+**09B.1: READY FOR EZE VISUAL QA.** Símbolo reducido a27px Desktop/25px Mobile y menú; geometría delSVG/target44 preservados.
+
+**09C: IMPLEMENTATION COMPLETE / READY FOR EZE VISUAL QA.** Footer Mobile compacto, iconos locales oficiales, dominio metadata preparado y P1-02 resuelto técnicamente; OG y gates visuales/de release pendientes.
+
+**09D: IMPLEMENTATION COMPLETE / 404 LOCAL VISUALLY APPROVED BY EZE.** Privacidad en revisión con datos legales/operativos pendientes y `noindex`, enlace Footer y 404 estático implementados. Preview HTTP: privacidad 200, rutas inexistentes 404. Eze probó una URL inexistente mediante `npm run preview` y confirmó que aparece la 404 personalizada; `npm run dev` muestra la 404 genérica de Vite intencionalmente. Host público sin verificar; privacidad no aprobada como definitiva. Ver `docs/PRIVACY_AND_404.md`.
+
+**09E: IMPLEMENTATION COMPLETE / COPY AUDIT 01 CLOSED FOR LAUNCH.** C01 demo Fitness y C02 `<title>`/`og:title`/`twitter:title` con servicio exacto implementados en commit `d9fceba5782017985505770b350e998f4424dd2d`. C03 y C05 diferidos; C04 rechazado. No reescritura restante de copy aprobada.
+
+**09F: IMPLEMENTATION COMPLETE / READY FOR EZE FINAL QA.** OG aprobada y FINAL/FROZEN integrada exactamente, metadata social completa y previewHTTP local PASS. Despliegue y preview social público pendientes.
+
+**Próximo paso (Dirección,14/10 ART):** cerrar datos reales de Privacidad y QA final de Eze en navegador; confirmar hosting comercial y autorizar separadamente release/DNS/HTTPS/redirects. Luego verificar `/`200, `/privacidad`200, unknown404 y `/og-image.png`200/image/png en dominio público y preview de crawlers. 404 local ya aprobada por Eze. Sin merge/deploy ni Production FINAL.
+
+---
+
+## 23. Regla de mantenimiento de este archivo
+
+Al cerrar cada bloque, el agente responsable debe actualizar:
+
+- fecha;
+- estado del bloque;
+- commit SHA;
+- archivos principales;
+- decisiones nuevas;
+- desviaciones intencionales;
+- validaciones realizadas;
+- dependencias agregadas / rechazadas;
+- blockers resueltos / nuevos;
+- próximo bloque autorizado.
+
+Mantener este documento como snapshot actual, no como diario infinito.
+
+Los detalles exhaustivos de un bloque pueden vivir en un documento específico, pero este archivo siempre debe permitir que otro agente entienda en pocos minutos:
+
+**dónde estamos, qué está cerrado, qué no debe tocar, qué falta y qué sigue.**

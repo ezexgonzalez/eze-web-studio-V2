@@ -1,15 +1,25 @@
 import { siteConfig } from '../../data/siteConfig'
-import { Container } from '../ui/Container'
+import { anchors, footerNavigation } from '../../data/navigation'
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--theme-border)]">
-      <Container className="flex flex-col gap-3 py-6 text-sm text-[var(--theme-muted)] sm:flex-row sm:items-center sm:justify-between">
-        <strong className="font-semibold text-[var(--theme-text)]">
-          {siteConfig.businessName}
-        </strong>
-        {siteConfig.footerNote ? <span>{siteConfig.footerNote}</span> : null}
-      </Container>
+    <footer className="site-footer">
+      <div className="footer-layout">
+        <span className="footer-rule" aria-hidden="true" />
+        <div className="footer-main">
+          <p className="footer-wordmark type-brand-header desktop:type-brand-footer">{siteConfig.wordmark}</p>
+          <nav className="footer-navigation" aria-label="Navegación del pie de página">
+            {footerNavigation.map(link => (
+              <a key={link.href} href={link.href} className="type-body-md desktop:type-navigation-footer">{link.label}</a>
+            ))}
+          </nav>
+        </div>
+        <div className="footer-bottom type-body-sm desktop:type-footer-meta">
+          <p className="footer-copyright">{siteConfig.footerNote}</p>
+          <a className="footer-back-to-top" href={anchors.inicio}>{siteConfig.backToTopLabel}</a>
+        </div>
+        <a className="footer-privacy type-body-sm desktop:type-footer-meta" href="/privacidad">Privacidad</a>
+      </div>
     </footer>
   )
 }
